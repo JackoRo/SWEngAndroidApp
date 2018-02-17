@@ -24,4 +24,3 @@ public class ExampleInstrumentedTest {
         assertEquals("com.group3.swengandroidapp", appContext.getPackageName());
     }
 }
-// asoidjaoisdj
