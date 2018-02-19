@@ -29,7 +29,10 @@ public class Recipe {
 		}
 	}
 	
-	
+	/**
+	 * Update the description of the recipe
+	 * @param description new description to be set for this recipe
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}

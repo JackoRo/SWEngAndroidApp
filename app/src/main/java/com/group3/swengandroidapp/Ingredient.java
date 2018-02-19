@@ -24,7 +24,9 @@ public class Ingredient {
 	}
 	
 	/**
-	 * Returns the integer value of the quantity string.
+	 * Get the value of the quantity string<p>
+	 * Works by extracting any digit characters
+	 * from the quantity string.
 	 * @return int
 	 */
 	public int getQuantityValue() {
@@ -36,6 +38,12 @@ public class Ingredient {
 		}
 	}
 	
+	/**
+	 * Get the units from the quantity string<p>
+	 * Works by extracting any non-digit characters from the
+	 * quantity string.
+	 * @return String units
+	 */
 	public String getQuantityUnits() {
 		return quantity.replaceAll("\\d", "");
 	}
