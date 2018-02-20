@@ -2,4 +2,14 @@
     <string name="app_name">Hands Off</string>
     <string name="action_menu" />
     <string name="logo" />
+
+    <string-array name="fragments_array">
+        <item>Home</item>
+        <item>Favourites</item>
+        <item>Instruction Videos</item>
+        <item>Shopping List</item>
+        <item>My Recipes</item>
+        <item>History</item>
+        <item>Settings</item>
+    </string-array>
 </resources>
