@@ -1,5 +1,12 @@
-package com.group3.swengandroidapp;
+package com.group3.recipe;
 
+/**
+ * {@link Ingredient}<p>
+ * Class that contains name and quantity information about a single ingredient.<p>
+ * @see {@link #getQuantityUnits()}, {@link #getQuantityValue()}, {@link #getQuantity()}, {@link #getName()}
+ * @author Marco
+ *
+ */
 public class Ingredient {
 	private String name;
 	private String quantity;
@@ -9,11 +16,6 @@ public class Ingredient {
 		quantity = null;
 	}
 	
-	/**
-	 * 
-	 * @param name
-	 * @param quantity format: XY where X = value, Y = units
-	 */
 	public Ingredient(String name, String quantity) {
 		this.name = name;
 		this.quantity = quantity;
@@ -21,6 +23,16 @@ public class Ingredient {
 	
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * String getQuantity(void)<p>
+	 * Returns the full 'quantity' string<p>
+	 * e.g. "100g", "5 cups", "1 tbsp" etc
+	 * @return
+	 */
+	public String getQuantity() {
+		return quantity;
 	}
 	
 	/**
@@ -48,9 +60,7 @@ public class Ingredient {
 		return quantity.replaceAll("\\d", "");
 	}
 	
-	public String getQuantity() {
-		return quantity;
-	}
+
 	
 	public String toString() {
 		return new String(name + " " + quantity);
