@@ -27,4 +27,8 @@ public class Slide {
 	 * store it as an integer called 'x'.<p>
 	 */
 	public ArrayList<Object> items;
+	
+	public Slide() {
+		items = new ArrayList<Object>(0);
+	}
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * {@linkplain ArrayList}<{@linkplain Ingredient}> {@linkplain #ingredients} A list of all ingredients<p>
  * {@linkplain ArrayList}<{@linkplain Slide}> {@linkplain #slides} A list of all slides for the slideshow<p>
  * @see {@link Ingredient}, {@link Slide}
- * @author Marco
+ * @author mb1510 (Team Leader)
  *
  */
 public class Recipe extends Presentation{
@@ -19,6 +19,7 @@ public class Recipe extends Presentation{
 	private String title = "n/a";
 	private String author = "n/a";
 	private String description = "n/a";
+	private String id = "n/a";
 	
 	// The following are public to take advantage of built-in methods of ArrayList class
 	public ArrayList<Ingredient> ingredients;
@@ -31,7 +32,10 @@ public class Recipe extends Presentation{
 		slides = new ArrayList<Slide>(0);
 	}
 	
-	public Recipe(String title, String author, String description) {
+	public Recipe(String title, String author, String description, String id) {
+		
+		// Set meta data, checking to make sure that each has been given
+		// if not, leave at default of "n/a"
 		if(title != null) {
 			this.title = title;
 		}
@@ -42,10 +46,16 @@ public class Recipe extends Presentation{
 			this.description = description;
 		}
 		
+		if(id != null) {
+			this.id = id;
+		}
+		
 		// Both ArrayLists initialised to have 0 stored objects
 		// (Whenever you add to an array list, it extends the size by 1 (I think))
 		ingredients = new ArrayList<Ingredient>(0);
 		slides = new ArrayList<Slide>(0);
+		
+		
 	}
 	
 	public void setTitle(String title) {
@@ -54,6 +64,10 @@ public class Recipe extends Presentation{
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public void setID(String id) {
+		this.id = id;
 	}
 	
 	public String getTitle() {
@@ -66,5 +80,9 @@ public class Recipe extends Presentation{
 	
 	public String getDescription() {
 		return description;
+	}
+	
+	public String getId() {
+		return this.id;
 	}
 }

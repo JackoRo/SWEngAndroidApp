@@ -4,17 +4,12 @@ package com.group3.recipe;
  * {@link Ingredient}<p>
  * Class that contains name and quantity information about a single ingredient.<p>
  * @see {@link #getQuantityUnits()}, {@link #getQuantityValue()}, {@link #getQuantity()}, {@link #getName()}
- * @author Marco
+ * @author mb1510 (Team Leader)
  *
  */
 public class Ingredient {
 	private String name;
 	private String quantity;
-	
-	public Ingredient() {
-		name = null;
-		quantity = null;
-	}
 	
 	public Ingredient(String name, String quantity) {
 		this.name = name;
@@ -63,6 +58,6 @@ public class Ingredient {
 
 	
 	public String toString() {
-		return new String(name + " " + quantity);
+		return new String(name + ": " + quantity);
 	}
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Slides are contained within the attribute:<p>
  * {@linkplain ArrayList}<{@linkplain Slide}> {@linkplain #slides}<p>
  * Any further attributes can be optionally implemented within the object extending this class.
- * @author Marco
+ * @author mb1510 (Team Leader)
  *
  */
 public abstract class Presentation {
