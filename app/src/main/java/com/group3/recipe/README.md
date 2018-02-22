@@ -1,20 +1,20 @@
 # **Recipe library**
 
-This library contains all classes related to a recipe, including:
-* **[Presentation](Presentation.java)**
-* **[Recipe](Recipe.java)**
-* **[Slide](Slide.java)**
-* **[Ingredient](Ingredient.java)**
+####Contents:
+* [Presentation](#Presentation-class)
+* [Recipe](#Recipe-class)
+* [Slide](#Slide-class)
+* [Ingredient](#Ingredient-class)
 
-==============================================
-## [Presentation](presentation.java)
+
+## Presentation.class
 
 The presentation class is an abstract class that outlines the absolute minimum a [Recipe](Recipe.java) must have in order to comply with the PWS.
 
 ####Attributes:
 * ArrayList<Slide> slides
 
-## [Recipe](Recipe.java)
+## Recipe.class
 The  Recipe class contains all data relevant to the individual recipe. 
 #### Attributes:
 * String title
@@ -34,16 +34,18 @@ As an example, to get the first item contained in the first slide of a Recipe, y
 Object item = recipe.slides.get(0).items.get(0);
 '''
 
-## [Slide](Slide.java)
+## Slide.class
 
 Slides contain a single ArrayList that stores any object associated with it. This is to allow complete freedom when it comes to determining the contents of the slide.
 
 #### Attributes:
-* ArrayList<Object> items
+* ArrayList\<Object\> items
+
 
 *See [ArrayList](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)*
 
-## [Ingredient](Ingredient.java)
+
+## Ingredient.class
 
 Ingredients simply store information about a single ingredient of a recipe, and has the functionality to extract a variety of information from them.
 
