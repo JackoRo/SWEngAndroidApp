@@ -1,10 +1,10 @@
 # **Recipe library**
 
 #### Contents:
-* [Presentation](#Presentationclass)
-* [Recipe](#Recipeclass)
-* [Slide](#Slideclass)
-* [Ingredient](#Ingredientclass)
+* [Presentation](#presentationclass)
+* [Recipe](#recipeclass)
+* [Slide](#slideclass)
+* [Ingredient](#ingredientclass)
 
 
 ## Presentation.class
