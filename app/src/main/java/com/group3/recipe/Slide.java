@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Slides contain the following attributes:<p>
  * {@linkplain ArrayList}<{@linkplain Object}> {@link Slide#items}
  * @see Recipe
- * @author Marco
+ * @author mb1510 (Team Leader)
  *
  */
 public class Slide {
