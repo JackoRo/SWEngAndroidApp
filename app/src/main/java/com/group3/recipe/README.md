@@ -12,7 +12,7 @@
 The presentation class is an abstract class that outlines the absolute minimum a [Recipe](Recipe.java) must have in order to comply with the PWS.
 
 #### Attributes:
-* ArrayList\<Slide\> slides test
+* ArrayList\<Slide\> slides
 
 ## Recipe.class
 The  Recipe class contains all data relevant to the individual recipe. 
@@ -21,8 +21,8 @@ The  Recipe class contains all data relevant to the individual recipe.
 * String author
 * String description
 * String id
-* ArrayList<Slide> slides
-* ArrayList<Ingredient> ingredients
+* ArrayList\<Slide\> slides
+* ArrayList\<Ingredient\> ingredients
 
 All variables that aren't an ArrayList are private, and can only be edited via setters. However, "slides" and "ingredients" are left public to take full advantage of the built-in functionality of ArrayLists 
 
