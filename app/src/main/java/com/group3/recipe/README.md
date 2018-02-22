@@ -1,17 +1,17 @@
 # **Recipe library**
 
-####Contents:
-* [Presentation](#Presentation-class)
-* [Recipe](#Recipe-class)
-* [Slide](#Slide-class)
-* [Ingredient](#Ingredient-class)
+#### Contents:
+* [Presentation](#Presentationclass)
+* [Recipe](#Recipeclass)
+* [Slide](#Slideclass)
+* [Ingredient](#Ingredientclass)
 
 
 ## Presentation.class
 
 The presentation class is an abstract class that outlines the absolute minimum a [Recipe](Recipe.java) must have in order to comply with the PWS.
 
-####Attributes:
+#### Attributes:
 * ArrayList<Slide> slides
 
 ## Recipe.class
