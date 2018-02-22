@@ -12,7 +12,7 @@
 The presentation class is an abstract class that outlines the absolute minimum a [Recipe](Recipe.java) must have in order to comply with the PWS.
 
 #### Attributes:
-* ArrayList\<Slide\> slides
+* ArrayList\<Slide\> slides test
 
 ## Recipe.class
 The  Recipe class contains all data relevant to the individual recipe. 
