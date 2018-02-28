@@ -1,7 +1,11 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,6 +15,10 @@ import android.widget.TextView;
  */
 
 public class TextAndroid extends Text {
+
+    private StyleSpan boldSpan = new StyleSpan(Typeface.ITALIC);
+    private StyleSpan plainSpan = new StyleSpan(Typeface.NORMAL);
+    private UnderlineSpan underlineSpan = new UnderlineSpan();
 
     public TextAndroid(XmlElement parent) {
         super(parent);
@@ -31,17 +39,16 @@ public class TextAndroid extends Text {
 
         String str = builder.toString();
 
-
         //for (Map.Entry<String, String> e : properties.entrySet()) {
            // Log.d("TextAndroid", String.format("%s : %s", e.getKey(), e.getValue()));
         //}
+
 
         textView.setText(str);
 //
 //        SpannableStringBuilder ssb = new SpannableStringBuilder();
 //        ssb.append(getProperties());
-//        StyleSpan boldSpan = new StyleSpan(Typeface.ITALIC);
-//        StyleSpan plainSpan = new StyleSpan(Typeface.NORMAL);
+
 //        ssb.setSpan(plainSpan, 1, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 //        ssb.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 //
@@ -53,9 +60,22 @@ public class TextAndroid extends Text {
     @Override
     public void buildString(SpannableStringBuilder builder) {
         for (XmlElement e : children) {
+            if (getBold().equals("true")) {
+                    Log.d("TextAndroid: buildString: bold: ", getBold());
+                    builder.clear();
+                    builder.setSpan(boldSpan, 0, 0, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            if (getUnderline().equals("true")) {
+                    Log.d("TextAndroid: buildString: underline: ", getUnderline());
+                    builder.clear();
+                    builder.setSpan(underlineSpan,0 ,0, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+
             if (e instanceof RawText) {
-                RawText t = (RawText)e;
-                Log.d("TextAndroid",t.getText());
+                RawText t = (RawText) e;
+                Log.d("TextAndroid", t.getText());
+
                 builder.append(t.getText());
             } else if (e instanceof Format) {
                 ((Format)e).buildString(builder);
