@@ -12,19 +12,43 @@ public class Image extends XmlElement implements Drawable {
         super(parent);
     }
 
+    public String  getX(){
+        return getInheritableProperty("x");
+    }
+
+    public void setX(String x) {
+        setProperty("x", x);
+    }
+
+
+    public String  getY(){
+        return getInheritableProperty("y");
+    }
+
+    public void setY(String y) {
+        setProperty("y", y);
+    }
+
+    public String  getX2(){
+        return getInheritableProperty("x2");
+    }
+
+    public void setX2(String x2) {
+        setProperty("x2", x2);
+    }
+
+
+    public String  getY2(){
+        return getInheritableProperty("y2");
+    }
+
+    public void setY2(String y2) {
+        setProperty("y2", y2);
+    }
+
     @Override
     public void draw(Activity activity) {
-        // do some imagey things.
-        /* E.G.
-        // Some existing RelativeLayout from your layout xml
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.my_relative_layout);
 
-        ImageView iv = new ImageView(this);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(30, 40);
-        params.leftMargin = 50;
-        params.topMargin = 60;
-        rl.addView(iv, params);
-        */
     }
 }
