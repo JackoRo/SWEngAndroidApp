@@ -22,4 +22,32 @@
             android:id="@+id/toolbar_title" />
     </android.support.v7.widget.Toolbar>
 
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="405dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="125dp">
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ToggleButton"
+            android:textOff="Save To Favourites"
+            android:textOn="Added"
+            tools:layout_editor_absoluteX="96dp"
+            tools:layout_editor_absoluteY="213dp" />
+
+        <Button
+            android:id="@+id/view_favourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Favourites"
+            tools:layout_editor_absoluteX="96dp"
+            tools:layout_editor_absoluteY="280dp" />
+
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>
