@@ -9,5 +9,5 @@ import android.text.SpannableStringBuilder;
 
 public interface Drawable {
     public void draw(Activity activity);
-    public void buildString(SpannableStringBuilder stringBuilder);
+    public void buildString(SpannableStringBuilder stringBuilder, Activity activity);
 }

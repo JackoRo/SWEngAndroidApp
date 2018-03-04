@@ -1,5 +1,6 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import android.app.Activity;
 import android.text.SpannableStringBuilder;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public abstract class XmlElement implements Drawable {
     }
 
     @Override
-    public void buildString(SpannableStringBuilder stringBuilder) {
+    public void buildString(SpannableStringBuilder stringBuilder, Activity activity) {
 
     }
 }

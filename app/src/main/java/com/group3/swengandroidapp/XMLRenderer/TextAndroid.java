@@ -2,15 +2,19 @@ package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.support.v4.provider.FontRequest;
+import android.support.v4.provider.FontsContractCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 /**
  * Created by Jack on 23/02/2018.
@@ -18,31 +22,46 @@ import java.util.ArrayList;
 
 public class TextAndroid extends Text {
 
-    private StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
-    private StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
-    private StyleSpan plainSpan = new StyleSpan(Typeface.NORMAL);
-    private UnderlineSpan underlineSpan = new UnderlineSpan();
+    //BIU
+//    private StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+//    private StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
+//    private StyleSpan plainSpan = new StyleSpan(Typeface.NORMAL);
+//    private UnderlineSpan underlineSpan = new UnderlineSpan();
 
+    //Fonts
+    private Handler mHandler = null;
+    //private TypefaceSpan timeNewRoman = new TypefaceSpan("Times New Roman");
+
+
+
+    //Constuctor
     public TextAndroid(XmlElement parent) {
         super(parent);
 
     }
 
+    //BIU method spans
     private UnderlineSpan getUnderlineSpan() {
         return new UnderlineSpan();
     }
-
     private StyleSpan getBoldSpan() {
         return new StyleSpan(Typeface.BOLD);
     }
-
     private StyleSpan getItalicSpan() {
         return new StyleSpan(Typeface.ITALIC);
     }
-
     private StyleSpan getPlainSpan() {
         return new StyleSpan(Typeface.NORMAL);
     }
+
+    //Font method spans
+//    private Typeface getTimeNewRomanSpan(Activity activity) { return requestDownload("Times New Roman", activity);}
+    private TypefaceSpan getTimeNewRomanSpan() { return new TypefaceSpan("monospace");}
+
+
+
+    //Text size method spans
+    //private RelativeSizeSpan getTextSizeSpan() { return new RelativeSizeSpan(); }
 
     @Override
     public void draw(Activity activity) {
@@ -52,7 +71,7 @@ public class TextAndroid extends Text {
             TextView textView = new TextView(activity);
 
             SpannableStringBuilder builder = new SpannableStringBuilder();
-            buildString(builder);
+            buildString(builder, activity);
 
             textView.setText(builder);
 
@@ -62,7 +81,7 @@ public class TextAndroid extends Text {
     }
 
     @Override
-    public void buildString(SpannableStringBuilder builder) {
+    public void buildString(SpannableStringBuilder builder, Activity activity) {
 
         for (XmlElement e : children) {
 
@@ -79,18 +98,20 @@ public class TextAndroid extends Text {
 
                 builder.append(t.getText());
 
-                buildBUI(builder, start);
-                buildFont(builder);
+                builderBUI(builder, start);
+                builderFont(builder, start);
+                builderSize(builder, start);
+
 
             } else if (e instanceof Format) {
-                ((Format)e).buildString(builder);
+                ((Format)e).buildString(builder, activity);
             }
 
         }
     }
 
-    // sets the Bold, Underline, Italic settings
-    private void buildBUI (SpannableStringBuilder builder, int start) {
+    //Sets the Bold, Underline, Italic settings
+    private void builderBUI (SpannableStringBuilder builder, int start) {
 
         if (getBold().equals("true") && getItalic().equals("true") && getUnderline().equals("true")) {
             builder.setSpan(getBoldSpan(),start,builder.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -125,11 +146,67 @@ public class TextAndroid extends Text {
 
     }
 
-    //set Fonts
-    private void buildFont (SpannableStringBuilder builder) {
+    //Sets font
+    private void builderFont (SpannableStringBuilder builder, int start) {
+
+        if (getFont().equals("Times New Roman")) {
+            builder.setSpan(getTimeNewRomanSpan(),start,builder.length(), SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+    }
+
+    private void builderSize (SpannableStringBuilder builder, int start) {
+
+        builder.setSpan(new RelativeSizeSpan(Float.valueOf(getTextSize())/10),start,builder.length(), SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+    }
 
 
 
+    //Requests a download from Google Fonts
+    private Typeface requestDownload (String familyName, Activity activity) {
+        int certs = 0;
+
+        QueryBuilder queryBuilder = new QueryBuilder(familyName)
+                .withWidth(0)
+                .withWeight(0)
+                .withItalic(0)
+                .withBestEffort(false);
+        String query = queryBuilder.build();
+
+        Log.d("Requesting a font. Query: ", query);
+        FontRequest request = new FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                query,
+                certs);
+
+        FontsContractCompat.FontRequestCallback callback = new FontsContractCompat
+                .FontRequestCallback() {
+            @Override
+            public void onTypefaceRetrieved(Typeface typeface) {
+                //return typeface;
+            }
+
+            @Override
+            public void onTypefaceRequestFailed(int reason) {
+                Log.d("TextAndroid: requestDownload: onTypeFaceRequestFailed: ", String.valueOf(reason));
+            }
+        };
+        FontsContractCompat
+                .requestFont(activity, request, callback,
+                        getHandlerThreadHandler());
+
+        return null;
+    }
+
+    private Handler getHandlerThreadHandler() {
+        if (mHandler == null) {
+            HandlerThread handlerThread = new HandlerThread("fonts");
+            handlerThread.start();
+            mHandler = new Handler(handlerThread.getLooper());
+        }
+        return mHandler;
     }
 
 }
