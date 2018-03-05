@@ -3,6 +3,7 @@ package com.group3.recipe;
 import java.util.ArrayList;
 
 /**
+ * @deprecated
  * Presentation<p>
  * As defined in the PWS, presentations must contain a minimum of 1 {@linkplain Slide}. 
  * Any other metadata, or items contained within the slide is optional, and therefore

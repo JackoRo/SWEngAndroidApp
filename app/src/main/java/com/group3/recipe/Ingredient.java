@@ -1,13 +1,14 @@
 package com.group3.recipe;
 
 /**
+ * @deprecated
  * {@link Ingredient}<p>
  * Class that contains name and quantity information about a single ingredient.<p>
  * @see {@link #getQuantityUnits()}, {@link #getQuantityValue()}, {@link #getQuantity()}, {@link #getName()}
  * @author mb1510 (Team Leader)
  *
  */
-public class Ingredient {
+public abstract class Ingredient{
 	private String name;
 	private String quantity;
 	
@@ -60,4 +61,5 @@ public class Ingredient {
 	public String toString() {
 		return new String(name + ": " + quantity);
 	}
+
 }

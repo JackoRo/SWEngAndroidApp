@@ -1,9 +1,11 @@
 package com.group3.recipe;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * {@link Recipe}<p>
+ * A class describing a recipe to be used in the app<p>
  * This class contains the following attributes:<p>
  * {@linkplain String} {@linkplain #title} Name of the recipe<p>
  * {@linkplain String} {@linkplain #author} Author of the recipe<p>
@@ -20,14 +22,18 @@ public class Recipe extends Presentation{
 	private String author = "n/a";
 	private String description = "n/a";
 	private String id = "n/a";
+	private URL thumbnail;
+	//TODO: Filers!
 	
 	// The following are public to take advantage of built-in methods of ArrayList class
 	public ArrayList<Ingredient> ingredients;
 	public ArrayList<Slide> slides;
 	
+	
+	// CONSTRUCTORS
+	
 	public Recipe() {
-		// Both ArrayLists initialised to have 0 stored objects
-		// (Whenever you add to an array list, it extends the size by 1 (I think))
+		// Both ArrayLists initialised to have 0 initial capacity
 		ingredients = new ArrayList<Ingredient>(0);
 		slides = new ArrayList<Slide>(0);
 	}
@@ -45,7 +51,6 @@ public class Recipe extends Presentation{
 		if(description != null) {
 			this.description = description;
 		}
-		
 		if(id != null) {
 			this.id = id;
 		}
@@ -54,12 +59,26 @@ public class Recipe extends Presentation{
 		// (Whenever you add to an array list, it extends the size by 1 (I think))
 		ingredients = new ArrayList<Ingredient>(0);
 		slides = new ArrayList<Slide>(0);
-		
-		
 	}
+	
+	
+	// METHODS
+	
+	/**
+	 * Get the number of people who have this recipe favourited
+	 * @return
+	 */
+	//TODO: public int getNumFavourites();
+	
+	
+	// SETTERS
 	
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public void setAuthor(String id) {
+		this.id = id;
 	}
 	
 	public void setDescription(String description) {
@@ -69,6 +88,15 @@ public class Recipe extends Presentation{
 	public void setID(String id) {
 		this.id = id;
 	}
+	
+	public void setThumbnail(URL url) {
+		this.thumbnail = url;
+	}
+	
+	//TODO: public void setFilter(Filter);
+	
+	
+	// GETTERS
 	
 	public String getTitle() {
 		return title;
@@ -85,4 +113,10 @@ public class Recipe extends Presentation{
 	public String getId() {
 		return this.id;
 	}
+	
+	public URL getThumbnail() {
+		return this.thumbnail;
+	}
+	
+	//TODO: public Filter getFilter();
 }
