@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
@@ -88,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
             String xmlFile = PresentationManager.getInstance().getXML();
             Presentation presentation = PresentationManager.getInstance().getPresentation();
 
-            presentation.getSlide(0).draw(MainActivity.this);
+            presentation.draw(MainActivity.this);
+
 
             //TextView greetingContentText = (TextView) findViewById(R.id.content_value);
             //greetingContentText.setText(presentation.getMeta("author"));

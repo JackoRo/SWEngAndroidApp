@@ -68,7 +68,7 @@ public class XmlParser {
             case "slide":
                 return new Slide(parent);
             case "image":
-                return new Image(parent);
+                return new ImageAndroid(parent);
             case "text":
                 return new TextAndroid(parent);
             case "format":

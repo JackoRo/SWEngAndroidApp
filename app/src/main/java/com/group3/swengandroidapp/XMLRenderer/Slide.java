@@ -26,12 +26,16 @@ public class Slide extends XmlElement {
     public void draw(Activity activity) {
 
         // Set layout of the slide
-        linearLayout = new LinearLayout(activity);
-        activity.setContentView(linearLayout);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        if (parent instanceof Presentation) {
+            linearLayout = ((Presentation) parent).getLayout();
 
-        for (Drawable item : children) {
-            item.draw(activity);
+            activity.setContentView(linearLayout);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+            for (Drawable item : children) {
+                item.draw(activity);
+            }
         }
+
     }
 }

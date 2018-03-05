@@ -1,6 +1,7 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -8,6 +9,7 @@ import android.support.v4.provider.FontRequest;
 import android.support.v4.provider.FontsContractCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
@@ -101,6 +103,7 @@ public class TextAndroid extends Text {
                 builderBUI(builder, start);
                 builderFont(builder, start);
                 builderSize(builder, start);
+                builderColor(builder, start);
 
 
             } else if (e instanceof Format) {
@@ -155,10 +158,20 @@ public class TextAndroid extends Text {
 
     }
 
+    //Sets text size
     private void builderSize (SpannableStringBuilder builder, int start) {
 
+        Log.d("TextAndroid: builderSize", getTextSize());
         builder.setSpan(new RelativeSizeSpan(Float.valueOf(getTextSize())/10),start,builder.length(), SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+
+    }
+
+    //Sets text colour
+    private void builderColor (SpannableStringBuilder builder, int start) {
+
+        Log.d("TextAndroid: builderColor", getColor());
+        builder.setSpan(new ForegroundColorSpan(Color.parseColor(getColor())),start,builder.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
 

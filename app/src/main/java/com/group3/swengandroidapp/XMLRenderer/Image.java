@@ -6,7 +6,7 @@ import android.app.Activity;
  * Created by Jack on 22/02/2018.
  */
 
-public class Image extends XmlElement implements Drawable {
+public abstract class Image extends XmlElement implements Drawable {
 
     public Image(XmlElement parent) {
         super(parent);
@@ -46,9 +46,8 @@ public class Image extends XmlElement implements Drawable {
         setProperty("y2", y2);
     }
 
-    @Override
-    public void draw(Activity activity) {
+    public String getPath() { return getInheritableProperty("path"); }
 
+    public void setPath(String path) { setProperty("path", path); }
 
-    }
 }
