@@ -3,7 +3,7 @@
     <string name="action_menu" />
     <string name="logo" />
 
-    <string-array name="fragments_array">
+    <string-array name="screens_array">
         <item>Home</item>
         <item>Favourites</item>
         <item>Instruction Videos</item>
@@ -12,4 +12,6 @@
         <item>History</item>
         <item>Settings</item>
     </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
