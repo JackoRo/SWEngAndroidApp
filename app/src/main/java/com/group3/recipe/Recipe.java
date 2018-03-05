@@ -22,7 +22,7 @@ public class Recipe extends Presentation{
 	private String author = "n/a";
 	private String description = "n/a";
 	private String id = "n/a";
-	private URL thumbnail;
+	private URL thumbnail = null;
 	//TODO: Filers!
 	
 	// The following are public to take advantage of built-in methods of ArrayList class
