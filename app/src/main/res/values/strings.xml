@@ -8,4 +8,8 @@
     <string name = "ingredient_name2"> Red Pepper </string>
     <string name = "ingredient_name3"> Hand Picked, Home Grown Baking Potatoes perfect for the oven </string>
     <string name = "delete_button"> Clear All </string>
+
+    //Instructional Videos Page
+    <string name = "video1"> How to peel vegetables </string>
+    <string name = "video2"> How to use a Knife </string>
 </resources>
