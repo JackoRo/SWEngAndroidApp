@@ -6,4 +6,6 @@
     <string name = "shopping_list_name"> Shopping List </string>
     <string name = "ingredient_name1"> Carrot </string>
     <string name = "ingredient_name2"> Red Pepper </string>
+    <string name = "ingredient_name3"> Hand Picked, Home Grown Baking Potatoes perfect for the oven </string>
+    <string name = "delete_button"> Clear All </string>
 </resources>
