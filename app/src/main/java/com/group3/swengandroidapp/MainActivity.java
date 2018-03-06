@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         // update the main content by replacing fragments
         Fragment fragment = new ScreenFragment();
         Bundle args = new Bundle();
-        args.putInt(ScreenFragment.ARG_PLANET_NUMBER, position);
+        args.putInt(ScreenFragment.SCREEN_NUMBER, position);
         fragment.setArguments(args);
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
+        // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
@@ -156,17 +157,16 @@ public class MainActivity extends AppCompatActivity {
      * Fragment that appears in the "content_frame", shows a planet
      */
     public static class ScreenFragment extends Fragment {
-        public static final String ARG_PLANET_NUMBER = "planet_number";
+        public static final String SCREEN_NUMBER = "screen_number";
 
         public ScreenFragment() {
             // Empty constructor required for fragment subclasses
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
-            int i = getArguments().getInt(ARG_PLANET_NUMBER);
+            int i = getArguments().getInt(SCREEN_NUMBER);
             String planet = getResources().getStringArray(R.array.screens_array)[i];
 
             int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()), "drawable", getActivity().getPackageName());
