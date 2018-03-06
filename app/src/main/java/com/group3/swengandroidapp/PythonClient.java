@@ -37,18 +37,6 @@ public class PythonClient extends IntentService{
         super("PythonClientService");
     }
 
-//        try{
-//
-//            //dout = new DataOutputStream( socket.getOutputStream() );
-//
-//        }
-//
-//        catch(Exception e){
-//            e.printStackTrace() ;
-//            //System.out.print("Connection established");
-//        }
-
-
 
 
     private String readStream(InputStream is) throws IOException {
@@ -76,40 +64,6 @@ public class PythonClient extends IntentService{
         }
 
     }
-
-
-//    private List<Entry> readStream(InputStream is) throws IOException, XmlPullParserException {
-////        StringBuilder sb = new StringBuilder();
-////        BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
-//          List<Entry> XMLentries = null;
-////
-////        for (String line = r.readLine(); line != null; line =r.readLine()){
-////            sb.append(line);
-////        }
-////
-////        String xml = sb.toString();
-//
-//        XMLentries = stackOverflowXmlParser.parse(is);
-//
-//        is.close();
-//        return XMLentries;
-//    }
-//
-//
-//    public List<Entry> connectToHttpServer(String id) throws IOException, XmlPullParserException{
-//
-//        url = new URL ("http://10.0.2.2:5000/download/" + id);
-//        urlConnection = (HttpURLConnection) url.openConnection();
-//
-//        try {
-//            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//            return readStream(in);
-//
-//        } finally {
-//            urlConnection.disconnect();
-//        }
-//
-//    }
 
     public void pingServer() throws IOException{
 
@@ -165,6 +119,51 @@ public class PythonClient extends IntentService{
 
 
 
+
+//        try{
+//
+//            //dout = new DataOutputStream( socket.getOutputStream() );
+//
+//        }
+//
+//        catch(Exception e){
+//            e.printStackTrace() ;
+//            //System.out.print("Connection established");
+//        }
+
+
+//    private List<Entry> readStream(InputStream is) throws IOException, XmlPullParserException {
+////        StringBuilder sb = new StringBuilder();
+////        BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
+//          List<Entry> XMLentries = null;
+////
+////        for (String line = r.readLine(); line != null; line =r.readLine()){
+////            sb.append(line);
+////        }
+////
+////        String xml = sb.toString();
+//
+//        XMLentries = stackOverflowXmlParser.parse(is);
+//
+//        is.close();
+//        return XMLentries;
+//    }
+//
+//
+//    public List<Entry> connectToHttpServer(String id) throws IOException, XmlPullParserException{
+//
+//        url = new URL ("http://10.0.2.2:5000/download/" + id);
+//        urlConnection = (HttpURLConnection) url.openConnection();
+//
+//        try {
+//            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+//            return readStream(in);
+//
+//        } finally {
+//            urlConnection.disconnect();
+//        }
+//
+//    }
 
 //    public class PythonClientResultReceiver<T> extends ResultReceiver {
 //
