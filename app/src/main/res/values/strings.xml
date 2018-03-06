@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Bowls Deep</string>
+    <string name = "iv_name"> Instructional Videos </string>
+
+    //Shopping List Page
+    <string name = "shopping_list_name"> Shopping List </string>
+    <string name = "ingredient_name1"> Carrot </string>
+    <string name = "ingredient_name2"> Red Pepper </string>
 </resources>
