@@ -2,7 +2,10 @@ from flask import Flask, send_from_directory, request, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 
-UPLOAD_FOLDER = '/Users/Jack/AndroidStudioProjects/SWEngAndroidApp/app/src/main/python/upload'
+cwd = os.getcwd()
+upload = 'upload'
+UPLOAD_FOLDER = os.path.join(cwd, upload)
+
 ALLOWED_EXTENSIONS = set(['xml', 'pws'])
 
 app = Flask(__name__)
