@@ -6,40 +6,46 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.res.Configuration;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 
+import java.util.Locale;
 
 import com.group3.swengandroidapp.XMLRenderer.Presentation;
 import com.group3.swengandroidapp.XMLRenderer.PresentationManager;
 
 
-//import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-//import org.springframework.web.client.RestTemplate;
-
 public class MainActivity extends AppCompatActivity {
 
-    private String xmlFile;
-    //private XmlParser xmlParser;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
 
-    /*
-    private CustomerService customerServiceTest;
-    private Customer customerTest = new Customer();
-    */
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private String[] mFragmentTitles;
+
+    private String xmlFile;
 
     @Override
     protected void onStart() {
         super.onStart();
-        //createServerExample();
-//        new HttpRequestTask().execute();
 
         try {
 
@@ -55,28 +61,50 @@ public class MainActivity extends AppCompatActivity {
         final Context thisContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("XML-event-name"));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        
+        //Intent intent = new Intent(thisContext, PythonClient.class);
+        //startService(intent);
 
-                TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-                greetingContentText.setText("BEFORE");
+        mTitle = mDrawerTitle = getTitle();
+        mFragmentTitles = getResources().getStringArray(R.array.screens_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        // set up the drawer's list view with items and click listener
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mFragmentTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-                Intent intent = new Intent(thisContext, PythonClient.class);
-                startService(intent);
+        mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-        });
+
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -91,11 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
             presentation.draw(MainActivity.this);
 
-
-            //TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            //greetingContentText.setText(presentation.getMeta("author"));
-            //greetingContentText.setText("After");
-
         }
     };
 
@@ -106,63 +129,107 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_resource, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            //new HttpRequestTask().execute();
-
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-
-
-
-        return super.onOptionsItemSelected(item);
+        // Handle action buttons
+        switch(item.getItemId()) {
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-    /*
-    private void createServerExample(){
-
-        new serverGrizzly();
-        customerServiceTest = new CustomerService();
-
-    }*/
-
-    /*private class HttpRequestTask extends AsyncTask<Void, Void, Greeting> {
+    /* The click listner for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        protected Greeting doInBackground(Void... params) {
-            try {
-                final String url = "http://rest-service.guides.spring.io/greeting";
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                Greeting greeting = restTemplate.getForObject(url, Greeting.class);
-                return greeting;
-            } catch (Exception e) {
-                Log.e("MainActivity", e.getMessage(), e);
-            }
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
 
-            return null;
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = new ScreenFragment();
+        Bundle args = new Bundle();
+        args.putInt(ScreenFragment.SCREEN_NUMBER, position);
+        fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mFragmentTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
+    }
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    /**
+     * Fragment that appears in the "content_frame", shows a planet
+     */
+    public static class ScreenFragment extends Fragment {
+        public static final String SCREEN_NUMBER = "screen_number";
+
+        public ScreenFragment() {
+            // Empty constructor required for fragment subclasses
         }
 
         @Override
-        protected void onPostExecute(Greeting greeting) {
-            TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            greetingContentText.setText(greeting.getContent());
-        }
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
+            int i = getArguments().getInt(SCREEN_NUMBER);
+            String planet = getResources().getStringArray(R.array.screens_array)[i];
 
-    }*/
+            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()), "drawable", getActivity().getPackageName());
+            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+            getActivity().setTitle(planet);
+            return rootView;
+        }
+    }
 }
 
