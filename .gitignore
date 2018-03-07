@@ -66,4 +66,4 @@ fastlane/readme.md
 .DS_Store
 
 # Python class
-.pyc
+*.pyc
