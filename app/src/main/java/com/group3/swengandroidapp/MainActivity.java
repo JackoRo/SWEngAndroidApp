@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mFragmentTitles;
+    private FragmentManager fragmentManager;
+    private Fragment fragment;
 
     private String xmlFile;
 
@@ -115,10 +117,12 @@ public class MainActivity extends AppCompatActivity {
             String message = intent.getStringExtra("message");
             Log.d("receiver", "Got message: " + message);
 
-            String xmlFile = PresentationManager.getInstance().getXML();
-            Presentation presentation = PresentationManager.getInstance().getPresentation();
 
-            presentation.draw(MainActivity.this);
+            Intent newIntent = new Intent(context, PresentationActivity.class);
+            startActivity(newIntent);
+
+
+            //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
 
         }
     };
@@ -171,18 +175,24 @@ public class MainActivity extends AppCompatActivity {
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = new ScreenFragment();
+        fragment = new ScreenFragment();
         Bundle args = new Bundle();
         args.putInt(ScreenFragment.SCREEN_NUMBER, position);
         fragment.setArguments(args);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mFragmentTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+
+        if (position == 1){
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            startService(intent);
+        }
+
     }
 
     @Override

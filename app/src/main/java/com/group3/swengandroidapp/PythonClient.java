@@ -52,7 +52,7 @@ public class PythonClient extends IntentService{
 
     public String connectToHttpServer(String id) throws IOException{
 
-        url = new URL ("http://10.0.2.2:5000/download/" + id);
+        url = new URL ("http://192.168.0.20:5000/download/" + id);
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
