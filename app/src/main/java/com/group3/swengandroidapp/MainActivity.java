@@ -77,6 +77,87 @@ public class MainActivity extends AppCompatActivity {
                 startService(intent);
             }
         });
+
+        //listenButtons();
+        /*add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((ToggleButton) view).isChecked()) {
+                    DisplayToast("Toggle button is On");
+                }
+                else{
+                    DisplayToast("Toggle button is Off");
+                }
+            }
+        });*/
+
+        /*view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayToast("You have clicked the Save button");
+                //viewFavourites();
+            }
+        });*/
+
+
+
+    //}
+
+    /*public void listenButtons(){
+        add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((ToggleButton) view).isChecked()) {
+                    DisplayToast("Toggle button is On");
+                }
+                else{
+                    DisplayToast("Toggle button is Off");
+                }
+            }
+        });
+
+        view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //DisplayToast("You have clicked the Save button");
+                viewFavourites();
+            }
+        });
+    }*/
+
+
+    /*
+    public void addFavourite() {
+       Recipe recipe1 = new Recipe("Crisps", "user1", "This is a recipe for crisps.", 1);
+       addToFavourites(recipe1);
+
+    }
+
+    protected void addToFavourites(Recipe recipe){
+
+        ArrayList<Recipe> arrayRecipe = new ArrayList<Recipe>();
+
+        arrayRecipe.add(recipe);
+
+    }*/
+
+
+
+/*
+    public void viewFavourites() {
+        //Call command to pass arraylist through to other activity.
+
+
+        //Creates an instance of the Intent class-the way android switches between activities.
+        //Tells you to watch the class FavouriteList.
+        Intent view_f = new Intent(this, FavouriteList.class);
+        //Next, the code that launches an activity.
+        startActivity(view_f);
+    }
+
+    private void DisplayToast(String msg) {
+        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
+    }*/
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
