@@ -55,28 +55,6 @@ public class MainActivity extends AppCompatActivity {
         final Context thisContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("XML-event-name"));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-                greetingContentText.setText("BEFORE");
-
-
-
-                Intent intent = new Intent(thisContext, PythonClient.class);
-                startService(intent);
-            }
-        });
 
         //listenButtons();
         /*add_button.setOnClickListener(new View.OnClickListener() {
