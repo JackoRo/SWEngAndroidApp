@@ -14,4 +14,9 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    
+    <string name="title_activity_favourite_list">FavouriteList</string>
+    <string name="add_fave">Add To Favourites</string>
+    <string name="added_fave">Added</string>
+    <string name="view_fave">View Favourites</string>
 </resources>
