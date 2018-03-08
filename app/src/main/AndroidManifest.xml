@@ -12,9 +12,14 @@
     <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17" />
 
     <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:icon="@drawable/hands_off_logo"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/Theme.AppCompat.Light"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -36,6 +41,8 @@
             android:parentActivityName=".MainActivity">
 
         </activity>
+        <activity android:name=".EditFieldClass" />
+        <activity android:name=".EditMessageClass"></activity>
     </application>
 
 </manifest>
