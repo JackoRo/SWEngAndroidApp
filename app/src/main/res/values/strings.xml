@@ -1,8 +1,8 @@
 <resources>
+    <!-- This contains a list of strings to be used in the menu bar GUI. -->
     <string name="app_name">Hands Off</string>
-    <string name="iv_name"> Instructional Videos </string>
 
-    //Shopping List Page
+    <!-- This contains a list of strings to be used in the shopping list GUI. -->
     <string name="shopping_list_name"> Shopping List </string>
     <string name="ingredient_name1"> Carrot </string>
     <string name="ingredient_name2"> Red Pepper </string>
@@ -11,9 +11,8 @@
     <string name="add_your_message">Add Your Message</string>
     <string name="save">Save</string>
 
-    //Instructional Videos Page
+    <!-- This contains a list of strings to be used in the Instructional Videos GUI. -->
     <string name="video1"> How to peel vegetables </string>
     <string name="video2"> How to use a Knife </string>
-
 
 </resources>

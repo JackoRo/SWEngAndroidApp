@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <!-- This creates the list that will be used to store all of the shopping list items. -->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </ListView>
 
+    <!-- This creates button that will be used to add items to the list. -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="addItem"
+        android:onClick="onClick"
         android:src="@drawable/plus_sign">
     </android.support.design.widget.FloatingActionButton>
 

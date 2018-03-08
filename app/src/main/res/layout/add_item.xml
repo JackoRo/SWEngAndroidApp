@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- This shows the text 'Add your message' so that users know where to click. -->
     <EditText
         android:id="@+id/addMessage"
         android:layout_width="match_parent"
@@ -18,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- This is the save button that will save whatever message the user types. -->
     <Button
         android:layout_width="384dp"
         android:layout_height="64dp"

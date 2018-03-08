@@ -14,6 +14,7 @@ public class EditFieldClass extends AppCompatActivity {
         setContentView(R.layout.add_item);
     }
 
+    //Makes sure that when the save button is clicked, the message is saved as long as the string is not empty.
     public void saveButtonClicked(View v){
         String messageText = ((EditText)findViewById(R.id.addMessage)).getText().toString();
         //noinspection StatementWithEmptyBody
