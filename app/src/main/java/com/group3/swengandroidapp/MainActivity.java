@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         arrayList = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
-        registerForContextMenu(listView);
 
         //When something is clicked on in the list, the EditMessage method is called so that the message can be edited.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this,EditMessageClass.class);
-                intent.putExtra(Intent_Constants.INTENT_MESSAGE_DATA,arrayList.get(position).toString());
+                intent.putExtra(Intent_Constants.INTENT_MESSAGE_DATA, arrayList.get(position));
                 intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
                 startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE_TWO);
             }
@@ -62,19 +61,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-        menu.setHeaderTitle("What would you like to do?");
-        String options[]={"Delete","Cancel"};
-        for(String option : options){
-            menu.add(option);
-        }
-    }
-
     //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
     @Override
     public void onBackPressed(){
         try{
+            deleteFile("ShoppingList.txt");
             PrintWriter pw = new PrintWriter(openFileOutput("ShoppingList.txt", Context.MODE_PRIVATE));
             for(String data : arrayList){
                 pw.println(data);
@@ -86,12 +77,21 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    //When clicked, the button will start the process of finding which activity has been clicked on and will generate the appropriate
-    //request code.
+    //When the 'add' button is clicked from the shopping list gui, this code will run and send an intent request to the EditField Class.
     public void onClick(View v){
         Intent intent = new Intent();
         intent.setClass(MainActivity.this,EditFieldClass.class);
         startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE);
+    }
+
+    //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
+    public void clearAllButtonClicked(View v){
+        int i=arrayList.size();
+        while(i!=0){
+            arrayList.remove(i-1);
+            i--;
+            arrayAdapter.notifyDataSetChanged();
+        }
     }
 
     //After the button has been clicked, the activity is established via request/result code and the appropriate method run.
@@ -111,6 +111,24 @@ public class MainActivity extends AppCompatActivity {
             arrayList.add(position,messageText);
             arrayAdapter.notifyDataSetChanged();
         }
-    }
 
+        //If it is result code 3, then the user is trying to delete their text, so this code should run.
+        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE){
+            //noinspection StatementWithEmptyBody
+            if(arrayList.size()==0){
+                //Do Nothing
+            }
+            else{
+                position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
+                arrayList.remove(position);
+                arrayAdapter.notifyDataSetChanged();
+            }
+        }
+
+        //If it is result code 3, then the user is trying to delete their text, so this code should run.
+        else //noinspection StatementWithEmptyBody
+            if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_FOUR) {
+            //Do Nothing
+        }
+    }
 }

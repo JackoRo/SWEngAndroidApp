@@ -7,9 +7,10 @@
     <string name="ingredient_name1"> Carrot </string>
     <string name="ingredient_name2"> Red Pepper </string>
     <string name="ingredient_name3"> Hand Picked, Home Grown Baking Potatoes perfect for the oven </string>
-    <string name="delete_button"> Clear All </string>
+    <string name="delete"> Delete </string>
     <string name="add_your_message">Add Your Message</string>
-    <string name="save">Save</string>
+    <string name="save"> Save</string>
+    <string name="clearAll"> Clear All</string>
 
     <!-- This contains a list of strings to be used in the Instructional Videos GUI. -->
     <string name="video1"> How to peel vegetables </string>

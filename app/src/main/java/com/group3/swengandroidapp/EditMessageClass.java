@@ -19,7 +19,7 @@ public class EditMessageClass extends AppCompatActivity {
         Intent intent = getIntent();
         messageText = intent.getStringExtra(Intent_Constants.INTENT_MESSAGE_DATA);
         position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
-        EditText messageData = (EditText) findViewById(R.id.addMessage);
+        EditText messageData = findViewById(R.id.addMessage);
         messageData.setText(messageText);
     }
 
@@ -29,6 +29,13 @@ public class EditMessageClass extends AppCompatActivity {
         intent.putExtra(Intent_Constants.INTENT_CHANGED_MESSAGE,changedMessageText);
         intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
         setResult(Intent_Constants.INTENT_RESULT_CODE_TWO,intent);
+        finish();
+    }
+
+    public void deleteButtonClicked(View v){
+        Intent intent = new Intent();
+        intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
+        setResult(Intent_Constants.INTENT_RESULT_CODE_THREE,intent);
         finish();
     }
 }

@@ -28,4 +28,11 @@ public class EditFieldClass extends AppCompatActivity {
             finish();
         }
     }
+
+    //Makes sure that when the delete button is clicked, the message is deleted.
+    public void deleteButtonClicked(View v){
+            Intent intent = new Intent();
+            setResult(Intent_Constants.INTENT_RESULT_CODE_FOUR,intent);
+            finish();
+    }
 }
