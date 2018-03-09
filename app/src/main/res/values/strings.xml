@@ -34,4 +34,8 @@
     <string name="video1"> How to peel vegetables </string>
     <string name="video2"> How to use a Knife </string>
 
+    <!-- This contains a list of strings to be used in the search page. -->
+    <string name="hint">Keywords, Authors, &#8230;</string>
+    <string name="searchButton">search button</string>
+    <string name="backButton">back button</string>
 </resources>
