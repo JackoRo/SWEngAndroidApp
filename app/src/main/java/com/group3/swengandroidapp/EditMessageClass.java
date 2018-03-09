@@ -17,8 +17,8 @@ public class EditMessageClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item);
         Intent intent = getIntent();
-        messageText = intent.getStringExtra(Intent_Constants.INTENT_MESSAGE_DATA);
-        position = intent.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
+        messageText = intent.getStringExtra(IntentConstants.INTENT_MESSAGE_DATA);
+        position = intent.getIntExtra(IntentConstants.INTENT_ITEM_POSITION,-1);
         EditText messageData = findViewById(R.id.addMessage);
         messageData.setText(messageText);
     }
@@ -26,16 +26,16 @@ public class EditMessageClass extends AppCompatActivity {
     public void saveButtonClicked(View v){
         String changedMessageText = ((EditText) findViewById(R.id.addMessage)).getText().toString();
         Intent intent = new Intent();
-        intent.putExtra(Intent_Constants.INTENT_CHANGED_MESSAGE,changedMessageText);
-        intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
-        setResult(Intent_Constants.INTENT_RESULT_CODE_TWO,intent);
+        intent.putExtra(IntentConstants.INTENT_CHANGED_MESSAGE,changedMessageText);
+        intent.putExtra(IntentConstants.INTENT_ITEM_POSITION,position);
+        setResult(IntentConstants.INTENT_RESULT_CODE_TWO,intent);
         finish();
     }
 
     public void deleteButtonClicked(View v){
         Intent intent = new Intent();
-        intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
-        setResult(Intent_Constants.INTENT_RESULT_CODE_THREE,intent);
+        intent.putExtra(IntentConstants.INTENT_ITEM_POSITION,position);
+        setResult(IntentConstants.INTENT_RESULT_CODE_THREE,intent);
         finish();
     }
 }

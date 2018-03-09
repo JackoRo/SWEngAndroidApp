@@ -37,9 +37,9 @@ public class ShoppinglistActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent();
                 intent.setClass(ShoppinglistActivity.this,EditMessageClass.class);
-                intent.putExtra(Intent_Constants.INTENT_MESSAGE_DATA, arrayList.get(position));
-                intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
-                startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE_TWO);
+                intent.putExtra(IntentConstants.INTENT_MESSAGE_DATA, arrayList.get(position));
+                intent.putExtra(IntentConstants.INTENT_ITEM_POSITION,position);
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE_TWO);
             }
         });
 
@@ -80,7 +80,7 @@ public class ShoppinglistActivity extends AppCompatActivity {
     public void onClick(View v){
         Intent intent = new Intent();
         intent.setClass(ShoppinglistActivity.this,EditFieldClass.class);
-        startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE);
+        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);
     }
 
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
@@ -97,28 +97,28 @@ public class ShoppinglistActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //If it is result code 1, then the user is trying to add some text to the list, so this code should run.
-        if(resultCode==Intent_Constants.INTENT_REQUEST_CODE){
-            messageText=data.getStringExtra(Intent_Constants.INTENT_MESSAGE_FIELD);
+        if(resultCode== IntentConstants.INTENT_REQUEST_CODE){
+            messageText=data.getStringExtra(IntentConstants.INTENT_MESSAGE_FIELD);
             arrayList.add(messageText);
             arrayAdapter.notifyDataSetChanged();
         }
         //If it is result code 2, then the user is trying to modify their text, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_TWO){
-            messageText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_MESSAGE);
-            position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
+        else if(resultCode== IntentConstants.INTENT_REQUEST_CODE_TWO){
+            messageText = data.getStringExtra(IntentConstants.INTENT_CHANGED_MESSAGE);
+            position = data.getIntExtra(IntentConstants.INTENT_ITEM_POSITION,-1);
             arrayList.remove(position);
             arrayList.add(position,messageText);
             arrayAdapter.notifyDataSetChanged();
         }
 
         //If it is result code 3, then the user is trying to delete their text, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE){
+        else if(resultCode== IntentConstants.INTENT_REQUEST_CODE_THREE){
             //noinspection StatementWithEmptyBody
             if(arrayList.size()==0){
                 //Do Nothing
             }
             else{
-                position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
+                position = data.getIntExtra(IntentConstants.INTENT_ITEM_POSITION,-1);
                 arrayList.remove(position);
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -126,7 +126,7 @@ public class ShoppinglistActivity extends AppCompatActivity {
 
         //If it is result code 3, then the user is trying to delete their text, so this code should run.
         else //noinspection StatementWithEmptyBody
-            if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_FOUR) {
+            if(resultCode== IntentConstants.INTENT_REQUEST_CODE_FOUR) {
             //Do Nothing
         }
     }

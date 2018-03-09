@@ -23,8 +23,8 @@ public class EditFieldClass extends AppCompatActivity {
         }
         else{
             Intent intent = new Intent();
-            intent.putExtra(Intent_Constants.INTENT_MESSAGE_FIELD,messageText);
-            setResult(Intent_Constants.INTENT_RESULT_CODE,intent);
+            intent.putExtra(IntentConstants.INTENT_MESSAGE_FIELD,messageText);
+            setResult(IntentConstants.INTENT_RESULT_CODE,intent);
             finish();
         }
     }
@@ -32,7 +32,7 @@ public class EditFieldClass extends AppCompatActivity {
     //Makes sure that when the delete button is clicked, the message is deleted.
     public void deleteButtonClicked(View v){
             Intent intent = new Intent();
-            setResult(Intent_Constants.INTENT_RESULT_CODE_FOUR,intent);
+            setResult(IntentConstants.INTENT_RESULT_CODE_FOUR,intent);
             finish();
     }
 }

@@ -1,7 +1,7 @@
 package com.group3.swengandroidapp;
 
 //This contains all of the INTENTS that are cast when buttons are clicked etc
-class Intent_Constants {
+class IntentConstants {
     final static int INTENT_REQUEST_CODE=1;
     final static int INTENT_RESULT_CODE=1;
     final static int INTENT_REQUEST_CODE_TWO=2;
