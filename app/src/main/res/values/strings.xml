@@ -11,15 +11,17 @@
         <item>My Recipes</item>
         <item>History</item>
         <item>Settings</item>
+        <!-- TEST RECIPE SELECTION. PLEASE REMOVE AFTER TESTING -->
+        <item>TEST RECIPE</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    
+
     <string name="title_activity_favourite_list">FavouriteList</string>
     <string name="add_fave">Add To Favourites</string>
     <string name="added_fave">Added</string>
     <string name="view_fave">View Favourites</string>
-    
+
     <!-- This contains a list of strings to be used in the shopping list GUI. -->
     <string name="shopping_list_name"> Shopping List </string>
     <string name="ingredient_name1"> Carrot </string>

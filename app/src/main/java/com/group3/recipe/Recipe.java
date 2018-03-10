@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
+ * @deprecated
  * {@link Recipe}<p>
  * A class describing a recipe to be used in the app<p>
  * This class contains the following attributes:<p>
