@@ -32,6 +32,9 @@ public class PythonClient extends IntentService{
     public static final String FETCH_RECIPE = "com.group3.swengandroidapp.FETCH_RECIPE";
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
 
+    //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
+    public static final String IP_ADDR = "192.168.0.20";
+
 
 
     private DataOutputStream dout;
@@ -61,7 +64,7 @@ public class PythonClient extends IntentService{
 
     public String fetchRecipeFromHttpServer(String id) throws IOException{
 
-        url = new URL ("http://192.168.0.20:5000/download/recipe/" + id);
+        url = new URL (String.format("http://%s:5000/download/recipe/%s", IP_ADDR, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -76,7 +79,7 @@ public class PythonClient extends IntentService{
 
     public String fetchPresentationFromHttpServer(String id) throws IOException{
 
-        url = new URL ("http://192.168.0.20:5000/download/presentation/" + id);
+        url = new URL (String.format("http://%s:5000/download/presentation/%s", IP_ADDR, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -91,7 +94,7 @@ public class PythonClient extends IntentService{
 
     public String[] fetchRecipeListFromHttpServer() throws IOException{
 
-        url = new URL ("http://192.168.0.20:5000/recipelist");
+        url = new URL (String.format("http://%s:5000/recipelist", IP_ADDR));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
