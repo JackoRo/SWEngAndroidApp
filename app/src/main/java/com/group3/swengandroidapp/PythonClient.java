@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.group3.swengandroidapp.XMLRenderer.PresentationManager;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 import com.group3.swengandroidapp.XMLRenderer.XmlParser;
+import com.group3.swengandroidapp.XMLRenderer.XmlRecipe;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -17,7 +18,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
-import java.util.List;
 
 /**
  * Created by Jack on 08/02/2018.
@@ -25,11 +25,20 @@ import java.util.List;
 
 public class PythonClient extends IntentService{
 
+    public static final String ACTION = "com.group3.swengandroidapp.ACTION";
+    public static final String ID = "com.group3.swengandroidapp.ID";
+
+    public static final String LOAD_ALL = "com.group3.swengandroidapp.LOAD_ALL";
+    public static final String FETCH_RECIPE = "com.group3.swengandroidapp.FETCH_RECIPE";
+    public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
+
+
+
     private DataOutputStream dout;
     private Socket socket;
     private URL url;
     private HttpURLConnection urlConnection;
-    private PresentationManager manager = PresentationManager.getInstance();
+    private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
 
 
     public PythonClient() throws IOException {
@@ -50,9 +59,9 @@ public class PythonClient extends IntentService{
     }
 
 
-    public String connectToHttpServer(String id) throws IOException{
+    public String fetchRecipeFromHttpServer(String id) throws IOException{
 
-        url = new URL ("http://192.168.0.20:5000/download/" + id);
+        url = new URL ("http://192.168.0.20:5000/download/recipe/" + id);
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -65,30 +74,32 @@ public class PythonClient extends IntentService{
 
     }
 
-    public void pingServer() throws IOException{
+    public String fetchPresentationFromHttpServer(String id) throws IOException{
 
-        try{
-            socket = new Socket("10.0.2.2", 2400);
-            dout = new DataOutputStream( socket.getOutputStream() );
-            dout.writeChars("Hello World");
-            dout.flush();
-        }
+        url = new URL ("http://192.168.0.20:5000/download/presentation/" + id);
+        urlConnection = (HttpURLConnection) url.openConnection();
 
-        catch(Exception e){
-            e.printStackTrace() ;
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in);
+
+        } finally {
+            urlConnection.disconnect();
         }
 
     }
 
-    public void closeConnection() throws IOException{
+    public String[] fetchRecipeListFromHttpServer() throws IOException{
+
+        url = new URL ("http://192.168.0.20:5000/recipelist");
+        urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
-            dout.close();
-            socket.close();
-        }
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in).split("\n");
 
-        catch(Exception e){
-            e.printStackTrace() ;
+        } finally {
+            urlConnection.disconnect();
         }
 
     }
@@ -96,12 +107,35 @@ public class PythonClient extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            Log.d("sender", "A");
-            manager.setXML(connectToHttpServer("example.pws"));
-            manager.setPresentation(new XmlParser(manager.getXML()).parse());
+//            Log.d("sender", "A");
+//            remoteFileManager.setRecipe(new XmlParser());
+//            remoteFileManager.setPresentation(new XmlParser(remoteFileManager.getXML()).parse());
+            String id;
+
+            switch (intent.getStringExtra(ACTION)) {
+                case LOAD_ALL:
+                    String[] ids = fetchRecipeListFromHttpServer();
+                    for (String rid : ids) {
+                        remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
+                    }
+                    sendMessage(LOAD_ALL, "");
+                    break;
+                case FETCH_RECIPE:
+                    id = intent.getStringExtra(ID);
+                    remoteFileManager.setRecipe(id, new XmlRecipe(fetchRecipeFromHttpServer(id)));
+                    sendMessage(FETCH_RECIPE, id);
+                    break;
+                case FETCH_PRESENTATION:
+                    id = intent.getStringExtra(ID);
+
+                    if (remoteFileManager.getPresentation(id) == null){
+                        remoteFileManager.setPresentation(id, new XmlParser(fetchPresentationFromHttpServer(id)).parse());
+                    }
+                    sendMessage(FETCH_PRESENTATION, id);
+                    break;
+            }
+
             Log.d("sender", "B");
-            sendMessage();
-            Log.d("sender", "C");
         } catch (Exception e) {
             // Restore interrupt status.
             Log.d("sender", "Error");
@@ -109,11 +143,13 @@ public class PythonClient extends IntentService{
         }
     }
 
-    private void sendMessage() {
+    private void sendMessage(String action, String id) {
         Log.d("sender", "Broadcasting message");
         Intent intent = new Intent("XML-event-name");
         // You can also include some extra data.
-        intent.putExtra("message", "XML received!");
+        intent.putExtra("message", "whatever message");
+        intent.putExtra(ACTION,action);
+        intent.putExtra(ID, id);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

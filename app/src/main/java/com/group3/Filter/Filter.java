@@ -2,6 +2,7 @@ package com.group3.Filter;
 //import javafx.scene.control.ListView;
 
 /**
+   * @deprecated
  * Created by St. John on 06/03/2018.
  */
 

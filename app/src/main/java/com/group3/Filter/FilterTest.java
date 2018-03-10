@@ -1,6 +1,7 @@
 package com.group3.Filter;
 
 /**
+ * @deprecated
  * Created by St. John on 06/03/2018.
  */
 

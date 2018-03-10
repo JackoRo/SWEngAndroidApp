@@ -187,11 +187,13 @@ public class MainActivity extends AppCompatActivity {
             String message = intent.getStringExtra("message");
             Log.d("receiver", "Got message: " + message);
 
-
-            Intent newIntent = new Intent(context, PresentationActivity.class);
-            startActivity(newIntent);
-
-
+            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.FETCH_RECIPE) {
+                Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
+                startActivity(newIntent);
+            }
+            else {
+                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
+            }
             //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
 
         }
@@ -258,8 +260,10 @@ public class MainActivity extends AppCompatActivity {
         setTitle(mFragmentTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
 
-        if (position == 1){
+        if (position == 7){
             Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
+            intent.putExtra(PythonClient.ID,"exampleRecipe");
             startService(intent);
         }
 
