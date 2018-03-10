@@ -5,6 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.group3.swengandroidapp.XMLRenderer.*;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
 
@@ -21,8 +27,15 @@ public class RecipeSelectionActivity extends AppCompatActivity {
                 startActivity(newIntent);
             }
         });
+
+        Recipe recipe = RemoteFileManager.getInstance().getRecipe("example");
+
+        ImageView thumbnail = findViewById(R.id.imageView);
+        TextView recipeName = findViewById(R.id.recipeName);
+
+        recipeName.setText(recipe.getTitle());
+        Glide.with(this)
+                .load(recipe.getThumbnail())
+                .into(thumbnail);
     }
-
-
-
 }

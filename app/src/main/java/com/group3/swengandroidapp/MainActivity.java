@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         if (position == 7){
             Intent intent = new Intent(MainActivity.this, PythonClient.class);
             intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
-            intent.putExtra(PythonClient.ID,"exampleRecipe");
+            intent.putExtra(PythonClient.ID,"example");
             startService(intent);
         }
 

@@ -36,7 +36,8 @@ public class PresentationActivity extends AppCompatActivity {
             Log.d("SAASDASD", intent.getStringExtra(PythonClient.ACTION));
 
             if (message == PythonClient.FETCH_PRESENTATION) {
-                Presentation presentation = RemoteFileManager.getInstance().getPresentation("example");
+                String presentationID = RemoteFileManager.getInstance().getRecipe("example").getID();
+                Presentation presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
                 presentation.draw(PresentationActivity.this);
             }
             //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();

@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".PresentationActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".RecipeSelectionActivity"></activity>
         <activity android:name=".EditFieldClass" />
         <activity android:name=".EditMessageClass" />
         <activity

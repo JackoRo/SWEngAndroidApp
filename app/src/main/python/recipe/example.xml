@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Recipe>
-  <id>0001</id>
+  <id>example</id>
   <title>Cake</title>
   <author>Mary Berry</author>
   <description>The cake is a lie.</description>
   <thumbnailURL>http://i0.kym-cdn.com/photos/images/facebook/000/115/357/portal-cake.jpg</thumbnailURL>
-  <presenationID>example.pws</presenationID>
   <Filters spicy="false" lactose="false" nuts="false" vegetarian="true" vegan="false" gluten="true"></Filters>
   <Ingredient amount="2" units="medium">Egg</Ingredient>
   <Ingredient amount="100" units="grams">Flour</Ingredient>

@@ -1,5 +1,7 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import java.net.URL;
@@ -25,7 +27,8 @@ public class Recipe {
     private String author = "n/a";
     private String description = "n/a";
     private String id = "n/a";
-    private URL thumbnail = null;
+    private String thumbnail = null;
+    private String presentationID = "n/a";
     private Presentation presentation;
 
     // Filters
@@ -81,8 +84,8 @@ public class Recipe {
         this.title = title;
     }
 
-    public void setAuthor(String id) {
-        this.id = id;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public void setDescription(String description) {
@@ -93,9 +96,7 @@ public class Recipe {
         this.id = id;
     }
 
-    public void setThumbnail(URL url) {
-        this.thumbnail = url;
-    }
+    public void setThumbnail(String url) { this.thumbnail = url; }
 
     public void setSpicy(Boolean spicy) {
         this.spicy = spicy;
@@ -129,6 +130,10 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public void appendIntgredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+    }
+
     // GETTERS
     public String getTitle() {
         return title;
@@ -142,12 +147,12 @@ public class Recipe {
         return description;
     }
 
-    public String getId() {
-        return this.id;
+    public String getID() {
+        return id;
     }
 
-    public URL getThumbnail() {
-        return this.thumbnail;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
     public Presentation getPresentation() {
