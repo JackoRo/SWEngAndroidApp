@@ -28,7 +28,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             }
         });
 
-        Recipe recipe = RemoteFileManager.getInstance().getRecipe("example");
+        Recipe recipe = RemoteFileManager.getInstance().getRecipe("0000");
 
         ImageView thumbnail = findViewById(R.id.imageView);
         TextView recipeName = findViewById(R.id.recipeName);

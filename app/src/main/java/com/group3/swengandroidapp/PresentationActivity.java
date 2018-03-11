@@ -24,7 +24,7 @@ public class PresentationActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, PythonClient.class);
         intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_PRESENTATION);
-        intent.putExtra(PythonClient.ID,"example");
+        intent.putExtra(PythonClient.ID,"0000");
         startService(intent);
     }
 
@@ -36,7 +36,7 @@ public class PresentationActivity extends AppCompatActivity {
             Log.d("SAASDASD", intent.getStringExtra(PythonClient.ACTION));
 
             if (message == PythonClient.FETCH_PRESENTATION) {
-                String presentationID = RemoteFileManager.getInstance().getRecipe("example").getID();
+                String presentationID = RemoteFileManager.getInstance().getRecipe("0000").getID();
                 Presentation presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
                 presentation.draw(PresentationActivity.this);
             }
