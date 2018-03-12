@@ -27,21 +27,5 @@
         android:dividerHeight="0dp"
         android:background="#ffffff"/>
 
-    <!--
-    <ToggleButton
-        android:id="@+id/b_add_r1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:textOff="@string/add_fave"
-        android:textOn="@string/added_fave" />
-
-    <Button
-        android:id="@+id/b_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/view_fave" />
-
-    -->
 
 </android.support.v4.widget.DrawerLayout>
