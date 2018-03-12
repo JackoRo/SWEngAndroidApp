@@ -1,30 +1,28 @@
 package com.group3.swengandroidapp;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.util.Locale;
+import static com.group3.swengandroidapp.R.drawable.hands_off_logo;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mFragmentTitles;
-    private FragmentManager fragmentManager;
-    private Fragment fragment;
 
     private String xmlFile;
 
@@ -54,18 +50,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        final Context thisContext = this;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("XML-event-name"));
-        
+    protected void onCreateDrawer() {
+        //final Context thisContext = this;
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
+
+        //LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+         //       new IntentFilter("XML-event-name"));
+
         //Intent intent = new Intent(thisContext, PythonClient.class);
         //startService(intent);
-        
+
         //listenButtons();
         /*add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
         mFragmentTitles = getResources().getStringArray(R.array.screens_array);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set up the drawer's list view with items and click listener
@@ -110,21 +106,17 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-            
+
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
 
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        if (savedInstanceState == null) {
-            selectItem(0);
-        }
     }
-    
+
     /*public void listenButtons(){
          add_button.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -178,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
     private void DisplayToast(String msg) {
         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
     }*/
-    
+
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -190,10 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent newIntent = new Intent(context, PresentationActivity.class);
             startActivity(newIntent);
-
-
             //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
-
         }
     };
 
@@ -203,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -242,16 +231,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** Swaps fragments in the main content view */
+    /** Swaps activities*/
     private void selectItem(int position) {
-        // update the main content by replacing fragments
-        fragment = new ScreenFragment();
-        Bundle args = new Bundle();
-        args.putInt(ScreenFragment.SCREEN_NUMBER, position);
-        fragment.setArguments(args);
 
-        fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        // update the main content by replacing fragments
+        Intent intent;
+
+
+        switch(position) {
+            default: // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
+                startActivity(intent);           // switch activities
+                this.finish();
+            case 0:  // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
+                startActivity(intent);           // switch activities
+                this.finish();
+                break;
+            case 1:  // Favourites
+                intent = new Intent();
+                intent.setClass(this,FavouriteList.class);                 // Set new activity destination
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
+                startActivity(intent);           // switch activities
+                this.finish();
+                break;
+            case 2:  // Instructional Videos
+                break;
+            case 3:  // Shopping List
+                intent = new Intent();
+                intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                break;
+            case 4:  // History
+                break;
+            case 5: // Settings
+                break;
+        }
+
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
@@ -259,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.closeDrawer(mDrawerList);
 
         if (position == 1){
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent = new Intent(MainActivity.this, PythonClient.class);
             startService(intent);
         }
 
@@ -290,27 +311,19 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
-    public static class ScreenFragment extends Fragment {
-        public static final String SCREEN_NUMBER = "screen_number";
 
-        public ScreenFragment() {
-            // Empty constructor required for fragment subclasses
-        }
+    @Override
+    public void onResume(){
+        super.onResume();
+        // Override the transition animation between activities
+        overridePendingTransition(0,0);
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
-            int i = getArguments().getInt(SCREEN_NUMBER);
-            String planet = getResources().getStringArray(R.array.screens_array)[i];
-
-            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()), "drawable", getActivity().getPackageName());
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-            getActivity().setTitle(planet);
-            return rootView;
-        }
+    @Override
+    public void onPause(){
+        super.onPause();
+        // Override the transition animation between activities
+        overridePendingTransition(0,0);
     }
 }
 
