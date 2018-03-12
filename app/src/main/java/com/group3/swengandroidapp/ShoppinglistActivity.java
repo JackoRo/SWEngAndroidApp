@@ -30,6 +30,8 @@ public class ShoppinglistActivity extends MainActivity {
         setContentView(R.layout.shopping_list_gui_new);
         super.onCreateDrawer();
 
+        setTitle("Shopping List");
+
 
         listView = findViewById(R.id.listView);
         arrayList = new ArrayList<>();

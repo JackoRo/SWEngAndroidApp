@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentTitles = getResources().getStringArray(R.array.screens_array);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mFragmentTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Set title of drawer
+        getSupportActionBar().setTitle(mTitle);
 
         mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+
 
     }
 
@@ -198,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_resource, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -239,38 +245,48 @@ public class MainActivity extends AppCompatActivity {
 
 
         switch(position) {
-            default: // Home
-                intent = new Intent();
-                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
-                startActivity(intent);           // switch activities
-                this.finish();
             case 0:  // Home
                 intent = new Intent();
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
-                startActivity(intent);           // switch activities
-                this.finish();
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                this.finish();        // End this activity
                 break;
             case 1:  // Favourites
                 intent = new Intent();
                 intent.setClass(this,FavouriteList.class);                 // Set new activity destination
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
-                startActivity(intent);           // switch activities
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
                 this.finish();
                 break;
             case 2:  // Instructional Videos
+                intent = new Intent();
+                intent.setClass(this,InstructionalVideoActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+                this.finish();     // End this activity
                 break;
             case 3:  // Shopping List
                 intent = new Intent();
                 intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Delete previous activities
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                this.finish();     // End this activity
                 break;
             case 4:  // History
+                intent = new Intent();
+                intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                this.finish();     // End this activity
                 break;
             case 5: // Settings
+                intent = new Intent();
+                intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                this.finish();     // End this activity
                 break;
+            default: // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+                this.finish();
         }
 
 

@@ -15,6 +15,8 @@ public class FavouriteList extends MainActivity {
         setContentView(R.layout.activity_favourite_list);
         super.onCreateDrawer();
 
+        setTitle("Favourites");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

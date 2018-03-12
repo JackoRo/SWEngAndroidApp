@@ -7,12 +7,12 @@ import android.os.Bundle;
  * Created by Kevin on 12/03/2018.
  */
 
-public class HomeActivity extends MainActivity{
+public class InstructionalVideoActivity extends MainActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_instructional_video);
         super.onCreateDrawer();
 
-        setTitle("Home");
+        setTitle("Instructional Videos");
     }
 }

@@ -37,13 +37,26 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".PythonClient" />
-
         <activity
             android:name=".FavouriteList"
-            android:label="@string/title_activity_favourite_list"
-            android:theme="@style/AppTheme">
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <activity
+            android:name=".InstructionalVideoActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".PythonClient" />
+
 
         <activity android:name=".PresentationActivity"
             android:parentActivityName=".ShoppinglistActivity">
