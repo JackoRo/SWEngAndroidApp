@@ -31,16 +31,16 @@ public class PresentationActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra(PythonClient.ACTION);
-            Log.d("SAASDASD", intent.getStringExtra(PythonClient.ACTION));
+        // Get extra data included in the Intent
+        String message = intent.getStringExtra(PythonClient.ACTION);
+        Log.d("SAASDASD", intent.getStringExtra(PythonClient.ACTION));
 
-            if (message == PythonClient.FETCH_PRESENTATION) {
-                String presentationID = RemoteFileManager.getInstance().getRecipe("0000").getID();
-                Presentation presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
-                presentation.draw(PresentationActivity.this);
-            }
-            //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
+        if (message == PythonClient.FETCH_PRESENTATION) {
+            String presentationID = RemoteFileManager.getInstance().getRecipe("0000").getID();
+            Presentation presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
+            presentation.draw(PresentationActivity.this);
+        }
+        //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
 
         }
     };

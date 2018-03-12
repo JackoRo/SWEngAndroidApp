@@ -11,8 +11,7 @@
         <item>My Recipes</item>
         <item>History</item>
         <item>Settings</item>
-        <!-- TEST RECIPE SELECTION. PLEASE REMOVE AFTER TESTING -->
-        <item>TEST RECIPE</item>
+
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

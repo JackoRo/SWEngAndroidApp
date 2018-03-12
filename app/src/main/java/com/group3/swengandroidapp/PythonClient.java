@@ -126,6 +126,7 @@ public class PythonClient extends IntentService{
                 case FETCH_RECIPE:
                     id = intent.getStringExtra(ID);
                     remoteFileManager.setRecipe(id, new XmlRecipe(fetchRecipeFromHttpServer(id)));
+                    Log.d("sender", "FETCH_RECIPE");
                     sendMessage(FETCH_RECIPE, id);
                     break;
                 case FETCH_PRESENTATION:
@@ -147,7 +148,7 @@ public class PythonClient extends IntentService{
     }
 
     private void sendMessage(String action, String id) {
-        Log.d("sender", "Broadcasting message");
+        Log.d("sender", "Broadcasting message" + action);
         Intent intent = new Intent("XML-event-name");
         // You can also include some extra data.
         intent.putExtra("message", "whatever message");
