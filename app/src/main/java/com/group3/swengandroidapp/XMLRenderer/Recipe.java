@@ -3,6 +3,8 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.util.Log;
 
 import com.group3.swengandroidapp.Filter;
+import com.group3.swengandroidapp.Filter.Info;
+
 import org.xmlpull.v1.XmlPullParser;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class Recipe {
     private Presentation presentation;
 
     // Filters
-    private Filter.Info info;
+    private Filter.Info info = new Filter.Info();
 
     // Ingredients
     ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
