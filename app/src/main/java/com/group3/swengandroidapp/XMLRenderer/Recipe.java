@@ -2,8 +2,8 @@ package com.group3.swengandroidapp.XMLRenderer;
 
 import android.util.Log;
 
+import com.group3.swengandroidapp.Filter;
 import org.xmlpull.v1.XmlPullParser;
-
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * {@linkplain String} {@linkplain #author} Author of the recipe<p>
  * {@linkplain String} {@linkplain #description} A short description as provided by the author.<p>
  * {@linkplain ArrayList}<{@linkplain Ingredient}> {@linkplain #ingredients} A list of all ingredients<p>
- * {@linkplain ArrayList}<{@linkplain Slide}> {@linkplain #slides} A list of all slides for the slideshow<p>
  * @see {@link Ingredient}, {@link Slide}
  * @author mb1510 (Team Leader)
  *
@@ -32,12 +31,7 @@ public class Recipe {
     private Presentation presentation;
 
     // Filters
-    private Boolean spicy;
-    private Boolean lactose;
-    private Boolean nuts;
-    private Boolean vegetarian;
-    private Boolean vegan;
-    private Boolean gluten;
+    private Filter.Info info;
 
     // Ingredients
     ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -45,9 +39,7 @@ public class Recipe {
     // CONSTRUCTORS
 
     public Recipe() {
-        // Both ArrayLists initialised to have 0 initial capacity
-//        ingredients = new ArrayList<Ingredient>(0);
-//        slides = new ArrayList<Slide>(0);
+
     }
 
     public Recipe(String title, String author, String description, String id) {
@@ -99,27 +91,27 @@ public class Recipe {
     public void setThumbnail(String url) { this.thumbnail = url; }
 
     public void setSpicy(Boolean spicy) {
-        this.spicy = spicy;
+        this.info.setSpicy(spicy);
     }
 
     public void setLactose(Boolean lactose) {
-        this.lactose = lactose;
+        this.info.setLactose(lactose);
     }
 
     public void setNuts(Boolean nuts) {
-        this.nuts = nuts;
+        this.info.setNuts(nuts);
     }
 
     public void setVegetarian(Boolean vegetarian) {
-        this.vegetarian = vegetarian;
+        this.info.setVegetarian(vegetarian);
     }
 
     public void setVegan(Boolean vegan) {
-        this.vegan = vegan;
+        this.info.setVegan(vegan);
     }
 
     public void setGluten(Boolean gluten) {
-        this.gluten = gluten;
+        this.info.setGluten(gluten);
     }
 
     public void setPresentation(Presentation presentation) {
@@ -160,28 +152,30 @@ public class Recipe {
     }
 
     public Boolean getSpicy() {
-        return spicy;
+        return this.info.getSpicy();
     }
 
     public Boolean getLactose() {
-        return lactose;
+        return this.info.getLactose();
     }
 
     public Boolean getNuts() {
-        return nuts;
+        return this.info.getNuts();
     }
 
     public Boolean getVegetarian() {
-        return vegetarian;
+        return this.info.getVegetarian();
     }
 
     public Boolean getVegan() {
-        return vegan;
+        return this.info.getVegan();
     }
 
     public Boolean getGluten() {
-        return gluten;
+        return this.info.getGluten();
     }
+
+    public Filter.Info getFilterInfo(){ return this.info; }
 
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;

@@ -1,44 +1,49 @@
-package com.group3.Filter;
+package com.group3.swengandroidapp;
 //import javafx.scene.control.ListView;
 
+import android.util.Log;
+
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
+
 /**
-   * @deprecated
  * Created by St. John on 06/03/2018.
  */
 
 public class Filter {
+    private static final Filter ourInstance = new Filter();
 
     private Filter.Info criteria;
-    // private XMLParser xmlParser;
 
-    public String[] manyTest(String[] input){
-        String[] output = new String[input.length];
+
+    private Filter(){
+        criteria = new Filter.Info();
+    }
+
+    public static Filter getInstance(){
+        return Filter.ourInstance;
+    }
+
+
+    public String[] process(String[] inputIds){
+        String[] output = new String[inputIds.length];
         int counter = 0;
-        for(String s : input){
-            Info i = new Info();
-            if(test(i)){
-                output[counter] = s;
-                counter++;
+        for(String s : inputIds){
+            try{
+                Info info = RemoteFileManager.getInstance().getRecipe(s).getFilterInfo();
+                System.out.println("TESTING: "+info.toString());
+                if(infoMatchesCriteria(info)){
+                    output[counter] = s;
+                    counter++;
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+                //Log.d("Filter", "Error getting info from recipe: "+s);
             }
         }
-
         return output;
     }
 
-    public Info[] manyTest(Info[] input){
-        Info[] output = new Info[input.length];
-        int counter = 0;
-        for(Info s : input){
-            if(test(s)){
-                output[counter] = s;
-                counter++;
-            }
-        }
-
-        return output;
-    }
-
-    public Boolean test(Info info){
+    private Boolean infoMatchesCriteria(Info info){
         if (criteria.getSpicy()){
             if (!info.getSpicy()) {
                 System.out.println("Failed at spicy");
@@ -97,13 +102,12 @@ public class Filter {
 
     public static class Info {
 
-        private String recipeId = "1234abcd";
-        private Boolean spicy = false;
-        private Boolean lactose = false;
-        private Boolean nuts = false;
-        private Boolean vegetarian = false;
-        private Boolean vegan = false;
-        private Boolean gluten = false;
+        private Boolean spicy;
+        private Boolean lactose;
+        private Boolean nuts;
+        private Boolean vegetarian;
+        private Boolean vegan;
+        private Boolean gluten;
 
 
         public Info(Boolean spicy, Boolean lactose, Boolean nuts, Boolean vegetarian, Boolean vegan, Boolean gluten){
