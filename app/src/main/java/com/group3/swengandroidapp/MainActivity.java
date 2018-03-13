@@ -21,10 +21,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ToggleButton;
 
 import java.util.Locale;
+
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -62,22 +67,37 @@ public class MainActivity extends AppCompatActivity {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("XML-event-name"));
-        
+
         //Intent intent = new Intent(thisContext, PythonClient.class);
         //startService(intent);
-        
+
         //listenButtons();
-        /*add_button.setOnClickListener(new View.OnClickListener() {
+        /*ToggleButton b_add_r1 = (ToggleButton) findViewById(R.id.b_add_r1);
+        b_add_r1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean selected) {
+                if(selected){
+                    Toast.makeText(MainActivity.this, "Recipe added to favourites!", Toast.LENGTH_LONG).show();
+                }
+
+                else{
+                    Toast.makeText(MainActivity.this, "Recipe removed from favourites!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });*/
+
+        /*new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (((ToggleButton) view).isChecked()) {
-                    DisplayToast("Toggle button is On");
+                   // DisplayToast("Toggle button is On");
                 }
                 else{
-                    DisplayToast("Toggle button is Off");
+                  DisplayToast("Toggle button is Off");
                 }
             }
-        });*/
+        });/*
 
         /*view_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-            
+
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -124,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             selectItem(0);
         }
     }
-    
+
     /*public void listenButtons(){
          add_button.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -178,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     private void DisplayToast(String msg) {
         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
     }*/
-    
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
