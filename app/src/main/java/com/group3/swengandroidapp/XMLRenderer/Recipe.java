@@ -142,8 +142,9 @@ public class Recipe {
         fav.eraseColor(0);  // Set transparrent
         layers[1] = new BitmapDrawable(context.getResources(), fav);
         layers[1].setBounds((int)(THUMBNAILSIZE*0.9), (int)(THUMBNAILSIZE*0.9), THUMBNAILSIZE, THUMBNAILSIZE);
-
+        layers[0].setBounds(0, 0, THUMBNAILSIZE, THUMBNAILSIZE);
         LayerDrawable test = new LayerDrawable(layers);
+
 
         return test;
     }
