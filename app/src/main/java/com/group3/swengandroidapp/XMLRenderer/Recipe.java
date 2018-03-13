@@ -46,9 +46,9 @@ public class Recipe {
     private String presentationID = "n/a";
     private Presentation presentation;
 
-    private static final String DEFAULTTHUMBNAIL = "../../../../res/drawable.recipe_defaults/thumbnail.png";
-    private static final String FAVOURITEICONOFF = "../../../../res/drawable.recipe_defaults/heart_off.png";
-    private static final String FAVOURITEICONON = "../../../../res/drawable.recipe_defaults/heart_on.png";
+    private static final String DEFAULTTHUMBNAIL = "../../../../res/drawable/thumbnail.png";
+    private static final String FAVOURITEICONOFF = "../../../../res/drawable/heart_off.png";
+    private static final String FAVOURITEICONON = "../../../../res/drawable/heart_on.png";
     public final static int THUMBNAILSIZE = 250;
 
 
@@ -130,13 +130,15 @@ public class Recipe {
         android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[2];
 
         // Background image
-        try{
+        /*try{
             //Try fetching from string location of thumbnail
             layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(thumbnail));
         }catch(Exception e){
             //If error, use the default thumbnail
             layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(DEFAULTTHUMBNAIL));
-        }
+        }*/
+
+        layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(DEFAULTTHUMBNAIL));
 
         // Favourites Icon
         Bitmap fav = BitmapFactory.decodeFile(FAVOURITEICONOFF);
