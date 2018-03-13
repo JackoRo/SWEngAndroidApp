@@ -100,7 +100,7 @@ public class Recipe {
 
         // Background image
 
-        layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbnail);
+        layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbnail));
 
 
         // Favourites Icon
