@@ -46,7 +46,7 @@ public class Recipe {
     private String presentationID = "n/a";
     private Presentation presentation;
 
-    private static final String DEFAULTTHUMBNAIL = "../../../../res/drawable/thumbnail.png";
+    private static final String DEFAULTTHUMBNAIL = R;
     private static final String FAVOURITEICONOFF = "../../../../res/drawable/heart_off.png";
     private static final String FAVOURITEICONON = "../../../../res/drawable/heart_on.png";
     public final static int THUMBNAILSIZE = 250;
@@ -99,16 +99,12 @@ public class Recipe {
         android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[2];
 
         // Background image
-        try{
-            //Try fetching from string location of thumbnail
-            layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(thumbnail));
-        }catch(Exception e){
-            //If error, use the default thumbnail
-            layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(DEFAULTTHUMBNAIL));
-        }
+
+        layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbnail);
+
 
         // Favourites Icon
-        Bitmap fav = BitmapFactory.decodeFile(FAVOURITEICONOFF);
+        Bitmap fav = BitmapFactory.decodeResource(context.getResources(), R.drawable.heart_off);
         fav.eraseColor(0);  // Set transparrent
         layers[1] = new BitmapDrawable(context.getResources(), fav);
         layers[1].setBounds((int)(THUMBNAILSIZE*0.9), (int)(THUMBNAILSIZE*0.9), THUMBNAILSIZE, THUMBNAILSIZE);
