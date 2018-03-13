@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.*;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -95,7 +96,7 @@ public class Recipe {
     }
 
     public View createView(Context context){
-        android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[3];
+        android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[2];
 
         // Background image
         try{
@@ -124,6 +125,31 @@ public class Recipe {
 
         return view;
     }
+
+    public Drawable createDrawable(Context context){
+        android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[2];
+
+        // Background image
+        try{
+            //Try fetching from string location of thumbnail
+            layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(thumbnail));
+        }catch(Exception e){
+            //If error, use the default thumbnail
+            layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(DEFAULTTHUMBNAIL));
+        }
+
+        // Favourites Icon
+        Bitmap fav = BitmapFactory.decodeFile(FAVOURITEICONOFF);
+        fav.eraseColor(0);  // Set transparrent
+        layers[1] = new BitmapDrawable(context.getResources(), fav);
+        layers[1].setBounds((int)(THUMBNAILSIZE*0.9), (int)(THUMBNAILSIZE*0.9), THUMBNAILSIZE, THUMBNAILSIZE);
+
+        LayerDrawable test = new LayerDrawable(layers);
+
+
+        return test;
+    }
+
 
 
     // SETTERS

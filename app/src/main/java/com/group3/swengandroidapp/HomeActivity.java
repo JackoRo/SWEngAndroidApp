@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 import com.group3.swengandroidapp.XMLRenderer.Image;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 /**
  * Created by Kevin on 12/03/2018.
@@ -40,7 +41,8 @@ public class HomeActivity extends MainActivity{
                 startService(intent);
             }
         });
-
+        Recipe testRecipe = new Recipe();
+        imagebuttonExample.setImageDrawable(testRecipe.createDrawable(getApplicationContext()));
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
