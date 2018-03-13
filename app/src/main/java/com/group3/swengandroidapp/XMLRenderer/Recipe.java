@@ -45,10 +45,7 @@ public class Recipe {
     private String thumbnail = null;
     private String presentationID = "n/a";
     private Presentation presentation;
-
-    private static final String DEFAULTTHUMBNAIL = R;
-    private static final String FAVOURITEICONOFF = "../../../../res/drawable/heart_off.png";
-    private static final String FAVOURITEICONON = "../../../../res/drawable/heart_on.png";
+    
     public final static int THUMBNAILSIZE = 250;
 
 

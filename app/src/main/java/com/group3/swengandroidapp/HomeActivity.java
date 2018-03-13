@@ -39,6 +39,7 @@ public class HomeActivity extends MainActivity{
                 intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
                 intent.putExtra(PythonClient.ID,"0000");
                 startService(intent);
+
             }
         });
         Recipe testRecipe = new Recipe();
