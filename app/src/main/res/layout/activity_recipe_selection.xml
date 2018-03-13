@@ -11,16 +11,16 @@
         android:layout_width="157dp"
         android:layout_height="179dp"
         app:srcCompat="@drawable/hands_off_logo"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="33dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/recipeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="3dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
     <Button
         android:id="@+id/startButton"

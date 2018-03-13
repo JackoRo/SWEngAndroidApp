@@ -33,7 +33,9 @@ public class PythonClient extends IntentService{
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
+    //For USB debugging
     //public static final String IP_ADDR = "192.168.0.20";
+    //For device emulator
     public static final String IP_ADDR = "10.0.2.2";
 
 
