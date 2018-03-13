@@ -10,6 +10,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 
 import com.group3.swengandroidapp.XMLRenderer.Image;
@@ -31,7 +33,9 @@ public class HomeActivity extends MainActivity{
 
         setTitle("Home");
 
-        ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
+        GridLayout layout = (GridLayout)findViewById(R.id.home_grid_layout);
+
+        /*ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
         imagebuttonExample.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +45,9 @@ public class HomeActivity extends MainActivity{
                 startService(intent);
 
             }
-        });
+        });*/
+
+
         Recipe testRecipe = new Recipe();
         imagebuttonExample.setImageDrawable(testRecipe.createDrawable(getApplicationContext()));
 
