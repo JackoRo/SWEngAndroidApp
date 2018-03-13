@@ -32,10 +32,12 @@ public class RecipeSelectionActivity extends AppCompatActivity {
 
         ImageView thumbnail = findViewById(R.id.imageView);
         TextView recipeName = findViewById(R.id.recipeName);
+        TextView description = findViewById(R.id.description);
 
         recipeName.setText(recipe.getTitle());
         Glide.with(this)
                 .load(recipe.getThumbnail())
                 .into(thumbnail);
+        description.setText(recipe.getDescription());
     }
 }
