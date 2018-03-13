@@ -99,11 +99,11 @@ public class Recipe {
 
         layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbnail));
 
-
         // Favourites Icon
+        // SEE THIS
         Bitmap favt = BitmapFactory.decodeResource(context.getResources(), R.drawable.heart_off);
         Bitmap fav = favt.copy(Bitmap.Config.ARGB_8888, true);
-        
+
         fav.eraseColor(0);  // Set transparrent
         layers[1] = new BitmapDrawable(context.getResources(), fav);
         layers[1].setBounds((int)(THUMBNAILSIZE*0.9), (int)(THUMBNAILSIZE*0.9), THUMBNAILSIZE, THUMBNAILSIZE);
