@@ -145,7 +145,6 @@ public class Recipe {
 
         LayerDrawable test = new LayerDrawable(layers);
 
-
         return test;
     }
 

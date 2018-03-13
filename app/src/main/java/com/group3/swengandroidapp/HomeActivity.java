@@ -44,6 +44,9 @@ public class HomeActivity extends MainActivity{
         });
         Recipe testRecipe = new Recipe();
         imagebuttonExample.setImageDrawable(testRecipe.createDrawable(getApplicationContext()));
+
+        imagebuttonExample.setMaxWidth(250);
+        imagebuttonExample.setMaxHeight(250);
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
