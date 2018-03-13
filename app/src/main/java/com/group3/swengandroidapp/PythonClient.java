@@ -112,9 +112,6 @@ public class PythonClient extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-//            Log.d("sender", "A");
-//            remoteFileManager.setRecipe(new XmlParser());
-//            remoteFileManager.setPresentation(new XmlParser(remoteFileManager.getXML()).parse());
             String id;
 
             switch (intent.getStringExtra(ACTION)) {
@@ -158,70 +155,6 @@ public class PythonClient extends IntentService{
         intent.putExtra(ID, id);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
-
-
-
-
-//        try{
-//
-//            //dout = new DataOutputStream( socket.getOutputStream() );
-//
-//        }
-//
-//        catch(Exception e){
-//            e.printStackTrace() ;
-//            //System.out.print("Connection established");
-//        }
-
-
-//    private List<Entry> readStream(InputStream is) throws IOException, XmlPullParserException {
-////        StringBuilder sb = new StringBuilder();
-////        BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
-//          List<Entry> XMLentries = null;
-////
-////        for (String line = r.readLine(); line != null; line =r.readLine()){
-////            sb.append(line);
-////        }
-////
-////        String xml = sb.toString();
-//
-//        XMLentries = stackOverflowXmlParser.parse(is);
-//
-//        is.close();
-//        return XMLentries;
-//    }
-//
-//
-//    public List<Entry> connectToHttpServer(String id) throws IOException, XmlPullParserException{
-//
-//        url = new URL ("http://10.0.2.2:5000/download/" + id);
-//        urlConnection = (HttpURLConnection) url.openConnection();
-//
-//        try {
-//            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//            return readStream(in);
-//
-//        } finally {
-//            urlConnection.disconnect();
-//        }
-//
-//    }
-
-//    public class PythonClientResultReceiver<T> extends ResultReceiver {
-//
-//        @Override
-//        protected void onReceiveResult(int resultCode, Bundle resultData) {
-//
-//            if (mReceiver != null) {
-//                if(resultCode == RESULT_CODE_OK){
-//                    mReceiver.onSuccess(resultData.getSerializable(PARAM_RESULT));
-//                } else {
-//                    mReceiver.onError((Exception) resultData.getSerializable(PARAM_EXCEPTION));
-//                }
-//            }
-//        }
-//
-//    }
 
 
 }
