@@ -2,12 +2,17 @@ package com.group3.swengandroidapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,12 +53,40 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView thumbnail = findViewById(R.id.imageView);
         TextView recipeName = findViewById(R.id.recipeName);
         TextView description = findViewById(R.id.description);
+        TextView descriptionTitle = findViewById(R.id.descriptionTitle);
+        TextView ingredientTitle = findViewById(R.id.ingredientTitle);
 
-        recipeName.setText(recipe.getTitle());
+
+        String recipeNameText = recipe.getTitle();
+        SpannableString recipeNameTextContent = new SpannableString(recipeNameText);
+        recipeNameTextContent.setSpan(new UnderlineSpan(), 0, recipeNameText.length(), 0);
+        recipeName.setText(recipeNameTextContent);
+
+        String descriptionTitleText = "Description";
+        SpannableString descriptionTitleTextContent = new SpannableString(descriptionTitleText);
+        descriptionTitleTextContent .setSpan(new UnderlineSpan(), 0, descriptionTitleText.length(), 0);
+        descriptionTitle.setText(descriptionTitleTextContent);
+
         Glide.with(this)
                 .load(recipe.getThumbnail())
                 .into(thumbnail);
         description.setText(recipe.getDescription());
+
+        LinearLayout layout = findViewById(R.id.ingredientsLayout);
+
+        String ingredientTitleText = "Ingredients";
+        SpannableString ingredientTitleTextContent = new SpannableString(ingredientTitleText);
+        ingredientTitleTextContent .setSpan(new UnderlineSpan(), 0, ingredientTitleText.length(), 0);
+        ingredientTitle.setText(ingredientTitleTextContent);
+
+        for (Ingredient i : recipe.getIngredients()) {
+
+            TextView ingredientText = new TextView(getApplicationContext());
+            ingredientText.setText(i.getQuantity() + " - " + i.getName());
+            ingredientText.setTextColor(Color.parseColor("#000000"));
+            layout.addView(ingredientText);
+
+        }
 
     };
 
