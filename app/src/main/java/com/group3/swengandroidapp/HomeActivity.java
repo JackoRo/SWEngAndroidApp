@@ -28,7 +28,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
     @Override
     public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + adapter.getItem(position).getTitle());
+        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + adapter.getItem(position).getTitle() + ". ID: "+adapter.getItem(position).getId());
     }
 
     protected void onCreate(Bundle savedInstanceState) {

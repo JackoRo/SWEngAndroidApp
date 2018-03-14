@@ -78,6 +78,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     // RECIPE DISPLAY MANAGEMENT
     // RECIPE DRAWING STUFF
+
     public void addRecipe(Context context, Recipe r){
         items.add(Recipe.produceDescriptor(context, r));
         this.notifyItemChanged(items.indexOf(r));
@@ -86,10 +87,6 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     public void clearView(){
         items.clear();
         this.notifyDataSetChanged();
-    }
-
-    public Recipe.Icon getRecipeIcon(int index){
-        return items.get(index);
     }
 
     // Parent activity will implement this method to respond to click events
