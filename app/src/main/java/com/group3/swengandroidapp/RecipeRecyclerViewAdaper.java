@@ -17,18 +17,19 @@ import java.util.ArrayList;
  */
 
 public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecyclerViewAdaper.ViewHolder> {
-    private ItemClickListener mClickListener;
-    private LayoutInflater mLayoutInflater;
+    private ItemClickListener clickListener;
+    private LayoutInflater layoutInflater;
+
     private ArrayList<Recipe.Icon> items;
 
     RecipeRecyclerViewAdaper(Context context){
-        this.mLayoutInflater = LayoutInflater.from(context);
+        this.layoutInflater = LayoutInflater.from(context);
         this.items = new ArrayList<Recipe.Icon>(0);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = mLayoutInflater.inflate(R.layout.recipe_icon, parent, false);
+        View view = layoutInflater.inflate(R.layout.recipe_icon, parent, false);
         return new ViewHolder(view) {};
     }
 
@@ -36,8 +37,8 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     public void onBindViewHolder(ViewHolder holder, int position){
         String temp = items.get(position).getTitle();
         android.graphics.drawable.Drawable image = items.get(position).getDrawable();
-        holder.tv.setText(temp);
-        holder.iv.setImageDrawable(image);
+        holder.title.setText(temp);
+        holder.image.setImageDrawable(image);
     }
 
 
@@ -51,23 +52,27 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     }
 
     public void setClickListener (ItemClickListener listener){
-        this.mClickListener = listener;
+        this.clickListener = listener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        ImageView iv;
-        TextView tv;
+        ImageView image;
+        TextView title;
+        TextView numFavourites;
+        TextView time;
 
         ViewHolder(View itemView){
             super(itemView);
-            iv=(ImageView) itemView.findViewById(R.id.recipe_icon_image);
-            tv=(TextView) itemView.findViewById(R.id.recipe_icon_text);
+            image =(ImageView) itemView.findViewById(R.id.recipe_icon_image);
+            title =(TextView) itemView.findViewById(R.id.recipe_icon_title);
+            numFavourites =(TextView) itemView.findViewById(R.id.recipe_icon_numfavourites);
+            time =(TextView) itemView.findViewById(R.id.recipe_icon_time);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view){
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (clickListener != null) clickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
@@ -81,6 +86,10 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     public void clearView(){
         items.clear();
         this.notifyDataSetChanged();
+    }
+
+    public Recipe.Icon getRecipeIcon(int index){
+        return items.get(index);
     }
 
     // Parent activity will implement this method to respond to click events

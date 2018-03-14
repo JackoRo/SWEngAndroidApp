@@ -14,7 +14,7 @@
 
     <!-- RECIPE TITLE -->
     <TextView
-        android:id="@+id/recipe_icon_text"
+        android:id="@+id/recipe_icon_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/recipe_icon_image"
@@ -57,9 +57,9 @@
 
     <!-- FAVOURITES -->
     <TextView
+        android:id="@+id/recipe_icon_time"
         android:textSize="12dp"
         android:gravity="bottom"
-        android:id="@+id/recipe_icon_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/heart_off"

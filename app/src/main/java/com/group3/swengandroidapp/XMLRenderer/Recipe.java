@@ -169,23 +169,26 @@ public class Recipe {
         private String numFavourites;
         private String time;
         private Drawable image;
+        private String id;
 
-        public Icon(String title, Drawable image, String numFavourites, String time){
+        public Icon(String title, Drawable image, String numFavourites, String time, String id){
             this.title = title;
             this.image = image;
             this.time = time;
             this.numFavourites = numFavourites;
+            this.id = id;
         }
 
         public String getTitle(){return this.title;}
         public Drawable getDrawable(){return this.image;}
         public String getTime(){return this.time;}
         public String getNumFavourites(){return this.numFavourites;}
+        public String getId(){return this.id;}
     }
 
     public static Icon produceDescriptor(Context c, Recipe recipe) {
         Drawable image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
-        return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime());
+        return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
 
 }
