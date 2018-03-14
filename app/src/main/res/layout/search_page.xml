@@ -6,6 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="164dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#e7e3d4">
+
+    </android.support.constraint.ConstraintLayout>
+
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
@@ -28,14 +41,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/search_icon"
+        android:contentDescription="@string/searchButton"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout3"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_search_category_default"
-        android:contentDescription="@string/searchButton"  />
+        app:layout_constraintVertical_bias="0.159" />
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -47,10 +61,10 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout3"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.22">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
@@ -58,26 +72,79 @@
             android:hint="@string/hint" />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
-    </android.support.constraint.ConstraintLayout>
+    <!--change this to a search layout-->
+   <android.support.constraint.ConstraintLayout
+       android:id="@+id/constraintLayout2"
+       android:layout_width="match_parent"
+       android:layout_height="350dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="366dp"
-        android:layout_height="164dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+   </android.support.constraint.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    <ToggleButton
+        android:id="@+id/togglebutton1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="90dp"
+        android:background="@drawable/spicy_filter_grey"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/togglebutton2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="90dp"
+        android:background="@drawable/vegetarian_filter_grey"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/togglebutton3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="90dp"
+        android:background="@drawable/vegan_filter_grey"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/togglebutton4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="195dp"
+        tools:layout_editor_absoluteY="90dp"
+        android:background="@drawable/lactosefree_filter_grey"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/togglebutton5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="255dp"
+        tools:layout_editor_absoluteY="90dp"
+        android:background="@drawable/nutfree_filter_grey"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/togglebutton6"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:layout_editor_absoluteX="315dp"
+        tools:layout_editor_absoluteY="90dp"
+        android:background="@drawable/glutenfree_filter_grey"
+        android:textOff=""
+        android:textOn="" />
+
+
 
 </android.support.constraint.ConstraintLayout>
