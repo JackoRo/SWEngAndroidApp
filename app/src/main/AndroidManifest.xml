@@ -70,6 +70,7 @@
         <activity
             android:name=".RecipeSelectionActivity"
             android:parentActivityName=".HomeActivity"
+            android:launchMode="singleTop"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

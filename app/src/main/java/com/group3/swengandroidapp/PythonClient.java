@@ -34,9 +34,9 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    //public static final String IP_ADDR = "192.168.0.20";
+    public static final String IP_ADDR = "192.168.0.20";
     //For device emulator
-    public static final String IP_ADDR = "10.0.2.2";
+    //public static final String IP_ADDR = "10.0.2.2";
 
 
     private DataOutputStream dout;
@@ -118,13 +118,19 @@ public class PythonClient extends IntentService{
                 case LOAD_ALL:
                     String[] ids = fetchRecipeListFromHttpServer();
                     for (String rid : ids) {
-                        remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
+                        if (remoteFileManager.getRecipe(rid) == null) {
+                            remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
+                        }
                     }
+                    Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
                     break;
                 case FETCH_RECIPE:
                     id = intent.getStringExtra(ID);
-                    remoteFileManager.setRecipe(id, new XmlRecipe(fetchRecipeFromHttpServer(id)));
+
+                    if (remoteFileManager.getRecipe(id) == null) {
+                        remoteFileManager.setRecipe(id, new XmlRecipe(fetchRecipeFromHttpServer(id)));
+                    }
                     Log.d("sender", "FETCH_RECIPE");
                     sendMessage(FETCH_RECIPE, id);
                     break;
@@ -134,6 +140,7 @@ public class PythonClient extends IntentService{
                     if (remoteFileManager.getPresentation(id) == null){
                         remoteFileManager.setPresentation(id, new XmlParser(fetchPresentationFromHttpServer(id)).parse());
                     }
+                    Log.d("sender", "FETCH_PRESENTATION");
                     sendMessage(FETCH_PRESENTATION, id);
                     break;
             }

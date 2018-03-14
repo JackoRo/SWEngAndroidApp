@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import static com.group3.swengandroidapp.R.drawable.hands_off_logo;
 
@@ -56,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
-        //LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-         //       new IntentFilter("XML-event-name"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("XML-event-name"));
 
-        //Intent intent = new Intent(thisContext, PythonClient.class);
-        //startService(intent);
+        Intent intent = new Intent(MainActivity.this, PythonClient.class);
+        intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+        startService(intent);
 
         //listenButtons();
         /*add_button.setOnClickListener(new View.OnClickListener() {
@@ -178,23 +180,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            // Get extra data included in the Intent
-//            String message = intent.getStringExtra("message");
-//            Log.d("receiver", "Got message: " + message);
-//
-//            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.FETCH_RECIPE) {
-//                Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-//                startActivity(newIntent);
-//            }
-//            else {
-//                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
-//            }
-//            //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
-//        }
-//    };
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Log.d("receiver", "Got message: " + message);
+
+            //Fetches all the recipes from the server
+            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.LOAD_ALL) {
+                Toast toast = Toast.makeText(context, "Recipes loaded!",Toast.LENGTH_LONG);
+                toast.show();
+            }
+            else {
+                Log.d("MainActivity: BroadcastReceiver: Error on receive", intent.getStringExtra(PythonClient.ACTION));
+            }
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -298,14 +300,6 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mFragmentTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
-
-        /* if (position == 7){
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
-            intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
-            intent.putExtra(PythonClient.ID,"0000");
-            startService(intent);
-        } */
-
     }
 
     @Override

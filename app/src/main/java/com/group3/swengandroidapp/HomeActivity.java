@@ -13,12 +13,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 import com.group3.swengandroidapp.XMLRenderer.Image;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 /**
  * Created by Kevin on 12/03/2018.
  */
 
 public class HomeActivity extends MainActivity{
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -30,8 +33,8 @@ public class HomeActivity extends MainActivity{
 
         setTitle("Home");
 
-        ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
-        imagebuttonExample.setOnClickListener(new OnClickListener() {
+        ImageButton imagebuttonServerExample = (ImageButton)findViewById(R.id.imageButton6);
+        imagebuttonServerExample.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, PythonClient.class);
@@ -40,6 +43,19 @@ public class HomeActivity extends MainActivity{
                 startService(intent);
             }
         });
+
+        ImageButton imagebuttonLocalExample = (ImageButton)findViewById(R.id.imageButton7);
+        imagebuttonLocalExample.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, PythonClient.class);
+                intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
+                intent.putExtra(PythonClient.ID,"0001");
+                startService(intent);
+            }
+        });
+
+
 
     }
 
@@ -52,6 +68,7 @@ public class HomeActivity extends MainActivity{
 
             if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.FETCH_RECIPE) {
                 Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
+                newIntent.putExtra(PythonClient.ID, intent.getStringExtra(PythonClient.ID));
                 startActivity(newIntent);
             }
             else {
