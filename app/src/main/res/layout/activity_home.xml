@@ -65,7 +65,6 @@
                 android:columnCount="2"
                 android:layout_below="@+id/horizontalScrollView"
                 android:layout_centerInParent="true"
-                android:scroll
                 >
 
                 <!--    Not Used

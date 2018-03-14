@@ -3,7 +3,6 @@
     android:layout_width="160dp"
     android:layout_height="160dp"
     android:padding="5dp"
-    android: android:orientation="horizontal"
     >
 
     <ImageView
@@ -17,8 +16,8 @@
         android:id="@+id/recycler_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/info_image"
-        android:layout_alignRight="@id/info_image"
+        android:layout_alignLeft="@id/recycler_item_image"
+        android:layout_alignRight="@id/recycler_item_image"
 
         android:layout_marginTop="5dp"
         android:paddingTop="5px"
