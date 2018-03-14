@@ -1,14 +1,11 @@
 package com.group3.swengandroidapp;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,8 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import static com.group3.swengandroidapp.R.drawable.hands_off_logo;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -168,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Creates an instance of the Intent class-the way android switches between activities.
-        //Tells you to watch the class FavouriteList.
-        Intent view_f = new Intent(this, FavouriteList.class);
+        //Tells you to watch the class FavouriteListActivity.
+        Intent view_f = new Intent(this, FavouriteListActivity.class);
         //Next, the code that launches an activity.
         startActivity(view_f);
     }
@@ -210,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_resource, menu);
 
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -230,6 +227,10 @@ public class MainActivity extends AppCompatActivity {
         }
         // Handle action buttons
         switch(item.getItemId()) {
+            case R.id.action_menu:
+                Intent intent = new Intent();
+                intent.setClass(this,SearchpageActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -260,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:  // Favourites
                 intent = new Intent();
-                intent.setClass(this,FavouriteList.class);                 // Set new activity destination
+                intent.setClass(this,FavouriteListActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
                 break;

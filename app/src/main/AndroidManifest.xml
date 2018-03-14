@@ -40,7 +40,7 @@
         </activity>
 
         <activity
-            android:name=".FavouriteList"
+            android:name=".FavouriteListActivity"
             android:label="@string/app_name"
             android:parentActivityName=".HomeActivity">
             <intent-filter>
@@ -77,6 +77,16 @@
             android:name=".RecipeSelectionActivity"
             android:parentActivityName=".HomeActivity"
             android:launchMode="singleTop"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SearchpageActivity"
+            android:parentActivityName=".HomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
