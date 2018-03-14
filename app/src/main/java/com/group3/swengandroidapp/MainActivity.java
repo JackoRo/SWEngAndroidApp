@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,13 +53,6 @@ public class MainActivity extends AppCompatActivity {
         //final Context thisContext = this;
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("XML-event-name"));
-
-        Intent intent = new Intent(MainActivity.this, PythonClient.class);
-        intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
-        startService(intent);
 
         //listenButtons();
         /*add_button.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
+
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
+        }
 
     }
 

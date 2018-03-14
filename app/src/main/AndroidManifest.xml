@@ -70,8 +70,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EditFieldClass" />
-        <activity android:name=".EditMessageClass" />
+        <activity android:name=".EditFieldClass"/>
+        <activity android:name=".EditMessageClass"/>
 
         <activity
             android:name=".RecipeSelectionActivity"

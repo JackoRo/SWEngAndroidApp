@@ -101,7 +101,7 @@ public class PythonClient extends IntentService{
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split("\n");
+            return readStream(in).split(".xml");
 
         } finally {
             urlConnection.disconnect();
