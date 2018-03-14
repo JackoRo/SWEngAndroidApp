@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,15 +19,39 @@ import android.widget.ImageButton;
 import com.group3.swengandroidapp.XMLRenderer.Image;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
+import java.util.ArrayList;
+
 /**
  * Created by Kevin on 12/03/2018.
  */
 
-public class HomeActivity extends MainActivity{
+public class HomeActivity extends MainActivity implements HomeRecyclerViewAdapter.ItemClickListener{
+
+    HomeRecyclerViewAdapter adapter;
+
+    @Override
+    public void onItemClick(View view, int position){
+        System.out.println("Clicked on recipe " + position + "!: " + adapter.getItem(position).text);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // Mock Recipes to populate the recyclerview
+        ArrayList<HomeRecyclerViewAdapter.ItemDescriptor> recipes = new ArrayList<HomeRecyclerViewAdapter.ItemDescriptor>(0);
+        recipes.add(new HomeRecyclerViewAdapter.ItemDescriptor("test", null));
+
+        //Setup RecyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        adapter = new HomeRecyclerViewAdapter(this, recipes);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+
+        /*      PREVIOUS CODE
         super.onCreateDrawer();
+
 
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -35,7 +61,7 @@ public class HomeActivity extends MainActivity{
 
         GridLayout layout = (GridLayout)findViewById(R.id.home_recyclerview);
 
-        /*ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
+        ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
         imagebuttonExample.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +75,6 @@ public class HomeActivity extends MainActivity{
 
 
         Recipe testRecipe = new Recipe();
-
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
