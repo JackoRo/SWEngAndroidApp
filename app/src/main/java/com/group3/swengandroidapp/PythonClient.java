@@ -33,8 +33,10 @@ public class PythonClient extends IntentService{
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
-    public static final String IP_ADDR = "192.168.0.20";
-
+    //For USB debugging
+    //public static final String IP_ADDR = "192.168.0.20";
+    //For device emulator
+    public static final String IP_ADDR = "10.0.2.2";
 
 
     private DataOutputStream dout;
@@ -99,7 +101,7 @@ public class PythonClient extends IntentService{
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split("\n");
+            return readStream(in).split(".xml");
 
         } finally {
             urlConnection.disconnect();
@@ -110,22 +112,26 @@ public class PythonClient extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-//            Log.d("sender", "A");
-//            remoteFileManager.setRecipe(new XmlParser());
-//            remoteFileManager.setPresentation(new XmlParser(remoteFileManager.getXML()).parse());
             String id;
 
             switch (intent.getStringExtra(ACTION)) {
                 case LOAD_ALL:
                     String[] ids = fetchRecipeListFromHttpServer();
                     for (String rid : ids) {
-                        remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
+                        if (remoteFileManager.getRecipe(rid) == null) {
+                            remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
+                        }
                     }
+                    Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
                     break;
                 case FETCH_RECIPE:
                     id = intent.getStringExtra(ID);
-                    remoteFileManager.setRecipe(id, new XmlRecipe(fetchRecipeFromHttpServer(id)));
+
+                    if (remoteFileManager.getRecipe(id) == null) {
+                        remoteFileManager.setRecipe(id, new XmlRecipe(fetchRecipeFromHttpServer(id)));
+                    }
+                    Log.d("sender", "FETCH_RECIPE");
                     sendMessage(FETCH_RECIPE, id);
                     break;
                 case FETCH_PRESENTATION:
@@ -134,6 +140,7 @@ public class PythonClient extends IntentService{
                     if (remoteFileManager.getPresentation(id) == null){
                         remoteFileManager.setPresentation(id, new XmlParser(fetchPresentationFromHttpServer(id)).parse());
                     }
+                    Log.d("sender", "FETCH_PRESENTATION");
                     sendMessage(FETCH_PRESENTATION, id);
                     break;
             }
@@ -147,7 +154,7 @@ public class PythonClient extends IntentService{
     }
 
     private void sendMessage(String action, String id) {
-        Log.d("sender", "Broadcasting message");
+        Log.d("sender", "Broadcasting message" + action);
         Intent intent = new Intent("XML-event-name");
         // You can also include some extra data.
         intent.putExtra("message", "whatever message");
@@ -155,70 +162,6 @@ public class PythonClient extends IntentService{
         intent.putExtra(ID, id);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
-
-
-
-
-//        try{
-//
-//            //dout = new DataOutputStream( socket.getOutputStream() );
-//
-//        }
-//
-//        catch(Exception e){
-//            e.printStackTrace() ;
-//            //System.out.print("Connection established");
-//        }
-
-
-//    private List<Entry> readStream(InputStream is) throws IOException, XmlPullParserException {
-////        StringBuilder sb = new StringBuilder();
-////        BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
-//          List<Entry> XMLentries = null;
-////
-////        for (String line = r.readLine(); line != null; line =r.readLine()){
-////            sb.append(line);
-////        }
-////
-////        String xml = sb.toString();
-//
-//        XMLentries = stackOverflowXmlParser.parse(is);
-//
-//        is.close();
-//        return XMLentries;
-//    }
-//
-//
-//    public List<Entry> connectToHttpServer(String id) throws IOException, XmlPullParserException{
-//
-//        url = new URL ("http://10.0.2.2:5000/download/" + id);
-//        urlConnection = (HttpURLConnection) url.openConnection();
-//
-//        try {
-//            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//            return readStream(in);
-//
-//        } finally {
-//            urlConnection.disconnect();
-//        }
-//
-//    }
-
-//    public class PythonClientResultReceiver<T> extends ResultReceiver {
-//
-//        @Override
-//        protected void onReceiveResult(int resultCode, Bundle resultData) {
-//
-//            if (mReceiver != null) {
-//                if(resultCode == RESULT_CODE_OK){
-//                    mReceiver.onSuccess(resultData.getSerializable(PARAM_RESULT));
-//                } else {
-//                    mReceiver.onError((Exception) resultData.getSerializable(PARAM_EXCEPTION));
-//                }
-//            }
-//        }
-//
-//    }
 
 
 }

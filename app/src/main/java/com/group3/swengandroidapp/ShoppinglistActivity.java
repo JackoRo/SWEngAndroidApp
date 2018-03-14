@@ -2,6 +2,7 @@ package com.group3.swengandroidapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ShoppinglistActivity extends AppCompatActivity {
+public class ShoppinglistActivity extends MainActivity {
 
     ListView listView;
     ArrayList<String> arrayList;
@@ -24,8 +25,14 @@ public class ShoppinglistActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_gui_new);
+        super.onCreateDrawer();
+
+        setTitle("Shopping List");
+
+
         listView = findViewById(R.id.listView);
         arrayList = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
