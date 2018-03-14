@@ -24,7 +24,7 @@ public class Recipe extends Presentation{
 	private String description = "n/a";
 	private String id = "n/a";
 	private URL thumbnail = null;
-	//TODO: Filters!
+	//TODO: Filers!
 	
 	// The following are public to take advantage of built-in methods of ArrayList class
 	public ArrayList<Ingredient> ingredients;
