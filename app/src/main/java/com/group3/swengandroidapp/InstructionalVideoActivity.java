@@ -14,5 +14,7 @@ public class InstructionalVideoActivity extends MainActivity{
         super.onCreateDrawer();
 
         setTitle("Instructional Videos");
+
     }
+
 }
