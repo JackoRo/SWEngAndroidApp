@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.group3.swengandroidapp.XMLRenderer.*;
@@ -79,5 +80,10 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Glide.with(this).pauseRequestsRecursive();
+    }
+    @Override
+    public void onBackPressed(){
+        Toast.makeText(getApplicationContext(), "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 }
