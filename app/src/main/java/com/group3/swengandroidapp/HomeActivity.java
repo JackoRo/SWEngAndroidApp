@@ -33,7 +33,7 @@ public class HomeActivity extends MainActivity{
 
         setTitle("Home");
 
-        GridLayout layout = (GridLayout)findViewById(R.id.home_grid_layout);
+        GridLayout layout = (GridLayout)findViewById(R.id.home_recyclerview);
 
         /*ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
         imagebuttonExample.setOnClickListener(new OnClickListener() {
@@ -49,10 +49,7 @@ public class HomeActivity extends MainActivity{
 
 
         Recipe testRecipe = new Recipe();
-        imagebuttonExample.setImageDrawable(testRecipe.createDrawable(getApplicationContext()));
 
-        imagebuttonExample.setMaxWidth(250);
-        imagebuttonExample.setMaxHeight(250);
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
