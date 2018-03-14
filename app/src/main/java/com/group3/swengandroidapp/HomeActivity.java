@@ -35,12 +35,13 @@ public class HomeActivity extends MainActivity implements HomeRecyclerViewAdapte
 
     @Override
     public void onItemClick(View view, int position){
-        System.out.println("Clicked on recipe " + position + "!: " + adapter.getItem(position).text);
+        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + adapter.getItem(position).text);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        super.onCreateDrawer();
 
         recipes = new ArrayList<HomeRecyclerViewAdapter.ItemDescriptor>(0);
         recipes.add(new HomeRecyclerViewAdapter.ItemDescriptor("Test Recipe 1", null));
