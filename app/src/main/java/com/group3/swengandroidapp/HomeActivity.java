@@ -10,7 +10,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.group3.swengandroidapp.XMLRenderer.Image;
 
@@ -24,13 +32,27 @@ public class HomeActivity extends MainActivity{
         setContentView(R.layout.activity_home);
         super.onCreateDrawer();
 
+        // Make grid for the vertical scroll
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new ImageAdapter(this));
+
+        // Re-focus the default slider position to the top
+        gridview.setFocusable(false);
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(HomeActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("XML-event-name"));
 
         setTitle("Home");
 
-        ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
+        /*
+        ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton);
         imagebuttonExample.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +62,7 @@ public class HomeActivity extends MainActivity{
                 startService(intent);
             }
         });
-
+        */
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -65,6 +87,54 @@ public class HomeActivity extends MainActivity{
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
+    }
+
+    public class ImageAdapter extends BaseAdapter {
+        private Context mContext;
+
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+
+        public int getCount() {
+            return mThumbIds.length;
+        }
+
+        public Object getItem(int position) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // create a new ImageView for each item referenced by the Adapter
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView;
+            if (convertView == null) {
+                // if it's not recycled, initialize some attributes
+                imageView = new ImageView(mContext);
+                imageView.setLayoutParams(new GridView.LayoutParams(
+                        (int)mContext.getResources().getDimension(R.dimen.thumbnail_width),
+                        (int)mContext.getResources().getDimension(R.dimen.thumbnail_height)));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setPadding(8, 8, 8, 8);
+            } else {
+                imageView = (ImageView) convertView;
+            }
+
+            imageView.setImageResource(mThumbIds[position]);
+            return imageView;
+        }
+
+        // references to our images
+        private Integer[] mThumbIds = {
+                R.drawable.mac_and_cheese, R.drawable.mac_and_cheese,
+                R.drawable.mac_and_cheese, R.drawable.mac_and_cheese,
+                R.drawable.mac_and_cheese, R.drawable.mac_and_cheese,
+                R.drawable.mac_and_cheese, R.drawable.mac_and_cheese,
+
+        };
     }
 
 }

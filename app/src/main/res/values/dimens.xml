@@ -1,3 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="thumbnail_width">130dp</dimen>
+    <dimen name="thumbnail_height">130dp</dimen>
 </resources>
