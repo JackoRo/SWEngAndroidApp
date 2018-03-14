@@ -58,15 +58,17 @@
 
 
 
-            <GridLayout
-                android:id="@+id/home_grid_layout"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/home_recyclerview"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:columnCount="2"
                 android:layout_below="@+id/horizontalScrollView"
                 android:layout_centerInParent="true"
-
+                android:scroll
                 >
+
+                <!--    Not Used
                 <ImageButton
                     android:id="@+id/imageButton6"
                     android:layout_width="wrap_content"
@@ -113,7 +115,9 @@
                     app:srcCompat="@drawable/ic_launcher_background"
                     tools:ignore="VectorDrawableCompat" />
 
-            </GridLayout>
+                -->
+
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
