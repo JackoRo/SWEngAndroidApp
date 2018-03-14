@@ -1,45 +1,41 @@
 package com.group3.swengandroidapp;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.group3.swengandroidapp.XMLRenderer.Drawable;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Marco on 14/03/2018.
  */
 
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
+public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecyclerViewAdaper.ViewHolder> {
     private ItemClickListener mClickListener;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<ItemDescriptor> items;
+    private ArrayList<Recipe.Icon> items;
 
-    HomeRecyclerViewAdapter(Context context, ArrayList<ItemDescriptor> items){
+    RecipeRecyclerViewAdaper(Context context){
         this.mLayoutInflater = LayoutInflater.from(context);
-        this.items = items;
+        this.items = new ArrayList<Recipe.Icon>(0);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = mLayoutInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.recipe_icon, parent, false);
         return new ViewHolder(view) {};
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        String temp = items.get(position).text;
-        android.graphics.drawable.Drawable image = items.get(position).image;
+        String temp = items.get(position).getTitle();
+        android.graphics.drawable.Drawable image = items.get(position).getDrawable();
         holder.tv.setText(temp);
         holder.iv.setImageDrawable(image);
     }
@@ -50,7 +46,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         return items.size();
     }
 
-    public ItemDescriptor getItem(int position){
+    public Recipe.Icon getItem(int position){
         return items.get(position);
     }
 
@@ -64,8 +60,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
         ViewHolder(View itemView){
             super(itemView);
-            iv=(ImageView) itemView.findViewById(R.id.recycler_item_image);
-            tv=(TextView) itemView.findViewById(R.id.recycler_item_text);
+            iv=(ImageView) itemView.findViewById(R.id.recipe_icon_image);
+            tv=(TextView) itemView.findViewById(R.id.recipe_icon_text);
             itemView.setOnClickListener(this);
         }
 
@@ -75,14 +71,16 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         }
     }
 
-    public static class ItemDescriptor{
-        public String text;
-        public android.graphics.drawable.Drawable image;
+    // RECIPE DISPLAY MANAGEMENT
+    // RECIPE DRAWING STUFF
+    public void addRecipe(Context context, Recipe r){
+        items.add(Recipe.produceDescriptor(context, r));
+        this.notifyItemChanged(items.indexOf(r));
+    }
 
-        ItemDescriptor(String text, android.graphics.drawable.Drawable image){
-            this.text = text;
-            this.image = image;
-        }
+    public void clearView(){
+        items.clear();
+        this.notifyDataSetChanged();
     }
 
     // Parent activity will implement this method to respond to click events

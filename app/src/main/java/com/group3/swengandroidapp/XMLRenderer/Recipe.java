@@ -3,24 +3,12 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.group3.swengandroidapp.Filter;
-import com.group3.swengandroidapp.Filter.Info;
-import com.group3.swengandroidapp.MainActivity;
 import com.group3.swengandroidapp.R;
 
-import org.xmlpull.v1.XmlPullParser;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -44,6 +32,7 @@ public class Recipe {
     private String id = "n/a";
     private String thumbnail = null;
     private String presentationID = "n/a";
+    private String time = "n/a";
     private Presentation presentation;
 
     public final static int THUMBNAILSIZE = 250;
@@ -87,68 +76,10 @@ public class Recipe {
 
 
     // METHODS
-    public int getNumFavourites(){
+    public String getNumFavourites(){
         //TODO: Access server and figure out a way to extract the number of users that have this recipe ID as a favourite!
-        return 10;
+        return "0";
     }
-
-    public View createView(Context context){
-        android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[2];
-
-        // Background image
-
-        layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbnail));
-
-        // Favourites Icon
-        // SEE THIS
-        Bitmap favt = BitmapFactory.decodeResource(context.getResources(), R.drawable.heart_off);
-        Bitmap fav = favt.copy(Bitmap.Config.ARGB_8888, true);
-
-        fav.eraseColor(0);  // Set transparrent
-        layers[1] = new BitmapDrawable(context.getResources(), fav);
-        layers[1].setBounds((int)(THUMBNAILSIZE*0.9), (int)(THUMBNAILSIZE*0.9), THUMBNAILSIZE, THUMBNAILSIZE);
-
-        LayerDrawable test = new LayerDrawable(layers);
-        //Layers: Background image, favourites, timer
-
-        ImageView view = new ImageView(context);
-        view.setImageDrawable(test);
-        view.setMinimumWidth(THUMBNAILSIZE);
-        view.setMinimumHeight(THUMBNAILSIZE);
-        view.setMaxHeight(THUMBNAILSIZE);
-        view.setMaxWidth(THUMBNAILSIZE);
-
-        return view;
-    }
-
-    public Drawable createDrawable(Context context){
-        android.graphics.drawable.Drawable layers[] = new android.graphics.drawable.Drawable[2];
-
-        // Background image
-        /*try{
-            //Try fetching from string location of thumbnail
-            layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(thumbnail));
-        }catch(Exception e){
-            //If error, use the default thumbnail
-            layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeFile(DEFAULTTHUMBNAIL));
-        }*/
-
-        layers[0] = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbnail));
-
-        // Favourites Icon
-        // SEE THIS
-        Bitmap favt = BitmapFactory.decodeResource(context.getResources(), R.drawable.heart_off);
-        Bitmap fav = favt.copy(Bitmap.Config.ARGB_8888, true);
-        fav.eraseColor(0);  // Set transparrent
-        layers[1] = new BitmapDrawable(context.getResources(), fav);
-        layers[1].setBounds((int)(THUMBNAILSIZE*0.9), (int)(THUMBNAILSIZE*0.9), THUMBNAILSIZE, THUMBNAILSIZE);
-        layers[0].setBounds(0, 0, THUMBNAILSIZE, THUMBNAILSIZE);
-        LayerDrawable test = new LayerDrawable(layers);
-
-
-        return test;
-    }
-
 
 
     // SETTERS
@@ -190,6 +121,7 @@ public class Recipe {
     public void appendIntgredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
+    public void setTime(String time){this.time = time;}
 
     // GETTERS
     public String getTitle() {
@@ -229,6 +161,31 @@ public class Recipe {
     public Filter.Info getFilterInfo(){ return this.info; }
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
+    }
+    public String getTime(){return this.time;}
+
+    public static class Icon {
+        private String title;
+        private String numFavourites;
+        private String time;
+        private Drawable image;
+
+        public Icon(String title, Drawable image, String numFavourites, String time){
+            this.title = title;
+            this.image = image;
+            this.time = time;
+            this.numFavourites = numFavourites;
+        }
+
+        public String getTitle(){return this.title;}
+        public Drawable getDrawable(){return this.image;}
+        public String getTime(){return this.time;}
+        public String getNumFavourites(){return this.numFavourites;}
+    }
+
+    public static Icon produceDescriptor(Context c, Recipe recipe) {
+        Drawable image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
+        return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime());
     }
 
 }
