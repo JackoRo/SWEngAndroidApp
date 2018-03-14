@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ToggleButton;
 
 public class SearchpageActivity extends AppCompatActivity {
 
@@ -19,6 +21,13 @@ public class SearchpageActivity extends AppCompatActivity {
     // the list to be output
 
     public String search;
+
+    public Boolean spicyFilter = false;
+    public Boolean lactoseFilter = false;
+    public Boolean nutsFilter = false;
+    public Boolean vegetarianFilter = false;
+    public Boolean veganFilter = false;
+    public Boolean glutenFilter = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +71,73 @@ public class SearchpageActivity extends AppCompatActivity {
         else {
             FoundList =  recipes ;
         }
+
+
+        ToggleButton toggle1 = (ToggleButton) findViewById(R.id.togglebutton1);
+        toggle1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    spicyFilter = true;
+                } else {
+                    spicyFilter = false;
+                }
+            }
+        });
+
+        ToggleButton toggle2 = (ToggleButton) findViewById(R.id.togglebutton2);
+        toggle2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    lactoseFilter = true;
+                } else {
+                    lactoseFilter = false;
+                }
+            }
+        });
+
+        ToggleButton toggle3 = (ToggleButton) findViewById(R.id.togglebutton3);
+        toggle3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    nutsFilter = true;
+                } else {
+                    nutsFilter = false;
+                }
+            }
+        });
+
+        ToggleButton toggle4 = (ToggleButton) findViewById(R.id.togglebutton4);
+        toggle4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    vegetarianFilter = true;
+                } else {
+                    vegetarianFilter = false;
+                }
+            }
+        });
+
+        ToggleButton toggle5 = (ToggleButton) findViewById(R.id.togglebutton5);
+        toggle5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    veganFilter = true;
+                } else {
+                    veganFilter = false;
+                }
+            }
+        });
+
+
+        ToggleButton toggle6 = (ToggleButton) findViewById(R.id.togglebutton6);
+        toggle6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    glutenFilter = true;
+                } else {
+                    glutenFilter = false;
+                }
+            }
+        });
     }
 }
