@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SWEngAndroidApp.iml" filepath="$PROJECT_DIR$/SWEngAndroidApp.iml" />
-      <module fileurl="file://C:\Users\Me\Downloads\SwengPro\SWEngAndroidApp\SWEngAndroidApp.iml" filepath="C:\Users\Me\Downloads\SwengPro\SWEngAndroidApp\SWEngAndroidApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

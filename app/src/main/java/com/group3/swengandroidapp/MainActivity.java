@@ -126,7 +126,15 @@ public class MainActivity extends AppCompatActivity {
             selectItem(0);
         }
     }
-    
+
+
+
+
+
+
+
+
+
     /*public void listenButtons(){
          add_button.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -219,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
+        // If the nav drawer is open, hide action items related to the content viewnot
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -257,6 +265,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
+
+
+        
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mFragmentTitles[position]);
