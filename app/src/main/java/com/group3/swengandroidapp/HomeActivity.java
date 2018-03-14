@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 public class HomeActivity extends MainActivity implements HomeRecyclerViewAdapter.ItemClickListener{
 
     HomeRecyclerViewAdapter adapter;
+    ArrayList<HomeRecyclerViewAdapter.ItemDescriptor> recipes;
+
 
     @Override
     public void onItemClick(View view, int position){
@@ -38,9 +42,10 @@ public class HomeActivity extends MainActivity implements HomeRecyclerViewAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Mock Recipes to populate the recyclerview
-        ArrayList<HomeRecyclerViewAdapter.ItemDescriptor> recipes = new ArrayList<HomeRecyclerViewAdapter.ItemDescriptor>(0);
-        recipes.add(new HomeRecyclerViewAdapter.ItemDescriptor("test", null));
+        recipes = new ArrayList<HomeRecyclerViewAdapter.ItemDescriptor>(0);
+        recipes.add(new HomeRecyclerViewAdapter.ItemDescriptor("Test Recipe 1", null));
+        recipes.add(new HomeRecyclerViewAdapter.ItemDescriptor("Test Recipe 2", null));
+        recipes.add(new HomeRecyclerViewAdapter.ItemDescriptor("Test Recipe 3", null));
 
         //Setup RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
@@ -72,9 +77,6 @@ public class HomeActivity extends MainActivity implements HomeRecyclerViewAdapte
 
             }
         });*/
-
-
-        Recipe testRecipe = new Recipe();
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
