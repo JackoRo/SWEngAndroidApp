@@ -6,6 +6,8 @@ import com.group3.swengandroidapp.Filter;
 import com.group3.swengandroidapp.Filter.Info;
 
 import org.xmlpull.v1.XmlPullParser;
+
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ import java.util.ArrayList;
  *
  */
 
-public class Recipe {
+public class Recipe implements Serializable {
     // Meta data
     private String title = "n/a";
     private String author = "n/a";

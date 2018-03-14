@@ -10,15 +10,24 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.group3.swengandroidapp.XMLRenderer.Image;
+import com.group3.swengandroidapp.XMLRenderer.*;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
+
+import java.util.ArrayList;
 
 /**
  * Created by Kevin on 12/03/2018.
  */
 
-public class HomeActivity extends MainActivity{
+public class HomeActivity extends MainActivity {
+
+    ArrayList<Button> buttonArrayList = new ArrayList<Button>();
+    ArrayList<Recipe> favRecipeBook = new ArrayList<Recipe>();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -39,7 +48,59 @@ public class HomeActivity extends MainActivity{
                 intent.putExtra(PythonClient.ID,"0000");
                 startService(intent);
             }
+
+
         });
+
+        buttonArrayList.add((Button)findViewById(R.id.add_r1));
+        buttonArrayList.add((Button)findViewById(R.id.add_r2));
+        buttonArrayList.add((Button)findViewById(R.id.add_r3));
+        buttonArrayList.add((Button)findViewById(R.id.add_r4));
+        /*Button b_add_r1 = findViewById(R.id.add_r1);
+        Button b_add_r2 = findViewById(R.id.add_r2);
+        Button b_add_r3 = findViewById(R.id.add_r3);
+        Button b_add_r4 = findViewById(R.id.add_r4);*/
+
+        for(int i = 0; i<buttonArrayList.size(); i++){
+            final int currentButton = i;
+            buttonArrayList.get(i).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+
+                    buttonArrayList.get(currentButton);
+                    //Toast.makeText(getApplicationContext(), "Recipe " + currentButton + " selected.", Toast.LENGTH_LONG).show();
+                    String currentButtonString = Integer.toString(currentButton);
+                    com.group3.swengandroidapp.XMLRenderer.Recipe recipeToAdd = RemoteFileManager.getInstance().getRecipe(currentButtonString);
+                    favRecipeBook.add(recipeToAdd);
+                    Toast.makeText(getApplicationContext(), recipeToAdd.getTitle() + " added.", Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+
+        Button view_favourites = findViewById(R.id.view_favourites);
+
+        view_favourites.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent view_f = new Intent(HomeActivity.this, FavouriteList.class);
+
+                view_f.putExtra("FavouriteRecipeExtra", favRecipeBook);
+
+                startActivity(view_f);
+
+            }
+        });
+
+
+
+
+
+
+
+
+
 
     }
 
