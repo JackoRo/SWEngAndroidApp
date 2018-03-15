@@ -81,7 +81,12 @@ public class Presentation extends XmlElement {
     @Override
     public void draw(Activity activity) {
         this.activity = activity;
-        drawSlide(0);
+        drawSlide(currentSlide);
+    }
+
+    public void restart() {
+        currentSlide = 0;
+        drawSlide(currentSlide);
     }
 
     private void drawNextSlide() {

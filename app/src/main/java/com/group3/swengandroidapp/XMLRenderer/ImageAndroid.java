@@ -1,6 +1,7 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -32,18 +33,21 @@ public class ImageAndroid extends Image {
     public void draw(Activity activity) {
 
         if (parent instanceof Slide) {
-            LinearLayout layout = ((Slide) parent).getLayout();
 
+            LinearLayout layout = ((Slide) parent).getLayout();
             ImageView image = new ImageView(activity);
 
+            // Load image via Glide lib using context
             Glide.with(activity)
                     .load("https://storage.googleapis.com/gweb-uniblog-publish-prod/images/android_ambassador_v1_cmyk_200px.max-2800x2800.png")
                     .into(image);
 
             layout.addView(image);
 
+
         }
 
     }
+
 
 }

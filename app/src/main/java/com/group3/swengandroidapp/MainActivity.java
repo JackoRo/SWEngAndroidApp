@@ -6,25 +6,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.util.Locale;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mFragmentTitles;
-    private FragmentManager fragmentManager;
-    private Fragment fragment;
 
     private String xmlFile;
 
@@ -54,18 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        final Context thisContext = this;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("XML-event-name"));
-        
-        //Intent intent = new Intent(thisContext, PythonClient.class);
-        //startService(intent);
-        
+    protected void onCreateDrawer() {
+        //final Context thisContext = this;
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
+
         //listenButtons();
         /*add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +75,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
         mFragmentTitles = getResources().getStringArray(R.array.screens_array);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
 
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mFragmentTitles));
@@ -99,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Set title of drawer
+        getSupportActionBar().setTitle(mTitle);
 
         mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -110,21 +102,27 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-            
+
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
 
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
 
-        if (savedInstanceState == null) {
-            selectItem(0);
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
         }
+
     }
-    
+
     /*public void listenButtons(){
          add_button.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -169,8 +167,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Creates an instance of the Intent class-the way android switches between activities.
-        //Tells you to watch the class FavouriteList.
-        Intent view_f = new Intent(this, FavouriteList.class);
+        //Tells you to watch the class FavouriteListActivity.
+        Intent view_f = new Intent(this, FavouriteListActivity.class);
         //Next, the code that launches an activity.
         startActivity(view_f);
     }
@@ -178,7 +176,8 @@ public class MainActivity extends AppCompatActivity {
     private void DisplayToast(String msg) {
         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
     }*/
-    
+
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -187,30 +186,31 @@ public class MainActivity extends AppCompatActivity {
             String message = intent.getStringExtra("message");
             Log.d("receiver", "Got message: " + message);
 
-            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.FETCH_RECIPE) {
-                Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-                startActivity(newIntent);
+            //Fetches all the recipes from the server
+            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.LOAD_ALL) {
+                Toast toast = Toast.makeText(context, "Recipes loaded!",Toast.LENGTH_LONG);
+                toast.show();
             }
             else {
-                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
+                Log.d("MainActivity: BroadcastReceiver: Error on receive", intent.getStringExtra(PythonClient.ACTION));
             }
-            //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
-
         }
     };
 
     @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_resource, menu);
+
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -231,6 +231,10 @@ public class MainActivity extends AppCompatActivity {
         }
         // Handle action buttons
         switch(item.getItemId()) {
+            case R.id.action_menu:
+                Intent intent = new Intent();
+                intent.setClass(this,SearchpageActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -244,29 +248,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** Swaps fragments in the main content view */
+    /** Swaps activities*/
     private void selectItem(int position) {
-        // update the main content by replacing fragments
-        fragment = new ScreenFragment();
-        Bundle args = new Bundle();
-        args.putInt(ScreenFragment.SCREEN_NUMBER, position);
-        fragment.setArguments(args);
 
-        fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        // update the main content by replacing fragments
+        Intent intent;
+
+
+        switch(position) {
+            case 0:  // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+
+                break;
+            case 1:  // Favourites
+                intent = new Intent();
+                intent.setClass(this,FavouriteListActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+
+                break;
+            case 2:  // Instructional Videos
+                intent = new Intent();
+                intent.setClass(this,InstructionalVideoActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+
+                break;
+            case 3:  // Shopping List
+                intent = new Intent();
+                intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+
+                break;
+            case 4:  // History
+                intent = new Intent();
+                intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+
+                break;
+            case 5: // Settings
+                intent = new Intent();
+                intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+
+                break;
+            default: // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+
+        }
+
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mFragmentTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
-
-        if (position == 7){
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
-            intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
-            intent.putExtra(PythonClient.ID,"exampleRecipe");
-            startService(intent);
-        }
-
     }
 
     @Override
@@ -294,26 +332,18 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
-    public static class ScreenFragment extends Fragment {
-        public static final String SCREEN_NUMBER = "screen_number";
 
-        public ScreenFragment() {
-            // Empty constructor required for fragment subclasses
-        }
+    @Override
+    public void onResume(){
+        super.onResume();
+        // Override the transition animation between activities
+        overridePendingTransition(0,0);
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
-            int i = getArguments().getInt(SCREEN_NUMBER);
-            String planet = getResources().getStringArray(R.array.screens_array)[i];
-
-            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()), "drawable", getActivity().getPackageName());
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-            getActivity().setTitle(planet);
-            return rootView;
-        }
+    @Override
+    public void onPause(){
+        super.onPause();
+        // Override the transition animation between activities
+        overridePendingTransition(0,0);
     }
 }

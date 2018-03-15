@@ -33,7 +33,7 @@ public class XmlRecipe extends Recipe {
                     setVegan(Boolean.getBoolean(xpp.getAttributeValue(null, "vegan")));
                     setGluten(Boolean.getBoolean(xpp.getAttributeValue(null, "gluten")));
                 }
-                else if (xpp.getName().equals("Ingredients")) {
+                else if (xpp.getName().equals("Ingredient")) {
                     String name = "";
                     String quantity = "";
 
@@ -44,14 +44,33 @@ public class XmlRecipe extends Recipe {
 
                     name = xpp.getText();
 
-                    new Ingredient(name, quantity);
+                    appendIntgredient(new Ingredient(name, quantity));
+                }
+                else if (xpp.getName().equals("id")) {
+                    xpp.next();
+                    setID(xpp.getText());
+                }
+                else if (xpp.getName().equals("title")) {
+                    xpp.next();
+                    setTitle(xpp.getText());
+                }
+                else if (xpp.getName().equals("author")) {
+                    xpp.next();
+                    setAuthor(xpp.getText());
+                }
+                else if (xpp.getName().equals("description")) {
+                    xpp.next();
+                    setDescription(xpp.getText());
+                }
+                else if (xpp.getName().equals("thumbnailURL")) {
+                    xpp.next();
+                    setThumbnail(xpp.getText());
                 }
 
             }
-            else if (eventType == XmlPullParser.TEXT) {
-                System.out.println("Text " + xpp.getText());
-            }
+            //else if
             eventType = xpp.next();
         }
+
     }
 }
