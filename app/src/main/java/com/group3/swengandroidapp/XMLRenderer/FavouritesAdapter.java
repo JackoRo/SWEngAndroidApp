@@ -34,7 +34,7 @@ public class FavouritesAdapter extends ArrayAdapter<Recipe> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             view = inflater.inflate(R.layout.activity_favourites, parent, false);
-            viewHolder.txtTitle = (TextView)view.findViewById(R.id.favourite_recipe);
+            //viewHolder.txtTitle = (TextView)view.findViewById(R.id.favourite_recipe);
             view.setTag(viewHolder);
         }
 

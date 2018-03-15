@@ -5,21 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
-import com.bumptech.glide.Glide;
 import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_selection);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("recipe ID");
 
-        final Button button = findViewById(R.id.startButton);
+        final Button button = findViewById(R.id.recipe_selection_favourites_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -28,15 +32,51 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             }
         });
 
-        //Recipe recipe = RemoteFileManager.getInstance().getRecipe("0000");
+        final Button favourites = findViewById(R.id.recipe_selection_favourites_button);
+        favourites.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(id!=null){
+                    FavouritesHandler.getInstance().toggleFavourite(id);
+                    if (FavouritesHandler.getInstance().contains(id)) {
+                        favourites.setBackgroundResource(R.drawable.favfull);
+                    } else {
+                        favourites.setBackgroundResource(R.drawable.favempty);
+                    }
+                }
+            }
+        });
+        if(id!=null){
+            if (FavouritesHandler.getInstance().contains(id)) {
+                favourites.setBackgroundResource(R.drawable.favfull);
+            } else {
+                favourites.setBackgroundResource(R.drawable.favempty);
+            }
+        }else{
+            favourites.setBackgroundResource(R.drawable.favempty);
+        }
+    }
 
-        //ImageView thumbnail = findViewById(R.id.imageView);
-        //TextView recipeName = findViewById(R.id.recipeName);
+    @Override
+    protected void onStart(){
+        super.onStart();
 
-        //recipeName.setText(recipe.getTitle());
-       // Glide.with(this)
-                //.load(recipe.getThumbnail())
-               // .into(thumbnail);
-        
+
+        Recipe recipe;
+        recipe = RemoteFileManager.getInstance().getRecipe(id);
+        if(recipe==null){
+            recipe = new Recipe("Recipe not found!", "n/a", (String)("ID: " + id), "n/a");
+        }
+        ImageView thumbnail = findViewById(R.id.recipe_selection_thumbnail);
+        TextView recipeName = findViewById(R.id.recipe_selection_recipe_name);
+        TextView description = findViewById(R.id.recipe_selection_description);
+        TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
+
+        recipeName.setText(recipe.getTitle());
+        //TODO: Generate and draw recipe icon
+        description.setText(recipe.getDescription());
+
+        //TODO: Generate and draw ingredients list
+        //ingredients.setText(recipe.getIngredients());
+
     }
 }

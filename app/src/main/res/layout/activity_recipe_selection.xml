@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.group3.swengandroidapp.RecipeSelectionActivity">
-
+    tools:context="com.group3.swengandroidapp.RecipeSelectionActivity"
+    android:id="@+id/recipe_selection_relative_layout">
 
     <ImageView
         android:layout_margin="10dp"
         android:layout_alignParentRight="true"
-        android:id="@+id/recipe_thumbnail"
+        android:id="@+id/recipe_selection_thumbnail"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:srcCompat="@drawable/hands_off_logo"
-        android:layout_below="@+id/recipeName"/>
+        android:layout_below="@+id/recipe_selection_recipe_name"/>
 
     <TextView
-        android:id="@+id/recipeName"
+        android:id="@+id/recipe_selection_recipe_name"
         android:layout_width="match_parent"
         android:textAlignment="center"
         android:background="#DDD"
@@ -26,18 +27,20 @@
         android:textSize="30sp"/>
 
     <TextView
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:id="@+id/descriptionTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_below="@id/recipeName"
+        android:layout_below="@id/recipe_selection_recipe_name"
         android:textStyle="bold"
         android:textSize="15sp"/>
 
     <TextView
         android:layout_marginTop="10dp"
-        android:id="@+id/description"
+        android:layout_marginStart="10dp"
+        android:id="@+id/recipe_selection_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="168dp"
@@ -45,8 +48,20 @@
         android:text="This is a test description which is pretty long as I need to test the wrapping and limitation sfoshdfksjdfha sfkasjdfhaskdfj akdf jsdfkjsdfh skjdfh adf asd fjahsdf sadkjfashdkfjash dfkasd fkasdfjfhdsakjdfhakdfjahsdfk asdkfjahsdkfjhaskdfjasdfkaf"
         android:layout_below="@id/descriptionTitle"/>
 
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/recipe_selection_thumbnail"
+        android:layout_alignParentRight="true"
+        android:textOff=""
+        android:textOn=""
+        android:background="@drawable/favempty"
+        android:layout_margin="10dp"
+        android:id="@+id/recipe_selection_favourites_button"
+        />
+
     <LinearLayout
-        android:layout_below="@id/recipe_thumbnail"
+        android:layout_below="@id/recipe_selection_favourites_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -56,12 +71,19 @@
         android:background="#DDD">
 
         <TextView
-            android:id="@+id/ingredientTitle"
-            android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            android:id="@+id/recipe_selection_ingredientTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ingredients"
             android:textStyle="bold"
             android:textSize="16sp"/>
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/recipe_selection_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="- NA"/>
 
 
     </LinearLayout>
@@ -71,9 +93,12 @@
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#2C5"
+        android:textColor="#FFF"
         android:text="Start"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/ingredientsLayout"
+        android:layout_margin="10dp"
         android:padding="20dip"/>
 
 </RelativeLayout>

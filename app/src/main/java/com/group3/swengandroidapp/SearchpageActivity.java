@@ -2,6 +2,7 @@ package com.group3.swengandroidapp;
 
 import java.util.ArrayList;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -191,5 +192,13 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
     @Override
     public void onItemClick(View view, int position){
         Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
+
+        Intent intent;
+        intent = new Intent();
+        intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+        intent.putExtra("recipe ID", displayAdapter.getItem(position).getId());
+        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+
     }
 }

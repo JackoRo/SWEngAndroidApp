@@ -3,6 +3,7 @@
 
 package com.group3.swengandroidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -46,5 +47,13 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
     @Override
     public void onItemClick(View view, int position){
         Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
+
+        Intent intent;
+        intent = new Intent();
+        intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+        intent.putExtra("recipe ID", displayAdapter.getItem(position).getId());
+        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+
     }
 }
