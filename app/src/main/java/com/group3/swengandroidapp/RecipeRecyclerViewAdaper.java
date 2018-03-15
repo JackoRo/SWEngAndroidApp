@@ -2,6 +2,7 @@ package com.group3.swengandroidapp;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.ArrayList;
 
@@ -21,8 +23,10 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     private LayoutInflater layoutInflater;
 
     private ArrayList<Recipe.Icon> items;
+    private Context context;
 
     RecipeRecyclerViewAdaper(Context context){
+        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.items = new ArrayList<Recipe.Icon>(0);
     }
@@ -39,6 +43,8 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         android.graphics.drawable.Drawable image = items.get(position).getDrawable();
         holder.title.setText(temp);
         holder.image.setImageDrawable(image);
+        holder.time.setText(items.get(position).getTime());
+        holder.numFavourites.setText(items.get(position).getNumFavourites());
     }
 
 
@@ -79,9 +85,96 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     // RECIPE DISPLAY MANAGEMENT
     // RECIPE DRAWING STUFF
 
-    public void addRecipe(Context context, Recipe r){
+    public void addRecipe(Recipe r){
         items.add(Recipe.produceDescriptor(context, r));
         this.notifyItemChanged(items.indexOf(r));
+    }
+
+    public void addRecipe(String id){
+        Recipe r = RemoteFileManager.getInstance().getRecipe(id);
+        if(r != null){
+            items.add(Recipe.produceDescriptor(context, r));
+            this.notifyItemChanged(items.indexOf(r));
+        }else{
+            Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + id);
+            r = new Recipe(id, "temp", "Replacement Recipe!", id);
+            items.add(Recipe.produceDescriptor(context, r));
+            this.notifyItemChanged(items.indexOf(r));
+        }
+    }
+
+    public void addRecipe(String[] ids){
+        for(String id : ids){
+            addRecipe(id);
+        }
+    }
+
+
+    public void addRecipe(ArrayList<String> ids){
+        for(int i=0; i<ids.size(); i++){
+            addRecipe(ids.get(i));
+        }
+    }
+
+    public void removeRecipe(int index){
+        items.remove(index);
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * Searches through recipes currently on screen and removes
+     * recipe whos id matches the input string
+     * @param id
+     */
+    public void removeRecipe(String id){
+        for(Recipe.Icon i : items){
+            if(i.getId()==id){
+                items.remove(i);
+                this.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Clears container and fills with given recipes
+     * @param ids ids of recipes to be fetched from server
+     */
+    public void setRecipes(ArrayList<String> ids){
+        this.items.clear();
+        for(String id : ids){
+            Recipe r = RemoteFileManager.getInstance().getRecipe(id);
+            if(r != null){
+                items.add(Recipe.produceDescriptor(context, r));
+            }else{
+                Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + id);
+                //TEMPORARY CODE:
+                r = new Recipe(id, "temp", "Replacement Recipe!", id);
+                items.add(Recipe.produceDescriptor(context, r));
+            }
+        }
+
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * Clears container and fills with given recipes
+     * @param ids ids of recipes to be fetched from server
+     */
+    public void setRecipes(String[] ids){
+        this.items.clear();
+        for(String id : ids){
+            Recipe r = RemoteFileManager.getInstance().getRecipe(id);
+            if(r != null){
+                items.add(Recipe.produceDescriptor(context, r));
+            }else{
+                Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + id);
+                //TEMPORARY CODE:
+                r = new Recipe(id, "temp", "Replacement Recipe!", id);
+                items.add(Recipe.produceDescriptor(context, r));
+            }
+        }
+        this.notifyDataSetChanged();
     }
 
     public void clearView(){

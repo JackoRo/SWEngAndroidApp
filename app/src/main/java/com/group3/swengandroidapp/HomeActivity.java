@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
-import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.ArrayList;
 
@@ -22,13 +21,13 @@ import java.util.ArrayList;
 
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
-    RecipeRecyclerViewAdaper adapter;
+    RecipeRecyclerViewAdaper recipeAdapter;
     ArrayList<Recipe.Icon> recipes;
 
 
     @Override
     public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + adapter.getItem(position).getTitle() + ". ID: "+adapter.getItem(position).getId());
+        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". ID: "+ recipeAdapter.getItem(position).getId());
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +38,22 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         //Setup RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new RecipeRecyclerViewAdaper(this);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        adapter.addRecipe(this, RemoteFileManager.getInstance().getRecipe("0000"));
-        adapter.addRecipe(this, RemoteFileManager.getInstance().getRecipe("0000"));
+        recipeAdapter = new RecipeRecyclerViewAdaper(this);
+        recipeAdapter.setClickListener(this);
+        recyclerView.setAdapter(recipeAdapter);
+
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        // Generate Recipe IDs to view!
+        String[] ids = {"0000", "0001", "0002", "0003", "0004"};
+
+        // Add them to container! (or try)
+        recipeAdapter.addRecipe(ids);
+    }
 
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
