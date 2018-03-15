@@ -40,6 +40,12 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     public void onItemClick(View view, int position){
         Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". ID: "+ recipeAdapter.getItem(position).getId());
+        Intent intent;
+        intent = new Intent();
+        intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+
     }
 
     @Override
