@@ -28,6 +28,7 @@ public class HomeActivity extends MainActivity {
     ArrayList<Button> favouriteButtons = new ArrayList<Button>();
     ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -59,22 +60,25 @@ public class HomeActivity extends MainActivity {
         favouriteButtons.add((Button)findViewById(R.id.add_r4));
 
         for(int i = 0; i<favouriteButtons.size(); i++){
-            final int selectecRecipe = i;
+            final int selectedRecipe = i;
             favouriteButtons.get(i).setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View view){
+                public void onClick(View view) {
+                    favouriteButtons.get(selectedRecipe);
+                    String selectedRecipeString = Integer.toString(selectedRecipe);
+                    com.group3.swengandroidapp.XMLRenderer.Recipe recipeSelected = RemoteFileManager.getInstance().getRecipe(selectedRecipeString);
 
-                    favouriteButtons.get(selectecRecipe);
-                    String selectedRecipeString = Integer.toString(selectecRecipe);
-                    com.group3.swengandroidapp.XMLRenderer.Recipe recipeToAdd = RemoteFileManager.getInstance().getRecipe(selectedRecipeString);
 
-                    //Only add the recipe to the favourites recipe book if it is not already there.
-                    if(favouritesRecipeBook.contains(recipeToAdd)){
-                        Toast.makeText(getBaseContext(), "Looks like this recipe's already been added to your favourite recipe book-take a look!", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        favouritesRecipeBook.add(recipeToAdd);
-                    }
+                        //Only add the recipe to the favourites recipe book if it is not already there.
+                        if (favouritesRecipeBook.contains(recipeSelected)) {
+                            favouritesRecipeBook.remove(recipeSelected);
+                            Toast.makeText(getBaseContext(), recipeSelected.getTitle() + "has been removed from your favourite recipe book.", Toast.LENGTH_LONG).show();
+                        } else {
+                            favouritesRecipeBook.add(recipeSelected);
+                            Toast.makeText(getBaseContext(), recipeSelected.getTitle() + "has been added from your favourite recipe book.", Toast.LENGTH_LONG).show();
+                        }
+
+
 
                 }
             });
