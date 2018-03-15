@@ -2,6 +2,7 @@
 <Recipe>
   <id>0010</id>
   <title>Bowl of Crisps</title>
+  <time>1min</time>
   <author>SWEng Group 3</author>
   <description>When times are toughest.</description>
   <thumbnailURL>http://www.thedailymash.co.uk/images/stories/crispbowl.jpg</thumbnailURL>

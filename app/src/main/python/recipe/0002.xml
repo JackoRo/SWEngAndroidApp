@@ -2,6 +2,7 @@
 <Recipe>
   <id>0002</id>
   <title>Pasta Bake</title>
+  <time>1 Hour</time>
   <author>SWEng Group 3</author>
   <description>A classic student failsafe, pasta bake is both quick and easy to make as well as being delicious.</description>
   <thumbnailURL>https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--10785_12.jpg?itok=5Mwov7Aq</thumbnailURL>
