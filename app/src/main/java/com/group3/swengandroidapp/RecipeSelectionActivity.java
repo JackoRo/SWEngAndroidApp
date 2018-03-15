@@ -28,14 +28,14 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             }
         });
 
-        Recipe recipe = RemoteFileManager.getInstance().getRecipe("0000");
+        //Recipe recipe = RemoteFileManager.getInstance().getRecipe("0000");
 
-        ImageView thumbnail = findViewById(R.id.imageView);
-        TextView recipeName = findViewById(R.id.recipeName);
+        //ImageView thumbnail = findViewById(R.id.imageView);
+        //TextView recipeName = findViewById(R.id.recipeName);
 
-        recipeName.setText(recipe.getTitle());
-        Glide.with(this)
-                .load(recipe.getThumbnail())
-                .into(thumbnail);
+        //recipeName.setText(recipe.getTitle());
+       // Glide.with(this)
+                //.load(recipe.getThumbnail())
+               // .into(thumbnail);
     }
 }
