@@ -27,13 +27,15 @@ import java.util.ArrayList;
  * Created by Kevin on 12/03/2018.
  */
 
-public class HomeActivity extends MainActivity  {
+//public class HomeActivity extends MainActivity  {
 
-    ArrayList<Button> favouriteButtons = new ArrayList<Button>();
-    ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();
+
 
 
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
+
+    ArrayList<Button> favouriteButtons = new ArrayList<Button>();
+    ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();
 
     RecipeRecyclerViewAdaper recipeAdapter;
     ArrayList<Recipe.Icon> recipes;
@@ -114,7 +116,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
             @Override
             public void onClick(View v){
 
-                Intent view_f = new Intent(HomeActivity.this, FavouriteList.class);
+                Intent view_f = new Intent(HomeActivity.this, Favourites.class);
 
                 view_f.putExtra("FavouriteRecipeExtra", favouritesRecipeBook);
 
