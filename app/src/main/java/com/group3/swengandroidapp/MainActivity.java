@@ -276,11 +276,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:  // History
                 intent = new Intent();
+                intent.setClass(this,MyRecipesActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                this.finish();     // End this activity
+                break;
+            case 5:  // History
+                intent = new Intent();
                 intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
                 this.finish();     // End this activity
                 break;
-            case 5: // Settings
+            case 6: // Settings
                 intent = new Intent();
                 intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities

@@ -44,4 +44,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="mac_and_cheese">Mac and Cheese</string>
+
+    <!-- Array holding example steps -->
+    <string-array
+        name="steps">
+        <item>Step 1</item>
+        <item>Step 2</item>
+        <item>Step 3</item>
+    </string-array>
 </resources>
