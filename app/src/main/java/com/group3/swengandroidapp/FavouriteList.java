@@ -1,3 +1,6 @@
+/*This class will receive arraylist of favourite recipes from home activity class and
+ *display the recipes (currently in ListView).*/
+
 package com.group3.swengandroidapp;
 
 import android.os.Bundle;
@@ -17,7 +20,7 @@ public class FavouriteList extends MainActivity {
 
     ArrayList<com.group3.swengandroidapp.XMLRenderer.Recipe> FavouriteRecipes = new ArrayList<Recipe>();
     FavouritesAdapter favouritesAdapter;
-    ArrayList<Recipe> recipeFavList = new ArrayList<Recipe>();
+    ArrayList<Recipe> recipeFavouritesList = new ArrayList<Recipe>();
     ListView listView;
 
 
@@ -33,7 +36,7 @@ public class FavouriteList extends MainActivity {
 
         FavouriteRecipes = (ArrayList<Recipe>)getIntent().getSerializableExtra("FavouriteRecipeExtra");
 
-        favouritesAdapter = new FavouritesAdapter(activity_favourite_list.this, 0, recipeFavList);
+        favouritesAdapter = new FavouritesAdapter(activity_favourite_list.this, 0, recipeFavouritesList);
         favouritesAdapter.setAdapter(favouritesAdapter);
 
 

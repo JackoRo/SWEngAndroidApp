@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 public class HomeActivity extends MainActivity {
 
-    ArrayList<Button> buttonArrayList = new ArrayList<Button>();
-    ArrayList<Recipe> favRecipeBook = new ArrayList<Recipe>();
+    ArrayList<Button> favouriteButtons = new ArrayList<Button>();
+    ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,33 +51,36 @@ public class HomeActivity extends MainActivity {
 
 
         });
+        /*Listeners for any arraylist of favourite buttons/imageviews/textviews etc, and creating
+        * the favourites arraylist from these listeners.*/
+        favouriteButtons.add((Button)findViewById(R.id.add_r1));
+        favouriteButtons.add((Button)findViewById(R.id.add_r2));
+        favouriteButtons.add((Button)findViewById(R.id.add_r3));
+        favouriteButtons.add((Button)findViewById(R.id.add_r4));
 
-        buttonArrayList.add((Button)findViewById(R.id.add_r1));
-        buttonArrayList.add((Button)findViewById(R.id.add_r2));
-        buttonArrayList.add((Button)findViewById(R.id.add_r3));
-        buttonArrayList.add((Button)findViewById(R.id.add_r4));
-        /*Button b_add_r1 = findViewById(R.id.add_r1);
-        Button b_add_r2 = findViewById(R.id.add_r2);
-        Button b_add_r3 = findViewById(R.id.add_r3);
-        Button b_add_r4 = findViewById(R.id.add_r4);*/
-
-        for(int i = 0; i<buttonArrayList.size(); i++){
-            final int currentButton = i;
-            buttonArrayList.get(i).setOnClickListener(new View.OnClickListener(){
+        for(int i = 0; i<favouriteButtons.size(); i++){
+            final int selectecRecipe = i;
+            favouriteButtons.get(i).setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
 
-                    buttonArrayList.get(currentButton);
-                    //Toast.makeText(getApplicationContext(), "Recipe " + currentButton + " selected.", Toast.LENGTH_LONG).show();
-                    String currentButtonString = Integer.toString(currentButton);
-                    com.group3.swengandroidapp.XMLRenderer.Recipe recipeToAdd = RemoteFileManager.getInstance().getRecipe(currentButtonString);
-                    favRecipeBook.add(recipeToAdd);
-                    Toast.makeText(getApplicationContext(), recipeToAdd.getTitle() + " added.", Toast.LENGTH_LONG).show();
+                    favouriteButtons.get(selectecRecipe);
+                    String selectedRecipeString = Integer.toString(selectecRecipe);
+                    com.group3.swengandroidapp.XMLRenderer.Recipe recipeToAdd = RemoteFileManager.getInstance().getRecipe(selectedRecipeString);
+
+                    //Only add the recipe to the favourites recipe book if it is not already there.
+                    if(favouritesRecipeBook.contains(recipeToAdd)){
+                        Toast.makeText(getBaseContext(), "Looks like this recipe's already been added to your favourite recipe book-take a look!", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        favouritesRecipeBook.add(recipeToAdd);
+                    }
 
                 }
             });
         }
 
+        //Listener for button/textview (depending on what is chosen) to open the favourites page and pass the favourites arraylist.
         Button view_favourites = findViewById(R.id.view_favourites);
 
         view_favourites.setOnClickListener(new View.OnClickListener(){
@@ -86,7 +89,7 @@ public class HomeActivity extends MainActivity {
 
                 Intent view_f = new Intent(HomeActivity.this, FavouriteList.class);
 
-                view_f.putExtra("FavouriteRecipeExtra", favRecipeBook);
+                view_f.putExtra("FavouriteRecipeExtra", favouritesRecipeBook);
 
                 startActivity(view_f);
 

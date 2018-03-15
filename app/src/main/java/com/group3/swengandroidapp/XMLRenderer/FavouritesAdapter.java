@@ -1,3 +1,4 @@
+/*This class temporarily acts as the adapter for the favourites page.*/
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
