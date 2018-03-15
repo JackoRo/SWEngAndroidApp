@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -18,13 +19,15 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 import java.util.ArrayList;
 
-public class Favourites extends MainActivity {
+public class Favourites extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     ArrayList<com.group3.swengandroidapp.XMLRenderer.Recipe> FavouriteRecipes = new ArrayList<Recipe>();
     ArrayList<Recipe.Icon> recipes;
     RecipeRecyclerViewAdaper favouritesAdapter;
     ArrayList<Recipe> recipeFavouritesList = new ArrayList<Recipe>();
     ListView listView;
+
+    RecipeRecyclerViewAdaper displayAdapter;
 
 
     @Override
@@ -58,4 +61,8 @@ public class Favourites extends MainActivity {
 
     }
 
+    @Override
+    public void onItemClick(View view, int position){
+        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
+    }
 }
