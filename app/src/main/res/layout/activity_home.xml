@@ -58,6 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+            </LinearLayout>
 
             </HorizontalScrollView>
 
@@ -149,7 +150,7 @@
             android:id="@+id/add_r4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageButton9"
+            app:layout_constraintTop_ toBottomOf="@id/imageButton9"
             app:layout_constraintStart_toStartOf="@id/imageButton9"
             android:text="@string/add_fave"/>
 
