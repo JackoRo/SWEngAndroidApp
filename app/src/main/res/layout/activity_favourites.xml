@@ -23,12 +23,10 @@
          the container. A solid background is used for contrast
          with the content view. -->
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.group3.swengandroidapp.FavouriteListActivity">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,25 +36,17 @@
                 android:layout_width="383dp"
                 android:layout_height="88dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginTop="16dp">
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
 
-                        <ImageButton
-                            android:id="@+id/imageButton4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                    <ImageButton
+                        android:id="@+id/imageButton4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <ImageButton
                         android:id="@+id/imageButton5"
@@ -75,104 +65,7 @@
                 android:layout_below="@+id/horizontalScrollView"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
-        <ImageButton
-            android:id="@+id/imageButton6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton7"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:srcCompat="@drawable/ic_launcher_background"
-            tools:ignore="VectorDrawableCompat" />
-
-        <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:srcCompat="@drawable/ic_launcher_background"
-            tools:ignore="VectorDrawableCompat" />
-
-        <ImageButton
-            android:id="@+id/imageButton8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton6"
-            app:layout_constraintVertical_bias="0.504"
-            app:srcCompat="@drawable/ic_launcher_background"
-            tools:ignore="VectorDrawableCompat" />
-
-        <ImageButton
-            android:id="@+id/imageButton9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton7"
-            app:layout_constraintVertical_bias="0.504"
-            app:srcCompat="@drawable/ic_launcher_background"
-            tools:ignore="VectorDrawableCompat" />
-
-        <Button
-            android:id="@+id/add_r1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageButton6"
-            app:layout_constraintStart_toStartOf="@id/imageButton6"
-            android:text="@string/add_fave" />
-        <Button
-            android:id="@+id/add_r2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageButton7"
-            app:layout_constraintStart_toStartOf="@id/imageButton7"
-            android:text="@string/add_fave"/>
-        <Button
-            android:id="@+id/add_r3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageButton8"
-            app:layout_constraintStart_toStartOf="@id/imageButton8"
-            android:text="@string/add_fave"/>
-        <Button
-            android:id="@+id/add_r4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_ toBottomOf="@id/imageButton9"
-            app:layout_constraintStart_toStartOf="@id/imageButton9"
-            android:text="@string/add_fave"/>
-
-        <Button
-            android:id="@+id/view_favourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/imageButton6"
-            android:text="@string/view_fave"/>
-
-
-
-        <include layout="@layout/content_favourite_list" />
-
-
-
-    </android.support.design.widget.CoordinatorLayout>
-
+    </android.support.constraint.ConstraintLayout>
 
     <ListView
         android:id="@+id/left_drawer"
@@ -184,19 +77,8 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />
 
-    <ListView
-        android:id="@+id/recipe_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/favourite_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </ListView>
-
 </android.support.v4.widget.DrawerLayout>
+
 
 
 
