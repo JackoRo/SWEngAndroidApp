@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class FavouriteList extends MainActivity {
+public class FavouriteListActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

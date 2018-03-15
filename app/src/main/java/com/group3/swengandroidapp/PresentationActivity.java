@@ -14,17 +14,28 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 public class PresentationActivity extends AppCompatActivity {
 
+    static Presentation presentation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentation);
+
+        if (presentation != null && savedInstanceState == null) {
+            // This activity has been recreated, but we do not have a saved state
+            // reset the presentation to the first slide. If we have opened a different
+            // presentation, it will be overwritten anyway
+            presentation.restart();
+        }
+
+        Intent receivedIntent = getIntent();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("XML-event-name"));
 
         Intent intent = new Intent(this, PythonClient.class);
         intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_PRESENTATION);
-        intent.putExtra(PythonClient.ID,"0000");
+        intent.putExtra(PythonClient.ID,receivedIntent.getStringExtra(PythonClient.ID));
         startService(intent);
     }
 
@@ -33,11 +44,11 @@ public class PresentationActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
         // Get extra data included in the Intent
         String message = intent.getStringExtra(PythonClient.ACTION);
-        Log.d("SAASDASD", intent.getStringExtra(PythonClient.ACTION));
+        Log.d("PresentationActivity received presentation", intent.getStringExtra(PythonClient.ACTION));
 
         if (message == PythonClient.FETCH_PRESENTATION) {
-            String presentationID = RemoteFileManager.getInstance().getRecipe("0000").getID();
-            Presentation presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
+            String presentationID = intent.getStringExtra(PythonClient.ID);
+            presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
             presentation.draw(PresentationActivity.this);
         }
         //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
@@ -45,4 +56,9 @@ public class PresentationActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
 }

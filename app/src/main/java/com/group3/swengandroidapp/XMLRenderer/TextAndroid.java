@@ -177,7 +177,7 @@ public class TextAndroid extends Text {
 
 
     //Requests a download from Google Fonts
-    private Typeface requestDownload (String familyName, Activity activity) {
+    /*private Typeface requestDownload (String familyName, Activity activity) {
         int certs = 0;
 
         QueryBuilder queryBuilder = new QueryBuilder(familyName)
@@ -211,7 +211,7 @@ public class TextAndroid extends Text {
                         getHandlerThreadHandler());
 
         return null;
-    }
+    }*/
 
     private Handler getHandlerThreadHandler() {
         if (mHandler == null) {

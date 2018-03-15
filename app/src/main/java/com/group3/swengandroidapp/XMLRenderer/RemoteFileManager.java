@@ -33,5 +33,6 @@ public class RemoteFileManager {
 
     public Presentation getPresentation(String id) { return presentations.get(id); }
 
+    public HashMap<String, Recipe> getRecipeList() { return recipes; }
 
 }
