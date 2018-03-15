@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by Kevin on 12/03/2018.
  */
 
-public class HomeActivity extends MainActivity {
+public class HomeActivity extends MainActivity  {
 
     ArrayList<Button> favouriteButtons = new ArrayList<Button>();
     ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();

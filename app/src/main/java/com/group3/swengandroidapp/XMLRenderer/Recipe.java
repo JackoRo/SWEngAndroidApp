@@ -1,5 +1,6 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.group3.swengandroidapp.Filter;
@@ -184,5 +185,6 @@ public class Recipe implements Serializable {
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
+
 
 }
