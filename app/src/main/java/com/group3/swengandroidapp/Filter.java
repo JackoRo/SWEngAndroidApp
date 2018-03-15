@@ -23,6 +23,7 @@ public class Filter {
         return Filter.ourInstance;
     }
 
+    public Filter.Info getCriteria(){return this.criteria;}
 
     public String[] process(String[] inputIds){
         String[] output = new String[inputIds.length];

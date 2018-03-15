@@ -45,7 +45,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra("recipe ID", recipeAdapter.getItem(position).getId());
+        intent.putExtra(PythonClient.ID, recipeAdapter.getItem(position).getId());
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
     }

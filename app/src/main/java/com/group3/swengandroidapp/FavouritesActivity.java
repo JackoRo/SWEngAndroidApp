@@ -52,7 +52,7 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
         intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra("recipe ID", displayAdapter.getItem(position).getId());
+        intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
     }

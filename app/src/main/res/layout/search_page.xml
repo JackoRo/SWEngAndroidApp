@@ -6,129 +6,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
-        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:background="#DDD"
-        app:layout_constraintHorizontal_weight="1">
-
-        <!-- input box -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/searchPage_text_input"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="70dp"
-            android:layout_height="50dp"
-            >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint" />
-        </android.support.design.widget.TextInputLayout>
-
-        <!-- Search Icon -->
-        <ImageButton
-            android:id="@+id/searchPage_search_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/search_icon"
-            android:contentDescription="@string/searchButton"
-            android:layout_alignEnd="@id/searchPage_text_input"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="-60dp"/>
-
-        <!-- FILTERS -->
+        android:layout_height="match_parent">
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/constraintLayout3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/searchPage_text_input"
-            android:layout_centerHorizontal="true"
-            >
 
-            <ToggleButton
-                android:id="@+id/searchPage_togglebuttonSpicy"
+            android:background="#DDD"
+            app:layout_constraintHorizontal_weight="1">
+
+            <!-- input box -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/searchPage_text_input"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="70dp"
+                android:layout_height="50dp"
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Search Icon -->
+            <ImageButton
+                android:id="@+id/searchPage_search_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/spicy_filter_grey"
-                android:textOff=""
-                android:textOn=""
-                android:layout_margin="4dp"/>
+                android:background="@drawable/search_icon"
+                android:contentDescription="@string/searchButton"
+                android:layout_alignEnd="@id/searchPage_text_input"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="-60dp"/>
 
-            <ToggleButton
-                android:id="@+id/searchPage_togglebuttonVegetarian"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/vegetarian_filter_grey"
-                android:textOff=""
-                android:textOn=""
-                android:layout_toRightOf="@id/searchPage_togglebuttonSpicy"
-                android:layout_margin="4dp"/>
+            <!-- FILTERS -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/searchPage_text_input"
+                android:layout_centerHorizontal="true"
+                >
 
-            <ToggleButton
-                android:id="@+id/searchPage_togglebuttonVegan"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                tools:layout_editor_absoluteX="135dp"
-                tools:layout_editor_absoluteY="90dp"
-                android:background="@drawable/vegan_filter_grey"
-                android:textOff=""
-                android:textOn=""
-                android:layout_toRightOf="@id/searchPage_togglebuttonVegetarian"
-                android:layout_margin="4dp"/>
+                <ToggleButton
+                    android:id="@+id/searchPage_togglebuttonSpicy"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/spicy_filter_grey"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_margin="4dp"/>
 
-            <ToggleButton
-                android:id="@+id/searchPage_togglebuttonLactose"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/lactosefree_filter_grey"
-                android:textOff=""
-                android:textOn=""
-                android:layout_toRightOf="@id/searchPage_togglebuttonVegan"
-                android:layout_margin="4dp"/>
+                <ToggleButton
+                    android:id="@+id/searchPage_togglebuttonVegetarian"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/vegetarian_filter_grey"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_toRightOf="@id/searchPage_togglebuttonSpicy"
+                    android:layout_margin="4dp"/>
 
-            <ToggleButton
-                android:id="@+id/searchPage_togglebuttonNuts"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/nutfree_filter_grey"
-                android:textOff=""
-                android:textOn=""
-                android:layout_toRightOf="@id/searchPage_togglebuttonLactose"
-                android:layout_margin="4dp"/>
+                <ToggleButton
+                    android:id="@+id/searchPage_togglebuttonVegan"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    tools:layout_editor_absoluteX="135dp"
+                    tools:layout_editor_absoluteY="90dp"
+                    android:background="@drawable/vegan_filter_grey"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_toRightOf="@id/searchPage_togglebuttonVegetarian"
+                    android:layout_margin="4dp"/>
 
-            <ToggleButton
-                android:id="@+id/searchPage_togglebuttonGluten"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/glutenfree_filter_grey"
-                android:textOff=""
-                android:textOn=""
-                android:layout_toRightOf="@id/searchPage_togglebuttonNuts"
-                android:layout_margin="4dp"/>
+                <ToggleButton
+                    android:id="@+id/searchPage_togglebuttonLactose"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/lactosefree_filter_grey"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_toRightOf="@id/searchPage_togglebuttonVegan"
+                    android:layout_margin="4dp"/>
+
+                <ToggleButton
+                    android:id="@+id/searchPage_togglebuttonNuts"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/nutfree_filter_grey"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_toRightOf="@id/searchPage_togglebuttonLactose"
+                    android:layout_margin="4dp"/>
+
+                <ToggleButton
+                    android:id="@+id/searchPage_togglebuttonGluten"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/glutenfree_filter_grey"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_toRightOf="@id/searchPage_togglebuttonNuts"
+                    android:layout_margin="4dp"/>
+
+            </RelativeLayout>
 
         </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/searchPage_recipeContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/constraintLayout3"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+        </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>
 
 
 
 
-   <android.support.v7.widget.RecyclerView
-       android:id="@+id/searchPage_recipeContainer"
-       android:layout_width="wrap_content"
-       android:layout_height="350dp"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
-
-   </android.support.v7.widget.RecyclerView>
 
 
 

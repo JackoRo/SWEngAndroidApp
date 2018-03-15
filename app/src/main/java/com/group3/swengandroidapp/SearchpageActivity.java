@@ -27,29 +27,19 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
     public String search;
 
-    //Filter booleans
-    public Boolean spicyFilter=false;
-    public Boolean lactoseFilter=false;
-    public Boolean nutsFilter=false;
-    public Boolean vegetarianFilter=false;
-    public Boolean veganFilter=false;
-    public Boolean glutenFilter=false;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
-        Log.d("TEST", "2");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.searchPage_recipeContainer);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
-
-        Log.d("TEST", "3");
-
 
             //When search button is click store the input string of the search bar
         final ImageButton button = findViewById(R.id.searchPage_search_button);
@@ -68,9 +58,6 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                 }
             }
         });
-        Log.d("TEST", "4");
-
-        Log.d("TESTES", "4");
         //Search algorithm
         if(search != null) {
             // Change to upper case to get rid of possible errors
@@ -93,49 +80,39 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         }
 
 
-        Log.d("TESTES", "5");
-
-
         //Toggle Buttons for filters
         ToggleButton toggleSpicy = (ToggleButton) findViewById(R.id.searchPage_togglebuttonSpicy);
         toggleSpicy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Filter.getInstance().getCriteria().setSpicy(isChecked);
                 if (isChecked) {
-                    spicyFilter = true;
                    toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
                 } else {
-                    spicyFilter = false;
                     toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
                 }
             }
         });
 
-        Log.d("TESTES", "6");
-
-
         ToggleButton toggleVegetarian = (ToggleButton) findViewById(R.id.searchPage_togglebuttonVegetarian);
         toggleVegetarian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Filter.getInstance().getCriteria().setVegetarian(isChecked);
                 if (isChecked) {
-                    vegetarianFilter = true;
                     toggleVegetarian.setBackgroundResource(R.drawable.vegetarian_filter);
                 } else {
-                    vegetarianFilter = false;
                     toggleVegetarian.setBackgroundResource(R.drawable.vegetarian_filter_grey);
                 }
             }
         });
 
-        Log.d("TESTES", "8");
 
         ToggleButton toggleVegan = (ToggleButton) findViewById(R.id.searchPage_togglebuttonVegan);
         toggleVegan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Filter.getInstance().getCriteria().setVegan(isChecked);
                 if (isChecked) {
-                    veganFilter = true;
                     toggleVegan.setBackgroundResource(R.drawable.vegan_filter);
                 } else {
-                    veganFilter = false;
                     toggleVegan.setBackgroundResource(R.drawable.vegan_filter_grey);
                 }
             }
@@ -144,11 +121,10 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleLactose = (ToggleButton) findViewById(R.id.searchPage_togglebuttonLactose);
         toggleLactose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Filter.getInstance().getCriteria().setLactose(isChecked);
                 if (isChecked) {
-                    lactoseFilter = true;
                     toggleLactose.setBackgroundResource(R.drawable.lactosefree_filter);
                 } else {
-                    lactoseFilter = false;
                     toggleLactose.setBackgroundResource(R.drawable.lactosefree_filter_grey);
                 }
             }
@@ -157,11 +133,10 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleNut = (ToggleButton) findViewById(R.id.searchPage_togglebuttonNuts);
         toggleNut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Filter.getInstance().getCriteria().setNuts(isChecked);
                 if (isChecked) {
-                    nutsFilter = true;
                     toggleNut.setBackgroundResource(R.drawable.nutfree_filter);
                 } else {
-                    nutsFilter = false;
                     toggleNut.setBackgroundResource(R.drawable.nutfree_filter_grey);
                 }
             }
@@ -171,15 +146,22 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleGluten = (ToggleButton) findViewById(R.id.searchPage_togglebuttonGluten);
         toggleGluten.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Filter.getInstance().getCriteria().setGluten(isChecked);
                 if (isChecked) {
-                    glutenFilter = true;
                     toggleGluten.setBackgroundResource(R.drawable.glutenfree_filter);
                 } else {
-                    glutenFilter = false;
                     toggleGluten.setBackgroundResource(R.drawable.glutenfree_filter_grey);
                 }
             }
         });
+
+        // LOAD CURRENT FILTER SETTINGS
+        toggleSpicy.setChecked(Filter.getInstance().getCriteria().getSpicy());
+        toggleGluten.setChecked(Filter.getInstance().getCriteria().getGluten());
+        toggleLactose.setChecked(Filter.getInstance().getCriteria().getLactose());
+        toggleNut.setChecked(Filter.getInstance().getCriteria().getNuts());
+        toggleVegan.setChecked(Filter.getInstance().getCriteria().getVegan());
+        toggleVegetarian.setChecked(Filter.getInstance().getCriteria().getVegetarian());
     }
 
     @Override
@@ -197,7 +179,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra("recipe ID", displayAdapter.getItem(position).getId());
+        intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
     }

@@ -21,13 +21,14 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_selection);
         Intent intent = getIntent();
-        id = intent.getStringExtra("recipe ID");
+        id = intent.getStringExtra(PythonClient.ID);
 
-        final Button button = findViewById(R.id.recipe_selection_favourites_button);
+        final Button button = findViewById(R.id.recipe_selection_start_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
+                newIntent.putExtra(PythonClient.ID, id);
                 startActivity(newIntent);
             }
         });
