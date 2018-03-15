@@ -137,23 +137,26 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     }
 
     /**
-     * Clears container and fills with given recipes
-     * @param ids ids of recipes to be fetched from server
+     * Clears container and fills with given recipes (Recipe type or String!!)
+     * @param items ArrayList of Recipe or String (id string) to be processed!
      */
-    public void setRecipes(ArrayList<String> ids){
+    public void setRecipes(ArrayList<Object> items){
         this.items.clear();
-        for(String id : ids){
-            Recipe r = RemoteFileManager.getInstance().getRecipe(id);
-            if(r != null){
-                items.add(Recipe.produceDescriptor(context, r));
-            }else{
-                Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + id);
-                //TEMPORARY CODE:
-                r = new Recipe(id, "temp", "Replacement Recipe!", id);
+        for(Object o : items){
+            if(o instanceof Recipe){
+                items.add(Recipe.produceDescriptor(context, (Recipe)o));
+            }else if(o instanceof String){
+                Recipe r = RemoteFileManager.getInstance().getRecipe((String)o);
+                if(r == null){
+                    // If server fails to return a recipe, report and make a fake one
+                    Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + (String)o);
+                    //TEMPORARY CODE:
+                    r = new Recipe((String)o, "temp", "Replacement Recipe!", (String)o);
+                }
+
                 items.add(Recipe.produceDescriptor(context, r));
             }
         }
-
         this.notifyDataSetChanged();
     }
 
