@@ -94,4 +94,5 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         // Add them to container! (or try)
         recipeAdapter.addRecipe(ids);
     }
+    
 }
