@@ -5,16 +5,18 @@ import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
-import com.group3.swengandroidapp.XMLRenderer.Drawable;
+public class SearchpageActivity extends AppCompatActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
-public class SearchpageActivity extends AppCompatActivity {
+    private RecipeRecyclerViewAdaper displayAdapter;
 
     public ArrayList<String> recipes = new ArrayList<String>();
     // the arraylist of string names from all recipes
@@ -37,16 +39,23 @@ public class SearchpageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
+        Log.d("TEST", "2");
 
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.searchPage_recipeContainer);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        displayAdapter = new RecipeRecyclerViewAdaper(this);
+        displayAdapter.setClickListener(this);
+        recyclerView.setAdapter(displayAdapter);
 
+        Log.d("TEST", "3");
 
 
             //When search button is click store the input string of the search bar
-        final ImageButton button = findViewById(R.id.imageButton3);
+        final ImageButton button = findViewById(R.id.searchPage_search_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 hideKeyboard();
-                final TextInputLayout searchBar = findViewById(R.id.textInputLayout2);
+                final TextInputLayout searchBar = findViewById(R.id.searchPage_text_input);
                 search = searchBar.getEditText().getText().toString();
             }
 
@@ -58,8 +67,9 @@ public class SearchpageActivity extends AppCompatActivity {
                 }
             }
         });
+        Log.d("TEST", "4");
 
-
+        Log.d("TESTES", "4");
         //Search algorithm
         if(search != null) {
             // Change to upper case to get rid of possible errors
@@ -82,29 +92,27 @@ public class SearchpageActivity extends AppCompatActivity {
         }
 
 
+        Log.d("TESTES", "5");
+
 
         //Toggle Buttons for filters
-        ToggleButton toggleSpicy = (ToggleButton) findViewById(R.id.togglebuttonSpicy);
+        ToggleButton toggleSpicy = (ToggleButton) findViewById(R.id.searchPage_togglebuttonSpicy);
         toggleSpicy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     spicyFilter = true;
-                   //toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
+                   toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
                 } else {
                     spicyFilter = false;
-                    //toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
+                    toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
                 }
             }
         });
-        if(spicyFilter==true){
-            toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
-        }
-        else{
-            toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
-        }
+
+        Log.d("TESTES", "6");
 
 
-        ToggleButton toggleVegetarian = (ToggleButton) findViewById(R.id.togglebuttonVegetarian);
+        ToggleButton toggleVegetarian = (ToggleButton) findViewById(R.id.searchPage_togglebuttonVegetarian);
         toggleVegetarian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -117,7 +125,9 @@ public class SearchpageActivity extends AppCompatActivity {
             }
         });
 
-        ToggleButton toggleVegan = (ToggleButton) findViewById(R.id.togglebuttonVegan);
+        Log.d("TESTES", "8");
+
+        ToggleButton toggleVegan = (ToggleButton) findViewById(R.id.searchPage_togglebuttonVegan);
         toggleVegan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -130,7 +140,7 @@ public class SearchpageActivity extends AppCompatActivity {
             }
         });
 
-        ToggleButton toggleLactose = (ToggleButton) findViewById(R.id.togglebuttonLactose);
+        ToggleButton toggleLactose = (ToggleButton) findViewById(R.id.searchPage_togglebuttonLactose);
         toggleLactose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -143,7 +153,7 @@ public class SearchpageActivity extends AppCompatActivity {
             }
         });
 
-        ToggleButton toggleNut = (ToggleButton) findViewById(R.id.togglebuttonNut);
+        ToggleButton toggleNut = (ToggleButton) findViewById(R.id.searchPage_togglebuttonNuts);
         toggleNut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -157,7 +167,7 @@ public class SearchpageActivity extends AppCompatActivity {
         });
 
 
-        ToggleButton toggleGluten = (ToggleButton) findViewById(R.id.togglebuttonGluten);
+        ToggleButton toggleGluten = (ToggleButton) findViewById(R.id.searchPage_togglebuttonGluten);
         toggleGluten.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -169,5 +179,17 @@ public class SearchpageActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        String[] ids = {"0000", "0001", "0002"};
+        displayAdapter.setRecipes(ids);
+    }
+
+    @Override
+    public void onItemClick(View view, int position){
+        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
     }
 }

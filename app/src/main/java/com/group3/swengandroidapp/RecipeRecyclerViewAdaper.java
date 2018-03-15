@@ -41,10 +41,13 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     public void onBindViewHolder(ViewHolder holder, int position){
         String temp = items.get(position).getTitle();
         android.graphics.drawable.Drawable image = items.get(position).getDrawable();
+        String time = items.get(position).getTime();
+        String numFavourites = items.get(position).getNumFavourites();
+
         holder.title.setText(temp);
-        holder.image.setImageDrawable(image);
-        holder.time.setText(items.get(position).getTime());
-        holder.numFavourites.setText(items.get(position).getNumFavourites());
+        if(image!=null) holder.image.setImageDrawable(image);
+        if(time!=null) holder.time.setText(time);
+        if(numFavourites!=null) holder.numFavourites.setText(numFavourites);
     }
 
 

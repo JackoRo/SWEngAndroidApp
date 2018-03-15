@@ -10,17 +10,14 @@
     <RelativeLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="164dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#e7e3d4"
+        android:layout_height="wrap_content"
+
+        android:background="#DDD"
         app:layout_constraintHorizontal_weight="1">
 
         <!-- input box -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/text_input"
+            android:id="@+id/searchPage_text_input"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
@@ -37,11 +34,12 @@
 
         <!-- Search Icon -->
         <ImageButton
+            android:id="@+id/searchPage_search_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/search_icon"
             android:contentDescription="@string/searchButton"
-            android:layout_alignEnd="@id/text_input"
+            android:layout_alignEnd="@id/searchPage_text_input"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="-60dp"/>
 
@@ -49,12 +47,12 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_input"
+            android:layout_below="@id/searchPage_text_input"
             android:layout_centerHorizontal="true"
             >
 
             <ToggleButton
-                android:id="@+id/togglebutton1"
+                android:id="@+id/searchPage_togglebuttonSpicy"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/spicy_filter_grey"
@@ -63,17 +61,17 @@
                 android:layout_margin="4dp"/>
 
             <ToggleButton
-                android:id="@+id/togglebutton2"
+                android:id="@+id/searchPage_togglebuttonVegetarian"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/vegetarian_filter_grey"
                 android:textOff=""
                 android:textOn=""
-                android:layout_toRightOf="@id/togglebutton1"
+                android:layout_toRightOf="@id/searchPage_togglebuttonSpicy"
                 android:layout_margin="4dp"/>
 
             <ToggleButton
-                android:id="@+id/togglebutton3"
+                android:id="@+id/searchPage_togglebuttonVegan"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 tools:layout_editor_absoluteX="135dp"
@@ -81,37 +79,37 @@
                 android:background="@drawable/vegan_filter_grey"
                 android:textOff=""
                 android:textOn=""
-                android:layout_toRightOf="@id/togglebutton2"
+                android:layout_toRightOf="@id/searchPage_togglebuttonVegetarian"
                 android:layout_margin="4dp"/>
 
             <ToggleButton
-                android:id="@+id/togglebutton4"
+                android:id="@+id/searchPage_togglebuttonLactose"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/lactosefree_filter_grey"
                 android:textOff=""
                 android:textOn=""
-                android:layout_toRightOf="@id/togglebutton3"
+                android:layout_toRightOf="@id/searchPage_togglebuttonVegan"
                 android:layout_margin="4dp"/>
 
             <ToggleButton
-                android:id="@+id/togglebutton5"
+                android:id="@+id/searchPage_togglebuttonNuts"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/nutfree_filter_grey"
                 android:textOff=""
                 android:textOn=""
-                android:layout_toRightOf="@id/togglebutton4"
+                android:layout_toRightOf="@id/searchPage_togglebuttonLactose"
                 android:layout_margin="4dp"/>
 
             <ToggleButton
-                android:id="@+id/togglebutton6"
+                android:id="@+id/searchPage_togglebuttonGluten"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/glutenfree_filter_grey"
                 android:textOff=""
                 android:textOn=""
-                android:layout_toRightOf="@id/togglebutton5"
+                android:layout_toRightOf="@id/searchPage_togglebuttonNuts"
                 android:layout_margin="4dp"/>
 
         </RelativeLayout>
@@ -122,7 +120,7 @@
 
 
    <android.support.v7.widget.RecyclerView
-       android:id="@+id/constraintLayout2"
+       android:id="@+id/searchPage_recipeContainer"
        android:layout_width="wrap_content"
        android:layout_height="350dp"
        app:layout_constraintBottom_toBottomOf="parent"
