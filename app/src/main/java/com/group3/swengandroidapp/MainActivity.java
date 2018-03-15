@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 toast.show();
             }
             else {
-                Log.d("MainActivity: BroadcastReceiver: Error on receive", intent.getStringExtra(PythonClient.ACTION));
+                Log.d("MainActivity:", "BroadcastReceiver: Error on receive" + intent.getStringExtra(PythonClient.ACTION));
             }
         }
     };
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:  // Favourites
                 intent = new Intent();
-                intent.setClass(this,FavouriteListActivity.class);                 // Set new activity destination
+                intent.setClass(this,Favourites.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
                 break;

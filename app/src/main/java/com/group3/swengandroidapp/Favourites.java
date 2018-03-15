@@ -37,27 +37,20 @@ public class Favourites extends MainActivity implements RecipeRecyclerViewAdaper
         super.onCreateDrawer();
 
         listView=(ListView)findViewById(R.id.recipe_list);
-
         setTitle("Favourites");
-
         FavouriteRecipes = (ArrayList<Recipe>)getIntent().getSerializableExtra("FavouriteRecipeExtra");
 
-
-        //Setup RecyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
+        // SETUP RECIPE CONTAINER
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.searchPage_recipeContainer);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        favouritesAdapter = new RecipeRecyclerViewAdaper(this);
-        //favouritesAdapter.setClickListener(this);
-        recyclerView.setAdapter(favouritesAdapter);
+        displayAdapter = new RecipeRecyclerViewAdaper(this);
+        displayAdapter.setClickListener(this);
+        recyclerView.setAdapter(displayAdapter);
+    }
 
-        /*
-        favouritesAdapter = new FavouritesAdapter(activity_favourite_list.this, 0, recipeFavouritesList);
-        favouritesAdapter.setAdapter(favouritesAdapter);*/
-
-
-
-
-
+    @Override
+    protected void onStart(){
+        super.onStart();
 
     }
 

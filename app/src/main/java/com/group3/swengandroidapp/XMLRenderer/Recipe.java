@@ -13,7 +13,9 @@ import com.group3.swengandroidapp.R;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -36,7 +38,7 @@ public class Recipe implements Serializable {
     private String author = "n/a";
     private String description = "n/a";
     private String id = "n/a";
-    private String thumbnail = null;
+    private String thumbnail = "n/a";
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
@@ -193,7 +195,23 @@ public class Recipe implements Serializable {
     }
 
     public static Icon produceDescriptor(Context c, Recipe recipe) {
-        Drawable image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
+        Drawable image = null;
+
+        if(recipe.getThumbnail().contains("http")){
+            Log.d("Recipe", "Apparantly, " + recipe.getThumbnail() + "contains http");
+            try{
+                URL url = new URL(recipe.getThumbnail());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                image = new BitmapDrawable(c.getResources(), BitmapFactory.decodeStream(input));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
+        }
         return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
 
