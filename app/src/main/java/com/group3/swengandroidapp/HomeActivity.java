@@ -27,13 +27,15 @@ import java.util.ArrayList;
  * Created by Kevin on 12/03/2018.
  */
 
-public class HomeActivity extends MainActivity  {
+//public class HomeActivity extends MainActivity  {
 
-    ArrayList<Button> favouriteButtons = new ArrayList<Button>();
-    ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();
+
 
 
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
+
+    ArrayList<Button> favouriteButtons = new ArrayList<Button>();
+    ArrayList<Recipe> favouritesRecipeBook = new ArrayList<Recipe>();
 
     RecipeRecyclerViewAdaper recipeAdapter;
     ArrayList<Recipe.Icon> recipes;
@@ -44,6 +46,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". ID: "+ recipeAdapter.getItem(position).getId());
     }
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -63,6 +66,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         super.onStart();
         setTitle("Home");
 
+        /*
         ImageButton imagebuttonExample = (ImageButton)findViewById(R.id.imageButton6);
         imagebuttonExample.setOnClickListener(new OnClickListener() {
             @Override
@@ -77,11 +81,11 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         });
         /*Listeners for any arraylist of favourite buttons/imageviews/textviews etc, and creating
         * the favourites arraylist from these listeners.*/
-        favouriteButtons.add((Button)findViewById(R.id.add_r1));
-        favouriteButtons.add((Button)findViewById(R.id.add_r2));
-        favouriteButtons.add((Button)findViewById(R.id.add_r3));
-        favouriteButtons.add((Button)findViewById(R.id.add_r4));
-
+        //favouriteButtons.add((Button)findViewById(R.id.add_r1));
+        //favouriteButtons.add((Button)findViewById(R.id.add_r2));
+        //favouriteButtons.add((Button)findViewById(R.id.add_r3));
+        //favouriteButtons.add((Button)findViewById(R.id.add_r4));
+        /*
         for(int i = 0; i<favouriteButtons.size(); i++){
             final int selectedRecipe = i;
             favouriteButtons.get(i).setOnClickListener(new View.OnClickListener(){
@@ -108,13 +112,13 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         }
 
         //Listener for button/textview (depending on what is chosen) to open the favourites page and pass the favourites arraylist.
-        Button view_favourites = findViewById(R.id.view_favourites);
+        //Button view_favourites = findViewById(R.id.view_favourites);
 
-        view_favourites.setOnClickListener(new View.OnClickListener(){
+        /*view_favourites.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
-                Intent view_f = new Intent(HomeActivity.this, FavouriteList.class);
+                Intent view_f = new Intent(HomeActivity.this, Favourites.class);
 
                 view_f.putExtra("FavouriteRecipeExtra", favouritesRecipeBook);
 
@@ -122,6 +126,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
             }
         });
+        */
 
 
 

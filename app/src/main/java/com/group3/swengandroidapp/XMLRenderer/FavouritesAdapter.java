@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.group3.swengandroidapp.FavouriteList;
+import com.group3.swengandroidapp.Favourites;
 import com.group3.swengandroidapp.R;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class FavouritesAdapter extends ArrayAdapter<Recipe> {
     private int layoutid;
 
     public FavouritesAdapter(Context context, ArrayList<Recipe> items){
-        super(context, R.layout.activity_favourite_list, items);
+        super(context, R.layout.activity_favourites, items);
 
     }
 
@@ -35,7 +35,7 @@ public class FavouritesAdapter extends ArrayAdapter<Recipe> {
         if(view == null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            view = inflater.inflate(R.layout.activity_favourite_list, parent, false);
+            view = inflater.inflate(R.layout.activity_favourites, parent, false);
             viewHolder.txtTitle = (TextView)view.findViewById(R.id.favourite_recipe);
             view.setTag(viewHolder);
         }

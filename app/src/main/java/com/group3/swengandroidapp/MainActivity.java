@@ -1,14 +1,11 @@
 package com.group3.swengandroidapp;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,8 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import static com.group3.swengandroidapp.R.drawable.hands_off_logo;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +50,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected void onCreateDrawer() {
+        //final Context thisContext = this;
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
 
+        //listenButtons();
+        /*add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((ToggleButton) view).isChecked()) {
+                    DisplayToast("Toggle button is On");
+                }
+                else{
+                    DisplayToast("Toggle button is Off");
+                }
+            }
+        });*/
+
+        /*view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayToast("You have clicked the Save button");
+                //viewFavourites();
+            }
+        });*/
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
@@ -90,30 +111,91 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
+
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
+        }
 
     }
 
+    /*public void listenButtons(){
+         add_button.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+         if (((ToggleButton) view).isChecked()) {
+         DisplayToast("Toggle button is On");
+         }
+         else{
+         DisplayToast("Toggle button is Off");
+         }
+     } */
+     /* view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //DisplayToast("You have clicked the Save button");
+                viewFavourites();
+            }
+        });
+    }*/
+
+
+    /*
+    public void addFavourite() {
+       Recipe recipe1 = new Recipe("Crisps", "user1", "This is a recipe for crisps.", 1);
+       addToFavourites(recipe1);
+
+    }
+
+    protected void addToFavourites(Recipe recipe){
+
+        ArrayList<Recipe> arrayRecipe = new ArrayList<Recipe>();
+
+        arrayRecipe.add(recipe);
+
+    }*/
 
 
 
+/*
+    public void viewFavourites() {
+        //Call command to pass arraylist through to other activity.
 
-//    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            // Get extra data included in the Intent
-//            String message = intent.getStringExtra("message");
-//            Log.d("receiver", "Got message: " + message);
-//
-//            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.FETCH_RECIPE) {
-//                Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-//                startActivity(newIntent);
-//            }
-//            else {
-//                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
-//            }
-//            //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
-//        }
-//    };
+
+        //Creates an instance of the Intent class-the way android switches between activities.
+        //Tells you to watch the class FavouriteListActivity.
+        Intent view_f = new Intent(this, FavouriteListActivity.class);
+        //Next, the code that launches an activity.
+        startActivity(view_f);
+    }
+
+    private void DisplayToast(String msg) {
+        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
+    }*/
+
+
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Log.d("receiver", "Got message: " + message);
+
+            //Fetches all the recipes from the server
+            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.LOAD_ALL) {
+                Toast toast = Toast.makeText(context, "Recipes loaded!",Toast.LENGTH_LONG);
+                toast.show();
+            }
+            else {
+                Log.d("MainActivity:", "BroadcastReceiver: Error on receive" + intent.getStringExtra(PythonClient.ACTION));
+            }
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -126,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_resource, menu);
+
+
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -147,6 +231,10 @@ public class MainActivity extends AppCompatActivity {
         }
         // Handle action buttons
         switch(item.getItemId()) {
+            case R.id.action_menu:
+                Intent intent = new Intent();
+                intent.setClass(this,SearchpageActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -173,43 +261,43 @@ public class MainActivity extends AppCompatActivity {
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
-                this.finish();        // End this activity
+
                 break;
             case 1:  // Favourites
                 intent = new Intent();
-                intent.setClass(this,FavouriteList.class);                 // Set new activity destination
+                intent.setClass(this,Favourites.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
-                this.finish();
+
                 break;
             case 2:  // Instructional Videos
                 intent = new Intent();
                 intent.setClass(this,InstructionalVideoActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
-                this.finish();     // End this activity
+
                 break;
             case 3:  // Shopping List
                 intent = new Intent();
                 intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
-                this.finish();     // End this activity
+
                 break;
             case 4:  // History
                 intent = new Intent();
                 intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
-                this.finish();     // End this activity
+
                 break;
             case 5: // Settings
                 intent = new Intent();
                 intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
-                this.finish();     // End this activity
+
                 break;
             default: // Home
                 intent = new Intent();
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
-                this.finish();
+
         }
 
 
@@ -217,14 +305,6 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mFragmentTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
-
-        /* if (position == 7){
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
-            intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_RECIPE);
-            intent.putExtra(PythonClient.ID,"0000");
-            startService(intent);
-        } */
-
     }
 
     @Override
