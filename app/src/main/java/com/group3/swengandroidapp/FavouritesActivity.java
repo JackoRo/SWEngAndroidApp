@@ -19,16 +19,9 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 import java.util.ArrayList;
 
-public class Favourites extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
-
-    ArrayList<com.group3.swengandroidapp.XMLRenderer.Recipe> FavouriteRecipes = new ArrayList<Recipe>();
-    ArrayList<Recipe.Icon> recipes;
-    RecipeRecyclerViewAdaper favouritesAdapter;
-    ArrayList<Recipe> recipeFavouritesList = new ArrayList<Recipe>();
-    ListView listView;
+public class FavouritesActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     RecipeRecyclerViewAdaper displayAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +29,8 @@ public class Favourites extends MainActivity implements RecipeRecyclerViewAdaper
         setContentView(R.layout.activity_favourites);
         super.onCreateDrawer();
 
-        listView=(ListView)findViewById(R.id.recipe_list);
-        setTitle("Favourites");
-        FavouriteRecipes = (ArrayList<Recipe>)getIntent().getSerializableExtra("FavouriteRecipeExtra");
-
         // SETUP RECIPE CONTAINER
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.searchPage_recipeContainer);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.favourites_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);
@@ -51,7 +40,7 @@ public class Favourites extends MainActivity implements RecipeRecyclerViewAdaper
     @Override
     protected void onStart(){
         super.onStart();
-
+        displayAdapter.setRecipes(FavouritesHandler.getInstance().getFavourites());
     }
 
     @Override

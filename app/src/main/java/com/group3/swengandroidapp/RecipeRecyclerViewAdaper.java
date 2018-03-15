@@ -143,11 +143,11 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
      * Clears container and fills with given recipes (Recipe type or String!!)
      * @param items ArrayList of Recipe or String (id string) to be processed!
      */
-    public void setRecipes(ArrayList<Object> items){
+    public void setRecipes(ArrayList<?> items){
         this.items.clear();
         for(Object o : items){
             if(o instanceof Recipe){
-                items.add(Recipe.produceDescriptor(context, (Recipe)o));
+                this.items.add(Recipe.produceDescriptor(context, (Recipe)o));
             }else if(o instanceof String){
                 Recipe r = RemoteFileManager.getInstance().getRecipe((String)o);
                 if(r == null){
@@ -157,7 +157,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
                     r = new Recipe((String)o, "temp", "Replacement Recipe!", (String)o);
                 }
 
-                items.add(Recipe.produceDescriptor(context, r));
+                this.items.add(Recipe.produceDescriptor(context, r));
             }
         }
         this.notifyDataSetChanged();

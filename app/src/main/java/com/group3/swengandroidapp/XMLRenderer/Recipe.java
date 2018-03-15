@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.group3.swengandroidapp.Filter;
 import com.group3.swengandroidapp.R;
 

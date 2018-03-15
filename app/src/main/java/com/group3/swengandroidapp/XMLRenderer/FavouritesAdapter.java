@@ -1,7 +1,6 @@
 /*This class temporarily acts as the adapter for the favourites page.*/
 package com.group3.swengandroidapp.XMLRenderer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.group3.swengandroidapp.Favourites;
 import com.group3.swengandroidapp.R;
 
 import java.util.ArrayList;

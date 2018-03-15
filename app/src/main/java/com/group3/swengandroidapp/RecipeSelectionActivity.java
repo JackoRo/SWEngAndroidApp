@@ -1,6 +1,5 @@
 package com.group3.swengandroidapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +35,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         } else {
             id = intent.getStringExtra(PythonClient.ID);
         }
-        Log.d("RecipeSelectionActivity: ID", id);
+        Log.d("RecipeSelectionActivity", "ID:" + id);
         recipe = RemoteFileManager.getInstance().getRecipe(id);
 
         final Button button = findViewById(R.id.startButton);
@@ -50,7 +48,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             }
         });
 
-        ImageView thumbnail = findViewById(R.id.imageView);
+        ImageView thumbnail = findViewById(R.id.recipe_thumbnail);
         TextView recipeName = findViewById(R.id.recipeName);
         TextView description = findViewById(R.id.description);
         TextView descriptionTitle = findViewById(R.id.descriptionTitle);
