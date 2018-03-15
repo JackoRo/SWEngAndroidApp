@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+  <id>0008</id>
+  <title>Beans on Toast</title>
+  <author>SWEng Group 3</author>
+  <time>5mins</time>
+  <description>When times are tough.</description>
+  <thumbnailURL>https://www.seriouseats.com/recipes/images/2012/10/227311-20121107-british-bites-beans-on-toast.JPG</thumbnailURL>
+  <Filters spicy="false" lactose="true" nuts="false" vegetarian="true" vegan="true" gluten="false"></Filters>
+  <Ingredient amount="2" units="slices">Bread</Ingredient>
+  <Ingredient amount="1" units="can">Beans</Ingredient>
+</Recipe>

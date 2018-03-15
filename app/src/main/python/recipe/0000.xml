@@ -2,6 +2,7 @@
 <Recipe>
   <id>0000</id>
   <title>Cake</title>
+  <time>2 Hours</time>
   <author>Mary Berry</author>
   <description>The cake is a lie.</description>
   <thumbnailURL>http://i0.kym-cdn.com/photos/images/facebook/000/115/357/portal-cake.jpg</thumbnailURL>
