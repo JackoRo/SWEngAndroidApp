@@ -37,5 +37,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
        // Glide.with(this)
                 //.load(recipe.getThumbnail())
                // .into(thumbnail);
+        
     }
 }
