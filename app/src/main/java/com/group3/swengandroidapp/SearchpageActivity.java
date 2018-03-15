@@ -24,12 +24,13 @@ public class SearchpageActivity extends AppCompatActivity {
 
     public String search;
 
-    public Boolean spicyFilter = false;
-    public Boolean lactoseFilter = false;
-    public Boolean nutsFilter = false;
-    public Boolean vegetarianFilter = false;
-    public Boolean veganFilter = false;
-    public Boolean glutenFilter = false;
+    //Filter booleans
+    public Boolean spicyFilter=false;
+    public Boolean lactoseFilter=false;
+    public Boolean nutsFilter=false;
+    public Boolean vegetarianFilter=false;
+    public Boolean veganFilter=false;
+    public Boolean glutenFilter=false;
 
 
     @Override
@@ -38,7 +39,9 @@ public class SearchpageActivity extends AppCompatActivity {
         setContentView(R.layout.search_page);
 
 
-        //When search button is click store the input string of the search bar
+
+
+            //When search button is click store the input string of the search bar
         final ImageButton button = findViewById(R.id.imageButton3);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -65,7 +68,7 @@ public class SearchpageActivity extends AppCompatActivity {
             // Remove recipes the user has not searched for
             ArrayList<String> subentries = new ArrayList<String>();
 
-            for (Object entry : FoundList) {
+            for (Object entry : recipes) {
                 String entryText = (String) entry;
                 if (entryText.toUpperCase().contains(search)) {
                     subentries.add(entryText);
@@ -86,13 +89,20 @@ public class SearchpageActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     spicyFilter = true;
-                   toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
+                   //toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
                 } else {
                     spicyFilter = false;
-                    toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
+                    //toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
                 }
             }
         });
+        if(spicyFilter==true){
+            toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
+        }
+        else{
+            toggleSpicy.setBackgroundResource(R.drawable.spicy_filter_grey);
+        }
+
 
         ToggleButton toggleVegetarian = (ToggleButton) findViewById(R.id.togglebuttonVegetarian);
         toggleVegetarian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
