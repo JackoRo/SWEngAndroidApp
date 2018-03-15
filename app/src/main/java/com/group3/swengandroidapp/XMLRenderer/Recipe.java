@@ -5,10 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.group3.swengandroidapp.Filter;
 import com.group3.swengandroidapp.R;
 
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +30,7 @@ import java.util.ArrayList;
  *
  */
 
-public class Recipe {
+public class Recipe implements Serializable {
     // Meta data
     private String title = "n/a";
     private String author = "n/a";
@@ -190,5 +196,6 @@ public class Recipe {
         Drawable image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
         return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
+
 
 }
