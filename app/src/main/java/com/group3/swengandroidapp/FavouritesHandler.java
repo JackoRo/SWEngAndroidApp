@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class FavouritesHandler {
+
     private ArrayList<String> items;
 
     private static FavouritesHandler handler = new FavouritesHandler();
@@ -43,4 +44,13 @@ public class FavouritesHandler {
         }
         return false;
     }
+
+    public void print(){
+        System.out.println("FAOURITES:");
+        for(String s : items){
+            System.out.println(s);
+        }
+    }
+
+
 }
