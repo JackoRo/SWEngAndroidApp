@@ -1,4 +1,4 @@
-package com.group3.Filter;
+package com.group3.swengandroidapp;
 
 import android.content.Intent;
 

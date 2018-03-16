@@ -1,26 +1,33 @@
 package com.group3.swengandroidapp;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 
-import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import static org.junit.Assert.*;
+
 /**
- * Created by Jack on 16/03/2018.
+ * Instrumented test, which will execute on an Android device.
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+@RunWith(AndroidJUnit4.class)
+public class RecipeInstrumentedTest {
+    /* Context appContext = InstrumentationRegistry.getTargetContext();
 
-public class RecipeTest {
-
-    /*RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
+    RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
 
     @Before
     public void initialize() {
 
-        Intent intent = new Intent(, PythonClient.class);
+        Intent intent = new Intent(appContext, PythonClient.class);
         intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
         startService(intent);
     }
@@ -69,6 +76,14 @@ public class RecipeTest {
     @Test
     public void recipe_iscorrectIngredients() {
         String id = "0000";
-    }*/
+    }
 
+    @Test
+    public void useAppContext() throws Exception {
+        // Context of the app under test.
+
+
+        assertEquals("com.group3.swengandroidapp", appContext.getPackageName());
+    } */
 }
+
