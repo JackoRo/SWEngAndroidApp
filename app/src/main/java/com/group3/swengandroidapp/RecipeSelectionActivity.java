@@ -68,6 +68,13 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView thumbnail = findViewById(R.id.recipe_selection_thumbnail_image);
         TextView time = findViewById(R.id.recipe_selection_thumbnail_time);
         TextView description = findViewById(R.id.recipe_selection_description);
+        TextView author = findViewById(R.id.recipe_selection_author);
+        ImageView spicy = findViewById(R.id.recipe_selection_thumbnail_filter_spicy);
+        ImageView veg = findViewById(R.id.recipe_selection_thumbnail_filter_vegetarian);
+        ImageView vegan = findViewById(R.id.recipe_selection_thumbnail_filter_vegan);
+        ImageView lactose = findViewById(R.id.recipe_selection_thumbnail_filter_lactose);
+        ImageView nuts = findViewById(R.id.recipe_selection_thumbnail_filter_nuts);
+        ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         ListView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
         Recipe recipe;
@@ -75,9 +82,28 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", (String)("ID: " + id), "n/a");
         }
+        if(recipe.getSpicy()){
+            spicy.setImageResource(R.drawable.spicy_filter);
+        }
+        if(recipe.getVegetarian()){
+            spicy.setImageResource(R.drawable.vegetarian_filter);
+        }
+        if(recipe.getVegan()){
+            spicy.setImageResource(R.drawable.vegan_filter);
+        }
+        if(recipe.getLactose()){
+            spicy.setImageResource(R.drawable.lactosefree_filter);
+        }
+        if(recipe.getNuts()){
+            spicy.setImageResource(R.drawable.nutfree_filter);
+        }
+        if(recipe.getGluten()){
+            spicy.setImageResource(R.drawable.glutenfree_filter);
+        }
         setTitle(recipe.getTitle());
         thumbnail.setImageResource(R.drawable.thumbnail);
         time.setText(recipe.getTime());
+        author.setText(recipe.getAuthor());
 
 
         //TODO: Generate and draw recipe icon

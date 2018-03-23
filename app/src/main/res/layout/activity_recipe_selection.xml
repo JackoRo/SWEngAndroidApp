@@ -20,6 +20,58 @@
             android:layout_height="200dp"
             app:srcCompat="@drawable/hands_off_logo"/>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@id/recipe_selection_thumbnail_image"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:background="#6000">
+            <ImageView
+                android:layout_margin="3dp"
+                android:id="@+id/recipe_selection_thumbnail_filter_spicy"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/spicy_filter_grey"/>
+            <ImageView
+                android:layout_margin="3dp"
+                android:id="@+id/recipe_selection_thumbnail_filter_vegetarian"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/vegan_filter_grey"
+                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_spicy"/>
+            <ImageView
+                android:layout_margin="3dp"
+                android:id="@+id/recipe_selection_thumbnail_filter_vegan"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/vegan_filter_grey"
+                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_vegetarian"/>
+            <ImageView
+                android:layout_margin="3dp"
+                android:id="@+id/recipe_selection_thumbnail_filter_lactose"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/spicy_filter_grey"
+                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_vegan"/>
+            <ImageView
+                android:layout_margin="3dp"
+                android:id="@+id/recipe_selection_thumbnail_filter_nuts"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/nutfree_filter_grey"
+                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_lactose"/>
+            <ImageView
+                android:layout_margin="3dp"
+                android:id="@+id/recipe_selection_thumbnail_filter_gluten"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/glutenfree_filter_grey"
+                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_nuts"/>
+
+        </RelativeLayout>
+
         <ImageButton
             android:id="@+id/recipe_selection_thumbnail_favourites_button"
             android:layout_width="wrap_content"
@@ -52,7 +104,7 @@
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/description_author"
+        android:id="@+id/recipe_selection_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Author"
@@ -61,11 +113,11 @@
 
     <TextView
         android:layout_marginStart="10dp"
-        android:id="@+id/descriptionTitle"
+        android:id="@+id/recipe_selection_description_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_below="@id/description_author"
+        android:layout_below="@id/recipe_selection_author"
 
         android:textStyle="bold"
         android:textSize="15sp"/>
@@ -79,7 +131,7 @@
         android:maxHeight="158dp"
         android:layout_marginEnd="220dp"
         android:text="This is a test description which is pretty long as I need to test the wrapping and limitation sfoshdfksjdfha sfkasjdfhaskdfj akdf jsdfkjsdfh skjdfh adf asd fjahsdf sadkjfashdkfjash dfkasd fkasdfjfhdsakjdfhakdfjahsdfk asdkfjahsdkfjhaskdfjasdfkaf"
-        android:layout_below="@id/descriptionTitle"/>
+        android:layout_below="@id/recipe_selection_description_label"/>
 
     <LinearLayout
         android:layout_below="@id/recipe_selection_thumbnail"
