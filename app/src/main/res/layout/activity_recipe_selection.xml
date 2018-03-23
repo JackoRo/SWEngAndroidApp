@@ -53,7 +53,7 @@
                 android:id="@+id/recipe_selection_thumbnail_filter_lactose"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/spicy_filter_grey"
+                android:src="@drawable/lactosefree_filter_grey"
                 android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_vegan"/>
             <ImageView
                 android:layout_margin="3dp"
@@ -151,7 +151,8 @@
             android:text="Ingredients"
             android:textStyle="bold"
             android:textSize="16sp"/>
-        <ListView
+        <TextView
+            android:text="NO INGREDIENTS!"
             android:layout_margin="10dp"
             android:id="@+id/recipe_selection_ingredients"
             android:layout_width="match_parent"

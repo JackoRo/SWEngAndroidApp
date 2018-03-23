@@ -75,7 +75,6 @@ public class Recipe implements Serializable {
         if(id != null) {
             this.id = id;
         }
-
         // Both ArrayLists initialised to have 0 stored objects
         // (Whenever you add to an array list, it extends the size by 1 (I think))
 
@@ -173,6 +172,15 @@ public class Recipe implements Serializable {
     }
     public String getTime(){return this.time;}
 
+
+    public String generateIngredientsString(){
+        StringBuilder sb = new StringBuilder();
+        for(Ingredient i : this.ingredients){
+            sb.append("- " + i.getName() + ": " + i.getQuantityValue()+" " + i.getQuantityUnits()+"\n");
+        }
+        return sb.toString();
+    }
+
     public static class Icon {
         private String title;
         private String numFavourites;
@@ -199,7 +207,6 @@ public class Recipe implements Serializable {
         Drawable image = null;
 
         if(recipe.getThumbnail().contains("http")){
-            Log.d("Recipe", "Apparantly, " + recipe.getThumbnail() + "contains http");
             try{
                 URL url = new URL(recipe.getThumbnail());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

@@ -3,6 +3,7 @@ package com.group3.swengandroidapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -75,7 +76,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView lactose = findViewById(R.id.recipe_selection_thumbnail_filter_lactose);
         ImageView nuts = findViewById(R.id.recipe_selection_thumbnail_filter_nuts);
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
-        ListView ingredients = findViewById(R.id.recipe_selection_ingredients);
+        TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
         Recipe recipe;
         recipe = RemoteFileManager.getInstance().getRecipe(id);
@@ -86,28 +87,26 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             spicy.setImageResource(R.drawable.spicy_filter);
         }
         if(recipe.getVegetarian()){
-            spicy.setImageResource(R.drawable.vegetarian_filter);
+            veg.setImageResource(R.drawable.vegetarian_filter);
         }
         if(recipe.getVegan()){
-            spicy.setImageResource(R.drawable.vegan_filter);
+            vegan.setImageResource(R.drawable.vegan_filter);
         }
         if(recipe.getLactose()){
-            spicy.setImageResource(R.drawable.lactosefree_filter);
+            lactose.setImageResource(R.drawable.lactosefree_filter);
         }
         if(recipe.getNuts()){
-            spicy.setImageResource(R.drawable.nutfree_filter);
+            nuts.setImageResource(R.drawable.nutfree_filter);
         }
         if(recipe.getGluten()){
-            spicy.setImageResource(R.drawable.glutenfree_filter);
+            gluten.setImageResource(R.drawable.glutenfree_filter);
         }
         setTitle(recipe.getTitle());
         thumbnail.setImageResource(R.drawable.thumbnail);
         time.setText(recipe.getTime());
         author.setText(recipe.getAuthor());
-
-
-        //TODO: Generate and draw recipe icon
         description.setText(recipe.getDescription());
+        ingredients.setText(recipe.generateIngredientsString());
 
         //TODO: Generate and draw ingredients list
         //ingredients.setText(recipe.getIngredients());
