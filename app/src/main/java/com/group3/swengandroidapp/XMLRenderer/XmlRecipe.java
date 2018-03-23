@@ -1,5 +1,7 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -19,19 +21,18 @@ public class XmlRecipe extends Recipe {
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         factory.setNamespaceAware(false);
         xpp = factory.newPullParser();
-
         xpp.setInput(new StringReader(xmlFile));
-
         int eventType = xpp.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG) {
                 if (xpp.getName().equals("Filters")) {
-                    setSpicy(Boolean.getBoolean(xpp.getAttributeValue(null, "spicy")));
-                    setLactose(Boolean.getBoolean(xpp.getAttributeValue(null, "lactose")));
-                    setNuts(Boolean.getBoolean(xpp.getAttributeValue(null, "nuts")));
-                    setVegetarian(Boolean.getBoolean(xpp.getAttributeValue(null, "vegetarian")));
-                    setVegan(Boolean.getBoolean(xpp.getAttributeValue(null, "vegan")));
-                    setGluten(Boolean.getBoolean(xpp.getAttributeValue(null, "gluten")));
+                    Log.d("TEST", "Found filters");
+                    setSpicy(Boolean.valueOf(xpp.getAttributeValue(null, "spicy")));
+                    setLactose(Boolean.valueOf(xpp.getAttributeValue(null, "lactose")));
+                    setNuts(Boolean.valueOf(xpp.getAttributeValue(null, "nuts")));
+                    setVegetarian(Boolean.valueOf(xpp.getAttributeValue(null, "vegetarian")));
+                    setVegan(Boolean.valueOf(xpp.getAttributeValue(null, "vegan")));
+                    setGluten(Boolean.valueOf(xpp.getAttributeValue(null, "gluten")));
                 }
                 else if (xpp.getName().equals("Ingredient")) {
                     String name = "";
