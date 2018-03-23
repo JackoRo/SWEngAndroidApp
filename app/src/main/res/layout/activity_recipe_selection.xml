@@ -8,60 +8,81 @@
     tools:context="com.group3.swengandroidapp.RecipeSelectionActivity"
     android:id="@+id/recipe_selection_relative_layout">
 
-    <ImageView
-        android:layout_margin="10dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/recipe_selection_thumbnail"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:srcCompat="@drawable/hands_off_logo"
-        android:layout_below="@+id/recipe_selection_recipe_name"/>
-
-    <TextView
-        android:id="@+id/recipe_selection_recipe_name"
-        android:layout_width="match_parent"
-        android:textAlignment="center"
-        android:background="#DDD"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="30sp"/>
+        android:id="@+id/recipe_selection_thumbnail"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true">
+        <ImageView
+            android:id="@+id/recipe_selection_thumbnail_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/hands_off_logo"/>
+
+        <ImageButton
+            android:id="@+id/recipe_selection_thumbnail_favourites_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heart_off"
+            android:background="#6000"
+            android:layout_margin="4dp"
+            android:padding="5dp"
+            android:layout_alignBottom="@id/recipe_selection_thumbnail_image"
+            android:layout_alignEnd="@id/recipe_selection_thumbnail_image"
+            />
+
+        <TextView
+            android:id="@+id/recipe_selection_thumbnail_time"
+            android:text="0 mins"
+            android:textSize="14sp"
+            android:gravity="bottom"
+            android:padding="5dp"
+            android:layout_margin="4dp"
+            android:textColor="#FFF"
+            android:background="#6000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/timer"
+            android:layout_alignBottom="@id/recipe_selection_thumbnail_image"
+            android:layout_alignStart="@id/recipe_selection_thumbnail_image"/>
+
+    </RelativeLayout>
 
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/descriptionTitle"
+        android:id="@+id/description_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_below="@id/recipe_selection_recipe_name"
+        android:text="Author"
         android:textStyle="bold"
         android:textSize="15sp"/>
 
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/descriptionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:layout_below="@id/description_author"
+
+        android:textStyle="bold"
+        android:textSize="15sp"/>
+
+
+    <TextView
         android:layout_marginStart="10dp"
         android:id="@+id/recipe_selection_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="168dp"
+        android:maxHeight="158dp"
         android:layout_marginEnd="220dp"
         android:text="This is a test description which is pretty long as I need to test the wrapping and limitation sfoshdfksjdfha sfkasjdfhaskdfj akdf jsdfkjsdfh skjdfh adf asd fjahsdf sadkjfashdkfjash dfkasd fkasdfjfhdsakjdfhakdfjahsdfk asdkfjahsdkfjhaskdfjasdfkaf"
         android:layout_below="@id/descriptionTitle"/>
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/recipe_selection_thumbnail"
-        android:layout_alignParentRight="true"
-        android:textOff=""
-        android:textOn=""
-        android:background="@drawable/favempty"
-        android:layout_margin="10dp"
-        android:id="@+id/recipe_selection_favourites_button"
-        />
-
     <LinearLayout
-        android:layout_below="@id/recipe_selection_favourites_button"
+        android:layout_below="@id/recipe_selection_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -78,12 +99,11 @@
             android:text="Ingredients"
             android:textStyle="bold"
             android:textSize="16sp"/>
-        <TextView
+        <ListView
             android:layout_margin="10dp"
             android:id="@+id/recipe_selection_ingredients"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="- NA"/>
+            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>

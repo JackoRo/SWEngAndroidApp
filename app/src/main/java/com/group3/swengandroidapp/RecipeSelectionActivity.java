@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+
+import java.util.ArrayList;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
     String id;
@@ -33,27 +37,27 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             }
         });
 
-        final Button favourites = findViewById(R.id.recipe_selection_favourites_button);
+        final ImageButton favourites = findViewById(R.id.recipe_selection_thumbnail_favourites_button);
         favourites.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(id!=null){
                     FavouritesHandler.getInstance().toggleFavourite(id);
                     if (FavouritesHandler.getInstance().contains(id)) {
-                        favourites.setBackgroundResource(R.drawable.favfull);
+                        favourites.setImageResource(R.drawable.heart_on);
                     } else {
-                        favourites.setBackgroundResource(R.drawable.favempty);
+                        favourites.setImageResource(R.drawable.heart_off);
                     }
                 }
             }
         });
         if(id!=null){
             if (FavouritesHandler.getInstance().contains(id)) {
-                favourites.setBackgroundResource(R.drawable.favfull);
+                favourites.setImageResource(R.drawable.heart_on);
             } else {
-                favourites.setBackgroundResource(R.drawable.favempty);
+                favourites.setImageResource(R.drawable.heart_off);
             }
         }else{
-            favourites.setBackgroundResource(R.drawable.favempty);
+            favourites.setImageResource(R.drawable.heart_off);
         }
     }
 
@@ -61,18 +65,21 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
+        ImageView thumbnail = findViewById(R.id.recipe_selection_thumbnail_image);
+        TextView time = findViewById(R.id.recipe_selection_thumbnail_time);
+        TextView description = findViewById(R.id.recipe_selection_description);
+        ListView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
         Recipe recipe;
         recipe = RemoteFileManager.getInstance().getRecipe(id);
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", (String)("ID: " + id), "n/a");
         }
-        ImageView thumbnail = findViewById(R.id.recipe_selection_thumbnail);
-        TextView recipeName = findViewById(R.id.recipe_selection_recipe_name);
-        TextView description = findViewById(R.id.recipe_selection_description);
-        TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
+        setTitle(recipe.getTitle());
+        thumbnail.setImageResource(R.drawable.thumbnail);
+        time.setText(recipe.getTime());
 
-        recipeName.setText(recipe.getTitle());
+
         //TODO: Generate and draw recipe icon
         description.setText(recipe.getDescription());
 
