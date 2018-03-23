@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,8 +45,28 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         android.graphics.drawable.Drawable image = items.get(position).getDrawable();
         String time = items.get(position).getTime();
         String numFavourites = items.get(position).getNumFavourites();
+        String id = items.get(position).getId();
 
         holder.title.setText(temp);
+        holder.favouritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(id != null){
+                    FavouritesHandler.getInstance().toggleFavourite(id);
+                    if (FavouritesHandler.getInstance().contains(id)) {
+                        holder.favouritesButton.setImageResource(R.drawable.heart_on);
+                    } else {
+                        holder.favouritesButton.setImageResource(R.drawable.heart_off);
+                    }
+                }
+            }
+        });
+
+        if (FavouritesHandler.getInstance().contains(id)) {
+            holder.favouritesButton.setImageResource(R.drawable.heart_on);
+        } else {
+            holder.favouritesButton.setImageResource(R.drawable.heart_off);
+        }
         if(image!=null) holder.image.setImageDrawable(image);
         if(time!=null) holder.time.setText(time);
         if(numFavourites!=null) holder.numFavourites.setText(numFavourites);
@@ -69,6 +91,8 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         TextView title;
         TextView numFavourites;
         TextView time;
+        ImageButton favouritesButton;
+
 
         ViewHolder(View itemView){
             super(itemView);
@@ -76,6 +100,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             title =(TextView) itemView.findViewById(R.id.recipe_icon_title);
             numFavourites =(TextView) itemView.findViewById(R.id.recipe_icon_numfavourites);
             time =(TextView) itemView.findViewById(R.id.recipe_icon_time);
+            favouritesButton = (ImageButton) itemView.findViewById(R.id.recipe_icon_numfavourites_button);
             itemView.setOnClickListener(this);
         }
 

@@ -38,25 +38,39 @@
     </TextView>
 
     <!-- FAVOURITES -->
-    <TextView
-        android:id="@+id/recipe_icon_numfavourites"
-        android:gravity="bottom"
-        android:textSize="14sp"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/heart_off"
-        android:text="0"
-        android:textColor="#FFF"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="2dp"
-        android:drawablePadding="2dp"
-        android:layout_margin="5dp"
-        android:layout_alignBottom="@id/recipe_icon_image"
-        android:layout_alignEnd="@id/recipe_icon_image"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:background="#9000"
-        />
+        android:layout_margin="4dp"
+        >
+
+        <ImageButton
+            android:id="@+id/recipe_icon_numfavourites_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/recipe_icon_numfavourites"
+            android:src="@drawable/heart_off"
+            android:layout_margin="2dp"
+            android:background="#0000"
+            />
+
+        <TextView
+            android:id="@+id/recipe_icon_numfavourites"
+            android:gravity="bottom"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/recipe_icon_numfavourites_button"
+            android:text="0"
+            android:textColor="#FFF"
+            android:paddingStart="3dp"
+            android:paddingEnd="2dp"
+            />
+    </RelativeLayout>
+
 
 
     <!-- TIME -->
@@ -74,9 +88,9 @@
         android:paddingStart="4dp"
         android:paddingEnd="2dp"
         android:drawablePadding="2dp"
-        android:layout_margin="5dp"
-        android:layout_alignBottom="@id/recipe_icon_image"
-        android:layout_alignStart="@id/recipe_icon_image"
+        android:layout_margin="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:background="#9000"
         />
 
