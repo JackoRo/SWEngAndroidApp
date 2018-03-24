@@ -51,14 +51,36 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recipeAdapter = new RecipeRecyclerViewAdaper(this);
-        recipeAdapter.setClickListener(this);
+        recipeAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
+            @Override
+            public void onItemClick(View view, int position){
+                Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". ID: "+ recipeAdapter.getItem(position).getId());
+                Intent intent;
+                intent = new Intent();
+                intent.setClass(getApplicationContext(),RecipeSelectionActivity.class);                 // Set new activity destination
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+                intent.putExtra(PythonClient.ID, recipeAdapter.getItem(position).getId());
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+            }
+        });
         recyclerView.setAdapter(recipeAdapter);
 
         // Setup History
         RecyclerView historyView = (RecyclerView)findViewById(R.id.home_history_bar);
         historyAdapter = new RecipeRecyclerViewAdaper(this);
         historyView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        historyAdapter.setClickListener(this);
+        historyAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
+            @Override
+            public void onItemClick(View view, int position){
+                Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". ID: "+ recipeAdapter.getItem(position).getId());
+                Intent intent;
+                intent = new Intent();
+                intent.setClass(getApplicationContext(),RecipeSelectionActivity.class);                 // Set new activity destination
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+                intent.putExtra(PythonClient.ID, historyAdapter.getItem(position).getId());
+                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+            }
+        });
         historyView.setAdapter(historyAdapter);
     }
 
