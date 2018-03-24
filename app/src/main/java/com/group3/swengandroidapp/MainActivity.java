@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case 4:  // My Recipes
-                
+
                 break;
             case 5:  // History
                 intent = new Intent();
