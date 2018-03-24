@@ -7,21 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
-
-import java.util.ArrayList;
-import com.group3.swengandroidapp.XMLRenderer.*;
-import com.group3.swengandroidapp.XMLRenderer.Recipe;
-
-import java.util.ArrayList;
 
 /**
  * Created by Kevin on 12/03/2018.
@@ -29,25 +22,23 @@ import java.util.ArrayList;
 
 //public class HomeActivity extends MainActivity  {
 
-
-
-
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     RecipeRecyclerViewAdaper recipeAdapter;
-
+    RecipeRecyclerViewAdaper historyAdapter;
 
     @Override
+    /**
+     * Method called when a recipe is clicked from the home screen either in the history or main section
+     */
     public void onItemClick(View view, int position){
         Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". ID: "+ recipeAdapter.getItem(position).getId());
-
         Intent intent;
         intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeAdapter.getItem(position).getId());
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
-
     }
 
     @Override
@@ -63,6 +54,12 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         recipeAdapter.setClickListener(this);
         recyclerView.setAdapter(recipeAdapter);
 
+        // Setup History
+        RecyclerView historyView = (RecyclerView)findViewById(R.id.home_history_bar);
+        historyAdapter = new RecipeRecyclerViewAdaper(this);
+        historyView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        historyAdapter.setClickListener(this);
+        historyView.setAdapter(historyAdapter);
     }
 
     @Override
@@ -72,9 +69,14 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         // Generate Recipe IDs to view!
         String[] ids = {"0000", "0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009"};
-
+        String[] histories = HistoryHandler.getInstance().getHistory();
         // Add them to container!
         recipeAdapter.setRecipes(ids);
+        historyAdapter.addRecipe(new Recipe("RECIPE OF THE DAY", "TEST", "Test Recipe Holder","0101"));
+        if(histories!=null){
+            Log.d("HISTORY","Adding items");
+            historyAdapter.addRecipe(histories);
+        }
     }
 
 

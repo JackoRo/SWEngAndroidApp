@@ -41,13 +41,13 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        String temp = items.get(position).getTitle();
+        String title = items.get(position).getTitle();
         android.graphics.drawable.Drawable image = items.get(position).getDrawable();
         String time = items.get(position).getTime();
         String numFavourites = items.get(position).getNumFavourites();
         String id = items.get(position).getId();
 
-        holder.title.setText(temp);
+        holder.title.setText(title);
         holder.favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

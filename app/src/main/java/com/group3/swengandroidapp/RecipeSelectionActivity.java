@@ -82,6 +82,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         recipe = RemoteFileManager.getInstance().getRecipe(id);
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", (String)("ID: " + id), "n/a");
+        }else{
+            // Recipe is found, add to history
+            HistoryHandler.getInstance().append(recipe.getID());
         }
         if(recipe.getSpicy()){
             spicy.setImageResource(R.drawable.spicy_filter);
