@@ -27,11 +27,11 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_history);
         super.onCreateDrawer();
 
         // SETUP RECIPE CONTAINER
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.favourites_recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.history_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);
