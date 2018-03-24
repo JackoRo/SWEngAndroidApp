@@ -41,6 +41,7 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
     @Override
     protected void onStart(){
         super.onStart();
+        setTitle("History");
         if(HistoryHandler.getInstance().getHistory() != null){
             displayAdapter.setRecipes(HistoryHandler.getInstance().getHistory());
         }
