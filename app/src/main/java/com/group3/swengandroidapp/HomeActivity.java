@@ -15,6 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
+
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Kevin on 12/03/2018.
@@ -50,7 +54,12 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         //Setup RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recipeAdapter = new RecipeRecyclerViewAdaper(this);
+        recipeAdapter = new RecipeRecyclerViewAdaper(this){
+            @Override
+            public void notifyActivity(String id){
+                historyAdapter.notifyRecipeChanged(id);
+            }
+        };
         recipeAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
             @Override
             public void onItemClick(View view, int position){
@@ -67,7 +76,13 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         // Setup History
         RecyclerView historyView = (RecyclerView)findViewById(R.id.home_history_bar);
-        historyAdapter = new RecipeRecyclerViewAdaper(this);
+        historyAdapter = new RecipeRecyclerViewAdaper(this){
+            @Override
+            public void notifyActivity(String id){
+                recipeAdapter.notifyRecipeChanged(id);
+                historyAdapter.notifyRecipeChanged(id); // incase it's the recipe of the day
+            }
+        };
         historyView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         historyAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
             @Override
@@ -89,15 +104,40 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         super.onStart();
         setTitle("Home");
 
-        // Generate Recipe IDs to view!
-        String[] ids = {"0000", "0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009"};
+        Log.d("TEST", "Recipes not loaded: " + RemoteFileManager.getInstance().getRecipeList().isEmpty());
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()){
+            try{
+                Thread.sleep(1000);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+
+            Log.d("TEST", "Recipes not loaded: " + RemoteFileManager.getInstance().getRecipeList().isEmpty());
+        }
+
+        // STEP 1: Generate Recipe IDs to view! (Suggested & History)
+        String[] suggested = {"0000", "0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009"};
         String[] histories = HistoryHandler.getInstance().getHistory();
-        // Add them to container!
-        recipeAdapter.setRecipes(ids);
-        historyAdapter.addRecipe(new Recipe("RECIPE OF THE DAY", "TEST", "Test Recipe Holder","0101"));
+
+        // STEP 2: Add Recipes in containers
+        // 2.1: Suggested recipes
+        recipeAdapter.setRecipes(suggested);
+
+        // 2.2 History
+        // Recipe of the day
+        Recipe recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
+        if(RemoteFileManager.getInstance().getRecipeOfTheDay()!=null){
+            historyAdapter.addRecipe(recipeOfTheDay);
+        }
+        // History
         if(histories!=null){
             Log.d("HISTORY","Adding items");
-            historyAdapter.addRecipe(histories);
+            for(String s : histories){
+                // Go through each item and make sure duplicate recipe isnt added to history display
+                if(recipeOfTheDay.getID() != s){
+                    historyAdapter.addRecipe(s);
+                }
+            }
         }
     }
 
@@ -118,6 +158,14 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
             }
         }
     };
+
+    @Override
+    protected void onStop(){
+        // When activity is no longer visible
+        super.onStop();
+        recipeAdapter.clearView();
+        historyAdapter.clearView();
+    }
 
     @Override
     protected void onDestroy() {

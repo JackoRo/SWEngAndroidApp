@@ -26,7 +26,6 @@ public class XmlRecipe extends Recipe {
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG) {
                 if (xpp.getName().equals("Filters")) {
-                    Log.d("TEST", "Found filters");
                     setSpicy(Boolean.valueOf(xpp.getAttributeValue(null, "spicy")));
                     setLactose(Boolean.valueOf(xpp.getAttributeValue(null, "lactose")));
                     setNuts(Boolean.valueOf(xpp.getAttributeValue(null, "nuts")));

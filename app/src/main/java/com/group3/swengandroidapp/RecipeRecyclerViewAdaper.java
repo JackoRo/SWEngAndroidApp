@@ -1,6 +1,7 @@
 package com.group3.swengandroidapp;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,12 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         String numFavourites = items.get(position).getNumFavourites();
         String id = items.get(position).getId();
 
+        if(FavouritesHandler.getInstance().contains(id)){
+            int temp = Integer.parseInt(numFavourites);
+            temp++;
+            numFavourites = Integer.toString(temp);
+        }
+
         holder.title.setText(title);
         holder.favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +66,9 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
                         holder.favouritesButton.setImageResource(R.drawable.heart_off);
                     }
                 }
+                //notifyDataSetChanged();
+                notifyItemChanged(position);
+                notifyActivity(items.get(position).getId());
             }
         });
 
@@ -70,6 +80,15 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         if(image!=null) holder.image.setImageDrawable(image);
         if(time!=null) holder.time.setText(time);
         if(numFavourites!=null) holder.numFavourites.setText(numFavourites);
+    }
+
+    /**
+     * Override this method if needed.
+     * This method is called each time
+     * @param id
+     */
+    public void notifyActivity(String id){
+
     }
 
 
@@ -135,6 +154,23 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         for(String id : ids){
             addRecipe(id);
         }
+    }
+
+    public void notifyRecipeChanged(String id){
+        try{
+            this.notifyItemChanged(this.indexOf(id));
+        }catch(Resources.NotFoundException e){
+            // Recipe id not contained in items, so do nothing.
+        }
+    }
+
+    public int indexOf(String recipeId) throws Resources.NotFoundException{
+        for(Recipe.Icon i : items){
+            if(i.getId()==recipeId){
+                return items.indexOf(i);
+            }
+        }
+        throw new Resources.NotFoundException();
     }
 
 

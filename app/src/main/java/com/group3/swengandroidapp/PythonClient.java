@@ -116,6 +116,7 @@ public class PythonClient extends IntentService{
 
             switch (intent.getStringExtra(ACTION)) {
                 case LOAD_ALL:
+                    Log.d("TEST", "LOADALL");
                     String[] ids = fetchRecipeListFromHttpServer();
                     for (String rid : ids) {
                         if (remoteFileManager.getRecipe(rid) == null) {
