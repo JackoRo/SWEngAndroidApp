@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -18,6 +20,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +37,8 @@ import java.util.ArrayList;
  */
 
 public class Recipe implements Serializable {
+    public final static int THUMBNAILSIZE = 250;
+
     // Meta data
     private String title = "n/a";
     private String author = "n/a";
@@ -43,9 +48,6 @@ public class Recipe implements Serializable {
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
-
-    public final static int THUMBNAILSIZE = 250;
-
 
     // Filters
     private Filter.Info info = new Filter.Info();
@@ -130,6 +132,7 @@ public class Recipe implements Serializable {
         this.ingredients.add(ingredient);
     }
     public void setTime(String time){this.time = time;}
+    public void setFilterInfo(Filter.Info info){this.info = info;}
 
     // GETTERS
     public String getTitle() {
@@ -172,13 +175,23 @@ public class Recipe implements Serializable {
     }
     public String getTime(){return this.time;}
 
-
     public String generateIngredientsString(){
         StringBuilder sb = new StringBuilder();
         for(Ingredient i : this.ingredients){
             sb.append("- " + i.getName() + ": " + i.getQuantityValue()+" " + i.getQuantityUnits()+"\n");
         }
         return sb.toString();
+    }
+
+    public Recipe clone(){
+        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID());
+        r.setThumbnail(this.getThumbnail());
+        r.setFilterInfo(this.getFilterInfo());
+        r.setPresentation(this.presentation);
+        r.setTime(this.time);
+        r.setIngredients(this.ingredients);
+
+        return r;
     }
 
     public static class Icon {
@@ -203,16 +216,30 @@ public class Recipe implements Serializable {
         public String getId(){return this.id;}
     }
 
+
+
     public static Icon produceDescriptor(Context c, Recipe recipe) {
         Drawable image = null;
 
+        Log.d("MARCO", "Producing descriptor");
         if(recipe.getThumbnail().contains("http")){
+
             try{
+                Bitmap bitmap = null;
+                InputStream stream = null;
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inSampleSize = 1;
+                // Get HTTP connection
                 URL url = new URL(recipe.getThumbnail());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
+                connection.setRequestMethod("GET");
+                //connection.setDoInput(true);
+                Log.d("MARCO", "Connecting...");
                 connection.connect();
+
+                Log.d("MARCO", "Getting input stream...");
                 InputStream input = connection.getInputStream();
+                Log.d("MARCO", "Done connection stuff, loading stream");
                 image = new BitmapDrawable(c.getResources(), BitmapFactory.decodeStream(input));
             }catch(Exception e){
                 e.printStackTrace();
