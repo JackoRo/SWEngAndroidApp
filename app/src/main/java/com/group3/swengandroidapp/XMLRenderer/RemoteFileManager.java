@@ -29,6 +29,15 @@ public class RemoteFileManager {
         return recipes.get(id);
     }
 
+    public Recipe getRecipeOfTheDay(){
+        Recipe r = null;
+        if(recipes.containsKey("0000")){
+            r = recipes.get("0000").clone();
+            r.setTitle("RECIPE OF THE DAY");
+        }
+        return r;
+    }
+
     public void setPresentation(String id, Presentation presentation) { presentations.put(id, presentation); }
 
     public Presentation getPresentation(String id) { return presentations.get(id); }
