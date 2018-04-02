@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.content.res.Configuration;
@@ -46,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace() ;
         }
 
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            Log.d("TEST", "Loading recipes n shit");
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
+
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
+        }
     }
 
 
@@ -111,15 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        //Load recipes from server if the list of recipes is empty
-        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                    new IntentFilter("XML-event-name"));
 
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
-            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
-            startService(intent);
-        }
 
     }
 
