@@ -107,6 +107,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView image;
+
         TextView title;
         TextView numFavourites;
         TextView time;

@@ -1,5 +1,7 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 /**
@@ -22,6 +24,10 @@ public class RemoteFileManager {
     }
 
     public void setRecipe(String id, Recipe recipe){
+        Log.d("TEST", "Getting bitmap");
+        recipe.setThumbnailBitmap(new ImageDownloader().doInBackground(recipe)[0]);
+
+        Log.d("TEST", "Done Getting bitmap");
         recipes.put(id,recipe);
     }
 

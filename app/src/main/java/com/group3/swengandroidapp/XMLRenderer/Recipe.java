@@ -48,6 +48,7 @@ public class Recipe implements Serializable {
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
+    private Bitmap thumbnailBitmap = null;
 
     // Filters
     private Filter.Info info = new Filter.Info();
@@ -133,6 +134,7 @@ public class Recipe implements Serializable {
     }
     public void setTime(String time){this.time = time;}
     public void setFilterInfo(Filter.Info info){this.info = info;}
+    public void setThumbnailBitmap(Bitmap bitmap){ this.thumbnailBitmap = bitmap; }
 
     // GETTERS
     public String getTitle() {
@@ -174,6 +176,7 @@ public class Recipe implements Serializable {
         return ingredients;
     }
     public String getTime(){return this.time;}
+    public Bitmap getThumbnailBitmap(){return this.thumbnailBitmap;}
 
     public String generateIngredientsString(){
         StringBuilder sb = new StringBuilder();
@@ -190,7 +193,7 @@ public class Recipe implements Serializable {
         r.setPresentation(this.presentation);
         r.setTime(this.time);
         r.setIngredients(this.ingredients);
-
+        r.setThumbnailBitmap(this.thumbnailBitmap);
         return r;
     }
 
@@ -222,31 +225,11 @@ public class Recipe implements Serializable {
         Drawable image = null;
 
         Log.d("MARCO", "Producing descriptor");
-        if(recipe.getThumbnail().contains("http")){
 
-            try{
-                Bitmap bitmap = null;
-                InputStream stream = null;
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                bmOptions.inSampleSize = 1;
-                // Get HTTP connection
-                URL url = new URL(recipe.getThumbnail());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                //connection.setDoInput(true);
-                Log.d("MARCO", "Connecting...");
-                connection.connect();
-
-                Log.d("MARCO", "Getting input stream...");
-                InputStream input = connection.getInputStream();
-                Log.d("MARCO", "Done connection stuff, loading stream");
-                image = new BitmapDrawable(c.getResources(), BitmapFactory.decodeStream(input));
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }else{
-            image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
+        if(recipe.getThumbnailBitmap() != null){
+            image = new BitmapDrawable(c.getResources(), recipe.getThumbnailBitmap());
         }
+
         return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
 

@@ -1,6 +1,7 @@
 package com.group3.swengandroidapp;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -105,7 +106,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             gluten.setImageResource(R.drawable.glutenfree_filter);
         }
         setTitle(recipe.getTitle());
-        thumbnail.setImageResource(R.drawable.thumbnail);
+        thumbnail.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), recipe.getThumbnailBitmap()));
         time.setText(recipe.getTime());
         author.setText(recipe.getAuthor());
         description.setText(recipe.getDescription());
