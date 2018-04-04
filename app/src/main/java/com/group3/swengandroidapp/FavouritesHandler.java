@@ -1,5 +1,10 @@
 package com.group3.swengandroidapp;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
+
 import java.util.ArrayList;
 
 /**
@@ -27,7 +32,25 @@ public class FavouritesHandler {
                 break;
             }
         }
-        if(!found) items.add(id);
+        if(!found){
+            items.add(id);
+        }
+    }
+
+    public void toggleFavourite(Context c, String id){
+        boolean found = false;
+        for(String s : items){
+            if(s.matches(id)){
+                found = true;
+                items.remove(s);
+                Toast.makeText(c, RemoteFileManager.getInstance().getRecipe(id).getTitle() + " removed from favourites!", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+        if(!found){
+            items.add(id);
+            Toast.makeText(c, RemoteFileManager.getInstance().getRecipe(id).getTitle() + " added to favourites!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public ArrayList<String> getFavourites(){
@@ -38,7 +61,6 @@ public class FavouritesHandler {
         for(String s : items){
             if(s.matches(id)){
                 return true;
-
             }
         }
         return false;

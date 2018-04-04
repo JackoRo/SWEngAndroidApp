@@ -59,7 +59,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             @Override
             public void onClick(View view) {
                 if(id != null){
-                    FavouritesHandler.getInstance().toggleFavourite(id);
+                    FavouritesHandler.getInstance().toggleFavourite(context, id);
                     if (FavouritesHandler.getInstance().contains(id)) {
                         holder.favouritesButton.setImageResource(R.drawable.heart_on);
                     } else {
@@ -140,12 +140,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     public void addRecipe(String id){
         Recipe r = RemoteFileManager.getInstance().getRecipe(id);
-        if(r != null){
-            items.add(Recipe.produceDescriptor(context, r));
-            this.notifyItemChanged(items.indexOf(r));
-        }else{
-            Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + id);
-            r = new Recipe(id, "temp", "Replacement Recipe!", id);
+        if(r != null){ // If recipe exists in file manager
             items.add(Recipe.produceDescriptor(context, r));
             this.notifyItemChanged(items.indexOf(r));
         }
