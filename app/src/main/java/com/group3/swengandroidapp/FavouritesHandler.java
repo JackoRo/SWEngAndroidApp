@@ -37,20 +37,20 @@ public class FavouritesHandler {
         }
     }
 
-    public void toggleFavourite(Context c, String id){
-        boolean found = false;
-        for(String s : items){
-            if(s.matches(id)){
-                found = true;
-                items.remove(s);
-                Toast.makeText(c, RemoteFileManager.getInstance().getRecipe(id).getTitle() + " removed from favourites!", Toast.LENGTH_SHORT).show();
-                break;
-            }
+    /**
+     * Toggle favourite and display message on screen
+     * @param context
+     * @param id
+     */
+    public void toggleFavourite(Context context, String id){
+        toggleFavourite(id);
+        // Message
+        String recipeName = RemoteFileManager.getInstance().getRecipe(id).getTitle();
+        Toast t =  Toast.makeText(context, recipeName + " removed from Favourites!", Toast.LENGTH_SHORT);
+        if(this.contains(id)){
+            t.setText(recipeName + "added to Favourites!");
         }
-        if(!found){
-            items.add(id);
-            Toast.makeText(c, RemoteFileManager.getInstance().getRecipe(id).getTitle() + " added to favourites!", Toast.LENGTH_SHORT).show();
-        }
+        t.show();
     }
 
     public ArrayList<String> getFavourites(){
