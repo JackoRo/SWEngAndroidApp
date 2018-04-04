@@ -2,12 +2,12 @@ package com.group3.swengandroidapp;
 
 import android.content.Context;
 import android.widget.Toast;
-
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
-
 import java.util.ArrayList;
 
 /**
+ * Favourites Handler stores a list of all favourited recipes, and is what each favourites button should
+ * interract with to manage the Favourites.
  * Created by Marco on 15/03/2018.
  */
 
@@ -39,8 +39,8 @@ public class FavouritesHandler {
 
     /**
      * Toggle favourite and display message on screen
-     * @param context
-     * @param id
+     * @param context context to draw message to
+     * @param id id of recipe
      */
     public void toggleFavourite(Context context, String id){
         toggleFavourite(id);
