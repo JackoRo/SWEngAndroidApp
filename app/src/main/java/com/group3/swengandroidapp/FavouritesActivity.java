@@ -40,7 +40,7 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
 
     @Override
     protected void onStart(){
-        setTitle("Favurites");
+        setTitle("Favourites");
         super.onStart();
         displayAdapter.setRecipes(FavouritesHandler.getInstance().getFavourites());
     }
