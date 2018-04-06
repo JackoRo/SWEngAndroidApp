@@ -42,4 +42,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_create_arecipe">CreateARecipe</string>
+
+    <!-- This contains a list of strings to be used in the Create a Recipe GUI-->
+    <string name="introductoryComment">Create A Recipe</string>
+    <string name="titleRequest">Title</string>
+    <string name="titleInput">Description</string>
+    <string name="ingredientRequest">Add Ingredients</string>
+    <string name="firstStep">Step One</string>
+
 </resources>

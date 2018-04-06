@@ -54,27 +54,6 @@ public class MainActivity extends AppCompatActivity {
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
-        //listenButtons();
-        /*add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (((ToggleButton) view).isChecked()) {
-                    DisplayToast("Toggle button is On");
-                }
-                else{
-                    DisplayToast("Toggle button is Off");
-                }
-            }
-        });*/
-
-        /*view_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DisplayToast("You have clicked the Save button");
-                //viewFavourites();
-            }
-        });*/
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
         mFragmentTitles = getResources().getStringArray(R.array.screens_array);
