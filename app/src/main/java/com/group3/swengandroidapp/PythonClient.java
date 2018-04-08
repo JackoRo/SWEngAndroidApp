@@ -26,7 +26,7 @@ import java.net.URL;
 public class PythonClient extends IntentService{
 
     public static final String ACTION = "com.group3.swengandroidapp.ACTION";
-    public static final String ID = "com.group3.swengandroidapp.ID";
+    public static final String ID = "com.group3.swengandroidapp.UPDATED_RECIPE_ID";
 
     public static final String LOAD_ALL = "com.group3.swengandroidapp.LOAD_ALL";
     public static final String FETCH_RECIPE = "com.group3.swengandroidapp.FETCH_RECIPE";

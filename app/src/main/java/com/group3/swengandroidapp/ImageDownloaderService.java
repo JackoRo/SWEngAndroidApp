@@ -11,57 +11,82 @@ import android.util.Log;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
- * Service to handle the requests to download the thumbnail images of recipes
+ * <p>
+ *     Service to handle the requests to download the thumbnail images of recipes.
+ * </p>
+ * <p>
+ *     All downloaded images are temporarily saved to cache memory. To get access,
+ *     you need to obtain the absolute file path.
+ * </p>
+ * <p>
+ *     To do this:<br>
+ *         1. create a new intent:<br>
+ *         <code>Intent intent = new Intent(this, ImageDownloaderService.class);<br>
+ *              intent.setAction(ImageDownloaderService.GET_BITMAP_READY);<br>
+ *              intent.putExtra(Recipe.ID, id);<br>
+ *              startService(intent);<br>
+ *         </code>
+ * </p>
  * Created by Marco on 06/04/2018.
  */
 
 public class ImageDownloaderService extends IntentService {
 
-    public final static String DOWNLOAD_TO_ICON = "ImageDownloaderService_downloadToIcon";
-    public final static String DOWNLOAD_TO_RECIPE = "ImageDownloaderService_downloadToRecipe";
-    public final static String RECIPE_ID = "ImageDownloaderService_recipeID";
-    public final static String DOWNLOAD_COMPLETE = "ImageDownloaderService_downloadComplete";
-    public final static String TARGET_ICON = "ImageDownloaderService_TargetIcon";
-    public final static String ID = "ImageDownloaderService_recipeID";
+    public final static String DOWNLOAD_TO_RECIPE = "ImageDownloaderService.downloadToRecipe";
+    public final static String GET_BITMAP_READY = "ImageDownloaderService.fetchBitmapDrawable";
+
+    public final static String RECIPE_UPDATED = "ImageDownloaderService.recipeUpdated";
+    public final static String BITMAP_READY = "ImageDownloaderService.bitmapSaved";
+
+    public final static String UPDATED_RECIPE_ID = "ImageDownloaderService.updatedRecipeID";
+    public final static String JPG_FILE_PATH = "ImageDownloaderService.jpgFilePath";
+
+    private HashMap<String, String> savedFiles;
 
     public ImageDownloaderService(){
         super("ImageDownloaderService");
         Log.d("ImageDownloaderService", "[OK] ImageDownloaderService started");
+        savedFiles = new HashMap<>(); // Record of all saved bitmaps
     }
 
     @Override
     public void onHandleIntent(Intent intent){
+        String id = intent.getStringExtra(Recipe.ID);
+        Log.d("ImageDownloaderListener", "Received request: " + id + ": " + intent.getAction());
         switch(intent.getAction()){
-            case DOWNLOAD_TO_ICON:
-                Recipe.Icon destination = (Recipe.Icon) intent.getSerializableExtra(TARGET_ICON);
-                if(destination != null){
-                    destination.updateThumbnail(new BitmapDrawable(getResources(),
-                            downloadImage(RemoteFileManager.getInstance().getRecipe(destination.getId()).getThumbnail())));
-                    sendMessage(destination.getId());
-                }else{
-                    Log.d("ImageDownloaderService", "[ER][1] Unable to extract destination icon!");
-                }
-            case DOWNLOAD_TO_RECIPE:
-            default:
-                String id = intent.getStringExtra(RECIPE_ID);
-                if(id == null){
-                    id = intent.getDataString();
-                }
+            case GET_BITMAP_READY:
                 if(id != null){
-                    Recipe r = RemoteFileManager.getInstance().getRecipe(id);
-                    if(r.getThumbnailBitmap() == null){
-                        Log.d("ImageDownloaderService", "[OK] Downloading image for Recipe #" + r.getID() + ": " + r.getTitle());
-                        r.setThumbnailBitmap(downloadImage(r.getThumbnail()));
-                        sendMessage(id);    // Broadcast message notifying the completion of the download
+                    // Check if it's already downloaded
+                    if(savedFiles.containsKey(id)){
+                        sendBitmapSavedMessage(id);
+                    }else{
+                        // Try downloading the bitmap
+                        Bitmap bitmap = downloadImage(RemoteFileManager.getInstance().getRecipe(id).getThumbnail());
+                        if(bitmap != null){
+                            try{
+                                saveBitmap(id, bitmap);
+                                sendBitmapSavedMessage(id);
+                            }catch(IOException e){
+                                Log.d("ImageDownloaderService", "[ER][5] Unable to save bitmap");
+                                e.printStackTrace();
+                            }
+                        }else{
+                            Log.d("ImageDownloaderService", "[ER][1] Unable to generate bitmap!");
+                        }
                     }
                 }else{
                     Log.d("ImageDownloaderService", "[ER][2] Unable to extract destination recipe id!");
                 }
-
+                break;
+            default:
                 break;
         }
     }
@@ -123,19 +148,46 @@ public class ImageDownloaderService extends IntentService {
             if(height > 250){
                 image = Bitmap.createScaledBitmap(image, 250, 250, true);
             }
-            Log.d("ImageDownloader", "Successfully processed image");
         }
        return image;
     }
 
     /**
      * Broadcasts message containing information about recipe thumbnails that have been updated
-     * @param id
+     * @param id ID string of the updated recipe
      */
-    private void sendMessage(String id) {
-        Intent intent = new Intent(DOWNLOAD_COMPLETE);
-        intent.putExtra(ID, id);
+    private void sendRecipeUpdateMessage(String id) {
+        Intent intent = new Intent(RECIPE_UPDATED);
+        intent.putExtra(UPDATED_RECIPE_ID, id);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
+
+    private void sendBitmapSavedMessage(String id){
+        Intent intent = new Intent(BITMAP_READY);
+        intent.putExtra(Recipe.ID, id);
+        intent.putExtra(ImageDownloaderService.JPG_FILE_PATH, savedFiles.get(id));
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+        Log.d("ImageDownloaderService", "Bitmap " + id + "Ready");
+    }
+
+    private void saveBitmap(String id, Bitmap bitmap) throws IOException{
+        File file = File.createTempFile(id, ".jpg");
+        FileOutputStream stream = new FileOutputStream(file);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        stream.flush();
+
+        // Log the existance of the saved file
+        savedFiles.put(id, file.getAbsolutePath());
+
+        sendBitmapSavedMessage(id);
+    }
+
+    public static BitmapDrawable fetchBitmapDrawable(String absolutePath){
+        // Try and read from local memory
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        return new BitmapDrawable(BitmapFactory.decodeFile(absolutePath, options));
+    }
+
 }
 

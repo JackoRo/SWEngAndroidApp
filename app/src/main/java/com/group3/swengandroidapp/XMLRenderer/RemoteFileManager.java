@@ -37,13 +37,19 @@ public class RemoteFileManager {
         return recipes.get(id);
     }
 
-    public Recipe getRecipeOfTheDay(){
-        Recipe r = null;
+    public String getRecipeOfTheDay(){
         Random random = new Random();
-        String key = new ArrayList<String>(recipes.keySet()).get(random.nextInt(recipes.size()));
-        r = recipes.get(key).clone();
-        r.setTitle("Recipe of the day:\n"+r.getTitle());
-        return r;
+        return new ArrayList<String>(recipes.keySet()).get(random.nextInt(recipes.size()));
+    }
+
+    public String[] getSuggestedRecipes(){
+        String[] ids = new String[recipes.size()];
+        int counter = 0;
+        for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
+            ids[counter] = key;
+            counter++;
+        }
+        return ids;
     }
 
     public void setPresentation(String id, Presentation presentation) { presentations.put(id, presentation); }

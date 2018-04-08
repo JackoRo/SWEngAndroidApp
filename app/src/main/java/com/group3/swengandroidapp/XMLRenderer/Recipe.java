@@ -7,6 +7,8 @@ import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 
 public class Recipe implements Serializable {
     public final static int THUMBNAILSIZE = 250;
+    public final static String ID = "Recipe_ID"; // Used with broadcast
 
     // Meta data
     private String title = "n/a";
@@ -49,7 +52,6 @@ public class Recipe implements Serializable {
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
-    private Bitmap thumbnailBitmap = null;
 
     // Filters
     private Filter.Info info = new Filter.Info();
@@ -89,7 +91,7 @@ public class Recipe implements Serializable {
 
     // METHODS
     public String getNumFavourites(){
-        //TODO: Access server and figure out a way to extract the number of users that have this recipe ID as a favourite!
+        //TODO: Access server and figure out a way to extract the number of users that have this recipe UPDATED_RECIPE_ID as a favourite!
         return "0";
     }
 
@@ -135,7 +137,6 @@ public class Recipe implements Serializable {
     }
     public void setTime(String time){this.time = time;}
     public void setFilterInfo(Filter.Info info){this.info = info;}
-    public void setThumbnailBitmap(Bitmap bitmap){ this.thumbnailBitmap = bitmap; }
 
     // GETTERS
     public String getTitle() {
@@ -177,7 +178,6 @@ public class Recipe implements Serializable {
         return ingredients;
     }
     public String getTime(){return this.time;}
-    public Bitmap getThumbnailBitmap(){return this.thumbnailBitmap;}
 
     public String generateIngredientsString(){
         StringBuilder sb = new StringBuilder();
@@ -194,11 +194,12 @@ public class Recipe implements Serializable {
         r.setPresentation(this.presentation);
         r.setTime(this.time);
         r.setIngredients(this.ingredients);
-        r.setThumbnailBitmap(this.thumbnailBitmap);
         return r;
     }
 
-    public static class Icon implements Serializable{
+    public static class Icon{
+        public final static String ICON_CHANGED = "Recipe.Icon_iconChanged"; // Used with broadcast
+
         private String title;
         private String numFavourites;
         private String time;
@@ -219,23 +220,25 @@ public class Recipe implements Serializable {
         public String getNumFavourites(){return this.numFavourites;}
         public String getId(){return this.id;}
 
-        public void updateThumbnail(Drawable d){
+        public void setDrawable(Drawable d){
             this.image = d;
+        }
+
+        public void setTitle(String title){
+            this.title = title;
         }
     }
 
 
-
+    /**
+     * Produce a foundational icon to draw to screen.<br>
+     * Be sure when you use this that you use the ImageDownloaderService to download the thumbnail image.
+     * @param c
+     * @param recipe
+     * @return
+     */
     public static Icon produceDescriptor(Context c, Recipe recipe){
-        Drawable image = null;
-
-        Log.d("MARCO", "Producing descriptor");
-
-        if(recipe.getThumbnailBitmap() != null){
-            image = new BitmapDrawable(c.getResources(), recipe.getThumbnailBitmap());
-        }
-
-        return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
+        return new Recipe.Icon(recipe.getTitle(), null, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
 
 

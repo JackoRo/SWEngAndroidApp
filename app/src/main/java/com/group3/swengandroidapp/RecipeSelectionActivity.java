@@ -82,7 +82,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         Recipe recipe;
         recipe = RemoteFileManager.getInstance().getRecipe(id);
         if(recipe==null){
-            recipe = new Recipe("Recipe not found!", "n/a", (String)("ID: " + id), "n/a");
+            recipe = new Recipe("Recipe not found!", "n/a", (String)("UPDATED_RECIPE_ID: " + id), "n/a");
         }else{
             // Recipe is found, add to history
             HistoryHandler.getInstance().append(recipe.getID());
@@ -106,7 +106,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             gluten.setImageResource(R.drawable.glutenfree_filter);
         }
         setTitle(recipe.getTitle());
-        thumbnail.setImageDrawable(new BitmapDrawable(getApplicationContext().getResources(), recipe.getThumbnailBitmap()));
         time.setText(recipe.getTime());
         author.setText(recipe.getAuthor());
         description.setText(recipe.getDescription());

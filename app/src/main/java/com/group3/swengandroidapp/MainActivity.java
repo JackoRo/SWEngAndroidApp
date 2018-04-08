@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.content.res.Configuration;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 
@@ -346,5 +348,24 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         // Override the transition animation between activities
         overridePendingTransition(0,0);
+    }
+
+    /**
+     * <p>
+     *     Send a request to ImageDownloaderService to get the cached thumbnail ready. (if it's
+     *     not yet downloaded, will download first, then notify ready).
+     * </p>
+     * <p>
+     *     When thumbnail is ready to load, an intent is broadcasted:<br>
+     *         - Action: <code>ImageDownloaderService.BITMAP_READY</code><br>
+     *         - String Extra: <code>Recipe.ID</code> - ID of the recipe
+     * </p>
+     * @param id id of recipe whos thumbnail you want
+     */
+    public void requestBitmapFile(String id){
+        Intent downloadreq = new Intent(this, ImageDownloaderService.class);
+        downloadreq.setAction(ImageDownloaderService.GET_BITMAP_READY);
+        downloadreq.putExtra(Recipe.ID, id);
+        startService(downloadreq);
     }
 }

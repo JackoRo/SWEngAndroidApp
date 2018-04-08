@@ -3,26 +3,25 @@
 
 package com.group3.swengandroidapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 
 import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FavouritesActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     RecipeRecyclerViewAdaper displayAdapter;
+    HashMap<String, Recipe.Icon> icons;
+    ImageDownloaderListener imageDownloaderListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +35,52 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
+
+        icons = new HashMap<>();
     }
 
     @Override
     protected void onStart(){
         setTitle("Favourites");
         super.onStart();
-        displayAdapter.setRecipes(FavouritesHandler.getInstance().getFavourites());
+        ArrayList<String> favourites = FavouritesHandler.getInstance().getFavourites();
+        //displayAdapter.setRecipes(FavouritesHandler.getInstance().getFavourites());
+        for(String s : favourites){
+            if(!icons.containsKey(s)){
+                icons.put(s, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(s)));
+            }
+            displayAdapter.addIcon(icons.get(s));
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        imageDownloaderListener = new ImageDownloaderListener(this) {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String id = intent.getStringExtra(Recipe.ID);
+                if(id != null){
+                    String action = intent.getAction();
+                    if(action != null){
+                        switch(action){
+                            case ImageDownloaderService.BITMAP_READY:
+                                String absolutePath = intent.getStringExtra(ImageDownloaderService.JPG_FILE_PATH);
+                                Log.d("ImageDownloaderListener", "Received file path: " + absolutePath);
+                                if(absolutePath != null){
+                                    icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
+                                    displayAdapter.notifyIconChanged(id);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        };
+
+        for(String id : icons.keySet()){
+            requestBitmapFile(id);
+        }
     }
 
     @Override
@@ -56,5 +94,11 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
         intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        imageDownloaderListener.destroy();
     }
 }

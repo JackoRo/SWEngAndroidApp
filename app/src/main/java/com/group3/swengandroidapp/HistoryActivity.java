@@ -3,26 +3,24 @@
 
 package com.group3.swengandroidapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 
-import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HistoryActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     RecipeRecyclerViewAdaper displayAdapter;
+    HashMap<String, Recipe.Icon> icons;
+    ImageDownloaderListener imageDownloaderListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +34,63 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
+
+        icons = new HashMap<>();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+
         setTitle("History");
-        if(HistoryHandler.getInstance().getHistory() != null){
-            displayAdapter.setRecipes(HistoryHandler.getInstance().getHistory());
+        String[] history = HistoryHandler.getInstance().getHistory();
+        if(history != null){
+            for(String id : history){
+                if(!icons.containsKey(id)){
+                    icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
+                }
+                displayAdapter.addIcon(icons.get(id));
+            }
+            displayAdapter.notifyDataSetChanged();
         }
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        imageDownloaderListener = new ImageDownloaderListener(this) {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String id = intent.getStringExtra(Recipe.ID);
+                if(id != null){
+                    String action = intent.getAction();
+                    if(action != null){
+                        switch(action){
+                            case ImageDownloaderService.BITMAP_READY:
+                                String absolutePath = intent.getStringExtra(ImageDownloaderService.JPG_FILE_PATH);
+                                Log.d("ImageDownloaderListener", "Received file path: " + absolutePath);
+                                if(absolutePath != null){
+                                    icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
+                                    displayAdapter.notifyIconChanged(id);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        };
+
+        for(String id : icons.keySet()){
+            requestBitmapFile(id);
+        }
+
     }
 
     @Override
     public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
+        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". UPDATED_RECIPE_ID: "+ displayAdapter.getItem(position).getId());
 
         Intent intent;
         intent = new Intent();
@@ -58,5 +99,16 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
         intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        imageDownloaderListener.destroy();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
     }
 }
