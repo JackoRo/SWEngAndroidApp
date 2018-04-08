@@ -1,13 +1,16 @@
 package com.group3.swengandroidapp;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -87,9 +90,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
      * This method is called each time
      * @param id
      */
-    public void notifyActivity(String id){
-
-    }
+    public void notifyActivity(String id){}
 
 
     @Override
@@ -134,15 +135,20 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     // RECIPE DRAWING STUFF
 
     public void addRecipe(Recipe r){
-        items.add(Recipe.produceDescriptor(context, r));
-        this.notifyItemChanged(items.indexOf(r));
+        try{
+            int index = indexOf(r.getID());
+            items.set(index, Recipe.produceDescriptor(this.context, r));
+            notifyItemChanged(index);
+        }catch(Exception e){
+            items.add(Recipe.produceDescriptor(this.context, r));
+            this.notifyDataSetChanged();
+        }
     }
 
     public void addRecipe(String id){
         Recipe r = RemoteFileManager.getInstance().getRecipe(id);
         if(r != null){ // If recipe exists in file manager
-            items.add(Recipe.produceDescriptor(context, r));
-            this.notifyItemChanged(items.indexOf(r));
+            addRecipe(r);
         }
     }
 
@@ -151,12 +157,29 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             addRecipe(id);
         }
     }
+    public void addRecipe(Recipe[] recipes){
+        for(Recipe r : recipes){
+            addRecipe(r);
+        }
+    }
 
     public void notifyRecipeChanged(String id){
-        try{
-            this.notifyItemChanged(this.indexOf(id));
-        }catch(Resources.NotFoundException e){
-            // Recipe id not contained in items, so do nothing.
+        for(Recipe.Icon i : items) {
+            if (i.getId().matches(id)) {
+                notifyItemChanged(items.indexOf(i));
+                break;
+            }
+        }
+    }
+
+    public void reloadRecipe(String id){
+        for(Recipe.Icon i : items){
+            if(i.getId().matches(id)){
+                int index = items.indexOf(i);
+                items.set(index, Recipe.produceDescriptor(this.context, RemoteFileManager.getInstance().getRecipe(id)));
+                notifyItemChanged(index);
+                break;
+            }
         }
     }
 
@@ -167,13 +190,6 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             }
         }
         throw new Resources.NotFoundException();
-    }
-
-
-    public void addRecipe(ArrayList<String> ids){
-        for(int i=0; i<ids.size(); i++){
-            addRecipe(ids.get(i));
-        }
     }
 
     public void removeRecipe(int index){
@@ -204,17 +220,10 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         this.items.clear();
         for(Object o : items){
             if(o instanceof Recipe){
-                this.items.add(Recipe.produceDescriptor(context, (Recipe)o));
+                this.addRecipe((Recipe)o);
             }else if(o instanceof String){
                 Recipe r = RemoteFileManager.getInstance().getRecipe((String)o);
-                if(r == null){
-                    // If server fails to return a recipe, report and make a fake one
-                    Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + (String)o);
-                    //TEMPORARY CODE:
-                    r = new Recipe((String)o, "temp", "Replacement Recipe!", (String)o);
-                }
-
-                this.items.add(Recipe.produceDescriptor(context, r));
+                if(r != null) this.addRecipe(r);
             }
         }
         this.notifyDataSetChanged();
@@ -229,15 +238,11 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         for(String id : ids){
             Recipe r = RemoteFileManager.getInstance().getRecipe(id);
             if(r != null){
-                items.add(Recipe.produceDescriptor(context, r));
-            }else{
-                Log.d("RecyclerViewAdapter", "90: Unable to fetch recipe with id " + id);
-                //TEMPORARY CODE:
-                r = new Recipe(id, "temp", "Replacement Recipe!", id);
-                items.add(Recipe.produceDescriptor(context, r));
+                this.addRecipe(r);
             }
         }
-        this.notifyDataSetChanged();
+
+
     }
 
     public void clearView(){
@@ -248,5 +253,23 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     // Parent activity will implement this method to respond to click events
     public interface ItemClickListener{
         void onItemClick(View view, int position);
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String id = intent.getStringExtra(ImageDownloaderService.ID);
+            reloadRecipe(id);
+            //notifyRecipeChanged(id);
+        }
+    };
+
+    public void onPause(){
+        LocalBroadcastManager.getInstance(this.context).unregisterReceiver(this.mMessageReceiver);
+    }
+
+    public void onResume(){
+        LocalBroadcastManager.getInstance(this.context).registerReceiver(mMessageReceiver, new IntentFilter(ImageDownloaderService.DOWNLOAD_COMPLETE));
+
     }
 }

@@ -1,8 +1,14 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import android.content.Intent;
 import android.util.Log;
 
+import com.group3.swengandroidapp.MainActivity;
+import com.group3.swengandroidapp.PythonClient;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by Jack on 11/02/2018.
@@ -24,10 +30,6 @@ public class RemoteFileManager {
     }
 
     public void setRecipe(String id, Recipe recipe){
-        Log.d("TEST", "Getting bitmap");
-        recipe.setThumbnailBitmap(new ImageDownloader().doInBackground(recipe)[0]);
-
-        Log.d("TEST", "Done Getting bitmap");
         recipes.put(id,recipe);
     }
 
@@ -37,10 +39,10 @@ public class RemoteFileManager {
 
     public Recipe getRecipeOfTheDay(){
         Recipe r = null;
-        if(recipes.containsKey("0000")){
-            r = recipes.get("0000").clone();
-            r.setTitle("RECIPE OF THE DAY");
-        }
+        Random random = new Random();
+        String key = new ArrayList<String>(recipes.keySet()).get(random.nextInt(recipes.size()));
+        r = recipes.get(key).clone();
+        r.setTitle("Recipe of the day:\n"+r.getTitle());
         return r;
     }
 

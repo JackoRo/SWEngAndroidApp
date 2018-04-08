@@ -18,6 +18,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.SerializablePermission;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -197,7 +198,7 @@ public class Recipe implements Serializable {
         return r;
     }
 
-    public static class Icon {
+    public static class Icon implements Serializable{
         private String title;
         private String numFavourites;
         private String time;
@@ -217,11 +218,15 @@ public class Recipe implements Serializable {
         public String getTime(){return this.time;}
         public String getNumFavourites(){return this.numFavourites;}
         public String getId(){return this.id;}
+
+        public void updateThumbnail(Drawable d){
+            this.image = d;
+        }
     }
 
 
 
-    public static Icon produceDescriptor(Context c, Recipe recipe) {
+    public static Icon produceDescriptor(Context c, Recipe recipe){
         Drawable image = null;
 
         Log.d("MARCO", "Producing descriptor");
