@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.content.res.Configuration;
@@ -37,19 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private String xmlFile;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace() ;
-        }
-
+    protected void onCreate(Bundle savedBundleInstance){
+        super.onCreate(savedBundleInstance);
         //Load recipes from server if the list of recipes is empty
         if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
-            Log.d("TEST", "Loading recipes n shit");
             LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                     new IntentFilter("XML-event-name"));
 
@@ -57,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
             startService(intent);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
 
