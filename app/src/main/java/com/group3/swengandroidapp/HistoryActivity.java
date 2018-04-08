@@ -62,23 +62,9 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
 
         imageDownloaderListener = new ImageDownloaderListener(this) {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                String id = intent.getStringExtra(Recipe.ID);
-                if(id != null){
-                    String action = intent.getAction();
-                    if(action != null){
-                        switch(action){
-                            case ImageDownloaderService.BITMAP_READY:
-                                String absolutePath = intent.getStringExtra(ImageDownloaderService.JPG_FILE_PATH);
-                                Log.d("ImageDownloaderListener", "Received file path: " + absolutePath);
-                                if(absolutePath != null){
-                                    icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
-                                    displayAdapter.notifyIconChanged(id);
-                                }
-                                break;
-                        }
-                    }
-                }
+            public void onBitmapReady(String id, String absolutePath){
+                icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
+                displayAdapter.notifyIconChanged(id);
             }
         };
 
