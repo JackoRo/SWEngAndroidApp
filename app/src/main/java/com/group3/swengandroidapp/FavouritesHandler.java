@@ -48,7 +48,7 @@ public class FavouritesHandler {
         String recipeName = RemoteFileManager.getInstance().getRecipe(id).getTitle();
         Toast t =  Toast.makeText(context, recipeName + " removed from Favourites!", Toast.LENGTH_SHORT);
         if(this.contains(id)){
-            t.setText(recipeName + "added to Favourites!");
+            t.setText(recipeName + " added to Favourites!");
         }
         t.show();
     }
