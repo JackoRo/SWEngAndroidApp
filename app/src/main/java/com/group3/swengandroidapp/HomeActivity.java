@@ -56,14 +56,9 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         super.onCreateDrawer();
 
         //Setup RecyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.home_recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.home_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recipeAdapter = new RecipeRecyclerViewAdaper(this){
-            @Override
-            public void notifyActivity(String id){
-                historyAdapter.notifyIconChanged(id);
-            }
-        };
+        recipeAdapter = new RecipeRecyclerViewAdaper(this);
         recipeAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
             @Override
             public void onItemClick(View view, int position){
@@ -80,13 +75,8 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
 
         // Setup History
-        RecyclerView historyView = (RecyclerView)findViewById(R.id.home_history_bar);
-        historyAdapter = new RecipeRecyclerViewAdaper(this){
-            @Override
-            public void notifyActivity(String id){
-                recipeAdapter.notifyIconChanged(id);
-            }
-        };
+        RecyclerView historyView = findViewById(R.id.home_history_bar);
+        historyAdapter = new RecipeRecyclerViewAdaper(this);
         historyView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         historyAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
             @Override

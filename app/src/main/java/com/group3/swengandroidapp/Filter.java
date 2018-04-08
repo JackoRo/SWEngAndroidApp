@@ -1,11 +1,9 @@
 package com.group3.swengandroidapp;
-//import javafx.scene.control.ListView;
-
-import android.util.Log;
 
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 /**
+ * To be used to filter recipes by dietary requirements.
  * Created by St. John on 06/03/2018.
  */
 

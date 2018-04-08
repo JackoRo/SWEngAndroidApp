@@ -11,15 +11,14 @@ import com.group3.swengandroidapp.XMLRenderer.XmlRecipe;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.Socket;
 import java.net.URL;
 
 /**
+ *
  * Created by Jack on 08/02/2018.
  */
 
@@ -39,8 +38,8 @@ public class PythonClient extends IntentService{
     public static final String IP_ADDR = "10.0.2.2";
 
 
-    private DataOutputStream dout;
-    private Socket socket;
+    //private DataOutputStream dout;
+    //private Socket socket;
     private URL url;
     private HttpURLConnection urlConnection;
     private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();

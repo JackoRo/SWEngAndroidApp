@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.content.res.Configuration;
@@ -20,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private String[] mFragmentTitles;
 
-    private String xmlFile;
 
     @Override
     protected void onCreate(Bundle savedBundleInstance){
@@ -83,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
         mFragmentTitles = getResources().getStringArray(R.array.screens_array);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = findViewById(R.id.left_drawer);
 
 
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mFragmentTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mFragmentTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -187,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("receiver", "Got message: " + message);
 
             //Fetches all the recipes from the server
-            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.LOAD_ALL) {
+            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.LOAD_ALL)) {
                 Toast toast = Toast.makeText(context, "Recipes loaded!",Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -218,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -359,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
      *     When thumbnail is ready to load, an intent is broadcasted:<br>
      *         - Action: <code>ImageDownloaderService.BITMAP_READY</code><br>
      *         - String Extra: <code>Recipe.ID</code> - ID of the recipe
+     *         - String Extra: <code>ImageDownloaderService.ABSOLUTE_PATH</code> - path of the cached image
      * </p>
      * @param id id of recipe whos thumbnail you want
      */

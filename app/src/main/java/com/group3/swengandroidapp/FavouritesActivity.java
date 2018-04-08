@@ -3,7 +3,6 @@
 
 package com.group3.swengandroidapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -30,7 +29,7 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
         super.onCreateDrawer();
 
         // SETUP RECIPE CONTAINER
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.favourites_recyclerview);
+        RecyclerView recyclerView =  findViewById(R.id.favourites_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);
@@ -44,7 +43,6 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
         setTitle("Favourites");
         super.onStart();
         ArrayList<String> favourites = FavouritesHandler.getInstance().getFavourites();
-        //displayAdapter.setRecipes(FavouritesHandler.getInstance().getFavourites());
         for(String s : favourites){
             if(!icons.containsKey(s)){
                 icons.put(s, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(s)));
@@ -64,6 +62,7 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
             }
         };
 
+        // Load images
         for(String id : icons.keySet()){
             requestBitmapFile(id);
         }

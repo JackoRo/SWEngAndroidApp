@@ -1,9 +1,7 @@
 package com.group3.swengandroidapp;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +17,7 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 import java.util.ArrayList;
 
 /**
+ *
  * Created by Marco on 14/03/2018.
  */
 
@@ -32,7 +31,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     RecipeRecyclerViewAdaper(Context context){
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
-        this.items = new ArrayList<Recipe.Icon>(0);
+        this.items = new ArrayList<>(0);
 
     }
 
@@ -65,15 +64,12 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
                         holder.numFavourites.setText(numFavourites);
                     }
                 }
-                //notifyDataSetChanged();
-                //notifyItemChanged(position);
 
                 // Send out a broadcast notifying that icon has changed
                 Intent intent = new Intent(Recipe.Icon.ICON_CHANGED);
                 intent.putExtra(Recipe.ID, id);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
-                //notifyActivity(id);
             }
         });
 
@@ -101,13 +97,6 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         if(image!=null) holder.image.setImageDrawable(image);
         if(time!=null) holder.time.setText(time);
     }
-
-    /**
-     * This method (designed to be overridden) is called each time an icon changes.
-     * To be replaced by Broadcasts.
-     * @param id
-     */
-    public void notifyActivity(String id){}
 
     @Override
     public int getItemCount(){
@@ -145,7 +134,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     /**
      * @deprecated
-     * @param r
+     * @param r recipe to be added
      */
     public void addRecipe(Recipe r){
         try{
@@ -161,7 +150,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     /**
      * @deprecated
-     * @param id
+     * @param id id of recipe to be added
      */
     public void addRecipe(String id){
         Recipe r = RemoteFileManager.getInstance().getRecipe(id);
@@ -172,7 +161,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     /**
      * @deprecated
-     * @param ids
+     * @param ids ids of recipes to be added
      */
     public void addRecipe(String[] ids){
         for(String id : ids){
@@ -182,7 +171,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     /**
      * @deprecated
-     * @param recipes
+     * @param recipes recipes to be added
      */
     public void addRecipe(Recipe[] recipes){
         for(Recipe r : recipes){
@@ -272,44 +261,12 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         }
     }
 
-
-
-
-    //******** REMOVING ICONS ********//
-    
-    public void removeIcon(int index){
-        items.remove(index);
-        this.notifyDataSetChanged();
-    }
-
-    /**
-     * Searches through recipes currently on screen and removes
-     * recipe whos id matches the input string
-     * @param id
-     */
-    public void removeIcon(String id){
-        for(Recipe.Icon i : items){
-            if(i.getId()==id){
-                items.remove(i);
-                this.notifyDataSetChanged();
-                break;
-            }
-        }
-    }
-
-    public void clearView(){
-        items.clear();
-        this.notifyDataSetChanged();
-    }
-
-
-
     
     //******** UTILITIES ********//
 
     public int indexOf(String recipeId) throws IconNotFoundException{
         for(Recipe.Icon i : items){
-            if(i.getId()==recipeId){
+            if(i.getId().matches(recipeId)){
                 return items.indexOf(i);
             }
         }
@@ -354,9 +311,6 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     public class IconNotFoundException extends Exception{
         public IconNotFoundException(String iconId){
             super("Icon with id: " + iconId + " not found.");
-        }
-        public IconNotFoundException(){
-            super();
         }
     }
 }

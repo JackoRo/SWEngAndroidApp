@@ -1,18 +1,7 @@
 package com.group3.swengandroidapp;
 
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-
-import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
-
-import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -48,13 +37,11 @@ public class LoadingActivity extends MainActivity {
         try{
             while(!progress){
                 TimeUnit.MILLISECONDS.sleep(1);
-            };
-        }catch(InterruptedException e){}
+            }
+        }catch(InterruptedException e){
+            // Do nothing
+        }
         startActivity(new Intent(LoadingActivity.this, HomeActivity.class));
         finish();
-    }
-
-    public void progress(){
-
     }
 }

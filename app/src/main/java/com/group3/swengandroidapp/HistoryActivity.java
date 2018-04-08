@@ -3,7 +3,6 @@
 
 package com.group3.swengandroidapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,7 +28,7 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
         super.onCreateDrawer();
 
         // SETUP RECIPE CONTAINER
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.history_recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.history_recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         displayAdapter = new RecipeRecyclerViewAdaper(this);
         displayAdapter.setClickListener(this);

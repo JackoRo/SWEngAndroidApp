@@ -1,8 +1,5 @@
 package com.group3.swengandroidapp;
 
-import android.widget.MultiAutoCompleteTextView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +7,7 @@ import java.util.ArrayList;
  * Created by Marco on 24/03/2018.
  */
 public class HistoryHandler {
-    public static final int MAX_NUMBER_OF_ITEMS = 10;
+    private static final int MAX_NUMBER_OF_ITEMS = 10;
 
     private static HistoryHandler history = new HistoryHandler();
     private ArrayList<String> items;
@@ -36,7 +33,7 @@ public class HistoryHandler {
 
     /**
      * Wipes History items content, and sets it to the passed array
-     * @param items
+     * @param items override history with these items
      */
     public void setHistory(String[] items){
         this.items = new ArrayList<>(MAX_NUMBER_OF_ITEMS);
@@ -56,10 +53,6 @@ public class HistoryHandler {
             i++;
         }
         return temp;
-    }
-
-    public String getItem(int index){
-        return items.get(index);
     }
 
 }
