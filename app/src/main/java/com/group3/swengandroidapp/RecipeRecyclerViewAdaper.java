@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * Created by Marco on 14/03/2018.
  */
 
+// TODO: Rename - "Adapter"
 public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecyclerViewAdaper.ViewHolder> {
     private ItemClickListener clickListener;
     private LayoutInflater layoutInflater;
@@ -38,7 +39,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = layoutInflater.inflate(R.layout.recipe_icon, parent, false);
-        return new ViewHolder(view) {};
+        return new ViewHolder(view);
     }
 
     @Override
@@ -130,6 +131,10 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             // Icon doesnt exist. Add new.
             items.add(icon);
         }
+    }
+
+    public void clear() {
+        items.clear();
     }
 
     /**

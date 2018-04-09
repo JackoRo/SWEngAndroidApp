@@ -139,6 +139,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     public void onPause(){
         super.onPause();
+        // TODO: Unregistered in onPause, not re-registered in onResume?
         imageDownloaderListener.unRegister();
     }
 

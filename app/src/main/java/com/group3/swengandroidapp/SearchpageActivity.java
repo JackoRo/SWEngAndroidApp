@@ -1,6 +1,9 @@
 package com.group3.swengandroidapp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
@@ -15,17 +18,24 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.Recipe.Icon;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
+
 public class SearchpageActivity extends AppCompatActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     private RecipeRecyclerViewAdaper displayAdapter;
+    private ImageDownloaderListener imageDownloaderListener;
 
-    public ArrayList<String> recipes = new ArrayList<String>();
+    private HashMap<String, Recipe.Icon> icons = new HashMap<>();
+
+    private ArrayList<String> recipes = new ArrayList<String>();
     // the arraylist of string names from all recipes
 
-    public ArrayList<String> FoundList = new ArrayList<String>();
+    private ArrayList<String> foundList = new ArrayList<String>();
     // the list to be output
 
-    public String search;
+    private String search;
 
 
 
@@ -48,6 +58,18 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                 hideKeyboard();
                 final TextInputLayout searchBar = findViewById(R.id.searchPage_text_input);
                 search = searchBar.getEditText().getText().toString();
+                Log.d("Search icon", "Pressed! Search with <" + search + ">");
+                searchRecipes(search);
+
+                displayAdapter.clear();
+
+                for(String id : foundList){
+                    displayAdapter.addIcon(Recipe.produceDescriptor(SearchpageActivity.this, RemoteFileManager.getInstance().getRecipe(id)));
+                }
+
+                displayAdapter.notifyDataSetChanged();
+                Log.d("Search icon", "Data updated");
+
             }
 
             private void hideKeyboard() {
@@ -58,26 +80,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                 }
             }
         });
-        //Search algorithm
-        if(search != null) {
-            // Change to upper case to get rid of possible errors
-            search = search.toUpperCase();
 
-            // Remove recipes the user has not searched for
-            ArrayList<String> subentries = new ArrayList<String>();
-
-            for (Object entry : recipes) {
-                String entryText = (String) entry;
-                if (entryText.toUpperCase().contains(search)) {
-                    subentries.add(entryText);
-                }
-            }
-            FoundList = subentries;
-            System.out.format(search);
-        }
-        else {
-            FoundList =  recipes ;
-        }
 
 
         //Toggle Buttons for filters
@@ -167,9 +170,27 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
     @Override
     protected void onStart(){
         super.onStart();
-        String[] ids = {"0000", "0001", "0002"};
-        displayAdapter.setRecipes(ids);
+        //String[] ids = {"0000", "0001", "0002"};
+        //displayAdapter.setRecipes(ids);
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//
+//        imageDownloaderListener = new ImageDownloaderListener(this) {
+//            @Override
+//            public void onBitmapReady(String id, String absolutePath){
+//                icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
+//                displayAdapter.notifyIconChanged(id);
+//            }
+//        };
+//
+//        for(String id : icons.keySet()){
+//            requestBitmapFile(id);
+//        }
+//
+//    }
 
     @Override
     public void onItemClick(String recipeId){
@@ -180,5 +201,33 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         intent.putExtra(PythonClient.ID, recipeId);
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);        // switch activities
 
+    }
+
+    private void searchRecipes(String search) {
+        //Fetch recipes
+        RemoteFileManager rfm = RemoteFileManager.getInstance();
+
+        //Search algorithm
+        if(search != null) {
+            // Change to upper case to get rid of possible errors
+            search = search.toUpperCase();
+            Log.d("searchRecipes","Searching with " + search);
+
+            // Remove recipes the user has not searched for
+            ArrayList<String> subentries = new ArrayList<String>();
+
+            for (Map.Entry<String, Recipe> entry : rfm.getRecipeList().entrySet()) {
+                String entryText = entry.getValue().getTitle();
+                if (entryText.toUpperCase().contains(search)) {
+                    subentries.add(entry.getKey());
+                    Log.d("searchRecipes For-Loop","Obtained: " + entry.getKey());
+                }
+            }
+            foundList = subentries;
+            System.out.format(search);
+        }
+        else {
+            foundList =  recipes ;
+        }
     }
 }

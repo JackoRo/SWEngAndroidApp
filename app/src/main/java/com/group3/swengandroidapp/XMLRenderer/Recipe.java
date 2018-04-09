@@ -132,7 +132,7 @@ public class Recipe implements Serializable {
         this.presentation = presentation;
     }
     public void setIngredients(ArrayList<Ingredient> ingredients) {this.ingredients = ingredients;}
-    public void appendIntgredient(Ingredient ingredient) {
+    public void appendIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
     public void setTime(String time){this.time = time;}

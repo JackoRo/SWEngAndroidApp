@@ -346,6 +346,8 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0,0);
     }
 
+    //TODO: Move method so it can be accessed by the search page activity
+
     /**
      * <p>
      *     Send a request to {@link ImageDownloaderService} to get the saved thumbnail ready. (if it's

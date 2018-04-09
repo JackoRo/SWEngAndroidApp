@@ -68,7 +68,7 @@ public class FavouritesHandler {
     }
 
     public void print(){
-        System.out.println("FAOURITES:");
+        System.out.println("FAVOURITES:");
         for(String s : items){
             System.out.println(s);
         }

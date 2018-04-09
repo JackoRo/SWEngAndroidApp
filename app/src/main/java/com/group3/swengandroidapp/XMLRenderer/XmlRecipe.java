@@ -1,7 +1,5 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
-import android.util.Log;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -44,7 +42,7 @@ public class XmlRecipe extends Recipe {
 
                     name = xpp.getText();
 
-                    appendIntgredient(new Ingredient(name, quantity));
+                    appendIngredient(new Ingredient(name, quantity));
                 }
                 else if (xpp.getName().equals("id")) {
                     xpp.next();
