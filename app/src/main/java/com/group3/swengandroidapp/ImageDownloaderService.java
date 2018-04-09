@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * <p>
@@ -40,6 +41,8 @@ import java.util.HashMap;
  */
 
 public class ImageDownloaderService extends IntentService {
+
+    private final static int NUM_DEFAULT_THUMBNAILS = 5;
 
     public final static String GET_BITMAP_READY = "ImageDownloaderService.fetchBitmapDrawable";
     public final static String BITMAP_READY = "ImageDownloaderService.bitmapSaved";
@@ -111,6 +114,7 @@ public class ImageDownloaderService extends IntentService {
                 URL address = new URL(url);
                 HttpURLConnection connection = (HttpURLConnection) address.openConnection();
                 connection.setDoInput(true);
+                // If connection times out, revert to defaul thumbnail.
                 connection.setConnectTimeout(500);
                 connection.setReadTimeout(500);
                 connection.connect();
@@ -127,7 +131,16 @@ public class ImageDownloaderService extends IntentService {
 
         if(image == null){
             // File could not be loaded, load default
-            image = BitmapFactory.decodeResource(getResources(), R.drawable.thumbnail);
+            Random random = new Random();
+            int i = random.nextInt(NUM_DEFAULT_THUMBNAILS) + 1;
+            String filename = "default_thumbnail_" + Integer.toString(i);
+            int resource = getResources().getIdentifier(filename, "drawable", "com.group3.swengandroidapp");
+
+            if(resource > 0){
+                image = BitmapFactory.decodeResource(getResources(), resource);
+            }else{
+                image = BitmapFactory.decodeResource(getResources(), R.drawable.thumbnail);
+            }
         }else{
             // STAGE 2: Image processing
             // If Image successfully imported, scale and crop
