@@ -44,19 +44,17 @@ public class ImageDownloaderService extends IntentService {
     public final static String GET_BITMAP_READY = "ImageDownloaderService.fetchBitmapDrawable";
     public final static String BITMAP_READY = "ImageDownloaderService.bitmapSaved";
     public final static String ABSOLUTE_PATH = "ImageDownloaderService.jpgFilePath";
-
-    private HashMap<String, String> savedFiles;
+    private static HashMap<String, String> savedFiles = new HashMap<>(); // Record of all saved bitmaps
 
     public ImageDownloaderService(){
         super("ImageDownloaderService");
         Log.d("ImageDownloaderService", "[OK] ImageDownloaderService started");
-        savedFiles = new HashMap<>(); // Record of all saved bitmaps
     }
 
     @Override
     public void onHandleIntent(Intent intent){
         String id = intent.getStringExtra(Recipe.ID);
-        Log.d("ImageDownloaderListener", "Received request: " + id + ": " + intent.getAction());
+        Log.d("ImageDownloaderService", "Received request: " + id + ": " + intent.getAction());
         String action = intent.getAction();
         if(action != null){
             switch(action){
@@ -113,11 +111,14 @@ public class ImageDownloaderService extends IntentService {
                 URL address = new URL(url);
                 HttpURLConnection connection = (HttpURLConnection) address.openConnection();
                 connection.setDoInput(true);
+                connection.setConnectTimeout(500);
+                connection.setReadTimeout(500);
                 connection.connect();
                 image = BitmapFactory.decodeStream(connection.getInputStream());
                 connection.disconnect();
             } catch (Exception e) {
                 Log.d("ImageDownloaderService", "[ER][6] Error when downloading image!");
+                image = null;
             }
         }else{
             // Is a file location...
