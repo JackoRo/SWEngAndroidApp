@@ -34,6 +34,7 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
 
+        // Initialise icon holder
         icons = new HashMap<>();
     }
 
@@ -74,14 +75,12 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
     }
 
     @Override
-    public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". UPDATED_RECIPE_ID: "+ displayAdapter.getItem(position).getId());
-
-        Intent intent;
-        intent = new Intent();
+    public void onItemClick(String recipeId){
+        Log.d("HomeActivity","Clicked on recipe " + recipeId);
+        Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
+        intent.putExtra(PythonClient.ID, recipeId);
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
     }
@@ -89,7 +88,7 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
     @Override
     public void onPause(){
         super.onPause();
-        imageDownloaderListener.destroy();
+        imageDownloaderListener.unRegister();
     }
 
     @Override

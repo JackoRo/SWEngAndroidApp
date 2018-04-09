@@ -20,33 +20,30 @@ import java.util.HashMap;
 /**
  * The home screen of the app.
  * <p>
- *     Displays a history of recently viewed recipes (as contained within HistoryHandler) and a
- *     "recommended" list of recipes.
+ *     Displays a history of recently viewed recipes (as contained within {@link HistoryHandler}) and a
+ *     "recommended" list of recipes (Produced within {@link RemoteFileManager}).
  * </p>
  * Created by Kevin on 12/03/2018 and edited by mb1510 (Team Leader).
  */
-
-//public class HomeActivity extends MainActivity  {
-
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
-    private RecipeRecyclerViewAdaper recipeAdapter;
-    private RecipeRecyclerViewAdaper historyAdapter;
-    private ImageDownloaderListener imageDownloaderListener;
-    HashMap<String, Recipe.Icon> icons = new HashMap<>();
+    private RecipeRecyclerViewAdaper suggestedAdapter;          // adapter to Suggested Recipes recyclerview
+    private RecipeRecyclerViewAdaper historyAdapter;            // Adapter to History recyclerview
+    private ImageDownloaderListener imageDownloaderListener;    // Listens for BITMAP_READY messages from ImageDownloaderService
+    HashMap<String, Recipe.Icon> icons = new HashMap<>();       // Contains all icons that are to be deplyed on this page
 
     /**
-     * Method called when a recipe is clicked from the home screen either in the history or main section
+     * Method called when a recipe is clicked from the home screen either in the history or main section.
+     * Opens an instance of {@link RecipeSelectionActivity}
      */
     @Override
-    public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". UPDATED_RECIPE_ID: "+ recipeAdapter.getItem(position).getId());
-        Intent intent;
-        intent = new Intent();
-        intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra(PythonClient.ID, recipeAdapter.getItem(position).getId());
-        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+    public void onItemClick(String recipeId){
+        Log.d("HomeActivity","Clicked on recipe " + recipeId);
+        Intent intent = new Intent();
+        intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
+        intent.putExtra(PythonClient.ID, recipeId);       // Set recipe id
+        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);                // switch activities
     }
 
     @Override
@@ -55,41 +52,20 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         setContentView(R.layout.activity_home);
         super.onCreateDrawer();
 
-        //Setup RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.home_recyclerview);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recipeAdapter = new RecipeRecyclerViewAdaper(this);
-        recipeAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
-            @Override
-            public void onItemClick(View view, int position){
-                Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". UPDATED_RECIPE_ID: "+ recipeAdapter.getItem(position).getId());
-                Intent intent;
-                intent = new Intent();
-                intent.setClass(getApplicationContext(),RecipeSelectionActivity.class);                 // Set new activity destination
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-                intent.putExtra(PythonClient.ID, recipeAdapter.getItem(position).getId());
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
-            }
-        });
-        recyclerView.setAdapter(recipeAdapter);
+        setTitle("Home");
 
+        // Setup Recommended Recipes view
+        RecyclerView recyclerView = findViewById(R.id.home_suggested_view);                // Get suggested recipe view
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        suggestedAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view
+        suggestedAdapter.setClickListener(this);                                          // Set the click listener for the adapter
+        recyclerView.setAdapter(suggestedAdapter);                                        // Assign adapter to the view
 
         // Setup History
-        RecyclerView historyView = findViewById(R.id.home_history_bar);
+        RecyclerView historyView = findViewById(R.id.home_history_view);
+        historyView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)); // Set view layout
         historyAdapter = new RecipeRecyclerViewAdaper(this);
-        historyView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        historyAdapter.setClickListener(new RecipeRecyclerViewAdaper.ItemClickListener(){
-            @Override
-            public void onItemClick(View view, int position){
-                Log.d("HomeActivity","Clicked on recipe " + position + "!: " + recipeAdapter.getItem(position).getTitle() + ". UPDATED_RECIPE_ID: "+ recipeAdapter.getItem(position).getId());
-                Intent intent;
-                intent = new Intent();
-                intent.setClass(getApplicationContext(),RecipeSelectionActivity.class);                 // Set new activity destination
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-                intent.putExtra(PythonClient.ID, historyAdapter.getItem(position).getId());
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
-            }
-        });
+        historyAdapter.setClickListener(this);
         historyView.setAdapter(historyAdapter);
 
     }
@@ -98,31 +74,25 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     public void onStart(){
         super.onStart();
 
-        Log.d("TEST","Home start - Start");
-        setTitle("Home");
-
-        // Draw / Add icons to relevant recyclerviews
-
-        // Get all recipes
+        // Get all needed recipe ids
         String recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
         String[] histories = HistoryHandler.getInstance().getHistory();
         String[] suggested = RemoteFileManager.getInstance().getSuggestedRecipes();
 
         // Process recipe of the day
-        Recipe rotd = RemoteFileManager.getInstance().getRecipe(recipeOfTheDay).clone();
+        Recipe rotd = RemoteFileManager.getInstance().getRecipe(recipeOfTheDay).clone(); // Copy the recipe
         rotd.setTitle("Recipe of the day:\n"+rotd.getTitle());
         icons.put(recipeOfTheDay, Recipe.produceDescriptor(this, rotd));
-
         // Add recipe of the day in the history view
         historyAdapter.addIcon(icons.get(recipeOfTheDay));
 
         // Process the rest of the history view (if there are histories to load)
-        if(histories != null){
-            for(String id : histories){
-                if(!icons.containsKey(id)){
+        if(histories != null){                          // if there are histories to load
+            for(String id : histories){                 // for each history recipe
+                if(!icons.containsKey(id)){             // if corresponding icon doesn't already exist, create
                     icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
                 }
-                historyAdapter.addIcon(icons.get(id));
+                historyAdapter.addIcon(icons.get(id));  // Add icon to the adapter
             }
         }
 
@@ -131,12 +101,12 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
             if(!icons.containsKey(id)){
                 icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
             }
-            recipeAdapter.addIcon(icons.get(id));
+            suggestedAdapter.addIcon(icons.get(id));
         }
 
         // Notify the adapters to update themselves.
         historyAdapter.notifyDataSetChanged();
-        recipeAdapter.notifyDataSetChanged();
+        suggestedAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -148,13 +118,13 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
             @Override
             public void onBitmapReady(String id, String absolutePath){
                 icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
-                recipeAdapter.notifyIconChanged(id);
+                suggestedAdapter.notifyIconChanged(id);
                 historyAdapter.notifyIconChanged(id);
             }
 
             @Override
             public void onIconChanged(String id){
-                recipeAdapter.notifyIconChanged(id);
+                suggestedAdapter.notifyIconChanged(id);
                 historyAdapter.notifyIconChanged(id);
             }
         };
@@ -169,10 +139,9 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     public void onPause(){
         super.onPause();
-        imageDownloaderListener.destroy();
+        imageDownloaderListener.unRegister();
     }
 
-    //TODO: Is this really necessary?
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -194,7 +163,6 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         super.onDestroy();
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        Log.d("TEST", "Destroying...");
     }
 
 }

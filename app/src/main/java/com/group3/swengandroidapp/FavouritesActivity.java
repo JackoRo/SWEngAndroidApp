@@ -69,14 +69,14 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
     }
 
     @Override
-    public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
+    public void onItemClick(String recipeId){
+        Log.d("HomeActivity","Clicked on recipe " + recipeId);
 
         Intent intent;
         intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
+        intent.putExtra(PythonClient.ID, recipeId);
         startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
 
     }
@@ -84,6 +84,6 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
     @Override
     public void onPause(){
         super.onPause();
-        imageDownloaderListener.destroy();
+        imageDownloaderListener.unRegister();
     }
 }

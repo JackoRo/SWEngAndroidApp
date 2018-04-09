@@ -280,12 +280,11 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     // Parent activity will implement this method to respond to click events
     public interface ItemClickListener{
-        void onItemClick(View view, int position);
+        void onItemClick(String recipeId);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView image;
-
         TextView title;
         TextView numFavourites;
         TextView time;
@@ -304,7 +303,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
         @Override
         public void onClick(View view){
-            if (clickListener != null) clickListener.onItemClick(view, getAdapterPosition());
+            if (clickListener != null) clickListener.onItemClick(items.get(getAdapterPosition()).getId());
         }
     }
 
