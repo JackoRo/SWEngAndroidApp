@@ -47,7 +47,7 @@ public class ImageDownloaderService extends IntentService {
     public final static String GET_BITMAP_READY = "ImageDownloaderService.fetchBitmapDrawable";
     public final static String BITMAP_READY = "ImageDownloaderService.bitmapSaved";
     public final static String ABSOLUTE_PATH = "ImageDownloaderService.jpgFilePath";
-    private static HashMap<String, String> savedFiles = new HashMap<>(); // Record of all saved bitmaps
+    private static HashMap<String, SaveFileDescriptor> savedFiles = new HashMap<>(); // Record of all saved bitmaps
 
     public ImageDownloaderService(){
         super("ImageDownloaderService");
@@ -64,21 +64,45 @@ public class ImageDownloaderService extends IntentService {
                 case GET_BITMAP_READY:
                     if(id != null){
                         // Check if it's already downloaded
-                        if(savedFiles.containsKey(id)){
+                        if(!thumbnailNeedsDownloading(id)){
                             sendBitmapSavedMessage(id);
                         }else{
                             // Try downloading the bitmap
+                            Boolean temporary = false;
                             Bitmap bitmap = downloadImage(RemoteFileManager.getInstance().getRecipe(id).getThumbnail());
+                            if(bitmap == null){
+                                Log.d("ImageDownloaderService", "[ER][1] Unable to download bitmap!");
+                                // If file doesnt exist, assign a temporary file
+                                if(!savedFiles.containsKey(id)){
+                                    temporary = true;
+                                    // File could not be loaded, load default
+                                    Random random = new Random();
+                                    int i = random.nextInt(NUM_DEFAULT_THUMBNAILS) + 1;
+                                    String filename = "default_thumbnail_" + Integer.toString(i);
+                                    int resource = getResources().getIdentifier(filename, "drawable", "com.group3.swengandroidapp");
+
+                                    if(resource > 0){
+                                        bitmap = BitmapFactory.decodeResource(getResources(), resource);
+                                    }else{
+                                        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.thumbnail);
+                                    }
+
+                                    // Resize because for some reason, resource is read in at 650x650px
+                                    bitmap = Bitmap.createScaledBitmap(bitmap, 250, 250, true);
+                                }else{
+                                    sendBitmapSavedMessage(id);
+                                }
+                            }
+
                             if(bitmap != null){
+                                // Save image
                                 try{
-                                    saveBitmap(id, bitmap);
+                                    saveBitmap(id, bitmap, temporary);
                                     sendBitmapSavedMessage(id);
                                 }catch(IOException e){
                                     Log.d("ImageDownloaderService", "[ER][5] Unable to save bitmap");
                                     e.printStackTrace();
                                 }
-                            }else{
-                                Log.d("ImageDownloaderService", "[ER][1] Unable to generate bitmap!");
                             }
                         }
                     }else{
@@ -122,26 +146,14 @@ public class ImageDownloaderService extends IntentService {
                 connection.disconnect();
             } catch (Exception e) {
                 Log.d("ImageDownloaderService", "[ER][6] Error when downloading image!");
-                image = null;
+                return null;
             }
         }else{
             // Is a file location...
             image = BitmapFactory.decodeFile(url);
         }
 
-        if(image == null){
-            // File could not be loaded, load default
-            Random random = new Random();
-            int i = random.nextInt(NUM_DEFAULT_THUMBNAILS) + 1;
-            String filename = "default_thumbnail_" + Integer.toString(i);
-            int resource = getResources().getIdentifier(filename, "drawable", "com.group3.swengandroidapp");
-
-            if(resource > 0){
-                image = BitmapFactory.decodeResource(getResources(), resource);
-            }else{
-                image = BitmapFactory.decodeResource(getResources(), R.drawable.thumbnail);
-            }
-        }else{
+        if(image != null){
             // STAGE 2: Image processing
             // If Image successfully imported, scale and crop
 
@@ -164,25 +176,26 @@ public class ImageDownloaderService extends IntentService {
                 image = Bitmap.createScaledBitmap(image, 250, 250, true);
             }
         }
+
        return image;
     }
 
     private void sendBitmapSavedMessage(String id){
         Intent intent = new Intent(BITMAP_READY);
         intent.putExtra(Recipe.ID, id);
-        intent.putExtra(ImageDownloaderService.ABSOLUTE_PATH, savedFiles.get(id));
+        intent.putExtra(ImageDownloaderService.ABSOLUTE_PATH, savedFiles.get(id).absolutePath);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
         Log.d("ImageDownloaderService", "Bitmap " + id + "Ready");
     }
 
-    private void saveBitmap(String id, Bitmap bitmap) throws IOException{
+    private void saveBitmap(String id, Bitmap bitmap, Boolean temporary) throws IOException{
         File file = File.createTempFile(id, ".jpg");
         FileOutputStream stream = new FileOutputStream(file);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         stream.flush();
 
         // Log the existance of the saved file
-        savedFiles.put(id, file.getAbsolutePath());
+        savedFiles.put(id, new SaveFileDescriptor(file.getAbsolutePath(), temporary));
 
         sendBitmapSavedMessage(id);
     }
@@ -199,5 +212,22 @@ public class ImageDownloaderService extends IntentService {
         return new BitmapDrawable(BitmapFactory.decodeFile(absolutePath, options));
     }
 
+    public Boolean thumbnailNeedsDownloading(String id){
+        if(savedFiles.containsKey(id)){
+            return savedFiles.get(id).isTemporary;
+        }else{
+            return true;
+        }
+    }
+
+    private class SaveFileDescriptor{
+        public String absolutePath;
+        public boolean isTemporary;
+
+        public SaveFileDescriptor(String path, boolean temporary){
+            this.absolutePath = path;
+            this.isTemporary = temporary;
+        }
+    }
 }
 
