@@ -86,6 +86,9 @@ public class ImageDownloaderService extends IntentService {
                                     }else{
                                         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.thumbnail);
                                     }
+
+                                    // Resize because for some reason, resource is read in at 650x650px
+                                    bitmap = Bitmap.createScaledBitmap(bitmap, 250, 250, true);
                                 }else{
                                     sendBitmapSavedMessage(id);
                                 }
