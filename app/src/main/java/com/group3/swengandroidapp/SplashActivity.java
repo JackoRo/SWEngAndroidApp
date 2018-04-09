@@ -28,7 +28,6 @@ public class SplashActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.splash_screen);
     }
 

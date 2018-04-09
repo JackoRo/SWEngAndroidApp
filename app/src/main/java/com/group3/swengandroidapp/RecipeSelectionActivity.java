@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 
-import java.util.ArrayList;
-
 public class RecipeSelectionActivity extends AppCompatActivity {
     String id;
     ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +62,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
+        // Fill the screen with all the information!
+
         icon = findViewById(R.id.recipe_selection_thumbnail_image);
         TextView time = findViewById(R.id.recipe_selection_thumbnail_time);
         TextView description = findViewById(R.id.recipe_selection_description);
@@ -74,14 +77,24 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
-        Recipe recipe;
-        recipe = RemoteFileManager.getInstance().getRecipe(id);
+        Recipe recipe = RemoteFileManager.getInstance().getRecipe(id);
+
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a");
         }else{
             // Recipe is found, add to history
             HistoryHandler.getInstance().append(recipe.getID());
         }
+
+        setTitle(recipe.getTitle());        // Set page title to the recipe title
+
+        time.setText(recipe.getTime());
+        author.setText(recipe.getAuthor());
+        description.setText(recipe.getDescription());
+        ingredients.setText(recipe.generateIngredientsString());
+
+        // FILTERS
+        // If any filters are true, replace filter icon with the "on" versions (default = off)
         if(recipe.getSpicy()){
             spicy.setImageResource(R.drawable.spicy_filter);
         }
@@ -100,15 +113,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         if(recipe.getGluten()){
             gluten.setImageResource(R.drawable.glutenfree_filter);
         }
-        setTitle(recipe.getTitle());
-        time.setText(recipe.getTime());
-        author.setText(recipe.getAuthor());
-        description.setText(recipe.getDescription());
-        ingredients.setText(recipe.generateIngredientsString());
-
-        //TODO: Generate and draw ingredients list
-        //ingredients.setText(recipe.getIngredients());
-
     }
 
     @Override
@@ -121,16 +125,18 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             }
         };
 
-        Intent downloadreq = new Intent(this, ImageDownloaderService.class);
-        downloadreq.setAction(ImageDownloaderService.GET_BITMAP_READY);
-        downloadreq.putExtra(Recipe.ID, id);
-        startService(downloadreq);
+        if(icon.getDrawable() == null){ // if there is no icon, fetch
+            Intent downloadreq = new Intent(this, ImageDownloaderService.class);
+            downloadreq.setAction(ImageDownloaderService.GET_BITMAP_READY);
+            downloadreq.putExtra(Recipe.ID, id);
+            startService(downloadreq);
+        }
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        imageDownloaderListener.destroy();
+        imageDownloaderListener.unRegister();
     }
 
 }

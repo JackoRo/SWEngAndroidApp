@@ -348,14 +348,18 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * <p>
-     *     Send a request to ImageDownloaderService to get the cached thumbnail ready. (if it's
+     *     Send a request to {@link ImageDownloaderService} to get the saved thumbnail ready. (if it's
      *     not yet downloaded, will download first, then notify ready).
      * </p>
      * <p>
      *     When thumbnail is ready to load, an intent is broadcasted:<br>
-     *         - Action: <code>ImageDownloaderService.BITMAP_READY</code><br>
-     *         - String Extra: <code>Recipe.ID</code> - ID of the recipe
-     *         - String Extra: <code>ImageDownloaderService.ABSOLUTE_PATH</code> - path of the cached image
+     *         - Action: {@link ImageDownloaderService#BITMAP_READY}<br>
+     *         - String Extra: {@link Recipe#ID} - ID of the recipe <br>
+     *         - String Extra: {@link ImageDownloaderService#ABSOLUTE_PATH} - absolute path of the saved image
+     * </p>
+     * <p>
+     *     It is reccommended to use an instance of {@link ImageDownloaderListener} to listen for
+     *     the broadcast.
      * </p>
      * @param id id of recipe whos thumbnail you want
      */

@@ -30,6 +30,7 @@ public class PythonClient extends IntentService{
     public static final String LOAD_ALL = "com.group3.swengandroidapp.LOAD_ALL";
     public static final String FETCH_RECIPE = "com.group3.swengandroidapp.FETCH_RECIPE";
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
+    protected static final String SERVER_TIMEOUT = "PythonClient.serveTimeout";
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
@@ -97,12 +98,13 @@ public class PythonClient extends IntentService{
 
         url = new URL (String.format("http://%s:5000/recipelist", IP_ADDR));
         urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setConnectTimeout(2000);
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             return readStream(in).split(".xml");
-
-        } finally {
+        }
+        finally{
             urlConnection.disconnect();
         }
 
@@ -146,7 +148,14 @@ public class PythonClient extends IntentService{
             }
 
             Log.d("sender", "B");
-        } catch (Exception e) {
+        }catch(IOException e1) {    // Timeout exception thrown / unable to connect to server
+            // Send broadcast notifying server timeout
+            Intent timeoutintent = new Intent();
+            timeoutintent.setAction(PythonClient.SERVER_TIMEOUT);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(timeoutintent);
+            Log.d("PythonClient", "Server Connection Timeout");
+        }
+        catch (Exception e) {
             // Restore interrupt status.
             Log.d("sender", "Error");
             e.printStackTrace();
@@ -162,7 +171,5 @@ public class PythonClient extends IntentService{
         intent.putExtra(ID, id);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
-
-
 }
 

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/recipe_selection_thumbnail"
         android:layout_margin="10dp"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentEnd="true">
         <ImageView
             android:id="@+id/recipe_selection_thumbnail_image"
             android:layout_width="200dp"
@@ -39,35 +39,35 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/vegan_filter_grey"
-                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_spicy"/>
+                android:layout_toEndOf="@id/recipe_selection_thumbnail_filter_spicy"/>
             <ImageView
                 android:layout_margin="3dp"
                 android:id="@+id/recipe_selection_thumbnail_filter_vegan"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/vegan_filter_grey"
-                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_vegetarian"/>
+                android:layout_toEndOf="@id/recipe_selection_thumbnail_filter_vegetarian"/>
             <ImageView
                 android:layout_margin="3dp"
                 android:id="@+id/recipe_selection_thumbnail_filter_lactose"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/lactosefree_filter_grey"
-                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_vegan"/>
+                android:layout_toEndOf="@id/recipe_selection_thumbnail_filter_vegan"/>
             <ImageView
                 android:layout_margin="3dp"
                 android:id="@+id/recipe_selection_thumbnail_filter_nuts"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/nutfree_filter_grey"
-                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_lactose"/>
+                android:layout_toEndOf="@id/recipe_selection_thumbnail_filter_lactose"/>
             <ImageView
                 android:layout_margin="3dp"
                 android:id="@+id/recipe_selection_thumbnail_filter_gluten"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/glutenfree_filter_grey"
-                android:layout_toRightOf="@id/recipe_selection_thumbnail_filter_nuts"/>
+                android:layout_toEndOf="@id/recipe_selection_thumbnail_filter_nuts"/>
 
         </RelativeLayout>
 

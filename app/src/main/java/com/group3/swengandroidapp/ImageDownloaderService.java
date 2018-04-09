@@ -29,7 +29,8 @@ import java.util.HashMap;
  * <p>
  *     To do this:<br>
  *         1. create a new intent:<br>
- *         <code>Intent intent = new Intent(this, ImageDownloaderService.class);<br>
+ *         <code>
+ *              Intent intent = new Intent(this, ImageDownloaderService.class);<br>
  *              intent.setAction(ImageDownloaderService.GET_BITMAP_READY);<br>
  *              intent.putExtra(Recipe.ID, id);<br>
  *              startService(intent);<br>
