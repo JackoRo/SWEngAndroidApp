@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+    <id>0011</id>
+    <title>Test Recipe: No Image</title>
+    <time>1 min</time>
+    <author>SWEng Group 3</author>
+    <description>A test recipe to see what happens when the imagedownloader can't find the thumbnail</description>
+    <thumbnailURL>THIS_IS_A_FAKE_PATH</thumbnailURL>
+    <Filters spicy="false" lactose="false" nuts="false" vegetarian="false" vegan="false" gluten="false"></Filters>
+    <Ingredient amount="200" units="grams">Debugging</Ingredient>
+    <Ingredient amount="1" units="bowl">Delusion</Ingredient>
+</Recipe>

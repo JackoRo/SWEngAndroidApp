@@ -5,6 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -16,8 +20,10 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.SerializablePermission;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +40,9 @@ import java.util.ArrayList;
  */
 
 public class Recipe implements Serializable {
+    public final static int THUMBNAILSIZE = 250;
+    public final static String ID = "Recipe_ID"; // Used with broadcast
+
     // Meta data
     private String title = "n/a";
     private String author = "n/a";
@@ -43,9 +52,6 @@ public class Recipe implements Serializable {
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
-
-    public final static int THUMBNAILSIZE = 250;
-
 
     // Filters
     private Filter.Info info = new Filter.Info();
@@ -75,7 +81,6 @@ public class Recipe implements Serializable {
         if(id != null) {
             this.id = id;
         }
-
         // Both ArrayLists initialised to have 0 stored objects
         // (Whenever you add to an array list, it extends the size by 1 (I think))
 
@@ -86,7 +91,7 @@ public class Recipe implements Serializable {
 
     // METHODS
     public String getNumFavourites(){
-        //TODO: Access server and figure out a way to extract the number of users that have this recipe ID as a favourite!
+        //TODO: Access server and figure out a way to extract the number of users that have this recipe UPDATED_RECIPE_ID as a favourite!
         return "0";
     }
 
@@ -131,6 +136,7 @@ public class Recipe implements Serializable {
         this.ingredients.add(ingredient);
     }
     public void setTime(String time){this.time = time;}
+    public void setFilterInfo(Filter.Info info){this.info = info;}
 
     // GETTERS
     public String getTitle() {
@@ -173,7 +179,27 @@ public class Recipe implements Serializable {
     }
     public String getTime(){return this.time;}
 
-    public static class Icon {
+    public String generateIngredientsString(){
+        StringBuilder sb = new StringBuilder();
+        for(Ingredient i : this.ingredients){
+            sb.append("- " + i.getName() + ": " + i.getQuantityValue()+" " + i.getQuantityUnits()+"\n");
+        }
+        return sb.toString();
+    }
+
+    public Recipe clone(){
+        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID());
+        r.setThumbnail(this.getThumbnail());
+        r.setFilterInfo(this.getFilterInfo());
+        r.setPresentation(this.presentation);
+        r.setTime(this.time);
+        r.setIngredients(this.ingredients);
+        return r;
+    }
+
+    public static class Icon{
+        public final static String ICON_CHANGED = "Recipe.Icon_iconChanged"; // Used with broadcast
+
         private String title;
         private String numFavourites;
         private String time;
@@ -193,27 +219,26 @@ public class Recipe implements Serializable {
         public String getTime(){return this.time;}
         public String getNumFavourites(){return this.numFavourites;}
         public String getId(){return this.id;}
+
+        public void setDrawable(Drawable d){
+            this.image = d;
+        }
+
+        public void setTitle(String title){
+            this.title = title;
+        }
     }
 
-    public static Icon produceDescriptor(Context c, Recipe recipe) {
-        Drawable image = null;
 
-        if(recipe.getThumbnail().contains("http")){
-            Log.d("Recipe", "Apparantly, " + recipe.getThumbnail() + "contains http");
-            try{
-                URL url = new URL(recipe.getThumbnail());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                image = new BitmapDrawable(c.getResources(), BitmapFactory.decodeStream(input));
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }else{
-            image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
-        }
-        return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
+    /**
+     * Produce a foundational icon to draw to screen.<br>
+     * Be sure when you use this that you use the ImageDownloaderService to download the thumbnail image.
+     * @param c
+     * @param recipe
+     * @return
+     */
+    public static Icon produceDescriptor(Context c, Recipe recipe){
+        return new Recipe.Icon(recipe.getTitle(), null, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
 
 

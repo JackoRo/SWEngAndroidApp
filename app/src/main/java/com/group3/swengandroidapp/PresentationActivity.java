@@ -44,9 +44,9 @@ public class PresentationActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
         // Get extra data included in the Intent
         String message = intent.getStringExtra(PythonClient.ACTION);
-        Log.d("PresentationActivity received presentation", intent.getStringExtra(PythonClient.ACTION));
+        Log.d("PresentationActivity","received presentation" + intent.getStringExtra(PythonClient.ACTION));
 
-        if (message == PythonClient.FETCH_PRESENTATION) {
+        if (message.matches(PythonClient.FETCH_PRESENTATION)) {
             String presentationID = intent.getStringExtra(PythonClient.ID);
             presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
             presentation.draw(PresentationActivity.this);

@@ -11,7 +11,7 @@ public class Slide extends XmlElement {
 
     private LinearLayout linearLayout;
 
-    // Must call drawAll again on activity destroy e.g. rotating phone
+    // Must call drawAll again on activity unRegister e.g. rotating phone
 
     public Slide (XmlElement parent) {
         super(parent);

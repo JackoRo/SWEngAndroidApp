@@ -172,15 +172,13 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
     }
 
     @Override
-    public void onItemClick(View view, int position){
-        Log.d("HomeActivity","Clicked on recipe " + position + "!: " + displayAdapter.getItem(position).getTitle() + ". ID: "+ displayAdapter.getItem(position).getId());
-
-        Intent intent;
-        intent = new Intent();
-        intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-        intent.putExtra(PythonClient.ID, displayAdapter.getItem(position).getId());
-        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+    public void onItemClick(String recipeId){
+        Log.d("HomeActivity","Clicked on recipe " + recipeId);
+        Intent intent = new Intent();
+        intent.setClass(this,RecipeSelectionActivity.class);           // Set new activity destination
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                            // Delete previous activities
+        intent.putExtra(PythonClient.ID, recipeId);
+        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);        // switch activities
 
     }
 }
