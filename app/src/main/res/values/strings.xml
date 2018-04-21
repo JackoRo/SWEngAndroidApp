@@ -12,8 +12,4 @@
     <string name="save"> Save</string>
     <string name="clearAll"> Clear All</string>
 
-    <!-- This contains a list of strings to be used in the Instructional Videos GUI. -->
-    <string name="video1"> How to peel vegetables </string>
-    <string name="video2"> How to use a Knife </string>
-
 </resources>
