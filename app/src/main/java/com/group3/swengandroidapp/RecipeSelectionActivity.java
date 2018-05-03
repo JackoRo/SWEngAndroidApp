@@ -16,6 +16,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     String id;
     ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
+//    ArrayList<String> ingredientsList;
 
 
     @Override
@@ -34,6 +35,20 @@ public class RecipeSelectionActivity extends AppCompatActivity {
                 startActivity(newIntent);
             }
         });
+
+//        final Button listButton = findViewById(R.id.recipe_selection_addToList_button);
+//        listButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString()); - do i need set text here?
+//                  if (toAdd.length > 0) {
+//                         for (int i=0; i < toAdd.length; i++){
+//                              ingredientsList.add(toAdd[i])
+//                         }
+//                  }
+//            }
+//        });
+//
+
 
         final ImageButton favourites = findViewById(R.id.recipe_selection_thumbnail_favourites_button);
         favourites.setOnClickListener(new View.OnClickListener() {
