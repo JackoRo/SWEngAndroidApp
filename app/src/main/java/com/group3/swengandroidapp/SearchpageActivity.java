@@ -65,15 +65,13 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
         editText.setOnKeyListener(new View.OnKeyListener()
         {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                        searchProcess();
-                        return true;
-                    }
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    searchProcess();
+                    return true;
                 }
+
                 return false;
             }
         });
