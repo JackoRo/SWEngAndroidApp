@@ -50,7 +50,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
 //                         }
 //                  }
                 ShoppinglistHandler.getInstance().addToShoppingList(recipe.getIngredients());
-
                 Toast.makeText(getApplicationContext(),"Recipes added to shopping list!", Toast.LENGTH_SHORT).show();
 
             }

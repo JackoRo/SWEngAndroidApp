@@ -10,8 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.group3.swengandroidapp.XMLRenderer.Ingredient;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,6 +25,7 @@ public class ShoppinglistActivity extends MainActivity {
     ArrayAdapter<String> arrayAdapter;
     String messageText;
     int position;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,25 @@ public class ShoppinglistActivity extends MainActivity {
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE_TWO);
             }
         });
+
+        //Get items from shopping list handler and convert to string and add to arrayList
+        ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
+        ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
+        if (ingredients == null){
+            //do nothing
+        }
+        else {
+            for (Ingredient data : ingredients) {
+
+                StringBuilder sb = new StringBuilder(32);
+                sb.append(data.getName() + ", " );
+                sb.append(data.getQuantity() + " ");
+                //sb.append(data.getQuantityUnits());
+                arrayList.add(sb.toString());
+
+            }
+        }
+
 
         //This will read the items from the ShoppingList.txt file that we create and will add all of the items to the list
         //when the app is opened again.
@@ -92,11 +115,14 @@ public class ShoppinglistActivity extends MainActivity {
 
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
     public void clearAllButtonClicked(View v){
+        ShoppinglistHandler removeList = ShoppinglistHandler.getInstance();
         int i=arrayList.size();
         while(i!=0){
             arrayList.remove(i-1);
             i--;
             arrayAdapter.notifyDataSetChanged();
+            removeList.removeFromArrayList();
+
         }
     }
 

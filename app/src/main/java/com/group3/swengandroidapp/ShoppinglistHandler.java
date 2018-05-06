@@ -12,7 +12,7 @@ public class ShoppinglistHandler {
 
     private static ShoppinglistHandler handler = new ShoppinglistHandler();
 
-    private ShoppinglistHandler(){
+    public ShoppinglistHandler(){
         items = new ArrayList<>(0);
     }
 
@@ -23,11 +23,19 @@ public class ShoppinglistHandler {
 
         items.addAll(list);
         Log.d("ShoppingListHandler:","Ingredients added");
+        for (Ingredient ingredient : list) {
+            System.out.println(ingredient);
+        }
         Log.d("ShoppingListHandler", items.get(0).getName());
         Log.d("ShoppingListHandler", items.get(0).getQuantity());
+
     }
 
     public ArrayList<Ingredient> getItems() {
         return items;
+    }
+
+    public void removeFromArrayList(){
+        items.clear();
     }
 }
