@@ -76,7 +76,6 @@ public class TextAndroid extends Text {
             buildString(builder, activity);
 
             textView.setText(builder);
-
             layout.addView(textView);
         }
 
@@ -104,6 +103,21 @@ public class TextAndroid extends Text {
                 builderFont(builder, start);
                 builderSize(builder, start);
                 builderColor(builder, start);
+
+//                for (int i = 0; i < builder.length(); i++) {
+//                    /* if (Character.isWhitespace(builder.charAt(i))) {
+//                        builder.delete(i, i+1);
+//                        builder.removeSpan(i);
+//                    } */
+//
+//                    if (builder.getChars(i, i+1, , ); == "  ")
+//                }
+
+                for (int i = 1; i < builder.length(); i++) {
+                    if (Character.isWhitespace(builder.charAt(i-1)) && Character.isWhitespace(builder.charAt(i))) {
+                        builder.delete(i-1, i);
+                    }
+                }
 
 
             } else if (e instanceof Format) {
@@ -211,7 +225,7 @@ public class TextAndroid extends Text {
                         getHandlerThreadHandler());
 
         return null;
-    }*/
+    }
 
     private Handler getHandlerThreadHandler() {
         if (mHandler == null) {
@@ -222,4 +236,5 @@ public class TextAndroid extends Text {
         return mHandler;
     }
 
+    */
 }

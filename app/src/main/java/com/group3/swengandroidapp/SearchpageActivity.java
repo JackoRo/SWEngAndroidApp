@@ -220,7 +220,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                 String entryText = entry.getValue().getTitle();
                 if (entryText.toUpperCase().contains(search)) {
                     subentries.add(entry.getKey());
-                    Log.d("searchRecipes For-Loop","Obtained: " + entry.getKey());
+                    Log.d("searchRecipes: For-Loop","Obtained: " + entry.getKey());
                 }
             }
             foundList = subentries;
