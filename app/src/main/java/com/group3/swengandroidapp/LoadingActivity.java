@@ -9,6 +9,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,7 +64,7 @@ public class LoadingActivity extends AppCompatActivity {
                                 Intent nextIntent = new Intent();
                                 nextIntent.setClass(getApplicationContext(),HomeActivity.class);                   // Set new activity destination
                                 nextIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);            // Delete previous activities
-                                startActivityForResult(nextIntent, IntentConstants.INTENT_REQUEST_CODE);
+                                startActivityForResult(nextIntent, Intent_Constants.INTENT_REQUEST_CODE);
                             }
                             break;
                         case PythonClient.SERVER_TIMEOUT:
