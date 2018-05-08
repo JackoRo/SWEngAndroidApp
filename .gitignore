@@ -64,3 +64,6 @@ fastlane/readme.md
 
 # Mac
 .DS_Store
+
+# Python class
+*.pyc

@@ -1,134 +1,377 @@
 package com.group3.swengandroidapp;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.support.v4.content.LocalBroadcastManager;
+import android.content.res.Configuration;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Scanner;
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
+import com.group3.swengandroidapp.ShoppingList.ShoppinglistActivity;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listView;
-    ArrayList<String> arrayList;
-    ArrayAdapter<String> arrayAdapter;
-    String messageText;
-    int position;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private String[] mFragmentTitles;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopping_list_gui_new);
-        listView = findViewById(R.id.listView);
-        arrayList = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(arrayAdapter);
+    protected void onCreate(Bundle savedBundleInstance){
+        super.onCreate(savedBundleInstance);
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
 
-        //When something is clicked on in the list, the EditMessage method is called so that the message can be edited.
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+
+    protected void onCreateDrawer() {
+        //final Context thisContext = this;
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
+
+        //listenButtons();
+        /*add_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this,EditMessageClass.class);
-                intent.putExtra(Intent_Constants.INTENT_MESSAGE_DATA, arrayList.get(position));
-                intent.putExtra(Intent_Constants.INTENT_ITEM_POSITION,position);
-                startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE_TWO);
+            public void onClick(View view) {
+                if (((ToggleButton) view).isChecked()) {
+                    DisplayToast("Toggle button is On");
+                }
+                else{
+                    DisplayToast("Toggle button is Off");
+                }
+            }
+        });*/
+
+        /*view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayToast("You have clicked the Save button");
+                //viewFavourites();
+            }
+        });*/
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mTitle = mDrawerTitle = getTitle();
+        mFragmentTitles = getResources().getStringArray(R.array.screens_array);
+        mDrawerList = findViewById(R.id.left_drawer);
+
+
+        // set up the drawer's list view with items and click listener
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mFragmentTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Set title of drawer
+        getSupportActionBar().setTitle(mTitle);
+
+        mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+
+
+    }
+
+    /*public void listenButtons(){
+         add_button.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+         if (((ToggleButton) view).isChecked()) {
+         DisplayToast("Toggle button is On");
+         }
+         else{
+         DisplayToast("Toggle button is Off");
+         }
+     } */
+     /* view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //DisplayToast("You have clicked the Save button");
+                viewFavourites();
             }
         });
+    }*/
 
-        //This will read the items from the ShoppingList.txt file that we create and will add all of the items to the list
-        //when the app is opened again.
-        try {
-            Scanner sc = new Scanner(openFileInput("ShoppingList.txt"));
-            //Is their something in the file?
-            while(sc.hasNextLine()){
-                //If so, pass the scanner to the next line and pass the data to the string data.
-                String data = sc.nextLine();
-                //Then add the data to the arrayList to show on the shopping list.
-                arrayAdapter.add(data);
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+    /*
+    public void addFavourite() {
+       Recipe recipe1 = new Recipe("Crisps", "user1", "This is a recipe for crisps.", 1);
+       addToFavourites(recipe1);
+
     }
 
-    //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
+    protected void addToFavourites(Recipe recipe){
+
+        ArrayList<Recipe> arrayRecipe = new ArrayList<Recipe>();
+
+        arrayRecipe.add(recipe);
+
+    }*/
+
+
+
+/*
+    public void viewFavourites() {
+        //Call command to pass arraylist through to other activity.
+
+
+        //Creates an instance of the Intent class-the way android switches between activities.
+        //Tells you to watch the class FavouriteListActivity.
+        Intent view_f = new Intent(this, FavouriteListActivity.class);
+        //Next, the code that launches an activity.
+        startActivity(view_f);
+    }
+
+    private void DisplayToast(String msg) {
+        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
+    }*/
+
+
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Log.d("receiver", "Got message: " + message);
+
+            //Fetches all the recipes from the server
+            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.LOAD_ALL)) {
+                Toast toast = Toast.makeText(context, "Recipes loaded!",Toast.LENGTH_LONG);
+                toast.show();
+            }
+            else {
+                Log.d("MainActivity:", "BroadcastReceiver: Error on receive" + intent.getStringExtra(PythonClient.ACTION));
+            }
+        }
+    };
+
     @Override
-    public void onBackPressed(){
-        try{
-            deleteFile("ShoppingList.txt");
-            PrintWriter pw = new PrintWriter(openFileOutput("ShoppingList.txt", Context.MODE_PRIVATE));
-            for(String data : arrayList){
-                pw.println(data);
-            }
-            pw.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        finish();
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 
-    //When the 'add' button is clicked from the shopping list gui, this code will run and send an intent request to the EditField Class.
-    public void onClick(View v){
-        Intent intent = new Intent();
-        intent.setClass(MainActivity.this,EditFieldClass.class);
-        startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE);
-    }
-
-    //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
-    public void clearAllButtonClicked(View v){
-        int i=arrayList.size();
-        while(i!=0){
-            arrayList.remove(i-1);
-            i--;
-            arrayAdapter.notifyDataSetChanged();
-        }
-    }
-
-    //After the button has been clicked, the activity is established via request/result code and the appropriate method run.
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //If it is result code 1, then the user is trying to add some text to the list, so this code should run.
-        if(resultCode==Intent_Constants.INTENT_REQUEST_CODE){
-            messageText=data.getStringExtra(Intent_Constants.INTENT_MESSAGE_FIELD);
-            arrayList.add(messageText);
-            arrayAdapter.notifyDataSetChanged();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_resource, menu);
+
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
-        //If it is result code 2, then the user is trying to modify their text, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_TWO){
-            messageText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_MESSAGE);
-            position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
-            arrayList.remove(position);
-            arrayList.add(position,messageText);
-            arrayAdapter.notifyDataSetChanged();
+        // Handle action buttons
+        switch(item.getItemId()) {
+            case R.id.action_menu:
+                Intent intent = new Intent();
+                intent.setClass(this,SearchpageActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /* The click listner for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /** Swaps activities*/
+    private void selectItem(int position) {
+
+        // update the main content by replacing fragments
+        Intent intent;
+
+
+        switch(position) {
+            case 0:  // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
+
+                break;
+            case 1:  // FavouritesActivity
+                intent = new Intent();
+                intent.setClass(this,FavouritesActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
+
+                break;
+            case 2:  // Instructional Videos
+                intent = new Intent();
+                intent.setClass(this,InstructionalVideoActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);           // switch activities
+
+                break;
+            case 3:  // Shopping List
+                intent = new Intent();
+                intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+
+                break;
+            case 4:  // My Recipes
+
+                break;
+            case 5:  // History
+                intent = new Intent();
+                intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+
+                break;
+            case 6: // Settings
+                intent = new Intent();
+                intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+
+                break;
+            default: // Home
+                intent = new Intent();
+                intent.setClass(this,HomeActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);           // switch activities
+
         }
 
-        //If it is result code 3, then the user is trying to delete their text, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE){
-            //noinspection StatementWithEmptyBody
-            if(arrayList.size()==0){
-                //Do Nothing
-            }
-            else{
-                position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
-                arrayList.remove(position);
-                arrayAdapter.notifyDataSetChanged();
-            }
-        }
 
-        //If it is result code 3, then the user is trying to delete their text, so this code should run.
-        else //noinspection StatementWithEmptyBody
-            if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_FOUR) {
-            //Do Nothing
-        }
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mFragmentTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
+    }
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // Override the transition animation between activities
+        overridePendingTransition(0,0);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        // Override the transition animation between activities
+        overridePendingTransition(0,0);
+    }
+
+    //TODO: Move method so it can be accessed by the search page activity
+
+    /**
+     * <p>
+     *     Send a request to {@link ImageDownloaderService} to get the saved thumbnail ready. (if it's
+     *     not yet downloaded, will download first, then notify ready).
+     * </p>
+     * <p>
+     *     When thumbnail is ready to load, an intent is broadcasted:<br>
+     *         - Action: {@link ImageDownloaderService#BITMAP_READY}<br>
+     *         - String Extra: {@link Recipe#ID} - ID of the recipe <br>
+     *         - String Extra: {@link ImageDownloaderService#ABSOLUTE_PATH} - absolute path of the saved image
+     * </p>
+     * <p>
+     *     It is reccommended to use an instance of {@link ImageDownloaderListener} to listen for
+     *     the broadcast.
+     * </p>
+     * @param id id of recipe whos thumbnail you want
+     */
+    public void requestBitmapFile(String id){
+        Intent downloadreq = new Intent(this, ImageDownloaderService.class);
+        downloadreq.setAction(ImageDownloaderService.GET_BITMAP_READY);
+        downloadreq.putExtra(Recipe.ID, id);
+        startService(downloadreq);
     }
 }

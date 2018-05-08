@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- This shows the text 'Add your message' so that users know where to click. -->
+    <!-- This shows the text 'Add the item name' so that users know where to click. -->
     <EditText
         android:id="@+id/addMessage"
         android:layout_width="match_parent"
@@ -14,19 +14,58 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
         android:hint="@string/add_your_message"
+        android:textAlignment="center"
         android:textSize="20sp"
         android:textColor="@color/buttonColour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType= "text"/>
+
+    <!-- This shows the text 'Add the quantity' so that users know where to click. -->
+    <EditText
+        android:id="@+id/addQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:hint="@string/add_quantity"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="@color/buttonColour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addMessage"
+        android:inputType= "text"/>
+
+    <!-- This shows the text 'Add the units' so that users know where to click. -->
+    <EditText
+        android:id="@+id/addUnit"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:hint="@string/add_unit"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="@color/buttonColour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addQuantity"
+        android:inputType= "text"/>
 
     <!-- This is the save button that will save whatever message the user types. -->
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="160dp"
+        android:layout_width="350dp"
         android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@color/buttonColour"
         android:onClick="saveButtonClicked"
         android:text="@string/save"
@@ -34,21 +73,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/deleteButton" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- This is the delete button that will delete the message the user has clicked on. -->
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="160dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/buttonColour"
-        android:onClick="deleteButtonClicked"
-        android:text="@string/delete"
-        android:textColor="@color/buttonTextColour"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveButton"
-        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
