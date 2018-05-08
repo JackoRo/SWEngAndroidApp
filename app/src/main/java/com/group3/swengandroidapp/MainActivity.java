@@ -19,6 +19,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
+import com.group3.swengandroidapp.ShoppingList.ShoppinglistActivity;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -230,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_menu:
                 Intent intent = new Intent();
                 intent.setClass(this,SearchpageActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -256,25 +259,25 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent();
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
                 break;
             case 1:  // FavouritesActivity
                 intent = new Intent();
                 intent.setClass(this,FavouritesActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
                 break;
             case 2:  // Instructional Videos
                 intent = new Intent();
                 intent.setClass(this,InstructionalVideoActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);           // switch activities
 
                 break;
             case 3:  // Shopping List
                 intent = new Intent();
                 intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
             case 4:  // My Recipes
@@ -283,19 +286,19 @@ public class MainActivity extends AppCompatActivity {
             case 5:  // History
                 intent = new Intent();
                 intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
             case 6: // Settings
                 intent = new Intent();
                 intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
             default: // Home
                 intent = new Intent();
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);           // switch activities
 
         }
 

@@ -22,14 +22,18 @@
     <string name="view_fave">View Favourites</string>
 
     <!-- This contains a list of strings to be used in the shopping list GUI. -->
-    <string name="shopping_list_name"> Shopping List </string>
-    <string name="ingredient_name1"> Carrot </string>
-    <string name="ingredient_name2"> Red Pepper </string>
-    <string name="ingredient_name3"> Hand Picked, Home Grown Baking Potatoes perfect for the oven </string>
     <string name="delete"> Delete </string>
-    <string name="add_your_message">Add Your Message</string>
+    <string name="add_your_message">Add the item name</string>
+    <string name="add_quantity">Add the Quantity</string>
+    <string name="add_unit">Add the Units</string>
     <string name="save"> Save</string>
     <string name="clearAll"> Clear All</string>
+    <string name="shopping_list_name"> Shopping List</string>
+    <string name="toggleCheckedOff"> Check Item</string>
+    <string name="toggleCheckedOn"> Uncheck Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="units">Units</string>
 
     <!-- This contains a list of strings to be used in the Instructional Videos GUI. -->
     <string name="video1"> How to peel vegetables </string>

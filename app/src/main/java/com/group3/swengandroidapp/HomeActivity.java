@@ -10,8 +10,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -43,7 +43,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);       // Set recipe id
-        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);                // switch activities
+        startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
     }
 
     @Override

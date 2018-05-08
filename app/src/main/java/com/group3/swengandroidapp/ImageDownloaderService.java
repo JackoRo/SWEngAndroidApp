@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
 
-/**
+/*
  * <p>
  *     Service to handle the requests to download the thumbnail images of recipes.
  * </p>
@@ -221,10 +221,10 @@ public class ImageDownloaderService extends IntentService {
     }
 
     private class SaveFileDescriptor{
-        public String absolutePath;
-        public boolean isTemporary;
+        String absolutePath;
+        boolean isTemporary;
 
-        public SaveFileDescriptor(String path, boolean temporary){
+        SaveFileDescriptor(String path, boolean temporary){
             this.absolutePath = path;
             this.isTemporary = temporary;
         }

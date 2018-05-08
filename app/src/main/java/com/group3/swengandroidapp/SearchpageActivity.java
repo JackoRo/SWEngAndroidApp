@@ -18,8 +18,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
-import com.group3.swengandroidapp.XMLRenderer.Recipe.Icon;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 public class SearchpageActivity extends AppCompatActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
@@ -199,7 +199,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         intent.setClass(this,RecipeSelectionActivity.class);           // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                            // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);
-        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);        // switch activities
+        startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);        // switch activities
 
     }
 

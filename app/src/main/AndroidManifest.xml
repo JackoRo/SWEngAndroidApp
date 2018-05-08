@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.group3.swengandroidapp"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.group3.swengandroidapp">
 
     <!-- <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17" /> -->
     <application
@@ -46,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".ShoppinglistActivity"
+            android:name=".ShoppingList.ShoppinglistActivity"
             android:label="@string/app_name"
             android:parentActivityName=".HomeActivity">
             <intent-filter>
@@ -97,8 +95,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EditFieldClass"/>
-        <activity android:name=".EditMessageClass"/>
+        <activity android:name=".ShoppingList.EditFieldClass"/>
+        <activity android:name=".ShoppingList.EditMessageClass"/>
 
         <activity
             android:name=".RecipeSelectionActivity"
@@ -120,6 +118,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 
