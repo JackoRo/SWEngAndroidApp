@@ -58,6 +58,7 @@ public class ShoppinglistActivity extends MainActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list_gui_new);
+        super.onCreateDrawer();
         setTitle(getString(R.string.shopping_list_name));
 
         //Set ListViews for each of the lists.
