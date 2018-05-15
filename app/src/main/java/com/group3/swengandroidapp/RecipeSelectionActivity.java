@@ -26,36 +26,32 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         id = intent.getStringExtra(PythonClient.ID);
 
         final Button button = findViewById(R.id.recipe_selection_start_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
-                newIntent.putExtra(PythonClient.ID, id);
-                startActivity(newIntent);
-            }
+        button.setOnClickListener(v -> {
+            // Code here executes on main thread after user presses button
+            Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
+            newIntent.putExtra(PythonClient.ID, id);
+            startActivity(newIntent);
         });
 
         final ImageButton favourites = findViewById(R.id.recipe_selection_thumbnail_favourites_button);
-        favourites.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(id!=null){
-                    FavouritesHandler.getInstance().toggleFavourite(id);
-                    if (FavouritesHandler.getInstance().contains(id)) {
-                        favourites.setImageResource(R.drawable.heart_on);
-                    } else {
-                        favourites.setImageResource(R.drawable.heart_off);
-                    }
+        favourites.setOnClickListener(v -> {
+            if(id!=null){
+                FavouritesHandler.getInstance().toggleFavourite(id);
+                if (FavouritesHandler.getInstance().contains(id)) {
+                    favourites.setImageResource(R.drawable.favfull);
+                } else {
+                    favourites.setImageResource(R.drawable.favempty);
                 }
             }
         });
         if(id!=null){
             if (FavouritesHandler.getInstance().contains(id)) {
-                favourites.setImageResource(R.drawable.heart_on);
+                favourites.setImageResource(R.drawable.favfull);
             } else {
-                favourites.setImageResource(R.drawable.heart_off);
+                favourites.setImageResource(R.drawable.favempty);
             }
         }else{
-            favourites.setImageResource(R.drawable.heart_off);
+            favourites.setImageResource(R.drawable.favempty);
         }
     }
 

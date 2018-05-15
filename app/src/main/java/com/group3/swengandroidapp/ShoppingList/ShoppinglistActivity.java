@@ -18,6 +18,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*This is the shopping list code that runs the main GUI for the shopping list. Developed by Alex Bennett using references from;
+    https://www.youtube.com/watch?v=3QHgJnPPnqQ&t=1545s
+    https://developer.android.com/guide/topics/ui/declaring-layout#AdapterViews
+    https://robgibbens.com/androids-built-in-list-item-layouts/*/
+
 public class ShoppinglistActivity extends MainActivity {
 
     //Listviews

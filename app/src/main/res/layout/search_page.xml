@@ -39,7 +39,7 @@
                 android:id="@+id/searchPage_search_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/search_icon_small"
+                android:background="@drawable/search_icon"
                 android:contentDescription="@string/searchButton"
                 android:layout_alignEnd="@id/searchPage_text_input"
                 android:layout_marginTop="10dp"
@@ -69,7 +69,7 @@
                     android:background="@drawable/vegetarian_filter_grey"
                     android:textOff=""
                     android:textOn=""
-                    android:layout_toRightOf="@id/searchPage_togglebuttonSpicy"
+                    android:layout_toEndOf="@id/searchPage_togglebuttonSpicy"
                     android:layout_margin="4dp"/>
 
                 <ToggleButton
@@ -81,7 +81,7 @@
                     android:background="@drawable/vegan_filter_grey"
                     android:textOff=""
                     android:textOn=""
-                    android:layout_toRightOf="@id/searchPage_togglebuttonVegetarian"
+                    android:layout_toEndOf="@id/searchPage_togglebuttonVegetarian"
                     android:layout_margin="4dp"/>
 
                 <ToggleButton
@@ -91,7 +91,7 @@
                     android:background="@drawable/lactosefree_filter_grey"
                     android:textOff=""
                     android:textOn=""
-                    android:layout_toRightOf="@id/searchPage_togglebuttonVegan"
+                    android:layout_toEndOf="@id/searchPage_togglebuttonVegan"
                     android:layout_margin="4dp"/>
 
                 <ToggleButton
@@ -101,7 +101,7 @@
                     android:background="@drawable/nutfree_filter_grey"
                     android:textOff=""
                     android:textOn=""
-                    android:layout_toRightOf="@id/searchPage_togglebuttonLactose"
+                    android:layout_toEndOf="@id/searchPage_togglebuttonLactose"
                     android:layout_margin="4dp"/>
 
                 <ToggleButton
@@ -111,7 +111,7 @@
                     android:background="@drawable/glutenfree_filter_grey"
                     android:textOff=""
                     android:textOn=""
-                    android:layout_toRightOf="@id/searchPage_togglebuttonNuts"
+                    android:layout_toEndOf="@id/searchPage_togglebuttonNuts"
                     android:layout_margin="4dp"/>
 
             </RelativeLayout>

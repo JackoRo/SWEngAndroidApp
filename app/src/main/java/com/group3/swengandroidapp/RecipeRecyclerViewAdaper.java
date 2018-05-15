@@ -51,31 +51,28 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         final String id = items.get(position).getId();
 
         holder.title.setText(title);
-        holder.favouritesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(id != null){
-                    FavouritesHandler.getInstance().toggleFavourite(context, id);
-                    if (FavouritesHandler.getInstance().contains(id)) {
-                        holder.favouritesButton.setImageResource(R.drawable.heart_on);
-                        // Extract number of favourites, and add 1, and reconvert to string
-                        holder.numFavourites.setText(Integer.toString(Integer.parseInt(numFavourites) + 1));
-                    } else {
-                        holder.favouritesButton.setImageResource(R.drawable.heart_off);
-                        holder.numFavourites.setText(numFavourites);
-                    }
+        holder.favouritesButton.setOnClickListener((View view) -> {
+            if(id != null){
+                FavouritesHandler.getInstance().toggleFavourite(context, id);
+                if (FavouritesHandler.getInstance().contains(id)) {
+                    holder.favouritesButton.setImageResource(R.drawable.favfull);
+                    // Extract number of favourites, and add 1, and reconvert to string
+                    holder.numFavourites.setText(Integer.toString(Integer.parseInt(numFavourites) + 1));
+                } else {
+                    holder.favouritesButton.setImageResource(R.drawable.favempty);
+                    holder.numFavourites.setText(numFavourites);
                 }
-
-                // Send out a broadcast notifying that icon has changed
-                Intent intent = new Intent(Recipe.Icon.ICON_CHANGED);
-                intent.putExtra(Recipe.ID, id);
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
             }
+
+            // Send out a broadcast notifying that icon has changed
+            Intent intent = new Intent(Recipe.Icon.ICON_CHANGED);
+            intent.putExtra(Recipe.ID, id);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
         });
 
         if (FavouritesHandler.getInstance().contains(id)) {
-            holder.favouritesButton.setImageResource(R.drawable.heart_on);
+            holder.favouritesButton.setImageResource(R.drawable.favfull);
             // Extract number of favourites, and add 1, and reconvert to string
             int number;
             try{
@@ -88,7 +85,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             holder.numFavourites.setText(Integer.toString(number));
 
         } else {
-            holder.favouritesButton.setImageResource(R.drawable.heart_off);
+            holder.favouritesButton.setImageResource(R.drawable.favempty);
             if(numFavourites!=null){
                 holder.numFavourites.setText(numFavourites);
             }else{
@@ -269,7 +266,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     
     //******** UTILITIES ********//
 
-    public int indexOf(String recipeId) throws IconNotFoundException{
+    private int indexOf(String recipeId) throws IconNotFoundException{
         for(Recipe.Icon i : items){
             if(i.getId().matches(recipeId)){
                 return items.indexOf(i);
@@ -298,11 +295,11 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
         ViewHolder(View itemView){
             super(itemView);
-            image =(ImageView) itemView.findViewById(R.id.recipe_icon_image);
-            title =(TextView) itemView.findViewById(R.id.recipe_icon_title);
-            numFavourites =(TextView) itemView.findViewById(R.id.recipe_icon_numfavourites);
-            time =(TextView) itemView.findViewById(R.id.recipe_icon_time);
-            favouritesButton = (ImageButton) itemView.findViewById(R.id.recipe_icon_numfavourites_button);
+            image = itemView.findViewById(R.id.recipe_icon_image);
+            title = itemView.findViewById(R.id.recipe_icon_title);
+            numFavourites = itemView.findViewById(R.id.recipe_icon_numfavourites);
+            time = itemView.findViewById(R.id.recipe_icon_time);
+            favouritesButton = itemView.findViewById(R.id.recipe_icon_numfavourites_button);
             itemView.setOnClickListener(this);
         }
 
@@ -313,7 +310,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     }
 
     public class IconNotFoundException extends Exception{
-        public IconNotFoundException(String iconId){
+        IconNotFoundException(String iconId){
             super("Icon with id: " + iconId + " not found.");
         }
     }
