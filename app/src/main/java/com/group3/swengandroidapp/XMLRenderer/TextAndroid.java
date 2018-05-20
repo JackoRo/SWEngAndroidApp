@@ -104,15 +104,7 @@ public class TextAndroid extends Text {
                 builderSize(builder, start);
                 builderColor(builder, start);
 
-//                for (int i = 0; i < builder.length(); i++) {
-//                    /* if (Character.isWhitespace(builder.charAt(i))) {
-//                        builder.delete(i, i+1);
-//                        builder.removeSpan(i);
-//                    } */
-//
-//                    if (builder.getChars(i, i+1, , ); == "  ")
-//                }
-
+                // Remove white spaces
                 for (int i = 1; i < builder.length(); i++) {
                     if (Character.isWhitespace(builder.charAt(i-1)) && Character.isWhitespace(builder.charAt(i))) {
                         builder.delete(i-1, i);

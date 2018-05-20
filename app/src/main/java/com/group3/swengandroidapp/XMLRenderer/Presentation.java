@@ -42,6 +42,7 @@ public class Presentation extends XmlElement {
 
         //Sets default properties
         setProperty("color","#000000");
+        setProperty("fill","#FFFFFF");
         setProperty("font","sans-serif-medium");
         setProperty("textsize","12");
 

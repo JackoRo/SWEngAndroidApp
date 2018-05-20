@@ -20,7 +20,6 @@ public class Shape extends XmlElement implements Drawable {
         setProperty("x", x);
     }
 
-
     public String  getY(){
         return getInheritableProperty("y");
     }
@@ -61,6 +60,21 @@ public class Shape extends XmlElement implements Drawable {
         setProperty("fill", fill);
     }
 
+    public String getType() {
+        return getInheritableProperty("type");
+    }
+
+    public void setType(String type) {
+        setProperty("type", type);
+    }
+
+    public String getStroke() {
+        return getInheritableProperty("stroke");
+    }
+
+    public void setStroke(String stroke) {
+        setProperty("stroke", stroke);
+    }
 
     @Override
     public void draw(Activity activity) {
