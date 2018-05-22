@@ -9,17 +9,17 @@ We believe the module is mainly self explanitory, but with the following we hope
 1) Rectangle
 
 ```java
-rectangle(double x, double y, double w, double h, double aw, double ah, Color outline, Color color0, Color color1, double time);
+rectangle(double x1, double y1, double w, double h, double aw, double ah, Color outline, Color color0, Color color1, double time);
 ```
-'x' and 'y' are used to position the rectangle, while 'w' and 'h', change the width and height respectively. However, 'aw' and 'ah can be either ignored, as the default is set to 0, or manipulated in order to give the shape curved edges. Otherwise, ignoring them will give sharp 90 degree edges as expected.
+'x1' and 'y1' are used to position the rectangle, while 'w' and 'h', change the width and height respectively. However, 'aw' and 'ah can be either ignored, as the default is set to 0, or manipulated in order to give the shape curved edges. Otherwise, ignoring them will give sharp 90 degree edges as expected.
 'color0' and 'color1' can be set such that they are different; this will create a rather picturesque gradient design, forming two colours changing from top to bottom. These can be set to the same colour otherwise, and the shape will be block coloured. The outline can be also changed here, meaning that it is possible to make shapes stand out better. Moreover, if only one colour is selected, the shape will be of solid colour, with a matching outline.
 'time', in milliseconds determines how long the object will be present for, for example, setting the time to 3000 would produce a rectangle which would become invisible after 3 seconds.
 
 2) Circle
 ```java
-circle(double x, double y, double radius, Color outline, Color color0, Color color1, double time)
+circle(double x1, double y1, double radius, Color outline, Color color0, Color color1, double time)
 ```
-Not overly dissimilar to the rectangle, the 'x' and 'y' here define the center of the circle, and 'radius' of course defines the circle's radius. The other values can be seen as being identical to those above.
+Not overly dissimilar to the rectangle, the 'x1' and 'y1' here define the center of the circle, and 'radius' of course defines the circle's radius. The other values can be seen as being identical to those above.
 
 3) Line
 ```java

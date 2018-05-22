@@ -11,19 +11,19 @@
    </annotation>
    <attributeGroup name="position">
       <annotation>
-         <documentation>The position and size (offset) of an element. The width and height of an element is defined as the difference between the (x, y) and (x2, y2) coordinates.</documentation>
+         <documentation>The position and size (offset) of an element. The width and height of an element is defined as the difference between the (x1, y1) and (x2, y2) coordinates.</documentation>
       </annotation>
-      <attribute name="x" type="decimal">
-        <annotation><documentation>The x co-ordinate of the top left corner of the element</documentation></annotation>
+      <attribute name="x1" type="decimal">
+        <annotation><documentation>The x1 co-ordinate of the top left corner of the element</documentation></annotation>
      </attribute>
-      <attribute name="y" type="decimal">
-        <annotation><documentation>The y co-ordinate of the top left corner of the element</documentation></annotation>
+      <attribute name="y1" type="decimal">
+        <annotation><documentation>The y1 co-ordinate of the top left corner of the element</documentation></annotation>
      </attribute>
       <attribute name="x2" type="decimal">
-        <annotation><documentation>The x co-ordinate of the bottom right corner of the element</documentation></annotation>
+        <annotation><documentation>The x1 co-ordinate of the bottom right corner of the element</documentation></annotation>
      </attribute>
       <attribute name="y2" type="decimal">
-        <annotation><documentation>The y co-ordinate of the bottom right corner of the element</documentation></annotation>
+        <annotation><documentation>The y1 co-ordinate of the bottom right corner of the element</documentation></annotation>
      </attribute>
    </attributeGroup>
    <attributeGroup name="fonts">

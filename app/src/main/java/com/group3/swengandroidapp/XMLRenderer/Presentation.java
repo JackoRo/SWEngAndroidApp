@@ -45,7 +45,7 @@ public class Presentation extends XmlElement {
         setProperty("fill","#FFFFFF");
         setProperty("font","sans-serif-medium");
         setProperty("textsize","12");
-
+        setProperty("stroke","10");
         this.handler = new Handler(Looper.getMainLooper());
     }
 

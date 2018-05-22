@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.LinearLayout;
 
+import com.group3.swengandroidapp.XMLRenderer.CanvasView;
 import com.group3.swengandroidapp.XMLRenderer.Shape;
 import com.group3.swengandroidapp.XMLRenderer.Slide;
 import com.group3.swengandroidapp.XMLRenderer.XmlElement;
@@ -27,21 +28,22 @@ public class GraphicModuleAndroid extends Shape{
             LinearLayout layout = ((Slide) parent).getLayout();
             Canvas canvas = new Canvas();
             Paint paint = new Paint();
+            CanvasView canvasView = new CanvasView(activity);
 
             paint.setColor(Color.parseColor(getColor()));
             paint.setStrokeWidth(Float.valueOf(getStroke()));
 
-            if (getType() == "ellipse") {
-                canvas.drawOval(getX(),getY(),getX2(),getY2(),paint);
-            }
-            else if (getType() == "rectangle") {
-                canvas.drawRect(getX(),getY(),getX2(),getY2(),paint);
-            }
-            else if (getType() == "line") {
-                canvas.drawLine(getX(),getY(),getX2(),getY2(),paint);
-            }
+            canvasView.setPaint(paint);
+            canvasView.setX1(Float.valueOf(getX1()));
+            canvasView.setY1(Float.valueOf(getY1()));
+            canvasView.setX2(Float.valueOf(getX2()));
+            canvasView.setY2(Float.valueOf(getY2()));
+            canvasView.setType(getType());
 
+            canvasView.onDraw(canvas);
+            canvasView.setBackgroundColor(Color.TRANSPARENT);
 
+            layout.addView(canvasView);
         }
 
     }

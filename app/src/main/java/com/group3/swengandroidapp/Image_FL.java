@@ -53,8 +53,8 @@
 //    public ImageView getImageView() { return this.imageView; }
 //
 //    public void moveTo(double newX, double newY) {
-//        this.imageView.setX(newX);
-//        this.imageView.setY(newY);
+//        this.imageView.setX1(newX);
+//        this.imageView.setY1(newY);
 //    }
 //
 //    private void setSize(double width, double height) {

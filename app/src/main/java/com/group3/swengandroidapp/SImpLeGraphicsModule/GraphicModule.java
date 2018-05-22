@@ -43,8 +43,8 @@
 //
 //    public static Rectangle rectangle(double x, double y, double w, double h, double aw, double ah, Color outline, Color color0, Color color1, double time) {
 //        Rectangle rectangle = new Rectangle(); //Creates a rectangle with specified location and size.
-//        rectangle.setX(x);
-//        rectangle.setY(y);
+//        rectangle.setX1(x);
+//        rectangle.setY1(y);
 //        rectangle.setWidth(w);
 //        rectangle.setHeight(h);
 //        rectangle.setArcWidth(aw); // arc width and height are used to specify rounded corners.
@@ -73,8 +73,8 @@
 //
 //    public static Rectangle rectangle(double x, double y, double w, double h, Color color) {
 //        Rectangle rectangle = new Rectangle(); //Creates a rectangle with specified location and size.
-//        rectangle.setX(x);
-//        rectangle.setY(y);
+//        rectangle.setX1(x);
+//        rectangle.setY1(y);
 //        rectangle.setWidth(w);
 //        rectangle.setHeight(h);
 //        rectangle.setArcWidth(0); // arc width and height are used to specify rounded corners.
