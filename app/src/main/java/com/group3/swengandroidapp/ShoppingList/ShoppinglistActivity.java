@@ -126,70 +126,104 @@ public class ShoppinglistActivity extends MainActivity {
             //If the button if currently off, the user must want to check the item off the list, so do that and visa versa.
             if(checkedState)
             {
-                //arrayListForShopping.get(position).setName();
-                System.out.println("Changed state to TRUE");
-                itemNames.remove(position);
-                itemNames.add(position, arrayListForShopping.get(position).getName());
-                itemQuantities.remove(position);
-                itemQuantities.add(position, String.valueOf(arrayListForShopping.get(position).getQuantity()));
-                itemUnits.remove(position);
-                itemUnits.add(position, arrayListForShopping.get(position).getUnits());
-                arrayAdapterName.notifyDataSetChanged();
-                arrayAdapterQuantity.notifyDataSetChanged();
-                arrayAdapterUnit.notifyDataSetChanged();
+                listViewUnit.setItemChecked(position, true);
             }
             else
             {
-                //arrayListForShopping.get(position).setName();
-                System.out.println("Changed state to FALSE");
-                itemNames.remove(position);
-                itemNames.add(position, arrayListForShopping.get(position).getName());
-                itemQuantities.remove(position);
-                itemQuantities.add(position, String.valueOf(arrayListForShopping.get(position).getQuantity()));
-                itemUnits.remove(position);
-                itemUnits.add(position, arrayListForShopping.get(position).getUnits());
+                listViewUnit.setItemChecked(position, false);
+            }
+        });
+
+        //This will read the items from the ShoppingList.txt file that we create and will add all of the items to the list
+        //when the app is opened again.
+        try
+        {
+            Scanner sc1 = new Scanner(openFileInput("ShoppingListItemNames.txt"));
+            Scanner sc2 = new Scanner(openFileInput("ShoppingListItemQuantities.txt"));
+            Scanner sc3 = new Scanner(openFileInput("ShoppingListItemUnits.txt"));
+            //Scanner sc4 = new Scanner(openFileInput("ShoppingListItemChecked.txt"));
+            //Is their something in the file?
+            while(sc1.hasNextLine())
+            {
+                //If so, pass the scanner to the next line and pass the data to the string data.
+                String data = sc1.nextLine();
+                String data2 = sc2.nextLine();
+                String data3 = sc3.nextLine();
+                //Then add the data to the arrayList to show on the shopping list.
+                itemNames.add(data);
+                itemQuantities.add(data2);
+                itemUnits.add(data3);
                 arrayAdapterName.notifyDataSetChanged();
                 arrayAdapterQuantity.notifyDataSetChanged();
                 arrayAdapterUnit.notifyDataSetChanged();
             }
-        });
-
-/* Not working at the moment.
-        //This will read the items from the ShoppingList.txt file that we create and will add all of the items to the list
-        //when the app is opened again.
-        try {
-            Scanner sc = new Scanner(openFileInput("ShoppingList.txt"));
-            //Is their something in the file?
-            while(sc.hasNextLine()){
+            sc1.close();
+            sc2.close();
+            sc3.close();
+            
+            //Unused for now. Could be used to reapply the checked items after opening.
+            /*while(sc4.hasNextLine())
+            {
                 //If so, pass the scanner to the next line and pass the data to the string data.
-                String data = sc.nextLine();
+                String data = sc4.nextLine();
                 //Then add the data to the arrayList to show on the shopping list.
-                listItem item = new listItem(data, 2 , kg, false);
-                arrayAdapter.add(item);
+                listViewUnit.setItemChecked(Integer.valueOf(data), true);
             }
-            sc.close();
-        } catch (FileNotFoundException e) {
+            sc4.close();*/
+
+            int i=itemNames.size();
+            while (i!=0)
+            {
+                listItem item = new listItem(itemNames.get(i-1), itemQuantities.get(i-1), itemUnits.get(i-1));
+                arrayListForShopping.add(item);
+                i--;
+            }
+        }
+        catch (FileNotFoundException e)
+        {
             e.printStackTrace();
-        }*/
+        }
     }
 
-    /* Also not working at the moment.
-        //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
-        @Override
-        public void onBackPressed(){
-            try{
-                deleteFile("ShoppingList.txt");
-                PrintWriter pw = new PrintWriter(openFileOutput("ShoppingList.txt", Context.MODE_PRIVATE));
-                for(listItem items : arrayListForShopping){
-                    pw.println(items);
-                }
-                pw.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+    //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
+    @Override
+    public void onBackPressed()
+    {
+        try
+        {
+            //Delete old files.
+            deleteFile("ShoppingListItemNames.txt");
+            deleteFile("ShoppingListItemQuantities.txt");
+            deleteFile("ShoppingListItemUnits.txt");
+            //deleteFile("ShoppingListItemChecked.txt");
+            //Write new files with the contents of the arrays.
+            PrintWriter pw1 = new PrintWriter(openFileOutput("ShoppingListItemNames.txt", Context.MODE_PRIVATE));
+            PrintWriter pw2 = new PrintWriter(openFileOutput("ShoppingListItemQuantities.txt", Context.MODE_PRIVATE));
+            PrintWriter pw3 = new PrintWriter(openFileOutput("ShoppingListItemUnits.txt", Context.MODE_PRIVATE));
+            //PrintWriter pw4 = new PrintWriter(openFileOutput("ShoppingListItemChecked.txt", Context.MODE_PRIVATE));
+
+            int i=0;
+            while (i!=(itemNames.size()))
+            {
+                pw1.println(itemNames.get(i));
+                pw2.println(itemQuantities.get(i));
+                pw3.println(itemUnits.get(i));
+                i++;
             }
-            finish();
+            pw1.close();
+            pw2.close();
+            pw3.close();
+            //Unused for now. Could be used to reapply the checked items after opening.
+            /*pw4.println(listViewUnit.getCheckedItemPositions());
+            pw4.close();*/
         }
-    */
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        finish();
+    }
+
     //When the 'add' button is clicked from the shopping list gui, this code will run and send an intent request to the EditField Class.
     public void onClick(View v){
         Intent intent = new Intent();
