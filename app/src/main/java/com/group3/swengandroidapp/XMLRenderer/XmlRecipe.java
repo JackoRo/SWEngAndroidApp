@@ -64,6 +64,10 @@ public class XmlRecipe extends Recipe {
                     xpp.next();
                     setThumbnail(xpp.getText());
                 }
+                else if (xpp.getName().equals("time")) {
+                    xpp.next();
+                    setTime(xpp.getText());
+                }
 
             }
             //else if
