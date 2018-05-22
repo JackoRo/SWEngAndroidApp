@@ -3,8 +3,11 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.View;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jack on 21/05/2018.
@@ -18,6 +21,7 @@ public class CanvasView extends View {
     private float x2;
     private float y2;
     private String type;
+    private ArrayList<RectF> canvasshapes;
 
     public CanvasView(Context context) {
         super(context);
@@ -71,21 +75,37 @@ public class CanvasView extends View {
         this.type = type;
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
-
+    public void assessType() {
         if (type.equals("ellipse")) {
             Log.d("Ellipse","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
-            canvas.drawOval(x1, y1, x2, y2, paint);
+            canvasshapes.add(new RectF(x1,y1,x2,y2));
         }
         else if (type.equals("rectangle")) {
             Log.d("Rectangle","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
-            canvas.drawRect(x1, y1, x2, y2, paint);
+            canvasshapes.add(new RectF(x1,y1,x2,y2));
         }
-        else if (type.equals("line")) {
-            Log.d("Line","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
-            canvas.drawLine(x1, y1, x2, y2, paint);
-        }
+//        else if (type.equals("line")) {
+//            Log.d("Line","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
+//            canvas.drawLine(x1, y1, x2, y2, paint);
+//        }
+    }
 
+    @Override
+    public void onDraw(Canvas canvas) {
+
+        for (int i = 0; i < canvasshapes.size(); i++) {
+
+            if (type.equals("ellipse")) {
+                Log.d("Ellipse", "x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
+                canvas.drawOval(canvasshapes.get(i), paint);
+            } else if (type.equals("rectangle")) {
+                Log.d("Rectangle", "x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
+                canvas.drawRect(canvasshapes.get(i), paint);
+            } else if (type.equals("line")) {
+                Log.d("Line", "x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
+                canvas.drawLine(x1, y1, x2, y2, paint);
+            }
+
+        }
     }
 }
