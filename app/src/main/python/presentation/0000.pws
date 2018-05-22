@@ -25,9 +25,9 @@
          <Format underline="false" textsize="24">Shapes</Format>
          !
       </Text>
-      <Shape x1="103" y1="123" type="ellipse" x2="300" y2="500" fill="gradient(#38AEDE,#3482ED)" />
-      <Shape x1="150" y1="150" type="rectangle" x2="500" y2="700" fill="gradient(#38AEDE,#3482ED)" />
-      <Shape x1="190" y1="200" type="line" x2="700" y2="900" fill="#382345" />
+      <Shape x1="100" y1="100" type="ellipse" x2="125" y2="125" fill="gradient(#38AEDE,#3482ED)" />
+      <Shape x1="150" y1="150" type="rectangle" x2="175" y2="175" fill="gradient(#38AEDE,#3482ED)" />
+      <Shape x1="200" y1="200" type="line" x2="300" y2="300" fill="#382345" />
    </Slide>
    <Slide fill="#023211" color="#F341DE" duration="20">
       <Text bold="true" underline="true" textsize="10" duration="12" start="trigger">

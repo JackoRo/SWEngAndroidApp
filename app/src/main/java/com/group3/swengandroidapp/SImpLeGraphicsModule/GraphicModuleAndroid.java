@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.group3.swengandroidapp.XMLRenderer.CanvasView;
@@ -17,18 +18,34 @@ import com.group3.swengandroidapp.XMLRenderer.XmlElement;
 
 public class GraphicModuleAndroid extends Shape{
 
+    private Canvas canvas;
+    private CanvasView canvasView;
+
     public GraphicModuleAndroid(XmlElement parent) {
         super(parent);
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+    public CanvasView getCanvasView() {
+        return canvasView;
+    }
+
+    public void setCanvasView(CanvasView canvasView) {
+        this.canvasView = canvasView;
     }
 
     @Override
     public void draw(Activity activity) {
 
         if (parent instanceof Slide) {
-            LinearLayout layout = ((Slide) parent).getLayout();
-            Canvas canvas = new Canvas();
             Paint paint = new Paint();
-            CanvasView canvasView = new CanvasView(activity);
 
             paint.setColor(Color.parseColor(getColor()));
             paint.setStrokeWidth(Float.valueOf(getStroke()));
@@ -43,7 +60,10 @@ public class GraphicModuleAndroid extends Shape{
             canvasView.onDraw(canvas);
             canvasView.setBackgroundColor(Color.TRANSPARENT);
 
-            layout.addView(canvasView);
+            if(canvasView.getParent()==null) {
+                LinearLayout layout = ((Slide) parent).getLayout();
+                layout.addView(canvasView);
+            }
         }
 
     }

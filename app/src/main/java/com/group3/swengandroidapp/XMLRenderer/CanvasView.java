@@ -3,6 +3,7 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -12,10 +13,10 @@ import android.view.View;
 public class CanvasView extends View {
 
     private Paint paint;
-    private Float x1;
-    private Float y1;
-    private Float x2;
-    private Float y2;
+    private float x1;
+    private float y1;
+    private float x2;
+    private float y2;
     private String type;
 
     public CanvasView(Context context) {
@@ -74,12 +75,15 @@ public class CanvasView extends View {
     public void onDraw(Canvas canvas) {
 
         if (type.equals("ellipse")) {
+            Log.d("Ellipse","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
             canvas.drawOval(x1, y1, x2, y2, paint);
         }
         else if (type.equals("rectangle")) {
+            Log.d("Rectangle","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
             canvas.drawRect(x1, y1, x2, y2, paint);
         }
         else if (type.equals("line")) {
+            Log.d("Line","x1 = " + x1 + " y1 = " + y1 + " x2 = " + x2 + " y2 = " + y2);
             canvas.drawLine(x1, y1, x2, y2, paint);
         }
 
