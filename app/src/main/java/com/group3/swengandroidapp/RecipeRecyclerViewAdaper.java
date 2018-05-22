@@ -298,7 +298,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             image = itemView.findViewById(R.id.recipe_icon_image);
             title = itemView.findViewById(R.id.recipe_icon_title);
             numFavourites = itemView.findViewById(R.id.recipe_icon_numfavourites);
-            time = itemView.findViewById(R.id.recipe_icon_time);
+            time = itemView.findViewById(R.id.recipe_time_text);
             favouritesButton = itemView.findViewById(R.id.recipe_icon_numfavourites_button);
             itemView.setOnClickListener(this);
         }

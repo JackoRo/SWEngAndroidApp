@@ -3,7 +3,6 @@ package com.group3.swengandroidapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,7 +61,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         // Fill the screen with all the information!
 
         icon = findViewById(R.id.recipe_selection_thumbnail_image);
-        TextView time = findViewById(R.id.recipe_selection_thumbnail_time);
+        TextView time = findViewById(R.id.recipe_selection_timer_time);
         TextView description = findViewById(R.id.recipe_selection_description);
         TextView author = findViewById(R.id.recipe_selection_author);
         ImageView spicy = findViewById(R.id.recipe_selection_thumbnail_filter_spicy);
