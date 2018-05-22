@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             }
         }
         if(image!=null) holder.image.setImageDrawable(image);
+        Log.d("MARCO", "Time : "+ time);
         if(time!=null) holder.time.setText(time);
     }
 
