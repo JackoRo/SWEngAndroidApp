@@ -39,7 +39,7 @@ public class ImageAndroid extends Image {
 
             // Load image via Glide lib using context
             Glide.with(activity)
-                    .load("https://storage.googleapis.com/gweb-uniblog-publish-prod/images/android_ambassador_v1_cmyk_200px.max-2800x2800.png")
+                    .load(getPath())
                     .into(image);
 
             layout.addView(image);
