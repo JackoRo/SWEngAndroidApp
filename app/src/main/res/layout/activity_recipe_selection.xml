@@ -80,30 +80,44 @@
 
         <ImageButton
             android:id="@+id/recipe_selection_thumbnail_favourites_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/favempty"
             android:background="#6000"
             android:layout_margin="4dp"
-            android:padding="5dp"
+            android:padding="2dp"
             android:layout_alignBottom="@id/recipe_selection_thumbnail_image"
             android:layout_alignEnd="@id/recipe_selection_thumbnail_image"
             android:contentDescription="TODO" />
 
-        <TextView
-            android:id="@+id/recipe_selection_thumbnail_time"
-            android:text="@string/_0_mins"
-            android:textSize="14sp"
-            android:gravity="bottom"
-            android:padding="5dp"
-            android:layout_margin="4dp"
-            android:textColor="#FFF"
-            android:background="#6000"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/timer"
+            android:layout_height="34dp"
             android:layout_alignBottom="@id/recipe_selection_thumbnail_image"
-            android:layout_alignStart="@id/recipe_selection_thumbnail_image"/>
+            android:background="#6000"
+            android:layout_margin="4dp">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="2dp"
+                android:src="@drawable/timer"
+                android:id="@+id/recipe_selection_timer_icon"/>
+            <TextView
+                android:id="@+id/recipe_selection_timer_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/recipe_selection_timer_icon"
+                android:layout_alignBottom="@id/recipe_selection_timer_icon"
+                android:padding="2dp"
+                android:text="@string/_0_mins"
+                android:textSize="14sp"
+                android:gravity="bottom"
+                android:layout_marginEnd="4dp"
+                android:textColor="#FFF"/>
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
