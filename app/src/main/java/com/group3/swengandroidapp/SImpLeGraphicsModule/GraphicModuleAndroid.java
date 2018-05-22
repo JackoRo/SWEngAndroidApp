@@ -49,13 +49,8 @@ public class GraphicModuleAndroid extends Shape{
 
             paint.setColor(Color.parseColor(getColor()));
             paint.setStrokeWidth(Float.valueOf(getStroke()));
-
             canvasView.setPaint(paint);
-            canvasView.setX1(Float.valueOf(getX1()));
-            canvasView.setY1(Float.valueOf(getY1()));
-            canvasView.setX2(Float.valueOf(getX2()));
-            canvasView.setY2(Float.valueOf(getY2()));
-            canvasView.setType(getType());
+            canvasView.addShape(this);
 
             canvasView.onDraw(canvas);
             canvasView.setBackgroundColor(Color.TRANSPARENT);
