@@ -147,32 +147,20 @@ public class ShoppinglistActivity extends MainActivity {
             {
                 //If so, pass the scanner to the next line and pass the data to the string data.
                 String data = sc1.nextLine();
+                String data2 = sc2.nextLine();
+                String data3 = sc3.nextLine();
                 //Then add the data to the arrayList to show on the shopping list.
                 itemNames.add(data);
+                itemQuantities.add(data2);
+                itemUnits.add(data3);
                 arrayAdapterName.notifyDataSetChanged();
-            }
-            sc1.close();
-
-            while(sc2.hasNextLine())
-            {
-                //If so, pass the scanner to the next line and pass the data to the string data.
-                String data = sc2.nextLine();
-                //Then add the data to the arrayList to show on the shopping list.
-                itemQuantities.add(data);
                 arrayAdapterQuantity.notifyDataSetChanged();
-            }
-            sc2.close();
-
-            while(sc3.hasNextLine())
-            {
-                //If so, pass the scanner to the next line and pass the data to the string data.
-                String data = sc3.nextLine();
-                //Then add the data to the arrayList to show on the shopping list.
-                itemUnits.add(data);
                 arrayAdapterUnit.notifyDataSetChanged();
             }
+            sc1.close();
+            sc2.close();
             sc3.close();
-
+            
             //Unused for now. Could be used to reapply the checked items after opening.
             /*while(sc4.hasNextLine())
             {
