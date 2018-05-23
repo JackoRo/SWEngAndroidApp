@@ -146,16 +146,16 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            if(message != null) Log.d("receiver", "Got message: " + message);
+        // Get extra data included in the Intent
+        String message = intent.getStringExtra("message");
+        if(message != null) Log.d("receiver", "Got message: " + message);
 
-            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
-                Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-                startActivity(newIntent);
-            }else {
-                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
-            }
+        if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
+            Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
+            startActivity(newIntent);
+        }else {
+            Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
+        }
         }
     };
 

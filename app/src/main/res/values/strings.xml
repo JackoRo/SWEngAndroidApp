@@ -55,6 +55,7 @@
     <string name="no_ingredients">NO INGREDIENTS!</string>
     <string name="start">Start</string>
     <string name="recipe_name">RECIPE NAME</string>
+    <string name="instructional_video_name">VIDEO NAME</string>
     <string name="_0">0</string>
     <string name="_0_mins">0 mins</string>
 </resources>

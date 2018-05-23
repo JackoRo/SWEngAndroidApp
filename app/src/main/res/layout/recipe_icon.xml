@@ -6,7 +6,7 @@
     android:layout_weight=".4"
     android:padding="5dp"
     >
-    <!-- BACKDROP THUMBNAIL -->
+    <!-- BACKDROP THUMBNAIL -->c
     <ImageView
         android:id="@+id/recipe_icon_image"
         android:layout_width="match_parent"
