@@ -28,9 +28,8 @@
     <string name="add_unit">Add the Units</string>
     <string name="save"> Save</string>
     <string name="clearAll"> Clear All</string>
+    <string name="clearChecked"> Clear Checked</string>
     <string name="shopping_list_name"> Shopping List</string>
-    <string name="toggleCheckedOff"> Check Item</string>
-    <string name="toggleCheckedOn"> Uncheck Item</string>
     <string name="item_name">Item Name</string>
     <string name="quantity">Quantity</string>
     <string name="units">Units</string>
