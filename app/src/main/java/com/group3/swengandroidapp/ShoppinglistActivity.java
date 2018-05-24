@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.*;
 
 public class ShoppinglistActivity extends MainActivity {
 
@@ -62,12 +64,48 @@ public class ShoppinglistActivity extends MainActivity {
         }
         else {
             for (Ingredient data : ingredients) {
-
                 StringBuilder sb = new StringBuilder(32);
-                sb.append(data.getName() + ", " );
-                sb.append(data.getQuantity() + " ");
-                //sb.append(data.getQuantityUnits());
+//                String pattern = data.getName();
+//                Boolean isTrue = false;
+//                String currentValue = "initialValue";
+
+                sb.append(data.getName() + ", ");
+                sb.append(data.getQuantityValue() + " ");
+                sb.append(data.getQuantityUnits());
                 arrayList.add(sb.toString());
+
+//                for (String ing: arrayList) {
+//                   Pattern r = Pattern.compile(pattern);
+//                   Matcher m = r.matcher(ing);
+//                   if (m.find()) {
+//                       Pattern s = Pattern.compile("\\d+");
+//                       Matcher o = s.matcher(ing);
+//                       isTrue = true;
+//                       Log.d("ShoppingListActivity:","found! isTrue is true");
+//                       if (o.find()){
+//                           currentValue = o.group(0);
+//                           arrayList.remove(ing);
+//                       }else{
+//                            currentValue = "";
+//                       }
+//                   }else{
+//                        isTrue = false;
+//                       Log.d("ShoppingListActivity:","not found! isTrue is false");
+//                   }
+//
+//                }
+//                if (isTrue == true){
+//                    sb.append(data.getName() + ", " );
+//                    sb.append(data.getQuantityValue() + currentValue);
+//                    sb.append(data.getQuantityUnits());
+//                    arrayList.add(sb.toString());
+//                }else {
+//                    sb.append(data.getName() + ", ");
+//                    sb.append(data.getQuantityValue() + " ");
+//                    sb.append(data.getQuantityUnits());
+//                    arrayList.add(sb.toString());
+//                }
+
 
             }
         }
