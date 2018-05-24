@@ -3,19 +3,25 @@ package com.group3.swengandroidapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View.OnClickListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+
+import java.util.ArrayList;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
     String id;
     ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
+    private Recipe recipe;
+    ArrayList<String> ingredientsList;
 
 
     @Override
@@ -32,6 +38,23 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             newIntent.putExtra(PythonClient.ID, id);
             startActivity(newIntent);
         });
+
+        final Button listButton = findViewById(R.id.recipe_selection_addToList_button);
+        listButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString());
+//                  if (toAdd.length > 0) {
+//                         for (int i=0; i < toAdd.length; i++){
+//                              ingredientsList.add(toAdd[i]);
+//                         }
+//                  }
+                ShoppinglistHandler.getInstance().addToShoppingList(recipe.getIngredients());
+                Toast.makeText(getApplicationContext(),"Recipes added to shopping list!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
 
         final ImageButton favourites = findViewById(R.id.recipe_selection_thumbnail_favourites_button);
         favourites.setOnClickListener(v -> {
@@ -62,7 +85,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         // Fill the screen with all the information!
 
         icon = findViewById(R.id.recipe_selection_thumbnail_image);
-        TextView time = findViewById(R.id.recipe_selection_thumbnail_time);
+        TextView time = findViewById(R.id.recipe_selection_timer_time);
         TextView description = findViewById(R.id.recipe_selection_description);
         TextView author = findViewById(R.id.recipe_selection_author);
         ImageView spicy = findViewById(R.id.recipe_selection_thumbnail_filter_spicy);
@@ -73,7 +96,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
-        Recipe recipe = RemoteFileManager.getInstance().getRecipe(id);
+        recipe = RemoteFileManager.getInstance().getRecipe(id);
 
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a");

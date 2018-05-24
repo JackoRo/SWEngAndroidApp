@@ -59,7 +59,8 @@
 
         <!-- This is the Clear button that will clear everything in the list. -->
         <Button
-            android:layout_width="250dp"
+            android:id="@+id/clearAllButton"
+            android:layout_width="125dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
@@ -70,8 +71,23 @@
             android:textColor="@color/buttonTextColour"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.088"
             app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- This is the button that will clear only the checked items. -->
+        <Button
+            android:layout_width="125dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/buttonColour"
+            android:onClick="clearCheckedButtonClicked"
+            android:text="@string/clearChecked"
+            android:textColor="@color/buttonTextColour"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/clearAllButton"
             tools:ignore="RtlHardcoded" />
 
 

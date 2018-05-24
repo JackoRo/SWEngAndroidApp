@@ -6,7 +6,7 @@
     android:layout_weight=".4"
     android:padding="5dp"
     >
-    <!-- BACKDROP THUMBNAIL -->
+    <!-- BACKDROP THUMBNAIL -->c
     <ImageView
         android:id="@+id/recipe_icon_image"
         android:layout_width="match_parent"
@@ -49,9 +49,10 @@
 
         <ImageButton
             android:id="@+id/recipe_icon_numfavourites_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_toEndOf="@id/recipe_icon_numfavourites"
+            android:scaleType="fitCenter"
             android:src="@drawable/favempty"
             android:layout_margin="2dp"
             android:background="#0000"
@@ -74,25 +75,43 @@
 
 
     <!-- TIME -->
-    <TextView
-        android:id="@+id/recipe_icon_time"
-        android:textSize="14sp"
-        android:gravity="bottom"
+    <RelativeLayout
+        android:id="@+id/recipe_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/timer"
-        android:text="@string/_0_mins"
-        android:textColor="#FFF"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="2dp"
-        android:drawablePadding="2dp"
         android:layout_margin="4dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#9000"
-        />
+        android:background="#9000">
+
+        <ImageView
+            android:id="@+id/recipe_time_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/timer"
+            android:layout_margin="2dp"
+            />
+
+
+        <TextView
+            android:id="@+id/recipe_time_text"
+            android:layout_toEndOf="@id/recipe_time_icon"
+            android:layout_alignBottom="@id/recipe_time_icon"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_0_mins"
+            android:textColor="#FFF"
+            android:paddingTop="2dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="2dp"
+            android:layout_marginEnd="4dp"
+            />
+
+
+
+    </RelativeLayout>
+
 
 
 </RelativeLayout>

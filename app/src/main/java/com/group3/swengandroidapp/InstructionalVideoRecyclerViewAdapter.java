@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.ArrayList;
@@ -22,14 +22,14 @@ import java.util.ArrayList;
  */
 
 // TODO: Rename - "Adapter"
-public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecyclerViewAdaper.ViewHolder> {
+public class InstructionalVideoRecyclerViewAdapter extends RecyclerView.Adapter<InstructionalVideoRecyclerViewAdapter.ViewHolder> {
     private ItemClickListener clickListener;
     private LayoutInflater layoutInflater;
 
-    private ArrayList<Recipe.Icon> items;
+    private ArrayList<InstructionalVideo.Icon> items;
     private Context context;
 
-    RecipeRecyclerViewAdaper(Context context){
+    InstructionalVideoRecyclerViewAdapter(Context context){
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.items = new ArrayList<>(0);
@@ -38,7 +38,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = layoutInflater.inflate(R.layout.recipe_icon, parent, false);
+        View view = layoutInflater.inflate(R.layout.instructional_video_icon, parent, false);
         return new ViewHolder(view);
     }
 
@@ -46,54 +46,11 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     public void onBindViewHolder(ViewHolder holder, int position){
         final String title = items.get(position).getTitle();
         android.graphics.drawable.Drawable image = items.get(position).getDrawable();
-        final String time = items.get(position).getTime();
-        final String numFavourites = items.get(position).getNumFavourites();
         final String id = items.get(position).getId();
 
         holder.title.setText(title);
-        holder.favouritesButton.setOnClickListener((View view) -> {
-            if(id != null){
-                FavouritesHandler.getInstance().toggleFavourite(context, id);
-                if (FavouritesHandler.getInstance().contains(id)) {
-                    holder.favouritesButton.setImageResource(R.drawable.favfull);
-                    // Extract number of favourites, and add 1, and reconvert to string
-                    holder.numFavourites.setText(Integer.toString(Integer.parseInt(numFavourites) + 1));
-                } else {
-                    holder.favouritesButton.setImageResource(R.drawable.favempty);
-                    holder.numFavourites.setText(numFavourites);
-                }
-            }
-
-            // Send out a broadcast notifying that icon has changed
-            Intent intent = new Intent(Recipe.Icon.ICON_CHANGED);
-            intent.putExtra(Recipe.ID, id);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-        });
-
-        if (FavouritesHandler.getInstance().contains(id)) {
-            holder.favouritesButton.setImageResource(R.drawable.favfull);
-            // Extract number of favourites, and add 1, and reconvert to string
-            int number;
-            try{
-                number = Integer.parseInt(numFavourites) + 1;
-            }catch(NumberFormatException e){
-                // Unable to parse integer number from numFavourites
-                number = 1;
-            }
-
-            holder.numFavourites.setText(Integer.toString(number));
-
-        } else {
-            holder.favouritesButton.setImageResource(R.drawable.favempty);
-            if(numFavourites!=null){
-                holder.numFavourites.setText(numFavourites);
-            }else{
-                holder.numFavourites.setText("0");
-            }
-        }
+        holder.image.setImageDrawable(items.get(position).getDrawable());
         if(image!=null) holder.image.setImageDrawable(image);
-        if(time!=null) holder.time.setText(time);
     }
 
     @Override
@@ -101,7 +58,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         return items.size();
     }
 
-    public Recipe.Icon getItem(int position){
+    public InstructionalVideo.Icon getItem(int position){
         return items.get(position);
     }
 
@@ -115,11 +72,11 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     /**
      * The new and cool way to handle icons. This way, one Icon object can be drawn in multiple
      * viewholders. <br>
-     * Adds icon the the recyclerview, unless an icon describing the corresponding recipe already
+     * Adds icon the the recyclerview, unless an icon describing the corresponding Instructional Video already
      * exists, in which case the icon is replaced by the new icon.
      * @param icon the icon the be added.
      */
-    public void addIcon(Recipe.Icon icon){
+    public void addIcon(InstructionalVideo.Icon icon){
         try{
             // Search for existing icons with same id, and replace
             int index = indexOf(icon.getId());
@@ -136,48 +93,48 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     /**
      * @deprecated
-     * @param r recipe to be added
+     * @param r InstructionalVideo to be added
      */
-    public void addRecipe(Recipe r){
+    public void addInstructionalVideo(InstructionalVideo r){
         try{
             int index = indexOf(r.getID());
-            items.set(index, Recipe.produceDescriptor(this.context, r));
+            items.set(index, InstructionalVideo.produceDescriptor(this.context, r));
             notifyItemChanged(index);
             // If there is no bitmap, request the loading of the bitmap
         }catch(Exception e){
-            items.add(Recipe.produceDescriptor(this.context, r));
+            items.add(InstructionalVideo.produceDescriptor(this.context, r));
             this.notifyDataSetChanged();
         }
     }
 
     /**
      * @deprecated
-     * @param id id of recipe to be added
+     * @param id id of InstructionalVideo to be added
      */
-    public void addRecipe(String id){
-        Recipe r = RemoteFileManager.getInstance().getRecipe(id);
+    public void addInstructionalVideo(String id){
+        InstructionalVideo r = RemoteFileManager.getInstance().getInstructionalVideo(id);
         if(r != null){ // If recipe exists in file manager
-            addRecipe(r);
+            addInstructionalVideo(r);
         }
     }
 
     /**
      * @deprecated
-     * @param ids ids of recipes to be added
+     * @param ids ids of InstructionalVideos to be added
      */
-    public void addRecipe(String[] ids){
+    public void addInstructionalVideo(String[] ids){
         for(String id : ids){
-            addRecipe(id);
+            addInstructionalVideo(id);
         }
     }
 
     /**
      * @deprecated
-     * @param recipes recipes to be added
+     * @param InstructionalVideos instructionalVideos to be added
      */
-    public void addRecipe(Recipe[] recipes){
-        for(Recipe r : recipes){
-            addRecipe(r);
+    public void addInstructionalVideo(InstructionalVideo[] InstructionalVideos){
+        for(InstructionalVideo r : InstructionalVideos){
+            addInstructionalVideo(r);
         }
     }
 
@@ -186,14 +143,14 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
      * Clears container and fills with given recipes (Recipe type or String!!)
      * @param items ArrayList of Recipe or String (id string) to be processed!
      */
-    public void setRecipes(ArrayList<?> items){
+    public void setInstructionalVideos(ArrayList<?> items){
         this.items.clear();
         for(Object o : items){
-            if(o instanceof Recipe){
-                this.addRecipe((Recipe)o);
+            if(o instanceof InstructionalVideo){
+                this.addInstructionalVideo((InstructionalVideo)o);
             }else if(o instanceof String){
-                Recipe r = RemoteFileManager.getInstance().getRecipe((String)o);
-                if(r != null) this.addRecipe(r);
+                InstructionalVideo r = RemoteFileManager.getInstance().getInstructionalVideo((String)o);
+                if(r != null) this.addInstructionalVideo(r);
             }
         }
         this.notifyDataSetChanged();
@@ -204,12 +161,12 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
      * Clears container and fills with given recipes
      * @param ids ids of recipes to be fetched from server
      */
-    public void setRecipes(String[] ids){
+    public void setInstructionalVideos(String[] ids){
         this.items.clear();
         for(String id : ids){
-            Recipe r = RemoteFileManager.getInstance().getRecipe(id);
+            InstructionalVideo r = RemoteFileManager.getInstance().getInstructionalVideo(id);
             if(r != null){
-                this.addRecipe(r);
+                this.addInstructionalVideo(r);
             }
         }
     }
@@ -234,7 +191,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
      * @param id id of the recipe(s) to be updated
      */
     public void notifyIconChanged(String id){
-        for(Recipe.Icon i : items) {
+        for(InstructionalVideo.Icon i : items) {
             if (i.getId().matches(id)) {
                 notifyItemChanged(items.indexOf(i));
                 break;
@@ -253,26 +210,26 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
      * @param id id of recipe to re-draw
      */
     public void reloadIcon(String id){
-        for(Recipe.Icon i : items){
+        for(InstructionalVideo.Icon i : items){
             if(i.getId().matches(id)){
                 int index = items.indexOf(i);
-                items.set(index, Recipe.produceDescriptor(this.context, RemoteFileManager.getInstance().getRecipe(id)));
+                items.set(index, InstructionalVideo.produceDescriptor(this.context, RemoteFileManager.getInstance().getInstructionalVideo(id)));
                 notifyItemChanged(index);
                 break;
             }
         }
     }
 
-    
+
     //******** UTILITIES ********//
 
-    private int indexOf(String recipeId) throws IconNotFoundException{
-        for(Recipe.Icon i : items){
-            if(i.getId().matches(recipeId)){
+    private int indexOf(String instructionalVideoId) throws IconNotFoundException{
+        for(InstructionalVideo.Icon i : items){
+            if(i.getId().matches(instructionalVideoId)){
                 return items.indexOf(i);
             }
         }
-        throw new IconNotFoundException(recipeId);
+        throw new IconNotFoundException(instructionalVideoId);
     }
 
 
@@ -282,24 +239,18 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     // Parent activity will implement this method to respond to click events
     public interface ItemClickListener{
-        void onItemClick(String recipeId);
+        void onItemClick(String instructionalVideoId);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView image;
         TextView title;
-        TextView numFavourites;
-        TextView time;
-        ImageButton favouritesButton;
 
 
         ViewHolder(View itemView){
             super(itemView);
-            image = itemView.findViewById(R.id.recipe_icon_image);
-            title = itemView.findViewById(R.id.recipe_icon_title);
-            numFavourites = itemView.findViewById(R.id.recipe_icon_numfavourites);
-            time = itemView.findViewById(R.id.recipe_time_text);
-            favouritesButton = itemView.findViewById(R.id.recipe_icon_numfavourites_button);
+            image = itemView.findViewById(R.id.instructional_video_icon_image);
+            title = itemView.findViewById(R.id.instructional_video_icon_title);
             itemView.setOnClickListener(this);
         }
 
