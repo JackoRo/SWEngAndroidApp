@@ -383,7 +383,7 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterUnit.notifyDataSetChanged();
             i--;
 
-            removeList.removeFromArrayList();
+            //removeList.removeFromArrayList();
         }
     }
 
