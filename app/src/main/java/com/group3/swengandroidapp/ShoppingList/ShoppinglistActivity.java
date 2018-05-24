@@ -32,6 +32,7 @@ public class ShoppinglistActivity extends MainActivity {
 
     //Main Arraylist containing all of the objects.
     ArrayList<listItem> arrayListForShopping = new ArrayList<>();
+    //ArrayList<String> arrayList;
 
     //Arraylists and adapters for the Item names display list.
     ArrayList<String> itemNames = new ArrayList<>();
@@ -81,6 +82,61 @@ public class ShoppinglistActivity extends MainActivity {
             }
             arrayAdapterName.notifyDataSetChanged();
         }
+
+//        //Get items from shopping list handler and convert to string and add to arrayList
+//        arrayList = new ArrayList<>();
+//        ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
+//        ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
+//        if (ingredients == null){
+//            //do nothing
+//        }
+//        else {
+//            for (Ingredient data : ingredients) {
+//                StringBuilder sb = new StringBuilder(32);
+////                String pattern = data.getName();
+////                Boolean isTrue = false;
+////                String currentValue = "initialValue";
+//
+//                sb.append(data.getName() + ", ");
+//                sb.append(data.getQuantityValue() + " ");
+//                sb.append(data.getQuantityUnits());
+//                arrayList.add(sb.toString());
+//
+////                for (String ing: arrayList) {
+////                   Pattern r = Pattern.compile(pattern);
+////                   Matcher m = r.matcher(ing);
+////                   if (m.find()) {
+////                       Pattern s = Pattern.compile("\\d+");
+////                       Matcher o = s.matcher(ing);
+////                       isTrue = true;
+////                       Log.d("ShoppingListActivity:","found! isTrue is true");
+////                       if (o.find()){
+////                           currentValue = o.group(0);
+////                           arrayList.remove(ing);
+////                       }else{
+////                            currentValue = "";
+////                       }
+////                   }else{
+////                        isTrue = false;
+////                       Log.d("ShoppingListActivity:","not found! isTrue is false");
+////                   }
+////
+////                }
+////                if (isTrue == true){
+////                    sb.append(data.getName() + ", " );
+////                    sb.append(data.getQuantityValue() + currentValue);
+////                    sb.append(data.getQuantityUnits());
+////                    arrayList.add(sb.toString());
+////                }else {
+////                    sb.append(data.getName() + ", ");
+////                    sb.append(data.getQuantityValue() + " ");
+////                    sb.append(data.getQuantityUnits());
+////                    arrayList.add(sb.toString());
+////                }
+//
+//
+//            }
+//        }
 
         //This listview is for the quantity display list.
         listViewQuantity = findViewById(R.id.listViewQuantity);
@@ -248,7 +304,7 @@ public class ShoppinglistActivity extends MainActivity {
             if (data4.contains("14=true"))
             {
                 listViewUnit.setItemChecked(14, true);
-                arrayAdapterUnit.notifyDataSetChanged(); f
+                arrayAdapterUnit.notifyDataSetChanged();
             }
 
             //This is used to make sure that Item objects are created along with all of the other arrays being filled up.
@@ -316,6 +372,7 @@ public class ShoppinglistActivity extends MainActivity {
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
     public void clearAllButtonClicked(View v){
         int i=arrayListForShopping.size();
+        //ShoppinglistHandler removeList = ShoppinglistHandler.getInstance();
         while(i!=0){
             arrayListForShopping.remove(i-1);
             itemNames.remove(i-1);
@@ -325,6 +382,8 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterQuantity.notifyDataSetChanged();
             arrayAdapterUnit.notifyDataSetChanged();
             i--;
+
+            removeList.removeFromArrayList();
         }
     }
 
