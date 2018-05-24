@@ -104,18 +104,27 @@ public class TextAndroid extends Text {
                 builderSize(builder, start);
                 builderColor(builder, start);
 
-                // Remove white spaces
-                for (int i = 1; i < builder.length(); i++) {
-                    if (Character.isWhitespace(builder.charAt(i-1)) && Character.isWhitespace(builder.charAt(i))) {
-                        builder.delete(i-1, i);
-                    }
-                }
-
+//                for (int i = 1; i < builder.length(); i++) {
+//                    if (Character.isWhitespace(builder.charAt(i-1)) && Character.isWhitespace(builder.charAt(i))) {
+//                        builder.delete(i-1, i);
+//                    }
+//                }
+            } else if (e instanceof Br) {
+                builder.append("\n");
 
             } else if (e instanceof Format) {
                 ((Format)e).buildString(builder, activity);
             }
 
+        }
+
+        // Remove leading and trailing white spaces
+
+        while (builder.length() > 0 && Character.isWhitespace(builder.charAt(0))) {
+            builder.delete(0, 1);
+        }
+        while (builder.length() > 0 && Character.isWhitespace(builder.charAt(builder.length()-1))) {
+            builder.delete(builder.length()-1, builder.length());
         }
     }
 

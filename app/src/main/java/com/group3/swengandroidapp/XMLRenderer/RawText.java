@@ -10,7 +10,7 @@ public class RawText extends XmlElement {
     private String text;
     public RawText(XmlElement parent, String text) {
         super(parent);
-        this.text = text;
+        this.text = text.replaceAll("\\s+", " ");
     }
 
     public String getText() {

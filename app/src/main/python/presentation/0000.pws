@@ -5,7 +5,7 @@
       <Text textsize="18" underline="true" font="Times New Roman">
          This is the schema of the
          <Format bold="true" color="#F341DE">PWS</Format>
-         file fromat agreed between
+         file format agreed between
          <Format bold="true" color="#F314DE">SWEng</Format>
          groups.
       </Text>
@@ -22,8 +22,7 @@
    <Slide>
       <Text underline="true" textsize="18" color="#F341DE" font="Times New Roman">
          The Schema also defines
-         <Format underline="false" textsize="24">Shapes</Format>
-         !
+         <Format underline="false" textsize="24">Shapes</Format>!
       </Text>
       <Shape x1="100" y1="100" type="ellipse" x2="200" y2="200" fill="gradient(#FF0000,#0000FF)" />
       <Shape x1="300" y1="300" type="rectangle" x2="400" y2="400" fill="gradient(#00FF00,#FFFF00)" />
