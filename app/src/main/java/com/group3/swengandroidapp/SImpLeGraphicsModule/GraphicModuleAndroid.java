@@ -3,14 +3,20 @@ package com.group3.swengandroidapp.SImpLeGraphicsModule;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.view.ViewGroup;
+import android.graphics.Paint.Style;
+import android.graphics.Shader.TileMode;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.group3.swengandroidapp.XMLRenderer.CanvasView;
 import com.group3.swengandroidapp.XMLRenderer.Shape;
 import com.group3.swengandroidapp.XMLRenderer.Slide;
 import com.group3.swengandroidapp.XMLRenderer.XmlElement;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Jack on 20/05/2018.
@@ -45,11 +51,7 @@ public class GraphicModuleAndroid extends Shape{
     public void draw(Activity activity) {
 
         if (parent instanceof Slide) {
-            Paint paint = new Paint();
 
-            paint.setColor(Color.parseColor(getColor()));
-            paint.setStrokeWidth(Float.valueOf(getStroke()));
-            canvasView.setPaint(paint);
             canvasView.addShape(this);
 
             canvasView.onDraw(canvas);
