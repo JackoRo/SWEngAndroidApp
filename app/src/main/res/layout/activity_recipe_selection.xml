@@ -194,4 +194,16 @@
         android:layout_margin="10dp"
         android:padding="20dip"/>
 
+    <Button
+        android:id="@+id/recipe_selection_addToList_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2C5"
+        android:textColor="#FFF"
+        android:text="Add to shopping list"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/ingredientsLayout"
+        android:layout_margin="10dp"
+        android:padding="20dip"/>
+
 </RelativeLayout>

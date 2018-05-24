@@ -6,15 +6,20 @@ import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
@@ -37,6 +42,8 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
     private String search;
 
+    private TextInputEditText editText;
+
 
 
 
@@ -51,35 +58,63 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
 
-            //When search button is click store the input string of the search bar
+
+
+
+        editText = (TextInputEditText) findViewById(R.id.searchPage_edit_text);
+
+        editText.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    searchProcess();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+//        editText.setKeyListener(new KeyListener() {
+//            @Override
+//            public int getInputType() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public boolean onKeyDown(View view, Editable editable, int i, KeyEvent keyEvent) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onKeyUp(View view, Editable editable, int i, KeyEvent keyEvent) {
+//
+//                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//                    searchProcess();
+//                }
+//
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onKeyOther(View view, Editable editable, KeyEvent keyEvent) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void clearMetaKeyState(View view, Editable editable, int i) {
+//
+//            }
+//        });
+        //When search button is click store the input string of the search bar
         final ImageButton button = findViewById(R.id.searchPage_search_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                hideKeyboard();
-                final TextInputLayout searchBar = findViewById(R.id.searchPage_text_input);
-                search = searchBar.getEditText().getText().toString();
-                Log.d("Search icon", "Pressed! Search with <" + search + ">");
-                searchRecipes(search);
-
-                displayAdapter.clear();
-
-                for(String id : foundList){
-                    displayAdapter.addIcon(Recipe.produceDescriptor(SearchpageActivity.this, RemoteFileManager.getInstance().getRecipe(id)));
-                }
-
-                displayAdapter.notifyDataSetChanged();
-                Log.d("Search icon", "Data updated");
-
-            }
-
-            private void hideKeyboard() {
-                View view = getCurrentFocus();
-                if (view != null) {
-                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
-                            hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
+                searchProcess();
             }
         });
+
+
 
 
 
@@ -203,6 +238,33 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
     }
 
+    private void searchProcess() {
+
+        hideKeyboard();
+        final TextInputLayout searchBar = (TextInputLayout) findViewById(R.id.searchPage_text_input);
+        search = searchBar.getEditText().getText().toString();
+        Log.d("Search icon", "Pressed! Search with <" + search + ">");
+        searchRecipes(search);
+        foundList = Filter.getInstance().process(foundList);
+        displayAdapter.clear();
+
+        for(String id : foundList){
+            displayAdapter.addIcon(Recipe.produceDescriptor(SearchpageActivity.this, RemoteFileManager.getInstance().getRecipe(id)));
+        }
+
+        displayAdapter.notifyDataSetChanged();
+        Log.d("Search icon", "Data updated");
+
+    }
+
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
     private void searchRecipes(String search) {
         //Fetch recipes
         RemoteFileManager rfm = RemoteFileManager.getInstance();
@@ -229,5 +291,29 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         else {
             foundList =  recipes ;
         }
+    }
+
+    /**
+     * <p>
+     *     Send a request to {@link ImageDownloaderService} to get the saved thumbnail ready. (if it's
+     *     not yet downloaded, will download first, then notify ready).
+     * </p>
+     * <p>
+     *     When thumbnail is ready to load, an intent is broadcasted:<br>
+     *         - Action: {@link ImageDownloaderService#BITMAP_READY}<br>
+     *         - String Extra: {@link Recipe#ID} - ID of the recipe <br>
+     *         - String Extra: {@link ImageDownloaderService#ABSOLUTE_PATH} - absolute path of the saved image
+     * </p>
+     * <p>
+     *     It is reccommended to use an instance of {@link ImageDownloaderListener} to listen for
+     *     the broadcast.
+     * </p>
+     * @param id id of recipe whos thumbnail you want
+     */
+    public void requestBitmapFile(String id){
+        Intent downloadreq = new Intent(this, ImageDownloaderService.class);
+        downloadreq.setAction(ImageDownloaderService.GET_BITMAP_READY);
+        downloadreq.putExtra(Recipe.ID, id);
+        startService(downloadreq);
     }
 }

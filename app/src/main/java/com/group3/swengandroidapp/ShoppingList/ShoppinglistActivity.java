@@ -248,7 +248,7 @@ public class ShoppinglistActivity extends MainActivity {
             if (data4.contains("14=true"))
             {
                 listViewUnit.setItemChecked(14, true);
-                arrayAdapterUnit.notifyDataSetChanged();
+                arrayAdapterUnit.notifyDataSetChanged(); f
             }
 
             //This is used to make sure that Item objects are created along with all of the other arrays being filled up.
