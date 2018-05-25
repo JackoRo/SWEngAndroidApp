@@ -21,11 +21,12 @@ public class PresentationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentation);
 
+        // TODO FIX THIS
         if (presentation != null && savedInstanceState == null) {
             // This activity has been recreated, but we do not have a saved state
             // reset the presentation to the first slide. If we have opened a different
             // presentation, it will be overwritten anyway
-            presentation.restart();
+            //presentation.restart();
         }
 
         Intent receivedIntent = getIntent();

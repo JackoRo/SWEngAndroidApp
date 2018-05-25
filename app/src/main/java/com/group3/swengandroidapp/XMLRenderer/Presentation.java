@@ -28,12 +28,6 @@ public class Presentation extends XmlElement {
     private int currentSlide;
     private Handler handler;
     private LinearLayout linearLayout;
-//    private Runnable slideAdvancer = new Runnable() {
-//        public void run() {
-//            drawNextSlide();
-//        }
-//    };
-
 
     public Presentation() {
         super(null);
@@ -143,15 +137,6 @@ public class Presentation extends XmlElement {
             }
 
         });
-
-
-                /*new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                handler.removeCallbacks(slideAdvancer);
-                handler.post(slideAdvancer);
-            }
-        }); */
 
         slides.get(index).draw(activity);
 
