@@ -37,10 +37,19 @@ public class ImageAndroid extends Image {
 
             LinearLayout layout = ((Slide) parent).getLayout();
             ImageView image = new ImageView(activity);
+            String urlString;
+
+            try {
+                new URL(getPath());
+                urlString = getPath();
+            }
+            catch (Exception e) {
+                urlString = "http://192.168.0.20:5000/download/presentation/" + getInheritableProperty("_ID") + "/" + getPath();
+            }
 
             // Load image via Glide lib using context
             Glide.with(activity)
-                    .load(getPath())
+                    .load(urlString)
                     .into(image);
 
             layout.addView(image);

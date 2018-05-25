@@ -5,7 +5,7 @@
        <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="10" y1="35" x2="100" y2="200" />
    </Slide>
    <Slide>
-       <Image path="../testimage.jpg" x1="10" y1="35" x2="100" y2="200" />
+       <Image path="image/testimage.jpg" x1="10" y1="35" x2="100" y2="200" />
    </Slide>
    <Slide duration="12">
       <Text textsize="18" underline="true" font="Times New Roman">

@@ -68,7 +68,10 @@ public class RemoteFileManager {
         return ids;
     }
 
-    public void setPresentation(String id, Presentation presentation) { presentations.put(id, presentation); }
+    public void setPresentation(String id, Presentation presentation) {
+        presentation.setProperty("_ID", id);
+        presentations.put(id, presentation);
+    }
 
     public Presentation getPresentation(String id) { return presentations.get(id); }
 
