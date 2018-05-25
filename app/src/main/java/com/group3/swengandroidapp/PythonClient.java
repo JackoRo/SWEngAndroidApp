@@ -110,21 +110,6 @@ public class PythonClient extends IntentService{
 
     }
 
-    public String fetchImageFromHttpServer(String id) throws IOException{
-
-        url = new URL (String.format("http://%s:5000/download/image/%s", IP_ADDR, id));
-        urlConnection = (HttpURLConnection) url.openConnection();
-
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in);
-
-        } finally {
-            urlConnection.disconnect();
-        }
-
-    }
-
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
