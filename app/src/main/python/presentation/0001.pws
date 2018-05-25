@@ -12,7 +12,9 @@
 
     <Meta key="author" value="Not Stuart Porter" />
     <Meta key="name" value="Pasta Bake"/>
-
+    <Slide duration="10" advert="1">
+         <Image path="..\..\res\drawable\coola_cola_ad.png"/>
+    </Slide>
     <Slide>
         <Text
             bold="true"
@@ -85,5 +87,9 @@
             Serve, good luch, and TELL ALL YOUR FRIENDS ABOUT THIS APP
         </Text>
         <Image path="https://www.thestar.com/content/dam/thestar/life/food_wine/2014/07/09/a_feast_before_fasting_sharing_suhoor_with_a_toronto_muslim_family/family_meal.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Image path="..\..\res\drawable\premium_ad.png"/>
     </Slide>
 </Presentation>

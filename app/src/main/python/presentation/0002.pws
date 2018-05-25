@@ -12,7 +12,9 @@
 
     <Meta key="author" value="Not Stuart Porter" />
     <Meta key="name" value="Pasta Bake"/>
-
+    <Slide duration="10" advert="1">
+         <Image path="..\..\res\drawable\coola_cola_ad.png"/>
+    </Slide>
     <Slide>
         <Text
             bold="true"
@@ -76,6 +78,9 @@
             Leave to cool for 2 minutes, and enjoy!
         </Text>
         <Image path="https://thatangiegirl.files.wordpress.com/2008/05/1stcanonpics-096.jpg"/>
+    </Slide>
+    <Slide>
+        <Image path="..\..\res\drawable\premium_ad.png"/>
     </Slide>
 
 </Presentation>
