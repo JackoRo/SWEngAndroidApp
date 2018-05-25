@@ -52,6 +52,7 @@
    </Slide>
    <Slide>
       <Video path="../local_file.jpg" x1="10" y1="35" x2="100" y2="200" />
+      <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="10" y1="35" x2="100" y2="200" />
       <Audio path="../local_file.wav" x1="50" y1="100" x2="10" y2="10" />
    </Slide>
 </Presentation>

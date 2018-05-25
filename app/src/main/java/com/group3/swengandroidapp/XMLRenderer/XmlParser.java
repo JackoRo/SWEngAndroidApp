@@ -78,7 +78,7 @@ public class XmlParser {
             case "shape":
                 return new GraphicModuleAndroid(parent);
             case "video":
-                return new Video(parent);
+                return new VideoAndroid(parent);
             case "audio":
                 return new Audio(parent);
         }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.group3.swengandroidapp.PythonClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class ImageAndroid extends Image {
                 urlString = getPath();
             }
             catch (Exception e) {
-                urlString = "http://192.168.0.20:5000/download/presentation/" + getInheritableProperty("_ID") + "/" + getPath();
+                urlString = "http://"+ PythonClient.IP_ADDR + ":5000/download/presentation/" + getInheritableProperty("_ID") + "/" + getPath();
             }
 
             // Load image via Glide lib using context

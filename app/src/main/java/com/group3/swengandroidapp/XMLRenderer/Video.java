@@ -6,7 +6,7 @@ import android.app.Activity;
  * Created by Jack on 25/02/2018.
  */
 
-public class Video extends XmlElement implements Drawable {
+public abstract class Video extends XmlElement implements Drawable {
 
     public Video(XmlElement parent) {
         super(parent);
@@ -45,10 +45,5 @@ public class Video extends XmlElement implements Drawable {
     public void setY2(String y2) {
         setProperty("y2", y2);
     }
-    @Override
-    public void draw(Activity activity) {
-
-    }
-
 
 }
