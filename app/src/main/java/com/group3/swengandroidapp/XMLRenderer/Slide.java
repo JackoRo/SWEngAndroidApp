@@ -23,6 +23,10 @@ public class Slide extends XmlElement {
 
     }
 
+    public String getAdvert () {
+        return getInheritableProperty("advert");
+    }
+
     public LinearLayout getLayout() {
         return linearLayout;
     }

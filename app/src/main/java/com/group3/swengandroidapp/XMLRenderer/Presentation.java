@@ -106,23 +106,32 @@ public class Presentation extends XmlElement {
             private GestureDetector gestureDetector = new GestureDetector(activity, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
-                    Log.d("TEST", "onDoubleTap");
+                    if (slides.get(index).getAdvert() == null) {
+                        Log.d("TEST", "onDoubleTap");
 
-                    handler.removeCallbacksAndMessages(null);
-                    handler.post(Presentation.this::drawPreviousSlide);
+                        handler.removeCallbacksAndMessages(null);
+                        handler.post(Presentation.this::drawPreviousSlide);
 
-                    return super.onDoubleTap(e);
+                        return super.onDoubleTap(e);
+                    }
+                    else {
+                        return false;
+                    }
                 }
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
-                    gestureDetector.onTouchEvent(e);
+                    if (slides.get(index).getAdvert() == null) {
+                        Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
+                        gestureDetector.onTouchEvent(e);
 
-                    handler.removeCallbacksAndMessages(null);
-                    handler.post(Presentation.this::drawNextSlide);
-
-                    return true;
+                        handler.removeCallbacksAndMessages(null);
+                        handler.post(Presentation.this::drawNextSlide);
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 }
             });
 

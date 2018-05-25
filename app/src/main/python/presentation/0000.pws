@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation xmlns="pws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="pws schema.xsd" italic="false" bold="false" underline="false" textsize="12" color="#000000" font="Times New Roman">
    <Meta key="author" value="Stuart Porter" />
+      <Slide duration="4" advert="1">
+        <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="10" y1="35" x2="100" y2="200" />
+      </Slide>
    <Slide duration="12">
       <Text textsize="18" underline="true" font="Times New Roman">
          This is the schema of the
