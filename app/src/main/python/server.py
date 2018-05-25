@@ -8,7 +8,7 @@ uploadRecipe = 'recipe'
 UPLOAD_PRESENTATION = os.path.join(cwd, uploadPresentation)
 UPLOAD_RECIPE = os.path.join(cwd, uploadRecipe)
 
-ALLOWED_EXTENSIONS = set(['xml', 'pws'])
+ALLOWED_EXTENSIONS = set(['xml', 'pws', 'jpg', 'png', 'jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
@@ -21,6 +21,18 @@ def fetchPresentation(id):
 @app.route('/download/recipe/<id>')
 def fetchRecipe(id):
     return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
+
+@app.route('/download/image/<id>')
+def fetchRecipe(id):
+    return send_from_directory(UPLOAD_RECIPE, "{}".format(id))
+
+@app.route('/download/video/<id>')
+def fetchRecipe(id):
+    return send_from_directory(UPLOAD_RECIPE, "{}".format(id))
+
+@app.route('/download/audio/<id>')
+def fetchRecipe(id):
+    return send_from_directory(UPLOAD_RECIPE, "{}".format(id))
 
 def allowed_file(filename):
     return '.' in filename and \

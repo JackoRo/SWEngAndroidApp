@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.widget.ImageViewCompat;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -43,7 +44,6 @@ public class ImageAndroid extends Image {
                     .into(image);
 
             layout.addView(image);
-
 
         }
 
