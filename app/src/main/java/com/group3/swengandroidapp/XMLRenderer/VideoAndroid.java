@@ -9,6 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.group3.swengandroidapp.PythonClient;
+
+import java.net.URL;
+
 /**
  * Created by Jack on 25/05/2018.
  */
@@ -25,9 +29,16 @@ public class VideoAndroid extends Video {
         if (parent instanceof Slide) {
             LinearLayout layout = ((Slide) parent).getLayout();
             VideoView video = new VideoView(activity);
-            //MediaController mc;
+            String urlString;
 
-            video.setVideoPath("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+            try{
+                new URL(getPath());
+                urlString = getPath();
+            } catch (Exception e){
+                urlString = "http://"+ PythonClient.IP_ADDR + ":5000/download/presentation/" + getInheritableProperty("_ID") + "/" + getPath();
+            }
+
+            video.setVideoPath(urlString);
             video.start();
 
             video.setOnPreparedListener(new OnPreparedListener() {

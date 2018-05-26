@@ -80,7 +80,7 @@ public class XmlParser {
             case "video":
                 return new VideoAndroid(parent);
             case "audio":
-                return new Audio(parent);
+                return new AudioAndroid(parent);
         }
         return null;
     }
