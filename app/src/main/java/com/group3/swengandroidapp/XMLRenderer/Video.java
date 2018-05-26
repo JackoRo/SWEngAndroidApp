@@ -37,7 +37,6 @@ public abstract class Video extends XmlElement implements Drawable {
         setProperty("x2", x2);
     }
 
-
     public String  getY2(){
         return getInheritableProperty("y2");
     }
@@ -45,5 +44,9 @@ public abstract class Video extends XmlElement implements Drawable {
     public void setY2(String y2) {
         setProperty("y2", y2);
     }
+
+    public String getPath() { return getInheritableProperty("path"); }
+
+    public void setPath(String path) { setProperty("path", path); }
 
 }
