@@ -5,6 +5,11 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.net.Uri;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
@@ -30,6 +35,7 @@ public class VideoAndroid extends Video {
             LinearLayout layout = ((Slide) parent).getLayout();
             VideoView video = new VideoView(activity);
             String urlString;
+            MediaController mc = new MediaController(activity);
 
             try{
                 new URL(getPath());
@@ -47,13 +53,32 @@ public class VideoAndroid extends Video {
                     mp.setOnVideoSizeChangedListener(new OnVideoSizeChangedListener() {
                         @Override
                         public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                            MediaController mc = new MediaController(activity);
                             video.setMediaController(mc);
-
                         }
                     });
                 }
             });
+
+            video.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Presentation.listenerEnable = false;
+                    Log.d("listenerEnable", "FALSE");
+
+                    if (mc.isShowing()) {
+                        mc.hide();
+                    }
+                    else {
+                        mc.show();
+                    }
+
+                    return true;
+                }
+            });
+
+            //layout.setOnTouchListener(null);
+
+            // if (something touch blah blah)
 
             layout.addView(video);
 

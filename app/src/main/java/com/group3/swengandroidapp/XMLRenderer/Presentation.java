@@ -28,6 +28,7 @@ public class Presentation extends XmlElement {
     private int currentSlide;
     private Handler handler;
     private LinearLayout linearLayout;
+    public static boolean listenerEnable = true;
 
     public Presentation() {
         super(null);
@@ -100,7 +101,8 @@ public class Presentation extends XmlElement {
             private GestureDetector gestureDetector = new GestureDetector(activity, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
-                    if (slides.get(index).getAdvert() == null) {
+
+                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
                         Log.d("TEST", "onDoubleTap");
 
                         handler.removeCallbacksAndMessages(null);
@@ -109,13 +111,15 @@ public class Presentation extends XmlElement {
                         return super.onDoubleTap(e);
                     }
                     else {
+                        listenerEnable = true;
+                        Log.d("listenerEnable", "TRUE");
                         return false;
                     }
                 }
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    if (slides.get(index).getAdvert() == null) {
+                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
                         Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
                         gestureDetector.onTouchEvent(e);
 
@@ -124,6 +128,8 @@ public class Presentation extends XmlElement {
                         return true;
                     }
                     else {
+                        listenerEnable = true;
+                        Log.d("listenerEnable", "TRUE");
                         return false;
                     }
                 }
