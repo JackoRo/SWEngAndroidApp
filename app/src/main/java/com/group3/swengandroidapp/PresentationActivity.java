@@ -56,10 +56,16 @@ public class PresentationActivity extends AppCompatActivity {
 
         }
     };
+    @Override
+    protected void onResume(){
+        super.onResume();
+        AudioPlayer.baguette();
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        AudioPlayer.stop();
     }
 }

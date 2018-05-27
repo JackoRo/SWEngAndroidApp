@@ -36,9 +36,22 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private String[] mFragmentTitles;
 
+    // For use in other parts of app that don't have access to the "getApplicationContext" method.
+    private static Context appContext;
+
+    /**
+     * A method to allow classes that don't normally have access to the "getApplicationContext()"
+     * method to have access to the app context.
+     * @return MainActivity application context
+     */
+    public static Context getAppContext(){
+        return appContext;
+    }
 
     @Override
     protected void onCreate(Bundle savedBundleInstance){
+        appContext = getApplicationContext();
+
         super.onCreate(savedBundleInstance);
         //Load recipes from server if the list of recipes is empty
         if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
@@ -249,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** Swaps activities*/
     private void selectItem(int position) {
-
+        AudioPlayer.touchSound();
         // update the main content by replacing fragments
         Intent intent;
 

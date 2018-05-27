@@ -110,6 +110,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         final ImageButton button = findViewById(R.id.searchPage_search_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                AudioPlayer.touchSound();
                 searchProcess();
             }
         });
@@ -122,6 +123,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleSpicy = (ToggleButton) findViewById(R.id.searchPage_togglebuttonSpicy);
         toggleSpicy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AudioPlayer.touchSound();
                 Filter.getInstance().getCriteria().setSpicy(isChecked);
                 if (isChecked) {
                    toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
@@ -134,6 +136,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleVegetarian = (ToggleButton) findViewById(R.id.searchPage_togglebuttonVegetarian);
         toggleVegetarian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AudioPlayer.touchSound();
                 Filter.getInstance().getCriteria().setVegetarian(isChecked);
                 if (isChecked) {
                     toggleVegetarian.setBackgroundResource(R.drawable.vegetarian_filter);
@@ -147,6 +150,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleVegan = (ToggleButton) findViewById(R.id.searchPage_togglebuttonVegan);
         toggleVegan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AudioPlayer.touchSound();
                 Filter.getInstance().getCriteria().setVegan(isChecked);
                 if (isChecked) {
                     toggleVegan.setBackgroundResource(R.drawable.vegan_filter);
@@ -159,6 +163,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleLactose = (ToggleButton) findViewById(R.id.searchPage_togglebuttonLactose);
         toggleLactose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AudioPlayer.touchSound();
                 Filter.getInstance().getCriteria().setLactose(isChecked);
                 if (isChecked) {
                     toggleLactose.setBackgroundResource(R.drawable.lactosefree_filter);
@@ -171,6 +176,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleNut = (ToggleButton) findViewById(R.id.searchPage_togglebuttonNuts);
         toggleNut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AudioPlayer.touchSound();
                 Filter.getInstance().getCriteria().setNuts(isChecked);
                 if (isChecked) {
                     toggleNut.setBackgroundResource(R.drawable.nutfree_filter);
@@ -184,6 +190,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         ToggleButton toggleGluten = (ToggleButton) findViewById(R.id.searchPage_togglebuttonGluten);
         toggleGluten.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AudioPlayer.touchSound();
                 Filter.getInstance().getCriteria().setGluten(isChecked);
                 if (isChecked) {
                     toggleGluten.setBackgroundResource(R.drawable.glutenfree_filter);
@@ -229,6 +236,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
     @Override
     public void onItemClick(String recipeId){
+        AudioPlayer.touchSound();
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);           // Set new activity destination

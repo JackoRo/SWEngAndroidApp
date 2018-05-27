@@ -38,6 +38,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
      */
     @Override
     public void onItemClick(String recipeId){
+        AudioPlayer.touchSound();
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
@@ -57,6 +58,8 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Setup Recommended Recipes view
         RecyclerView recyclerView = findViewById(R.id.home_suggested_view);                // Get suggested recipe view
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setVerticalScrollBarEnabled(true);
         suggestedAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view
         suggestedAdapter.setClickListener(this);                                          // Set the click listener for the adapter
         recyclerView.setAdapter(suggestedAdapter);                                        // Assign adapter to the view
@@ -165,5 +168,4 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
-
 }

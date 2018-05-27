@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 
+import com.group3.swengandroidapp.AudioPlayer;
+
 import junit.framework.Test;
 
 import java.util.ArrayList;
@@ -104,6 +106,9 @@ public class Presentation extends XmlElement {
 
                     if (slides.get(index).getAdvert() == null || listenerEnable == true) {
                         Log.d("TEST", "onDoubleTap");
+                        
+                        AudioPlayer.touchSound();
+                        AudioPlayer.touchSound();
 
                         handler.removeCallbacksAndMessages(null);
                         handler.post(Presentation.this::drawPreviousSlide);
@@ -115,11 +120,15 @@ public class Presentation extends XmlElement {
                         Log.d("listenerEnable", "TRUE");
                         return false;
                     }
+
+
+
                 }
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
                     if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                        AudioPlayer.touchSound();
                         Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
                         gestureDetector.onTouchEvent(e);
 
@@ -132,6 +141,7 @@ public class Presentation extends XmlElement {
                         Log.d("listenerEnable", "TRUE");
                         return false;
                     }
+
                 }
             });
 
