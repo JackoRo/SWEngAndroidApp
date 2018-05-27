@@ -15,6 +15,7 @@ import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -54,12 +55,36 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         setTitle("Home");
 
+
         // Setup Recommended Recipes view
         RecyclerView recyclerView = findViewById(R.id.home_suggested_view);                // Get suggested recipe view
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
-        suggestedAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));  // Set as a 2-collumn grid
+        suggestedAdapter = new RecipeRecyclerViewAdaper(this);                    // Initialise the adapter for the view
         suggestedAdapter.setClickListener(this);                                          // Set the click listener for the adapter
         recyclerView.setAdapter(suggestedAdapter);                                        // Assign adapter to the view
+
+        /*//Algorithm for suggestions based on history and favourites
+        ArrayList<String> favourites = FavouritesHandler.getInstance().getFavourites();
+        ArrayList<String> allRecipes = new ArrayList<>();                   //Get names of all recipes and add to arrayList
+        ArrayList<String> suggestedRecipes = new ArrayList<>();
+
+        if (favourites.size() ==0){
+            //do nothing for now need to set the suggestions to
+            //any recipe
+        }else{
+            for(String s : favourites){
+                String currentRecipeTime = RemoteFileManager.getInstance().getRecipe(s).getTime();
+                for(String r : allRecipes){
+                    String otherRecipeTime = RemoteFileManager.getInstance().getRecipe(r).getTime();
+                    if (currentRecipeTime == otherRecipeTime){
+                        suggestedRecipes.add(RemoteFileManager.getInstance().getRecipe(r).getTitle());
+                    }
+                }
+
+                //icons.put(s, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().get(s)));
+                //suggestedAdapter.addIcon(icons.get(s));
+            }
+        }*/
 
         // Setup History
         RecyclerView historyView = findViewById(R.id.home_history_view);
