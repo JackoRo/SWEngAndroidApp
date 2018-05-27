@@ -41,7 +41,8 @@ public class RemoteFileManager {
 
     public String getRecipeOfTheDay(){
         Random random = new Random();
-        return new ArrayList<String>(recipes.keySet()).get(random.nextInt(recipes.size()));
+        String id = new ArrayList<String>(recipes.keySet()).get(random.nextInt(recipes.size()));
+        return id;
     }
 
     public String[] getSuggestedRecipes(){
