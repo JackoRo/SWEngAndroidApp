@@ -70,6 +70,7 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
 
     @Override
     public void onItemClick(String recipeId){
+        AudioPlayer.touchSound();
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
 
         Intent intent;

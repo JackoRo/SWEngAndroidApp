@@ -31,8 +31,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra(PythonClient.ID);
 
-        final Button button = findViewById(R.id.recipe_selection_start_button);
-        button.setOnClickListener(v -> {
+        final Button startButton = findViewById(R.id.recipe_selection_start_button);
+        startButton.setOnClickListener(v -> {
+            AudioPlayer.touchSound();
             // Code here executes on main thread after user presses button
             Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
             newIntent.putExtra(PythonClient.ID, id);
@@ -42,6 +43,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         final Button listButton = findViewById(R.id.recipe_selection_addToList_button);
         listButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                AudioPlayer.touchSound();
 //                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString());
 //                  if (toAdd.length > 0) {
 //                         for (int i=0; i < toAdd.length; i++){
@@ -59,6 +61,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         final ImageButton favourites = findViewById(R.id.recipe_selection_thumbnail_favourites_button);
         favourites.setOnClickListener(v -> {
             if(id!=null){
+                AudioPlayer.favouritesSound();
                 FavouritesHandler.getInstance().toggleFavourite(id);
                 if (FavouritesHandler.getInstance().contains(id)) {
                     favourites.setImageResource(R.drawable.favfull);
@@ -106,7 +109,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         }
 
         setTitle(recipe.getTitle());        // Set page title to the recipe title
-
         time.setText(recipe.getTime());
         author.setText(recipe.getAuthor());
         description.setText(recipe.getDescription());
@@ -156,6 +158,12 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         imageDownloaderListener.unRegister();
+    }
+
+    @Override
+    public void onBackPressed(){
+        AudioPlayer.touchSound();
+        super.onBackPressed();
     }
 
 }
