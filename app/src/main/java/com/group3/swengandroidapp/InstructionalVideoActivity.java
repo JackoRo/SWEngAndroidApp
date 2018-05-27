@@ -13,6 +13,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
@@ -39,7 +41,10 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     @Override
     public void onItemClick(String videoID){
         Log.d("InstructionalActivity","Clicked on video " + videoID);
-        Intent intent = new Intent();
+
+        Intent intent = new Intent(InstructionalVideoActivity.this, InstructionalVideoPlayingActivity.class );
+        intent.putExtra("key", videoID); //Optional parameters
+        InstuctionalVideoActivity.this.startActivity(intent);
 
         // Play Video
         /*
@@ -60,7 +65,7 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         // Setup Instructional videos view
         RecyclerView recyclerView = findViewById(R.id.instructional_videos_view);                // Get instructional videos view
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));        // Set as a 2-column grid
         instructionalVideosAdapter = new InstructionalVideoRecyclerViewAdapter(this);                     // Initialise the adapter for the view
         instructionalVideosAdapter.setClickListener(this);                                          // Set the click listener for the adapter
         recyclerView.setAdapter(instructionalVideosAdapter);                                        // Assign adapter to the view
@@ -90,6 +95,8 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         // Notify the adapters to update themselves.
         instructionalVideosAdapter.notifyDataSetChanged();
+
+
 
     }
 
