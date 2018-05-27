@@ -12,4 +12,7 @@
   <Ingredient amount="1" units="clove">Garlic</Ingredient>
   <Ingredient amount="1" units="can">Chopped Tomatoes</Ingredient>
   <Ingredient amount="100" units="grams">Butter</Ingredient>
+  <Tag>Pasta</Tag>
+  <Tag>Italian</Tag>
+  <Tag>Easy</Tag>
 </Recipe>

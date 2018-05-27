@@ -3,7 +3,6 @@ package com.group3.swengandroidapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View.OnClickListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -98,6 +97,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView nuts = findViewById(R.id.recipe_selection_thumbnail_filter_nuts);
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
+        TextView tags = findViewById(R.id.recipe_selection_tags_text);
 
         recipe = RemoteFileManager.getInstance().getRecipe(id);
 
@@ -134,6 +134,17 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         if(recipe.getGluten()){
             gluten.setImageResource(R.drawable.glutenfree_filter);
         }
+
+        // Tags
+        StringBuilder sb = new StringBuilder();
+        for(String s : recipe.getTags()){
+            sb.append(s);
+            sb.append(", ");
+        }
+        if(sb.length()>2) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        tags.setText(sb.toString());
     }
 
     @Override

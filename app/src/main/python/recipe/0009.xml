@@ -9,4 +9,8 @@
   <Filters spicy="false" lactose="false" nuts="false" vegetarian="true" vegan="false" gluten="false"></Filters>
   <Ingredient amount="2" units="slices">Bread</Ingredient>
   <Ingredient amount="200" units="grams">Cheese</Ingredient>
+  <Tag>Quick</Tag>
+  <Tag>Easy</Tag>
+  <Tag>Cheap</Tag>
+  <Tag>Sudent</Tag>
 </Recipe>

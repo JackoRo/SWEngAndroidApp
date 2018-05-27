@@ -10,4 +10,7 @@
   <Ingredient amount="500" units="grams">Fish</Ingredient>
   <Ingredient amount="100" units="ml">Water</Ingredient>
   <Ingredient amount="100" units="grams">Butter</Ingredient>
+  <Tag>Fish</Tag>
+  <Tag>Easy</Tag>
+  <Tag>Kanye West</Tag>
 </Recipe>

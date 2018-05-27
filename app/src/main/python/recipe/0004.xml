@@ -12,4 +12,5 @@
   <Ingredient amount="1" units="clove">Garlic</Ingredient>
   <Ingredient amount="1/2" units="cup">Olive Oil</Ingredient>
   <Ingredient amount="1" units="whole">Lemon</Ingredient>
+  <Tag>Salsa</Tag>
 </Recipe>

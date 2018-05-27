@@ -11,4 +11,5 @@
   <Ingredient amount="900" units="grams">Apples</Ingredient>
   <Ingredient amount="100" units="grams">Golden caster sugar</Ingredient>
   <Ingredient amount="85" units="grams">Unsalted butter</Ingredient>
+  <Tag>French</Tag>
 </Recipe>
