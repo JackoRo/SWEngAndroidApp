@@ -25,6 +25,14 @@ public class AudioPlayer {
         return instance;
     }
 
+    public static void touchSound(Context c){
+        instance.playResource(c, R.raw.pop);
+    }
+
+    public static void baguette(Context c){
+        instance.playResource(c, R.raw.foux_du_fafa);
+    }
+
     public void playResource(Context context, int resourceId){
         MediaPlayer p = MediaPlayer.create(context, resourceId);
         p.setAudioStreamType(AudioManager.STREAM_MUSIC);
