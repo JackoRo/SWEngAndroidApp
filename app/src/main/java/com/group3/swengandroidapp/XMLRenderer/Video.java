@@ -12,20 +12,20 @@ public abstract class Video extends XmlElement implements Drawable {
         super(parent);
     }
 
-    public String  getX(){
-        return getInheritableProperty("x");
+    public String  getX1(){
+        return getInheritableProperty("x1");
     }
 
-    public void setX(String x) {
-        setProperty("x", x);
+    public void setX1(String x1) {
+        setProperty("x1", x1);
     }
 
-    public String  getY(){
-        return getInheritableProperty("y");
+    public String  getY1(){
+        return getInheritableProperty("y1");
     }
 
-    public void setY(String y) {
-        setProperty("y", y);
+    public void setY1(String y1) {
+        setProperty("y1", y1);
     }
 
     public String  getX2(){

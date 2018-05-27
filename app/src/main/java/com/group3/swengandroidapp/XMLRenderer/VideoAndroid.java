@@ -10,10 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.group3.swengandroidapp.AudioPlayer;
 import com.group3.swengandroidapp.PythonClient;
 
 import java.net.URL;
@@ -32,6 +36,7 @@ public class VideoAndroid extends Video {
     public void draw(Activity activity) {
 
         if (parent instanceof Slide) {
+            AudioPlayer.stop();
             LinearLayout layout = ((Slide) parent).getLayout();
             VideoView video = new VideoView(activity);
             String urlString;
@@ -45,6 +50,29 @@ public class VideoAndroid extends Video {
             }
 
             video.setVideoPath(urlString);
+
+            int x1 = Integer.valueOf(getX1());
+            int x2 = Integer.valueOf(getX2());
+            int y1 = Integer.valueOf(getY1());
+            int y2 = Integer.valueOf(getY2());
+//            if (x2 * 20 > layout.getWidth()) {
+//                x2 = 500;
+//            }
+//            if (y2 * 50 > layout.getHeight()) {
+//                y2 = 500;
+//            }
+//            if (x1 * 20 > layout.getWidth()) {
+//                x1 = 250;
+//            }
+//            if (y1 * 20 > layout.getHeight()) {
+//                y1 = 250;
+//            }
+
+            LayoutParams layoutParams=new LayoutParams(x2, y2);
+            layoutParams.setMargins(x1, y1, x2, y2);
+            video.setLayoutParams(layoutParams);
+
+
             video.start();
 
             video.setOnPreparedListener(new OnPreparedListener() {
@@ -76,12 +104,7 @@ public class VideoAndroid extends Video {
                 }
             });
 
-            //layout.setOnTouchListener(null);
-
-            // if (something touch blah blah)
-
             layout.addView(video);
-
 
         }
     }

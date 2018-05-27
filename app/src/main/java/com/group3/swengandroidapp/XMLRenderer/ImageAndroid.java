@@ -9,6 +9,7 @@ import android.support.v4.widget.ImageViewCompat;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.bumptech.glide.Glide;
 import com.group3.swengandroidapp.PythonClient;
@@ -47,6 +48,27 @@ public class ImageAndroid extends Image {
             catch (Exception e) {
                 urlString = "http://"+ PythonClient.IP_ADDR + ":5000/download/presentation/" + getInheritableProperty("_ID") + "/" + getPath();
             }
+
+            int x1 = Integer.valueOf(getX1());
+            int x2 = Integer.valueOf(getX2());
+            int y1 = Integer.valueOf(getY1());
+            int y2 = Integer.valueOf(getY2());
+//            if (x2 * 20 > layout.getWidth()) {
+//                x2 = 500;
+//            }
+//            if (y2 * 50 > layout.getHeight()) {
+//                y2 = 500;
+//            }
+//            if (x1 * 20 > layout.getWidth()) {
+//                x1 = 250;
+//            }
+//            if (y1 * 20 > layout.getHeight()) {
+//                y1 = 250;
+//            }
+
+            LayoutParams layoutParams=new LayoutParams(x2, y2);
+            layoutParams.setMargins(x1, y1, x2, y2);
+            image.setLayoutParams(layoutParams);
 
             // Load image via Glide lib using context
             Glide.with(activity)

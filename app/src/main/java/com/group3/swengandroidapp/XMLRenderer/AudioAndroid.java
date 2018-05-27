@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.group3.swengandroidapp.AudioPlayer;
 import com.group3.swengandroidapp.PythonClient;
 
 import java.net.URL;
@@ -20,7 +21,7 @@ public class AudioAndroid extends Audio {
 
     @Override
     public void draw(Activity activity) {
-
+        AudioPlayer.stop();
         MediaPlayer player = new MediaPlayer();
         String urlString;
 

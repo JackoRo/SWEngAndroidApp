@@ -2,10 +2,10 @@
 <Presentation xmlns="pws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="pws schema.xsd" italic="false" bold="false" underline="false" textsize="12" color="#000000" font="Times New Roman">
    <Meta key="author" value="Stuart Porter" />
    <Slide duration="4">
-       <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="10" y1="35" x2="100" y2="200" />
+       <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="100" y1="100" x2="500" y2="500" />
    </Slide>
    <Slide>
-       <Image path="image/testimage.jpg" x1="10" y1="35" x2="100" y2="200" />
+       <Image path="image/testimage.jpg" x1="100" y1="100" x2="500" y2="500" />
    </Slide>
    <Slide duration="12">
       <Text textsize="18" underline="true" font="Times New Roman">
@@ -47,11 +47,11 @@
       <Shape x1="103" y1="123" type="ellipse" x2="583" y2="933" stroke="2" color="#FF69B4" fill="gradient(#38AEDE,#3482ED)" />
    </Slide>
    <Slide fill="#FEDDFE" color="#032222">
-      <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="10" y1="35" x2="100" y2="200" />
+      <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="100" y1="100" x2="500" y2="500" />
       <Shape x1="103" y1="123" type="ellipse" x2="583" y2="933" stroke="2" color="#000000" fill="gradient(#38AEDE,#3482ED)" />
    </Slide>
    <Slide>
-      <Video path="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" x1="10" y1="35" x2="100" y2="200" />
+      <Video path="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" x1="100" y1="100" x2="500" y2="500" />
    </Slide>
    <Slide>
       <Audio path="audio/audiotest.wav" x1="50" y1="100" x2="10" y2="10" />
