@@ -51,26 +51,21 @@ public class VideoAndroid extends Video {
 
             video.setVideoPath(urlString);
 
-            int x1 = Integer.valueOf(getX1());
-            int x2 = Integer.valueOf(getX2());
-            int y1 = Integer.valueOf(getY1());
-            int y2 = Integer.valueOf(getY2());
-//            if (x2 * 20 > layout.getWidth()) {
-//                x2 = 500;
-//            }
-//            if (y2 * 50 > layout.getHeight()) {
-//                y2 = 500;
-//            }
-//            if (x1 * 20 > layout.getWidth()) {
-//                x1 = 250;
-//            }
-//            if (y1 * 20 > layout.getHeight()) {
-//                y1 = 250;
-//            }
 
-            LayoutParams layoutParams=new LayoutParams(x2, y2);
-            layoutParams.setMargins(x1, y1, x2, y2);
-            video.setLayoutParams(layoutParams);
+            if (getX1() != null && getX2() != null && getY1() != null && getY2() != null) {
+                int x1 = Integer.valueOf(getX1());
+                int x2 = Integer.valueOf(getX2());
+                int y1 = Integer.valueOf(getY1());
+                int y2 = Integer.valueOf(getY2());
+
+
+                LayoutParams layoutParams=new LayoutParams(x2, y2);
+                layoutParams.setMargins(x1, y1, x2, y2);
+                video.setLayoutParams(layoutParams);
+            }
+            else {
+                Log.d("Draw", "No parameters set. Loading default image size");
+            }
 
 
             video.start();
