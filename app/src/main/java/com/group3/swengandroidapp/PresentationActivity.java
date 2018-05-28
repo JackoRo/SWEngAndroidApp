@@ -14,7 +14,7 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 public class PresentationActivity extends AppCompatActivity {
 
-    static Presentation presentation;
+    private Presentation presentation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +47,15 @@ public class PresentationActivity extends AppCompatActivity {
         String message = intent.getStringExtra(PythonClient.ACTION);
         Log.d("PresentationActivity","received presentation" + intent.getStringExtra(PythonClient.ACTION));
 
-        if (message.matches(PythonClient.FETCH_PRESENTATION)) {
-            String presentationID = intent.getStringExtra(PythonClient.ID);
-            presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
-            presentation.draw(PresentationActivity.this);
-        }
-        //fragmentManager.beginTransaction().replace(presentation.getLayout().getId(),fragment).commit();
+            if (message.matches(PythonClient.FETCH_PRESENTATION)) {
+                String presentationID = intent.getStringExtra(PythonClient.ID);
+                presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
+                presentation.draw(PresentationActivity.this);
+            }
 
         }
     };
+
     @Override
     protected void onResume(){
         super.onResume();
