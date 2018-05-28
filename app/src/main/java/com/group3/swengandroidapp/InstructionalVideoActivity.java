@@ -10,11 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -40,9 +38,12 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     public void onItemClick(String videoID){
         AudioPlayer.touchSound();
         Log.d("InstructionalActivity","Clicked on video " + videoID);
-        Intent intent = new Intent();
 
-        // Play Video
+        Intent intent = new Intent(InstructionalVideoActivity.this, InstructionalVideoPlayingActivity.class );
+        intent.putExtra("key", videoID); //Optional parameters
+        InstructionalVideoActivity.this.startActivity(intent);
+
+        // Play Vide
         /*
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
@@ -61,7 +62,7 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         // Setup Instructional videos view
         RecyclerView recyclerView = findViewById(R.id.instructional_videos_view);                // Get instructional videos view
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));        // Set as a 2-column grid
         instructionalVideosAdapter = new InstructionalVideoRecyclerViewAdapter(this);                     // Initialise the adapter for the view
         instructionalVideosAdapter.setClickListener(this);                                          // Set the click listener for the adapter
         recyclerView.setAdapter(instructionalVideosAdapter);                                        // Assign adapter to the view
@@ -91,6 +92,8 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         // Notify the adapters to update themselves.
         instructionalVideosAdapter.notifyDataSetChanged();
+
+
 
     }
 

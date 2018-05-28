@@ -58,9 +58,6 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
 
-
-
-
         editText = (TextInputEditText) findViewById(R.id.searchPage_edit_text);
 
         editText.setOnKeyListener(new View.OnKeyListener()
@@ -207,6 +204,19 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         toggleNut.setChecked(Filter.getInstance().getCriteria().getNuts());
         toggleVegan.setChecked(Filter.getInstance().getCriteria().getVegan());
         toggleVegetarian.setChecked(Filter.getInstance().getCriteria().getVegetarian());
+
+
+        // Image Downloader Listener
+        imageDownloaderListener = new ImageDownloaderListener(this) {
+            @Override
+            public void onBitmapReady(String id, String filePath) {
+                // Update the drawable using the given file (if relevant)
+                if(icons.containsKey(id)){
+                    icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(filePath));
+                    displayAdapter.notifyIconChanged(id);
+                }
+            }
+        };
     }
 
     @Override
@@ -214,6 +224,12 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         super.onStart();
         //String[] ids = {"0000", "0001", "0002"};
         //displayAdapter.setRecipes(ids);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        imageDownloaderListener.unRegister();
     }
 
 //    @Override
@@ -257,11 +273,14 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         displayAdapter.clear();
 
         for(String id : foundList){
-            displayAdapter.addIcon(Recipe.produceDescriptor(SearchpageActivity.this, RemoteFileManager.getInstance().getRecipe(id)));
+            icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
+            displayAdapter.addIcon(icons.get(id));
+            requestBitmapFile(id);
         }
 
         displayAdapter.notifyDataSetChanged();
         Log.d("Search icon", "Data updated");
+
 
     }
 

@@ -108,7 +108,6 @@ public class Presentation extends XmlElement {
                         Log.d("TEST", "onDoubleTap");
                         
                         AudioPlayer.touchSound();
-                        AudioPlayer.touchSound();
 
                         handler.removeCallbacksAndMessages(null);
                         handler.post(Presentation.this::drawPreviousSlide);
