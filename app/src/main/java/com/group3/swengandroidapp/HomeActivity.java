@@ -120,9 +120,11 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         imageDownloaderListener = new ImageDownloaderListener(this) {
             @Override
             public void onBitmapReady(String id, String absolutePath){
-                icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
-                suggestedAdapter.notifyIconChanged(id);
-                historyAdapter.notifyIconChanged(id);
+                if(icons.containsKey(id)) {
+                    icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
+                    suggestedAdapter.notifyIconChanged(id);
+                    historyAdapter.notifyIconChanged(id);
+                }
             }
 
             @Override

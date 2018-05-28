@@ -226,6 +226,12 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         //displayAdapter.setRecipes(ids);
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        imageDownloaderListener.unRegister();
+    }
+
 //    @Override
 //    public void onResume(){
 //        super.onResume();
