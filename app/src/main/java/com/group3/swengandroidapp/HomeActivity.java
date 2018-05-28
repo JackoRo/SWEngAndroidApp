@@ -97,6 +97,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         }
 
         // Process the suggested view
+
         for(String id : suggested){
             if(!icons.containsKey(id)){
                 icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));

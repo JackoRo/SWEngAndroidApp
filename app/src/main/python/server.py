@@ -5,8 +5,10 @@ import os
 cwd = os.getcwd()
 uploadPresentation = 'presentation'
 uploadRecipe = 'recipe'
+uploadMyRecipe = 'myRecipe'
 UPLOAD_PRESENTATION = os.path.join(cwd, uploadPresentation)
 UPLOAD_RECIPE = os.path.join(cwd, uploadRecipe)
+UPLOAD_MY_RECIPE = os.path.join(cwd, uploadMyRecipe)
 
 ALLOWED_EXTENSIONS = set(['xml', 'pws'])
 
@@ -21,6 +23,10 @@ def fetchPresentation(id):
 @app.route('/download/recipe/<id>')
 def fetchRecipe(id):
     return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
+	
+@app.route('/download/myRecipe/<id>')
+def fetchMyRecipe(id):
+    return send_from_directory(UPLOAD_MY_RECIPE, "{}.xml".format(id))
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -29,6 +35,10 @@ def allowed_file(filename):
 @app.route('/recipelist')
 def fetchRecipes():
     return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
+	
+@app.route('/myRecipeList')
+def fetchMyRecipes():
+    return "\n".join(next(os.walk(UPLOAD_MY_RECIPE))[2])
 
 @app.route('/upload/presentation', methods=['GET', 'POST'])
 def storePresentation():

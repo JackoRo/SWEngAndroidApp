@@ -21,11 +21,13 @@ public class RemoteFileManager {
     }
 
     private static HashMap<String, Recipe> recipes;
+    private static HashMap<String, Recipe> myRecipes;
     private static HashMap<String, InstructionalVideo> instructionalVideos;
     private static HashMap<String, Presentation> presentations;
 
 
     private RemoteFileManager() {
+        myRecipes = new HashMap<>();
         recipes = new HashMap<>();
         presentations = new HashMap<>();
         instructionalVideos = new HashMap<>();
@@ -54,6 +56,25 @@ public class RemoteFileManager {
         return ids;
     }
 
+    public void setMyRecipe(String id, Recipe recipe){
+        myRecipes.put(id,recipe);
+    }
+
+    public Recipe getMyRecipe(String id){
+        return myRecipes.get(id);
+    }
+
+    public String[] getMyRecipes(){
+        String[] ids = new String[myRecipes.size()];
+        int counter = 0;
+        for(String key : RemoteFileManager.getInstance().getMyRecipeList().keySet()){
+            ids[counter] = key;
+            counter++;
+        }
+        return ids;
+    }
+
+
     public InstructionalVideo getInstructionalVideo(String id) {
         return instructionalVideos.get(id);
     }
@@ -73,6 +94,8 @@ public class RemoteFileManager {
     public Presentation getPresentation(String id) { return presentations.get(id); }
 
     public HashMap<String, Recipe> getRecipeList() { return recipes; }
+
+    public HashMap<String, Recipe> getMyRecipeList() { return myRecipes; }
 
     public HashMap<String, InstructionalVideo> getInstructionalVideosList() { return instructionalVideos; }
 

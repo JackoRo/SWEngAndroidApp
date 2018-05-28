@@ -96,6 +96,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
+
         recipe = RemoteFileManager.getInstance().getRecipe(id);
 
         if(recipe==null){

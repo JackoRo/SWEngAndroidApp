@@ -34,9 +34,9 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    public static final String IP_ADDR = "192.168.0.20";
+    //public static final String IP_ADDR = "192.168.0.20";
     //For device emulator
-    //public static final String IP_ADDR = "10.0.2.2";
+    public static final String IP_ADDR = "10.0.2.2";
 
 
     //private DataOutputStream dout;
@@ -44,6 +44,7 @@ public class PythonClient extends IntentService{
     private URL url;
     private HttpURLConnection urlConnection;
     private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
+    private RemoteFileManager myRecipeRemoteFileManager = RemoteFileManager.getInstance();
 
 
     public PythonClient() throws IOException {
@@ -79,6 +80,21 @@ public class PythonClient extends IntentService{
 
     }
 
+    public String fetchMyRecipeFromHttpServer(String id) throws IOException{
+
+        url = new URL (String.format("http://%s:5000/download/myRecipe/%s", IP_ADDR, id));
+        urlConnection = (HttpURLConnection) url.openConnection();
+
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in);
+
+        } finally {
+            urlConnection.disconnect();
+        }
+
+    }
+
     public String fetchPresentationFromHttpServer(String id) throws IOException{
 
         url = new URL (String.format("http://%s:5000/download/presentation/%s", IP_ADDR, id));
@@ -94,9 +110,26 @@ public class PythonClient extends IntentService{
 
     }
 
+
     public String[] fetchRecipeListFromHttpServer() throws IOException{
 
         url = new URL (String.format("http://%s:5000/recipelist", IP_ADDR));
+        urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setConnectTimeout(2000);
+
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in).split(".xml");
+        }
+        finally{
+            urlConnection.disconnect();
+        }
+
+    }
+
+    public String[] fetchMyRecipeListFromHttpServer() throws IOException{
+
+        url = new URL (String.format("http://%s:5000/myRecipeList", IP_ADDR));
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setConnectTimeout(2000);
 
@@ -124,6 +157,16 @@ public class PythonClient extends IntentService{
                             remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
                         }
                     }
+
+
+                    String[] myIds = fetchMyRecipeListFromHttpServer();
+                    for (String rid : myIds) {
+                        if (myRecipeRemoteFileManager.getMyRecipe(rid) == null) {
+                            myRecipeRemoteFileManager.setMyRecipe(rid, new XmlRecipe(fetchMyRecipeFromHttpServer(rid)));
+                        }
+                    }
+
+
                     Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
                     break;
