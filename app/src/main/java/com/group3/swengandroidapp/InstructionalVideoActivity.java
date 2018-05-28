@@ -38,6 +38,7 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
      */
     @Override
     public void onItemClick(String videoID){
+        AudioPlayer.touchSound();
         Log.d("InstructionalActivity","Clicked on video " + videoID);
         Intent intent = new Intent();
 

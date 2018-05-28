@@ -52,6 +52,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
         holder.title.setText(title);
         holder.favouritesButton.setOnClickListener((View view) -> {
+            AudioPlayer.favouritesSound();
             if(id != null){
                 FavouritesHandler.getInstance().toggleFavourite(context, id);
                 if (FavouritesHandler.getInstance().contains(id)) {

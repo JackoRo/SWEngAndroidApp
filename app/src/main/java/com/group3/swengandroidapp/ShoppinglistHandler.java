@@ -22,6 +22,7 @@ public class ShoppinglistHandler {
     public void addToShoppingList(ArrayList<Ingredient> list) {
 
         items.addAll(list);
+
         Log.d("ShoppingListHandler:","Ingredients added");
         for (Ingredient ingredient : list) {
             System.out.println(ingredient);

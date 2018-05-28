@@ -76,6 +76,7 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
 
     @Override
     public void onItemClick(String recipeId){
+        AudioPlayer.touchSound();
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
