@@ -8,8 +8,16 @@ import com.group3.swengandroidapp.MainActivity;
 import com.group3.swengandroidapp.PythonClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by Jack on 11/02/2018.
@@ -28,6 +36,7 @@ public class RemoteFileManager {
     private static HashMap<String, InstructionalVideo> instructionalVideos;
     private static HashMap<String, Presentation> presentations;
     private static HashMap<String, Integer> suggestions;
+    private static HashMap<String, Integer> orderedSuggestions;
 
 
     private RemoteFileManager() {
@@ -35,6 +44,7 @@ public class RemoteFileManager {
         presentations = new HashMap<>();
         instructionalVideos = new HashMap<>();
         suggestions = new HashMap<>();
+        orderedSuggestions = new HashMap<>();
     }
 
     public void setRecipe(String id, Recipe recipe){
@@ -52,7 +62,8 @@ public class RemoteFileManager {
     }
 
     public String[] getSuggestedRecipes(){
-        String[] ids = new String[recipes.size()];
+        int suggestionSize = 6;
+        String[] ids ;
         String[] histories = HistoryHandler.getInstance().getHistory();
         int historySize = histories.length;
         int similarityValue;
@@ -68,16 +79,45 @@ public class RemoteFileManager {
                 if (historyId != key){
                     //only compare tags to different recipes
                     similarityValue = myRecipe.tagSimilarity(historyId, key);
-                    int newSimilarityValue = similarityValue*i;                 //weights the similarity value based on
+                    int newSimilarityValue = similarityValue*(historySize-i);                 //weights the similarity value based on
                                                                                 //how recently the recipe was viewed
                     suggestions.put(key, newSimilarityValue);
                 }
             }
         }
 
+        orderedSuggestions = sortMapByValues(suggestions);
 
+        Set<String> keys = orderedSuggestions.keySet();
+        ids = keys.toArray(new String[suggestionSize]);
 
         return ids;
+    }
+    private static HashMap sortMapByValues(HashMap<String, Integer> aMap) {
+
+        Set<Entry<String,Integer>> mapEntries = aMap.entrySet();
+
+        // used linked list to sort, because insertion of elements in linked list is faster than an array list.
+        List<Entry<String,Integer>> aList = new LinkedList<Entry<String,Integer>>(mapEntries);
+
+        // sorting the List
+        Collections.sort(aList, new Comparator<Entry<String,Integer>>() {
+
+            @Override
+            public int compare(Entry<String, Integer> ele1,
+                               Entry<String, Integer> ele2) {
+
+                return ele1.getValue().compareTo(ele2.getValue());
+            }
+        });
+
+        // Storing the list into Linked HashMap to preserve the order of insertion.
+        HashMap<String,Integer> aMap2 = new LinkedHashMap<String, Integer>();
+        for(Entry<String,Integer> entry: aList) {
+            aMap2.put(entry.getKey(), entry.getValue());
+        }
+
+        return aMap2;
     }
 
     public InstructionalVideo getInstructionalVideo(String id) {
