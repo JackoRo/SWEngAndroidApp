@@ -3,6 +3,7 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.content.Intent;
 import android.util.Log;
 
+import com.group3.swengandroidapp.HistoryHandler;
 import com.group3.swengandroidapp.MainActivity;
 import com.group3.swengandroidapp.PythonClient;
 
@@ -16,19 +17,24 @@ import java.util.Random;
 
 public class RemoteFileManager {
     private static final RemoteFileManager ourInstance = new RemoteFileManager();
+
     public static RemoteFileManager getInstance() {
         return ourInstance;
     }
 
+    public Recipe myRecipe;
+
     private static HashMap<String, Recipe> recipes;
     private static HashMap<String, InstructionalVideo> instructionalVideos;
     private static HashMap<String, Presentation> presentations;
+    private static HashMap<String, Integer> suggestions;
 
 
     private RemoteFileManager() {
         recipes = new HashMap<>();
         presentations = new HashMap<>();
         instructionalVideos = new HashMap<>();
+        suggestions = new HashMap<>();
     }
 
     public void setRecipe(String id, Recipe recipe){
@@ -47,11 +53,30 @@ public class RemoteFileManager {
 
     public String[] getSuggestedRecipes(){
         String[] ids = new String[recipes.size()];
-        int counter = 0;
-        for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
-            ids[counter] = key;
-            counter++;
+        String[] histories = HistoryHandler.getInstance().getHistory();
+        int historySize = histories.length;
+        int similarityValue;
+
+        if (historySize > 3){
+            historySize =3;
         }
+
+        for (int i=0; i<historySize; i++){
+            String historyId = histories[i];
+            for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
+                //ids[counter] = key;
+                if (historyId != key){
+                    //only compare tags to different recipes
+                    similarityValue = myRecipe.tagSimilarity(historyId, key);
+                    int newSimilarityValue = similarityValue*i;                 //weights the similarity value based on
+                                                                                //how recently the recipe was viewed
+                    suggestions.put(key, newSimilarityValue);
+                }
+            }
+        }
+
+
+
         return ids;
     }
 
