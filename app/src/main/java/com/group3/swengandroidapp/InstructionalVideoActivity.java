@@ -10,13 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
 
-import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -44,9 +40,9 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         Intent intent = new Intent(InstructionalVideoActivity.this, InstructionalVideoPlayingActivity.class );
         intent.putExtra("key", videoID); //Optional parameters
-        InstuctionalVideoActivity.this.startActivity(intent);
+        InstructionalVideoActivity.this.startActivity(intent);
 
-        // Play Video
+        // Play Vide
         /*
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
