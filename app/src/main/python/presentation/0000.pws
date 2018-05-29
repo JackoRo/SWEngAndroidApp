@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation xmlns="pws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="pws schema.xsd" italic="false" bold="false" underline="false" textsize="12" color="#000000" font="Times New Roman">
    <Meta key="author" value="Stuart Porter" />
-   <Slide duration="4">
+   <Slide>
        <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="100" y1="100" x2="500" y2="500" />
    </Slide>
    <Slide>
        <Image path="image/testimage.jpg" x1="100" y1="100" x2="500" y2="500" />
    </Slide>
-   <Slide duration="12">
+   <Slide>
       <Text textsize="18" underline="true" font="Times New Roman">
          This is the schema of the
          <Format bold="true" color="#F341DE">PWS</Format>
@@ -34,8 +34,8 @@
       <Shape x1="300" y1="300" type="rectangle" x2="400" y2="400" fill="gradient(#00FF00,#FFFF00)" />
       <Shape x1="500" y1="500" type="line" x2="600" y2="600" fill="#00FFFF" />
    </Slide>
-   <Slide fill="#023211" color="#F341DE" duration="20">
-      <Text bold="true" underline="true" textsize="10" duration="12" start="trigger">
+   <Slide fill="#023211" color="#F341DE">
+      <Text bold="true" underline="true" textsize="10" start="trigger">
          Some text on one line
          <Br />
          <Format italic="true" bold="false" textsize="12" color="#F341DE" font="Helvetica">Some</Format>
