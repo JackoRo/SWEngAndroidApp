@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,6 +72,20 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         historyAdapter = new RecipeRecyclerViewAdaper(this);
         historyAdapter.setClickListener(this);
         historyView.setAdapter(historyAdapter);
+
+        // Set swipe refreshing
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(HomeActivity.this, PythonClient.class);
+                intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+                startService(intent);
+
+                swipeRefreshLayout.setRefreshing(false);s
+            }
+        });
+
 
     }
 
