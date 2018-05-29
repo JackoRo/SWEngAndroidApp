@@ -80,7 +80,19 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Get all needed recipe ids
         String recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
         String[] histories = HistoryHandler.getInstance().getHistory();
-        String[] suggested = RemoteFileManager.getInstance().getSuggestedRecipes();
+        String[] suggested;
+        //int historySize = histories.length;
+        if (histories == null){
+            suggested = RemoteFileManager.getInstance().getSuggestedRecipes(0, histories);
+            Log.d("history", "nothing in history, loading all recipes instead");
+        }else{
+            Log.d("history", "entered into else statement");
+
+            int historySize = histories.length;
+            Log.d("history", "number of recipes in history:" + historySize);
+            suggested = RemoteFileManager.getInstance().getSuggestedRecipes(historySize, histories);
+        }
+
 
         // Process recipe of the day
         Recipe rotd = RemoteFileManager.getInstance().getRecipe(recipeOfTheDay).clone(); // Copy the recipe

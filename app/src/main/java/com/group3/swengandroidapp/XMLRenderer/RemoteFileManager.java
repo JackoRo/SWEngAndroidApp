@@ -61,17 +61,20 @@ public class RemoteFileManager {
         return id;
     }
 
-    public String[] getSuggestedRecipes(){
+    public String[] getSuggestedRecipes(int size, String[] historyArray){
         int suggestionSize = 6;
         String[] ids = new String[recipes.size()] ;
-        String[] histories = HistoryHandler.getInstance().getHistory();
-        int historySize = histories.length;
+        String[] histories = historyArray;
+        int historySize =size;
         int similarityValue;
-
-        if (historySize > 3){
-            historySize =3;
+        Log.d("history", "recieved history size :" +historySize);
+        if (historySize >= 1){
+            historySize =1;
         }
         if (historySize == 0){
+
+            Log.d("history", "entered into if history size = 0");
+            Log.d("history", "adding all recipes to suggestions");
             int counter = 0;
             for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
                 ids[counter] = key;
@@ -79,6 +82,8 @@ public class RemoteFileManager {
             }
         }else{
             for (int i=0; i<historySize; i++){
+                Log.d("history", "entered into else, history size recieved :" +historySize);
+                Log.d("history", "adding suggestions based on history");
                 String historyId = histories[i];
                 for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
                     //ids[counter] = key;
@@ -92,11 +97,10 @@ public class RemoteFileManager {
                 }
             }
             orderedSuggestions = sortMapByValues(suggestions);
-
             Set<String> keys = orderedSuggestions.keySet();
             ids = keys.toArray(new String[suggestionSize]);
         }
-
+        Log.d("history", "returned suggestions");
         return ids;
     }
     private static HashMap sortMapByValues(HashMap<String, Integer> aMap) {
@@ -125,6 +129,16 @@ public class RemoteFileManager {
 
         return aMap2;
     }
+
+//    public String[] getSuggestedRecipes(int size, String[] historyArray){
+//        String[] ids = new String[recipes.size()];
+//        int counter = 0;
+//        for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
+//            ids[counter] = key;
+//            counter++;
+//        }
+//        return ids;
+//    }
 
     public InstructionalVideo getInstructionalVideo(String id) {
         return instructionalVideos.get(id);

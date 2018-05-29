@@ -3,6 +3,7 @@ package com.group3.swengandroidapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -145,6 +146,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             sb.delete(sb.length() - 2, sb.length());
         }
         tags.setText(sb.toString());
+        Log.d("MARCO", sb.toString());
     }
 
     @Override
