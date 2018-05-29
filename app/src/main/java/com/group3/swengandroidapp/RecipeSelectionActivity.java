@@ -23,11 +23,11 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     private Recipe recipe;
     ArrayList<String> ingredientsList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_selection);
+
         Intent intent = getIntent();
         id = intent.getStringExtra(PythonClient.ID);
 
@@ -96,8 +96,13 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
 
-
-        recipe = RemoteFileManager.getInstance().getRecipe(id);
+        Intent intent = getIntent();
+        String previousActivity= intent.getStringExtra("FROM_ACTIVITY"); // Get name of previous activity
+        if (previousActivity.equals("MyRecipesActivity")){
+            recipe = RemoteFileManager.getInstance().getMyRecipe(id);
+        }else{
+            recipe = RemoteFileManager.getInstance().getRecipe(id);
+        }
 
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a");
