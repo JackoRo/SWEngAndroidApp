@@ -78,6 +78,7 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);
+        intent.putExtra("FROM_ACTIVITY", "FavouritesActivity");      // Tell new activity that this was the previous activity
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
     }

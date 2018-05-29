@@ -294,7 +294,9 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case 4:  // My Recipes
-
+                intent = new Intent();
+                intent.setClass(this,MyRecipesActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
                 break;
             case 5:  // History
                 intent = new Intent();
