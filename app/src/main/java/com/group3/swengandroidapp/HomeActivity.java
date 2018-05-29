@@ -75,6 +75,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         // Set swipe refreshing
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent);
         swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -82,7 +83,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
                 intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
                 startService(intent);
 
-                swipeRefreshLayout.setRefreshing(false);s
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
