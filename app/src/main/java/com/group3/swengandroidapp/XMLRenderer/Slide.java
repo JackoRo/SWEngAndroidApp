@@ -2,6 +2,7 @@ package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -42,11 +43,11 @@ public class Slide extends XmlElement {
     }
 
     private void removeImage(ImageAndroid item) {
-        item.getImage().setVisibility(View.GONE);
+        item.getImage().setVisibility(View.INVISIBLE);
     }
 
     private void removeText(TextAndroid item) {
-        item.getTextView().setVisibility(View.GONE);
+        item.getTextView().setVisibility(View.INVISIBLE);
     }
 
     @Override
