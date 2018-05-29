@@ -68,6 +68,10 @@ public class XmlRecipe extends Recipe {
                     xpp.next();
                     setTime(xpp.getText());
                 }
+                else if (xpp.getName().equals("Tag")) {
+                    xpp.next();
+                    addKeyword(xpp.getText());
+                }
 
             }
             //else if

@@ -58,7 +58,8 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         // Setup Recommended Recipes view
         RecyclerView recyclerView = findViewById(R.id.home_suggested_view);                // Get suggested recipe view
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);    // Set as a 2-collumn grid
         recyclerView.setHasFixedSize(false);
         recyclerView.setVerticalScrollBarEnabled(true);
         suggestedAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view
@@ -81,7 +82,19 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Get all needed recipe ids
         String recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
         String[] histories = HistoryHandler.getInstance().getHistory();
-        String[] suggested = RemoteFileManager.getInstance().getSuggestedRecipes();
+        String[] suggested;
+        //int historySize = histories.length;
+        if (histories == null){
+            suggested = RemoteFileManager.getInstance().getSuggestedRecipes(0, histories);
+            Log.d("history", "nothing in history, loading all recipes instead");
+        }else{
+            Log.d("history", "entered into else statement");
+
+            int historySize = histories.length;
+            Log.d("history", "number of recipes in history:" + historySize);
+            suggested = RemoteFileManager.getInstance().getSuggestedRecipes(historySize, histories);
+        }
+
 
         // Process recipe of the day
         Recipe rotd = RemoteFileManager.getInstance().getRecipe(recipeOfTheDay).clone(); // Copy the recipe

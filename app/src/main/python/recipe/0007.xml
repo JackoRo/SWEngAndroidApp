@@ -11,4 +11,6 @@
   <Ingredient amount="2" units="whole">Eggs</Ingredient>
   <Ingredient amount="1" units="cup">Milk</Ingredient>
   <Ingredient amount="1 1/2" units="tbsp">Vegetable Oil</Ingredient>
+  <Tag>Quick</Tag>
+  <Tag>Easy</Tag>
 </Recipe>

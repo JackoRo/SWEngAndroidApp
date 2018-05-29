@@ -152,9 +152,31 @@
         android:layout_marginEnd="220dp"
         android:text="This is a test description which is pretty long as I need to test the wrapping and limitation sfoshdfksjdfha sfkasjdfhaskdfj akdf jsdfkjsdfh skjdfh adf asd fjahsdf sadkjfashdkfjash dfkasd fkasdfjfhdsakjdfhakdfjahsdfk asdkfjahsdkfjhaskdfjasdfkaf"
         android:layout_below="@id/recipe_selection_description_label"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recipe_selection_thumbnail"
+        android:id="@+id/recipe_selection_tags_section"
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="-5dp">
+        <TextView
+            android:id="@+id/recipe_selection_tags_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+
+            android:text="Tags:"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recipe_selection_tags_text"
+            android:paddingStart="10dp"/>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@id/recipe_selection_thumbnail"
+        android:layout_below="@id/recipe_selection_tags_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -165,6 +187,7 @@
 
         <TextView
             android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
             android:id="@+id/recipe_selection_ingredientTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

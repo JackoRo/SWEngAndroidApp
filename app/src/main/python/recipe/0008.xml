@@ -9,4 +9,8 @@
   <Filters spicy="false" lactose="true" nuts="false" vegetarian="true" vegan="true" gluten="false"></Filters>
   <Ingredient amount="2" units="slices">Bread</Ingredient>
   <Ingredient amount="1" units="can">Beans</Ingredient>
+  <Tag>Quick</Tag>
+  <Tag>Easy</Tag>
+  <Tag>Cheap</Tag>
+  <Tag>Sudent</Tag>
 </Recipe>

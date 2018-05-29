@@ -13,4 +13,7 @@
   <Ingredient amount="1" units="clove">Crushed Garlic</Ingredient>
   <Ingredient amount="1" units="can">San Marzano Tomatoes </Ingredient>
   <Ingredient amount="250" units="grams">Low moisture mozzarella</Ingredient>
+  <Tag>Italian</Tag>
+  <Tag>Pizza</Tag>
+  <Tag>Max Effort</Tag>
 </Recipe>

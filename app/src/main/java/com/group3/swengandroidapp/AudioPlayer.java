@@ -33,7 +33,6 @@ public class AudioPlayer {
         // Never repeats a number
         while((temp = r.nextInt(NUMBER_OF_TOUCH_SOUNDS))== instance.fileCounter);
         instance.fileCounter = temp;
-        Log.d("MARCO", Integer.toString(temp));
         switch(temp){
             case 0:
                 instance.playResource(R.raw.tap1);

@@ -10,5 +10,7 @@
   <Ingredient amount="2" units="medium">Egg</Ingredient>
   <Ingredient amount="100" units="grams">Flour</Ingredient>
   <Ingredient amount="100" units="grams">Sugar</Ingredient>
-  <Ingredient amount="100" units="grams">Butter</Ingredient>
+  <Ingredient amount="100" units="grams">Butter</Ingredient>#
+  <Tag>Sweet</Tag>
+  <Tag>Cake</Tag>
 </Recipe>

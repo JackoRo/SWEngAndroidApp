@@ -1,30 +1,13 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.group3.swengandroidapp.Filter;
-import com.group3.swengandroidapp.R;
 
-import org.xmlpull.v1.XmlPullParser;
-
-import java.io.InputStream;
 import java.io.Serializable;
-import java.io.SerializablePermission;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * {@link Recipe}<p>
@@ -52,12 +35,9 @@ public class Recipe implements Serializable {
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
-
-    // Filters
     private Filter.Info info = new Filter.Info();
-
-    // Ingredients
-    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private HashSet<String> tags = new HashSet<>(0);
 
     // CONSTRUCTORS
 
@@ -137,6 +117,9 @@ public class Recipe implements Serializable {
     }
     public void setTime(String time){this.time = time;}
     public void setFilterInfo(Filter.Info info){this.info = info;}
+    public void addKeyword(String keyword){
+        this.tags.add(keyword);
+    }
 
     // GETTERS
     public String getTitle() {
@@ -178,6 +161,7 @@ public class Recipe implements Serializable {
         return ingredients;
     }
     public String getTime(){return this.time;}
+    public HashSet<String> getTags(){return this.tags;}
 
     public String generateIngredientsString(){
         StringBuilder sb = new StringBuilder();
@@ -241,5 +225,21 @@ public class Recipe implements Serializable {
         return new Recipe.Icon(recipe.getTitle(), null, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
     }
 
+    public static int tagSimilarity(Recipe recipe1, Recipe recipe2){
+        int score = 0;
+        for(String s1 : recipe1.getTags()){
+            for(String s2 : recipe2.getTags()){
+                if(s1.toUpperCase().matches(s2.toUpperCase())){
+                    score++;
+                }
+            }
+        }
+        return score;
+    }
 
+    public static int tagSimilarity(String id1, String id2){
+        Recipe r1 = RemoteFileManager.getInstance().getRecipe(id1);
+        Recipe r2 = RemoteFileManager.getInstance().getRecipe(id2);
+        return tagSimilarity(r1, r2);
+    }
 }
