@@ -28,6 +28,10 @@ public class CanvasView extends View {
         shapes.add(shape);
     }
 
+    public void removeShape(Shape shape) {
+        shapes.remove(shape);
+    }
+
     @Override
     public void onDraw(Canvas canvas) {
 

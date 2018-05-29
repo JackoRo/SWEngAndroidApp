@@ -5,10 +5,10 @@
        <Image path="http://assets.kraftfoods.com/recipe_images/opendeploy/92161_640x428.jpg" x1="100" y1="100" x2="500" y2="500" />
    </Slide>
    <Slide>
-       <Image path="image/testimage.jpg" x1="100" y1="100" x2="500" y2="500" />
+       <Image path="image/testimage.jpg" x1="100" y1="100" x2="500" y2="500" duration="2"/>
    </Slide>
    <Slide>
-      <Text textsize="18" underline="true" font="Times New Roman">
+      <Text textsize="18" underline="true" font="Times New Roman" duration="2">
          This is the schema of the
          <Format bold="true" color="#F341DE">PWS</Format>
          file format agreed between
@@ -30,7 +30,7 @@
          The Schema also defines
          <Format underline="false" textsize="24">Shapes</Format>!
       </Text>
-      <Shape x1="100" y1="100" type="ellipse" x2="200" y2="200" fill="gradient(#FF0000,#0000FF)" />
+      <Shape x1="100" y1="100" type="ellipse" x2="200" y2="200" fill="gradient(#FF0000,#0000FF)" duration="2"/>
       <Shape x1="300" y1="300" type="rectangle" x2="400" y2="400" fill="gradient(#00FF00,#FFFF00)" />
       <Shape x1="500" y1="500" type="line" x2="600" y2="600" fill="#00FFFF" />
    </Slide>

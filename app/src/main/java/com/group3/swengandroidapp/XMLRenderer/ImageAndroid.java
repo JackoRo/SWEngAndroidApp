@@ -29,8 +29,14 @@ import java.net.URL;
 
 public class ImageAndroid extends Image {
 
+    private ImageView image;
+
     public ImageAndroid(XmlElement parent) {
         super(parent);
+    }
+
+    public ImageView getImage() {
+        return image;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class ImageAndroid extends Image {
         if (parent instanceof Slide) {
 
             LinearLayout layout = ((Slide) parent).getLayout();
-            ImageView image = new ImageView(activity);
+            image = new ImageView(activity);
             String urlString;
 
             try {

@@ -7,6 +7,8 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Shader.TileMode;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.LinearLayout;
 
@@ -47,6 +49,10 @@ public class GraphicModuleAndroid extends Shape{
         this.canvasView = canvasView;
     }
 
+    private void removeShape() {
+        canvasView.removeShape(this);
+    }
+
     @Override
     public void draw(Activity activity) {
 
@@ -61,6 +67,7 @@ public class GraphicModuleAndroid extends Shape{
                 LinearLayout layout = ((Slide) parent).getLayout();
                 layout.addView(canvasView);
             }
+
         }
 
     }

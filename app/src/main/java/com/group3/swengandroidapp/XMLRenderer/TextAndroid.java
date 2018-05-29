@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 public class TextAndroid extends Text {
 
+    private TextView textView;
+
     //BIU
 //    private StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
 //    private StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
@@ -65,12 +67,17 @@ public class TextAndroid extends Text {
     //Text size method spans
     //private RelativeSizeSpan getTextSizeSpan() { return new RelativeSizeSpan(); }
 
+
+    public TextView getTextView() {
+        return textView;
+    }
+
     @Override
     public void draw(Activity activity) {
 
         if (parent instanceof Slide) {
             LinearLayout layout = ((Slide) parent).getLayout();
-            TextView textView = new TextView(activity);
+            textView = new TextView(activity);
 
             SpannableStringBuilder builder = new SpannableStringBuilder();
             buildString(builder, activity);

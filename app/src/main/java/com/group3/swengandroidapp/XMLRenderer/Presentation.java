@@ -11,6 +11,7 @@ import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 
 import com.group3.swengandroidapp.AudioPlayer;
+import com.group3.swengandroidapp.SImpLeGraphicsModule.GraphicModuleAndroid;
 
 import junit.framework.Test;
 
