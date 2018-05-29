@@ -57,7 +57,8 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         // Setup Recommended Recipes view
         RecyclerView recyclerView = findViewById(R.id.home_suggested_view);                // Get suggested recipe view
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);    // Set as a 2-collumn grid
         recyclerView.setHasFixedSize(false);
         recyclerView.setVerticalScrollBarEnabled(true);
         suggestedAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view

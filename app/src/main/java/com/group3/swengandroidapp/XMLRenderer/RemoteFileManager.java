@@ -87,12 +87,14 @@ public class RemoteFileManager {
                 String historyId = histories[i];
                 for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
                     //ids[counter] = key;
-                    if (historyId != key){
+                    if (!historyId.equals(key)){
                         //only compare tags to different recipes
                         similarityValue = myRecipe.tagSimilarity(historyId, key);
                         int newSimilarityValue = similarityValue*(historySize-i);                 //weights the similarity value based on
                         //how recently the recipe was viewed
                         suggestions.put(key, newSimilarityValue);
+                    }else{
+                        suggestions.put(key, 0);
                     }
                 }
             }
@@ -117,7 +119,7 @@ public class RemoteFileManager {
             public int compare(Entry<String, Integer> ele1,
                                Entry<String, Integer> ele2) {
 
-                return ele1.getValue().compareTo(ele2.getValue());
+                return ele2.getValue().compareTo(ele1.getValue());
             }
         });
 
@@ -129,16 +131,6 @@ public class RemoteFileManager {
 
         return aMap2;
     }
-
-//    public String[] getSuggestedRecipes(int size, String[] historyArray){
-//        String[] ids = new String[recipes.size()];
-//        int counter = 0;
-//        for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
-//            ids[counter] = key;
-//            counter++;
-//        }
-//        return ids;
-//    }
 
     public InstructionalVideo getInstructionalVideo(String id) {
         return instructionalVideos.get(id);
