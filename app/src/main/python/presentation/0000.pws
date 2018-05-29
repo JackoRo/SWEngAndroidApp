@@ -15,7 +15,7 @@
          <Format bold="true" color="#F314DE">SWEng</Format>
          groups.
       </Text>
-      <Text>
+      <Text x1="100" y1="100" x2="500" y2="500">
          Text can contain
          <Format font="comic sans">Format</Format>
          tags that change how it is

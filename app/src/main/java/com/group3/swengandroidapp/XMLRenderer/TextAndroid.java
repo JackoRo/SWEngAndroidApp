@@ -16,6 +16,7 @@ import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 /**
@@ -81,6 +82,22 @@ public class TextAndroid extends Text {
 
             SpannableStringBuilder builder = new SpannableStringBuilder();
             buildString(builder, activity);
+
+
+            if (getX1() != null && getX2() != null && getY1() != null && getY2() != null) {
+                int x1 = Integer.valueOf(getX1());
+                int x2 = Integer.valueOf(getX2());
+                int y1 = Integer.valueOf(getY1());
+                int y2 = Integer.valueOf(getY2());
+
+
+                LayoutParams layoutParams=new LayoutParams(x2, y2);
+                layoutParams.setMargins(x1, y1, x2, y2);
+                textView.setLayoutParams(layoutParams);
+            }
+            else {
+                Log.d("Draw", "No parameters set. Loading default text position");
+            }
 
             textView.setText(builder);
             layout.addView(textView);

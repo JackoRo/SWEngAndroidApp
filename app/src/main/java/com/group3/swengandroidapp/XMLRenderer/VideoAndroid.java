@@ -64,7 +64,7 @@ public class VideoAndroid extends Video {
                 video.setLayoutParams(layoutParams);
             }
             else {
-                Log.d("Draw", "No parameters set. Loading default image size");
+                Log.d("Draw", "No parameters set. Loading default video size");
             }
 
 
