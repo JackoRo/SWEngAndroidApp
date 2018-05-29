@@ -100,16 +100,11 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         }
 
         // Process the suggested view
-        if (suggested.length != 0){
-            for(String id : suggested){
-                if(!icons.containsKey(id)){
-                    icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
-                }
-                suggestedAdapter.addIcon(icons.get(id));
+        for(String id : suggested){
+            if(!icons.containsKey(id)){
+                icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
             }
-
-        }else{
-            //RemoteFileManager.getInstance().getRecipeList().;
+            suggestedAdapter.addIcon(icons.get(id));
         }
 
         // Notify the adapters to update themselves.

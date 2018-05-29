@@ -63,7 +63,7 @@ public class RemoteFileManager {
 
     public String[] getSuggestedRecipes(){
         int suggestionSize = 6;
-        String[] ids ;
+        String[] ids = new String[recipes.size()] ;
         String[] histories = HistoryHandler.getInstance().getHistory();
         int historySize = histories.length;
         int similarityValue;
@@ -71,25 +71,31 @@ public class RemoteFileManager {
         if (historySize > 3){
             historySize =3;
         }
-
-        for (int i=0; i<historySize; i++){
-            String historyId = histories[i];
+        if (historySize == 0){
+            int counter = 0;
             for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
-                //ids[counter] = key;
-                if (historyId != key){
-                    //only compare tags to different recipes
-                    similarityValue = myRecipe.tagSimilarity(historyId, key);
-                    int newSimilarityValue = similarityValue*(historySize-i);                 //weights the similarity value based on
-                                                                                //how recently the recipe was viewed
-                    suggestions.put(key, newSimilarityValue);
+                ids[counter] = key;
+                counter++;
+            }
+        }else{
+            for (int i=0; i<historySize; i++){
+                String historyId = histories[i];
+                for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
+                    //ids[counter] = key;
+                    if (historyId != key){
+                        //only compare tags to different recipes
+                        similarityValue = myRecipe.tagSimilarity(historyId, key);
+                        int newSimilarityValue = similarityValue*(historySize-i);                 //weights the similarity value based on
+                        //how recently the recipe was viewed
+                        suggestions.put(key, newSimilarityValue);
+                    }
                 }
             }
+            orderedSuggestions = sortMapByValues(suggestions);
+
+            Set<String> keys = orderedSuggestions.keySet();
+            ids = keys.toArray(new String[suggestionSize]);
         }
-
-        orderedSuggestions = sortMapByValues(suggestions);
-
-        Set<String> keys = orderedSuggestions.keySet();
-        ids = keys.toArray(new String[suggestionSize]);
 
         return ids;
     }
