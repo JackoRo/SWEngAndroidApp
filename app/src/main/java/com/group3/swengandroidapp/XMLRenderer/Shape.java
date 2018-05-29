@@ -90,6 +90,14 @@ public abstract class Shape extends XmlElement implements Drawable {
         setProperty("stroke", stroke);
     }
 
+    public String getDuration() {
+        return getProperty("duration");
+    }
+
+    public void setDuration(String duration) {
+        setProperty("duration", duration);
+    }
+
     public Paint getFillPaint() {
         if (fillPaint == null) {
             fillPaint = new Paint();

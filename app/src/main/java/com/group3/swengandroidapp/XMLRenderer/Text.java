@@ -109,7 +109,7 @@ public abstract class Text extends XmlElement implements Drawable {
     }
 
     public String  getDuration(){
-        return getInheritableProperty("duration");
+        return getProperty("duration");
     }
 
     public void setDuration(String duration) {

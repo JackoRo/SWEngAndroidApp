@@ -48,4 +48,12 @@ public abstract class Image extends XmlElement implements Drawable {
 
     public void setPath(String path) { setProperty("path", path); }
 
+    public String  getDuration(){
+        return getProperty("duration");
+    }
+
+    public void setDuration(String duration) {
+        setProperty("duration", duration);
+    }
+
 }
