@@ -5,7 +5,7 @@
   <time>2 Hours</time>
   <author>Mary Berry</author>
   <description>The cake is a lie.</description>
-  <thumbnailURL>http://i0.kym-cdn.com/photos/images/facebook/000/115/357/portal-cake.jpg</thumbnailURL>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
   <Filters spicy="false" lactose="false" nuts="false" vegetarian="true" vegan="false" gluten="true"></Filters>
   <Ingredient amount="2" units="medium">Egg</Ingredient>
   <Ingredient amount="100" units="grams">Flour</Ingredient>

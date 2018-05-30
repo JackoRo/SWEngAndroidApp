@@ -5,7 +5,7 @@
   <time>1min</time>
   <author>SWEng Group 3</author>
   <description>When times are toughest.</description>
-  <thumbnailURL>http://www.thedailymash.co.uk/images/stories/crispbowl.jpg</thumbnailURL>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
   <Filters spicy="false" lactose="true" nuts="false" vegetarian="true" vegan="true" gluten="false"></Filters>
   <Ingredient amount="200" units="grams">Crisps</Ingredient>
   <Ingredient amount="1" units="bowl">Big</Ingredient>

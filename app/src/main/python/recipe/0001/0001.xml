@@ -4,7 +4,7 @@
   <title>Fish sticks</title>
   <author>Kanye West</author>
   <description>Do you like Fish sticks?</description>
-  <thumbnailURL>https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/9/12/0/FN_Picky-Eaters-Baked-Fish-Sticks_s4x3.jpg.rend.hgtvcom.616.462.suffix/1383787655091.jpeg</thumbnailURL>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
   <Filters spicy="false" lactose="false" nuts="false" vegetarian="false" vegan="false" gluten="true"></Filters>
   <Ingredient amount="2" units="slices of">Bread</Ingredient>
   <Ingredient amount="500" units="grams">Fish</Ingredient>
