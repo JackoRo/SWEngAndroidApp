@@ -1,9 +1,10 @@
 body{
-	background-color: white;
+	background-color: #EEE;
 	
 }
 
 div.text_section{
+	background-color: white;
 	border-style: groove;
 	border-width: 5px;
 	padding: 20px;
@@ -23,6 +24,7 @@ div.text_section h2{
 	border-style: none none solid none;
 	border-width: 1px;
 }
+
 
 .BANNER{
 	max-width: 100%;
