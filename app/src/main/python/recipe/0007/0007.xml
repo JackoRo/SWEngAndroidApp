@@ -5,7 +5,7 @@
   <time>15mins</time>
   <author>SWEng Group 3</author>
   <description>A customisable classic, perfect for breakfast, lunch or dinner!</description>
-  <thumbnailURL>https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--1273477_8.jpg?itok=6VhpTntM</thumbnailURL>
+  <thumbnailURL>thumbnail.png</thumbnailURL>
   <Filters spicy="false" lactose="false" nuts="false" vegetarian="true" vegan="false" gluten="false"></Filters>
   <Ingredient amount="100" units="grams">Plain Flour</Ingredient>
   <Ingredient amount="2" units="whole">Eggs</Ingredient>

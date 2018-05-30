@@ -5,7 +5,7 @@
   <time>1 Hour</time>
   <author>SWEng Group 3</author>
   <description>A lush treat for the a good time that will leave you wanting more!</description>
-  <thumbnailURL>https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/tarte-tatin.jpg?itok=RxLILAEd</thumbnailURL>
+  <thumbnailURL>thumbnail.png</thumbnailURL>
   <Filters spicy="false" lactose="false" nuts="true" vegetarian="true" vegan="false" gluten="false"></Filters>
   <Ingredient amount="300" units="grams">All-butter puff pastry</Ingredient>
   <Ingredient amount="900" units="grams">Apples</Ingredient>

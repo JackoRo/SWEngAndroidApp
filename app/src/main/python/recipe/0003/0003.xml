@@ -5,7 +5,7 @@
   <time>15mins</time>
   <author>SWEng Group 3</author>
   <description>A classic dish with an exciting spin, you can add anything you want!.</description>
-  <thumbnailURL>https://ichef.bbci.co.uk/food/ic/food_16x9_832/recipes/cheeseomelette_80621_16x9.jpg</thumbnailURL>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
   <Filters spicy="false" lactose="false" nuts="true" vegetarian="false" vegan="false" gluten="true"></Filters>
   <Ingredient amount="50" units="grams">Grated Cheddar Cheese</Ingredient>
   <Ingredient amount="3" units="whole">Eggs</Ingredient>

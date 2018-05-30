@@ -5,7 +5,7 @@
   <author>SWEng Group 3</author>
   <time>2 Hours</time>
   <description>A Neopolitan classic, sure to please the whole family.</description>
-  <thumbnailURL>https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/220px-Eq_it-na_pizza-margherita_sep2005_sml.jpg</thumbnailURL>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
   <Filters spicy="false" lactose="false" nuts="true" vegetarian="true" vegan="false" gluten="false"></Filters>
   <Ingredient amount="300" units="grams">Bread Flour</Ingredient>
   <Ingredient amount="1" units="tsp">Instant Yeast</Ingredient>
