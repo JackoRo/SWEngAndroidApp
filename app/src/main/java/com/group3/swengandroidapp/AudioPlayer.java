@@ -2,22 +2,29 @@ package com.group3.swengandroidapp;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import static android.content.Context.VIBRATOR_SERVICE;
+
 /**
  * Created by Marco on 25/05/2018.
  */
 
-public class AudioPlayer {
+public class AudioPlayer extends MainActivity{
 
     private static final int NUMBER_OF_TOUCH_SOUNDS = 3;
 
     private ArrayList<MediaPlayer> players;
     private static AudioPlayer instance = new AudioPlayer();
-    private Boolean muted = false;
+    private static Boolean muted = true;
+
+    private static Boolean muteSounds = false;
+
+    private static Vibrator myVib;
 
     // Used to count through files used for the same effect (see touchSound())
     private int fileCounter = 0;
@@ -33,21 +40,30 @@ public class AudioPlayer {
         // Never repeats a number
         while((temp = r.nextInt(NUMBER_OF_TOUCH_SOUNDS))== instance.fileCounter);
         instance.fileCounter = temp;
-        switch(temp){
-            case 0:
-                instance.playResource(R.raw.tap1);
-                break;
-            case 1:
-                instance.playResource(R.raw.tap2);
-                break;
-            case 2:
-                instance.playResource(R.raw.tap3);
-                break;
-            default:
-                instance.playResource(R.raw.tap1);
-                break;
+
+        if (instance.muteSounds) {
+            switch (temp) {
+                case 0:
+                    instance.playResource(R.raw.tap1);
+                    break;
+                case 1:
+                    instance.playResource(R.raw.tap2);
+                    break;
+                case 2:
+                    instance.playResource(R.raw.tap3);
+                    break;
+                default:
+                    instance.playResource(R.raw.tap1);
+                    break;
+            }
         }
+
+        myVib = (Vibrator) instance.getSystemService(VIBRATOR_SERVICE);
+
+        instance.myVib.vibrate(50);
+
     }
+
 
     public static void favouritesSound(){
         instance.playResource(R.raw.favourite_click);
