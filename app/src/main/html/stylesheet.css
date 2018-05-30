@@ -39,6 +39,8 @@ div.text_section h2{
 	font-size: 60px;
 	padding-bottom: 50px;
 	padding-top: 40px;
+	padding-left: 5%;
+	padding-right:5%;
 }
 
 ul.navigation{
