@@ -14,15 +14,15 @@ import static android.content.Context.VIBRATOR_SERVICE;
  * Created by Marco on 25/05/2018.
  */
 
-public class AudioPlayer extends MainActivity{
+public class AudioPlayer{
 
     private static final int NUMBER_OF_TOUCH_SOUNDS = 3;
 
     private ArrayList<MediaPlayer> players;
     private static AudioPlayer instance = new AudioPlayer();
-    private static Boolean muted = true;
+    private static Boolean muted = false;
 
-    private static Boolean muteSounds = false;
+    //private static Boolean muteSounds = false;
 
     private static Vibrator myVib;
 
@@ -41,26 +41,27 @@ public class AudioPlayer extends MainActivity{
         while((temp = r.nextInt(NUMBER_OF_TOUCH_SOUNDS))== instance.fileCounter);
         instance.fileCounter = temp;
 
-        if (instance.muteSounds) {
-            switch (temp) {
-                case 0:
-                    instance.playResource(R.raw.tap1);
-                    break;
-                case 1:
-                    instance.playResource(R.raw.tap2);
-                    break;
-                case 2:
-                    instance.playResource(R.raw.tap3);
-                    break;
-                default:
-                    instance.playResource(R.raw.tap1);
-                    break;
-            }
+
+        switch (temp) {
+            case 0:
+                instance.playResource(R.raw.tap1);
+                break;
+            case 1:
+                instance.playResource(R.raw.tap2);
+                break;
+            case 2:
+                instance.playResource(R.raw.tap3);
+                break;
+            default:
+                instance.playResource(R.raw.tap1);
+                break;
         }
 
-        myVib = (Vibrator) instance.getSystemService(VIBRATOR_SERVICE);
 
-        instance.myVib.vibrate(50);
+
+        //myVib = (Vibrator) instance.getSystemService(VIBRATOR_SERVICE);
+
+        //instance.myVib.vibrate(50);
 
     }
 
