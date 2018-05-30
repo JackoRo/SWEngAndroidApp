@@ -76,7 +76,7 @@ public class ImageDownloaderService extends IntentService {
                                 StringBuilder sb = new StringBuilder();
                                 sb.append("http://");
                                 sb.append(PythonClient.IP_ADDR);
-                                sb.append(":5000/recipe/");
+                                sb.append(":5000/download/recipe/");
                                 sb.append(id);
                                 sb.append("/");
                                 sb.append(recipeThumbnailURL);

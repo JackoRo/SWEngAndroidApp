@@ -34,9 +34,9 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    //public static final String IP_ADDR = "192.168.0.20";
+    public static final String IP_ADDR = "192.168.0.20";
     //For device emulator
-    public static final String IP_ADDR = "10.0.2.2";
+    //public static final String IP_ADDR = "10.0.2.2";
 
 
     //private DataOutputStream dout;
@@ -67,7 +67,7 @@ public class PythonClient extends IntentService{
 
     public String fetchRecipeFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/recipe/%s", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/recipe/%s/%s"+".xml", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -97,7 +97,7 @@ public class PythonClient extends IntentService{
 
     public String fetchPresentationFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/presentation/%s", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/recipe/%s/%s"+".pws", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {

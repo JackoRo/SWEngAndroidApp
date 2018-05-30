@@ -1,6 +1,8 @@
-from flask import Flask, send_from_directory, request, redirect, url_for
-from werkzeug.utils import secure_filename
+import glob
 import os
+
+from flask import Flask, send_from_directory, request, redirect
+from werkzeug.utils import secure_filename
 
 cwd = os.getcwd()
 uploadPresentation = 'presentation'
@@ -16,21 +18,19 @@ app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
 
-@app.route('/download/recipe/<presentationid>/<presentationid>')
-def fetchPresentation(id):
-    return send_from_directory(UPLOAD_PRESENTATION, "{}.pws".format(presentationid))
-
-@app.route('/download/recipe/<id>/<id>')
-def fetchRecipe(presentationid):
-    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
+@app.route('/download/recipe/<fileid>/<id>')
+def fetchFile(fileid, id):
+    print "fetchFile"
+    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, id))
 	
 @app.route('/download/myRecipe/<id>')
 def fetchMyRecipe(id):
     return send_from_directory(UPLOAD_MY_RECIPE, "{}.xml".format(id))
 
-@app.route('/download/recipe/<id>/<path:mediaid>')
-def fetchMedia(id, mediaid):
-    return send_from_directory(UPLOAD_PRESENTATION, os.path.join(presentationid, id))
+@app.route('/download/recipe/<fileid>/<path:mediaid>')
+def fetchMedia(fileid, mediaid):
+    print "fetchMedia"
+    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, mediaid))
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -38,7 +38,8 @@ def allowed_file(filename):
 
 @app.route('/recipelist')
 def fetchRecipes():
-    return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("recipe/*/*.xml"))
+    # return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
 	
 @app.route('/myRecipeList')
 def fetchMyRecipes():
