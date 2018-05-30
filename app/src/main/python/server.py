@@ -17,20 +17,26 @@ ALLOWED_EXTENSIONS = set(['xml', 'pws', 'jpg', 'png', 'jpeg'])
 app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
+app.config['UPLOAD_MY_RECIPE'] = UPLOAD_MY_RECIPE
 
 @app.route('/download/recipe/<fileid>/<id>')
-def fetchFile(fileid, id):
-    print "fetchFile"
+def fetchRecipeFile(fileid, id):
+    print "fetchRecipeFile"
     return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, id))
 	
-@app.route('/download/myRecipe/<id>')
-def fetchMyRecipe(id):
-    return send_from_directory(UPLOAD_MY_RECIPE, "{}.xml".format(id))
+@app.route('/download/myRecipe/<fileid>/<id>')
+def fetchMyRecipeFile(fileid, id):
+    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, id))
 
 @app.route('/download/recipe/<fileid>/<path:mediaid>')
-def fetchMedia(fileid, mediaid):
-    print "fetchMedia"
+def fetchRecipeMedia(fileid, mediaid):
+    print "fetchRecipeMedia"
     return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, mediaid))
+
+@app.route('/download/myRecipe/<fileid>/<path:mediaid>')
+def fetchMyRecipeMedia(fileid, mediaid):
+    print "fetchRecipeMedia"
+    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, mediaid))
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -43,7 +49,7 @@ def fetchRecipes():
 	
 @app.route('/myRecipeList')
 def fetchMyRecipes():
-    return "\n".join(next(os.walk(UPLOAD_MY_RECIPE))[2])
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("myRecipe/*/*.xml"))
 
 @app.route('/upload/presentation', methods=['GET', 'POST'])
 def storePresentation():

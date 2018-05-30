@@ -21,6 +21,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     private ImageDownloaderListener imageDownloaderListener;
     private Recipe recipe;
     ArrayList<String> ingredientsList;
+    String previousActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,13 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             // Code here executes on main thread after user presses button
             Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
             newIntent.putExtra(PythonClient.ID, id);
+
+            if (previousActivity.equals("MyRecipesActivity")) {
+                newIntent.putExtra("FROM_ACTIVITY", "MyRecipesActivity");
+            } else {
+                newIntent.putExtra("FROM_ACTIVITY", "HomeActivity");
+            }
+
             startActivity(newIntent);
         });
 
@@ -100,7 +108,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         TextView tags = findViewById(R.id.recipe_selection_tags_text);
 
         Intent intent = getIntent();
-        String previousActivity= intent.getStringExtra("FROM_ACTIVITY"); // Get name of previous activity
+        previousActivity= intent.getStringExtra("FROM_ACTIVITY"); // Get name of previous activity
         if (previousActivity.equals("MyRecipesActivity")){
             recipe = RemoteFileManager.getInstance().getMyRecipe(id);
         }else{

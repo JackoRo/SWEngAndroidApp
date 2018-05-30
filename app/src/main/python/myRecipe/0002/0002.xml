@@ -5,11 +5,14 @@
   <time>1 Hour</time>
   <author>SWEng Group 3</author>
   <description>A classic student failsafe, pasta bake is both quick and easy to make as well as being delicious.</description>
-  <thumbnailURL>https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--10785_12.jpg?itok=5Mwov7Aq</thumbnailURL>
+  <thumbnailURL>thumbnail.png</thumbnailURL>
   <Filters spicy="false" lactose="true" nuts="false" vegetarian="true" vegan="false" gluten="true"></Filters>
   <Ingredient amount="250" units="grams">Grated Cheddar Cheese</Ingredient>
   <Ingredient amount="500" units="grams">Pasta</Ingredient>
   <Ingredient amount="1" units="clove">Garlic</Ingredient>
   <Ingredient amount="1" units="can">Chopped Tomatoes</Ingredient>
   <Ingredient amount="100" units="grams">Butter</Ingredient>
+  <Tag>Pasta</Tag>
+  <Tag>Italian</Tag>
+  <Tag>Easy</Tag>
 </Recipe>

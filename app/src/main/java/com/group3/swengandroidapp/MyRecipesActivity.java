@@ -141,7 +141,7 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
             String message = intent.getStringExtra("message");
             if(message != null) Log.d("receiver", "Got message: " + message);
 
-            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
+            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_MY_RECIPE)) {
                 Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
                 startActivity(newIntent);
             }else {

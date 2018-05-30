@@ -29,7 +29,9 @@ public class PythonClient extends IntentService{
 
     public static final String LOAD_ALL = "com.group3.swengandroidapp.LOAD_ALL";
     public static final String FETCH_RECIPE = "com.group3.swengandroidapp.FETCH_RECIPE";
+    public static final String FETCH_MY_RECIPE = "com.group3.swengandroidapp.FETCH_MY_RECIPE";
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
+    public static final String FETCH_MY_PRESENTATION = "com.group3.swengandroidapp.FETCH_MY_PRESENTATION";
     protected static final String SERVER_TIMEOUT = "PythonClient.serveTimeout";
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
@@ -44,7 +46,6 @@ public class PythonClient extends IntentService{
     private URL url;
     private HttpURLConnection urlConnection;
     private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
-    private RemoteFileManager myRecipeRemoteFileManager = RemoteFileManager.getInstance();
 
 
     public PythonClient() throws IOException {
@@ -82,7 +83,7 @@ public class PythonClient extends IntentService{
 
     public String fetchMyRecipeFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/myRecipe/%s", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/myRecipe/%s/%s"+".xml", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -98,6 +99,21 @@ public class PythonClient extends IntentService{
     public String fetchPresentationFromHttpServer(String id) throws IOException{
 
         url = new URL (String.format("http://%s:5000/download/recipe/%s/%s"+".pws", IP_ADDR, id, id));
+        urlConnection = (HttpURLConnection) url.openConnection();
+
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in);
+
+        } finally {
+            urlConnection.disconnect();
+        }
+
+    }
+
+    public String fetchMyPresentationFromHttpServer(String id) throws IOException{
+
+        url = new URL (String.format("http://%s:5000/download/myRecipe/%s/%s"+".pws", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -161,8 +177,8 @@ public class PythonClient extends IntentService{
 
                     String[] myIds = fetchMyRecipeListFromHttpServer();
                     for (String rid : myIds) {
-                        if (myRecipeRemoteFileManager.getMyRecipe(rid) == null) {
-                            myRecipeRemoteFileManager.setMyRecipe(rid, new XmlRecipe(fetchMyRecipeFromHttpServer(rid)));
+                        if (remoteFileManager.getMyRecipe(rid) == null) {
+                            remoteFileManager.setMyRecipe(rid, new XmlRecipe(fetchMyRecipeFromHttpServer(rid)));
                         }
                     }
 
@@ -179,6 +195,15 @@ public class PythonClient extends IntentService{
                     Log.d("sender", "FETCH_RECIPE");
                     sendMessage(FETCH_RECIPE, id);
                     break;
+                case FETCH_MY_RECIPE:
+                    id = intent.getStringExtra(ID);
+
+                    if (remoteFileManager.getMyRecipe(id) == null) {
+                        remoteFileManager.setMyRecipe(id, new XmlRecipe(fetchMyRecipeFromHttpServer(id)));
+                    }
+                    Log.d("sender", "FETCH_MY_RECIPE");
+                    sendMessage(FETCH_MY_RECIPE, id);
+                    break;
                 case FETCH_PRESENTATION:
                     id = intent.getStringExtra(ID);
 
@@ -187,6 +212,15 @@ public class PythonClient extends IntentService{
                     }
                     Log.d("sender", "FETCH_PRESENTATION");
                     sendMessage(FETCH_PRESENTATION, id);
+                    break;
+                case FETCH_MY_PRESENTATION:
+                    id = intent.getStringExtra(ID);
+
+                    if (remoteFileManager.getMyPresentation(id) == null) {
+                        remoteFileManager.setMyPresentation(id, new XmlParser(fetchMyPresentationFromHttpServer(id)).parse());
+                    }
+                    Log.d("sender", "FETCH_MY_PRESENTATION");
+                    sendMessage(FETCH_MY_PRESENTATION, id);
                     break;
             }
 

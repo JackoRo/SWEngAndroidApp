@@ -36,6 +36,7 @@ public class RemoteFileManager {
     private static HashMap<String, Recipe> myRecipes;
     private static HashMap<String, InstructionalVideo> instructionalVideos;
     private static HashMap<String, Presentation> presentations;
+    private static HashMap<String, Presentation> myPresentations;
     private static HashMap<String, Integer> suggestions;
     private static HashMap<String, Integer> orderedSuggestions;
 
@@ -44,6 +45,7 @@ public class RemoteFileManager {
         myRecipes = new HashMap<>();
         recipes = new HashMap<>();
         presentations = new HashMap<>();
+        myPresentations = new HashMap<>();
         instructionalVideos = new HashMap<>();
         suggestions = new HashMap<>();
         orderedSuggestions = new HashMap<>();
@@ -172,7 +174,14 @@ public class RemoteFileManager {
         presentations.put(id, presentation);
     }
 
+    public void setMyPresentation(String id, Presentation myPresentation) {
+        myPresentation.setProperty("_ID", id);
+        myPresentations.put(id, myPresentation);
+    }
+
     public Presentation getPresentation(String id) { return presentations.get(id); }
+
+    public Presentation getMyPresentation(String id) { return myPresentations.get(id); }
 
     public HashMap<String, Recipe> getRecipeList() { return recipes; }
 

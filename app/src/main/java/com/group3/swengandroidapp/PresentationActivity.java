@@ -35,7 +35,14 @@ public class PresentationActivity extends AppCompatActivity {
                 new IntentFilter("XML-event-name"));
 
         Intent intent = new Intent(this, PythonClient.class);
-        intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_PRESENTATION);
+
+        if(receivedIntent.getStringExtra("FROM_ACTIVITY").equals("MyRecipesActivity")) {
+            intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_MY_PRESENTATION);
+        } else {
+            intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_PRESENTATION);
+        }
+
+
         intent.putExtra(PythonClient.ID,receivedIntent.getStringExtra(PythonClient.ID));
         startService(intent);
     }
@@ -50,6 +57,10 @@ public class PresentationActivity extends AppCompatActivity {
             if (message.matches(PythonClient.FETCH_PRESENTATION)) {
                 String presentationID = intent.getStringExtra(PythonClient.ID);
                 presentation = RemoteFileManager.getInstance().getPresentation(presentationID);
+                presentation.draw(PresentationActivity.this);
+            } else if (message.matches(PythonClient.FETCH_MY_PRESENTATION)) {
+                String presentationID = intent.getStringExtra(PythonClient.ID);
+                presentation = RemoteFileManager.getInstance().getMyPresentation(presentationID);
                 presentation.draw(PresentationActivity.this);
             }
 
