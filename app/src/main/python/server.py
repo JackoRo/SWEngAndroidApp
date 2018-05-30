@@ -16,20 +16,20 @@ app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
 
-@app.route('/download/presentation/<id>')
+@app.route('/download/recipe/<id>/<id>')
 def fetchPresentation(id):
     return send_from_directory(UPLOAD_PRESENTATION, "{}.pws".format(id))
 
-@app.route('/download/recipe/<id>')
-def fetchRecipe(id):
-    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
+@app.route('/download/recipe/<presentationid>/<presentationid>')
+def fetchRecipe(presentationid):
+    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(presentationid))
 	
 @app.route('/download/myRecipe/<id>')
 def fetchMyRecipe(id):
     return send_from_directory(UPLOAD_MY_RECIPE, "{}.xml".format(id))
 
-@app.route('/download/presentation/<presentationid>/<path:id>')
-def fetchMedia(presentationid, id):
+@app.route('/download/recipe/<id>/<path:mediaid>')
+def fetchMedia(id, mediaid):
     return send_from_directory(UPLOAD_PRESENTATION, os.path.join(presentationid, id))
 
 def allowed_file(filename):
