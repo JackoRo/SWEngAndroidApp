@@ -258,6 +258,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         intent.setClass(this,RecipeSelectionActivity.class);           // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                            // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);
+        intent.putExtra("FROM_ACTIVITY", "HomeActivity");
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);        // switch activities
 
     }
