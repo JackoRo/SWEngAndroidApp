@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="TEST" />
+    <Meta key="name" value="Demo"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            WELCOME
+        </Text>
+        <Text>
+            Welcome to the demo presentation.
+        </Text>
+		<Text>
+            In this current version, you can advance to the next 
+			slide by tapping once, and go back to the previous 
+			slide by tapping twice.
+        </Text>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            Images
+        </Text>
+        <Text>
+            Our presentation viewer will automatically lay out images 
+			(unless otherwise specified by the presentation file) in 
+			the designed layout for a recipe
+        </Text>
+        <Image path="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2016/04/wow-796x398.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24"
+            underline="false"
+            font="Times New Roman">
+            Video
+        </Text>
+        <Text>
+            The presentation viewer also supports video!
+        </Text>
+        <Video path="http://techslides.com/demos/sample-videos/small.mp4"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            Ads
+        </Text>
+        <Text>
+            In the free version of the app, ads will be embedded amongst the 
+			recipe slides...
+        </Text>
+    </Slide>
+
+</Presentation>

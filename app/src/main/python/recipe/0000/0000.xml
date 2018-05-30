@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+  <id>0000</id>
+  <title>Cake</title>
+  <time>2 Hours</time>
+  <author>Mary Berry</author>
+  <description>The cake is a lie.</description>
+  <thumbnailURL>http://i0.kym-cdn.com/photos/images/facebook/000/115/357/portal-cake.jpg</thumbnailURL>
+  <Filters spicy="false" lactose="false" nuts="false" vegetarian="true" vegan="false" gluten="true"></Filters>
+  <Ingredient amount="2" units="medium">Egg</Ingredient>
+  <Ingredient amount="100" units="grams">Flour</Ingredient>
+  <Ingredient amount="100" units="grams">Sugar</Ingredient>
+  <Ingredient amount="100" units="grams">Butter</Ingredient>#
+  <Tag>Sweet</Tag>
+  <Tag>Cake</Tag>
+</Recipe>

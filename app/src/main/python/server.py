@@ -30,7 +30,9 @@ def fetchMyRecipe(id):
 
 @app.route('/download/presentation/<presentationid>/<path:id>')
 def fetchMedia(presentationid, id):
-    return send_from_directory(UPLOAD_PRESENTATION, os.path.join(presentationid, id))
+	test = os.path.join(presentationid, id)
+	print test
+	return send_from_directory(UPLOAD_PRESENTATION, test)
 
 def allowed_file(filename):
     return '.' in filename and \
