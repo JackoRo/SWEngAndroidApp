@@ -5,11 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
@@ -52,6 +55,8 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,28 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
         myRecipesAdapter.setClickListener(this);                                          // Set the click listener for the adapter
         recyclerView.setAdapter(myRecipesAdapter);                                        // Assign adapter to the view
 
+        FloatingActionButton add_recipe_button = (FloatingActionButton) findViewById(R.id.add_recipe_button);
+
+
+        add_recipe_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                createNewRecipeScreen();
+            }
+        });
+
+
     }
+
+
+    public void createNewRecipeScreen(){
+        Log.d("myRecipesActivity","Create new recipe");
+        Intent intent = new Intent();
+        intent.setClass(this,HomeActivity.class);                   // Set new activity destination TODO: CHANGE TO RECIPE CREATION ACTIVITY
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
+        startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
+    }
+
+
 
     @Override
     public void onStart(){
