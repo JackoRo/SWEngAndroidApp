@@ -69,13 +69,20 @@ public class ImageDownloaderService extends IntentService {
                         }else{
                             // Try downloading the bitmap
                             Boolean temporary = false;
-                            StringBuilder sb = new StringBuilder();
-                            sb.append("http://");
-                            sb.append(PythonClient.IP_ADDR);
-                            sb.append(":5000/recipe/");
-                            sb.append(id);
-                            sb.append(RemoteFileManager.getInstance().getRecipe(id).getThumbnail());
-                            Bitmap bitmap = downloadImage(sb.toString());
+                            String recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
+                            
+                            if(!recipeThumbnailURL.contains("http")){
+                                StringBuilder sb = new StringBuilder();
+                                sb.append("http://");
+                                sb.append(PythonClient.IP_ADDR);
+                                sb.append(":5000/recipe/");
+                                sb.append(id);
+                                sb.append(recipeThumbnailURL);
+                                recipeThumbnailURL = sb.toString();
+                            }
+
+                            Bitmap bitmap = downloadImage(recipeThumbnailURL);
+
                             if(bitmap == null){
                                 Log.d("ImageDownloaderService", "[ER][1] Unable to download bitmap!");
                                 // If file doesnt exist, assign a temporary file
