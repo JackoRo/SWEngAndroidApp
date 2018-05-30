@@ -16,13 +16,13 @@ app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
 
-@app.route('/download/recipe/<id>/<id>')
-def fetchPresentation(id):
-    return send_from_directory(UPLOAD_PRESENTATION, "{}.pws".format(id))
-
 @app.route('/download/recipe/<presentationid>/<presentationid>')
+def fetchPresentation(id):
+    return send_from_directory(UPLOAD_PRESENTATION, "{}.pws".format(presentationid))
+
+@app.route('/download/recipe/<id>/<id>')
 def fetchRecipe(presentationid):
-    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(presentationid))
+    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
 	
 @app.route('/download/myRecipe/<id>')
 def fetchMyRecipe(id):
