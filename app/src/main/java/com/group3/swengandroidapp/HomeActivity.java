@@ -78,7 +78,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     }
 
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver MessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent

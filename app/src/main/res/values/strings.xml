@@ -45,10 +45,18 @@
     <string name="title_activity_create_arecipe">CreateARecipe</string>
 
     <!-- This contains a list of strings to be used in the Create a Recipe GUI-->
-    <string name="introductoryComment">Create A Recipe</string>
-    <string name="titleRequest">Title</string>
-    <string name="titleInput">Description</string>
-    <string name="ingredientRequest">Add Ingredients</string>
-    <string name="firstStep">Step One</string>
+    <string name="introductory_comment">Create A Recipe</string>
+    <string name="title_request">Title</string>
+    <string name="description_request">Description</string>
+    <string name="ingredient_request">Add Ingredients</string>
+    <string name="first_step">Step One</string>
+    <string name="create_recipe">Create Recipe</string>
 
+    <!-- This contains a list of strings to be used in the Add Ingredient GUI-->
+    <string name="ingredient_name">Name Of Ingredient</string>
+    <string name="ingredient_number_of_servings">Number of servings</string>
+    <string name="ingredient_quantity">Quantity (eg: 100g, 0.5 cup)</string>
+    <string name="ingredient_add">Add</string>
+    <string name="ingredients_exit">Exit</string>
+    <string name="title_activity_add_ingredients">AddIngredients</string>
 </resources>

@@ -9,42 +9,57 @@
     tools:showIn="@layout/activity_create_arecipe">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/title_input"
         android:layout_width="374dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="58dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/titleRequest"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        android:text="@string/title_request"
+        app:layout_constraintBottom_toTopOf="@+id/description_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/description_input"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="245dp"
+        android:layout_marginTop="104dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/titleInput"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:text="@string/description_request"
+        app:layout_constraintBottom_toTopOf="@+id/create_recipe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/add_ingredients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="262dp"
         android:layout_marginEnd="2dp"
         android:layout_marginStart="2dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/ingredientRequest"
+        android:text="@string/ingredient_request"
         android:textColor="@color/buttonTextColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/description_input" />
+
+    <Button
+        android:id="@+id/create_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/create_recipe"
+        android:textColor="@color/buttonTextColour"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_input" />
 </android.support.constraint.ConstraintLayout>
