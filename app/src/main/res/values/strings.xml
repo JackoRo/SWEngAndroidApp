@@ -48,7 +48,8 @@
     <string name="introductory_comment">Create A Recipe</string>
     <string name="title_request">Title</string>
     <string name="description_request">Description</string>
-    <string name="ingredient_request">Add Ingredients</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="ingredient_request">Add Ingredient</string>
     <string name="first_step">Step One</string>
     <string name="create_recipe">Create Recipe</string>
 

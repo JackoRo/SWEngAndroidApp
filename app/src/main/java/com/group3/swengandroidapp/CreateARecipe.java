@@ -7,21 +7,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.group3.swengandroidapp.XMLRenderer.Ingredient;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
+import java.util.ArrayList;
+
 public class CreateARecipe extends AppCompatActivity {
 
     Recipe temporaryRecipe;
 
-
     EditText etTitle;
     EditText etDescription;
+    EditText etIngredientName;
+    EditText etQuantity;
 
     String title;
     String description;
+    String ingredientName;
+    String quantity;
+
+    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
     int idFlag = 0;
     int id_integer;
@@ -31,17 +39,19 @@ public class CreateARecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_arecipe);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button ingredientsBtn = (Button)(findViewById(R.id.add_ingredients));
-        Button createRecipeBtn = (Button)(findViewById(R.id.create_recipe));
+        Button addIngredientBtn = findViewById(R.id.add_ingredients);
+        Button createRecipeBtn = findViewById(R.id.create_recipe);
+
+
         createRecipeBtn.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
 
-                etTitle = (EditText)findViewById(R.id.title_input);
-                etDescription = (EditText)findViewById(R.id.description_input);
+                etTitle = findViewById(R.id.title_input);
+                etDescription = findViewById(R.id.description_input);
 
                 title = etTitle.getText().toString();
                 description = etDescription.getText().toString();
@@ -53,6 +63,7 @@ public class CreateARecipe extends AppCompatActivity {
                 temporaryRecipe.setDescription(description);
                 temporaryRecipe.setAuthor("User");
                 temporaryRecipe.setID(id_String);
+                temporaryRecipe.setIngredients(ingredients);
                 idFlag++;
 
                 RemoteFileManager userRecipe = RemoteFileManager.getInstance();
@@ -61,14 +72,24 @@ public class CreateARecipe extends AppCompatActivity {
 
         });
 
-        ingredientsBtn.setOnClickListener(new View.OnClickListener(){
+        addIngredientBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etIngredientName = findViewById(R.id.ingredient_name);
+                etQuantity = findViewById(R.id.ingredient_quantity);
 
-            public void onClick(View v){
-                Intent launchIngredientsPage = new Intent(CreateARecipe.this, AddIngredients.class);
-                startActivity(launchIngredientsPage);
+                ingredientName = etIngredientName.getText().toString();
+                quantity = etQuantity.getText().toString();
+
+                ingredients.add(new Ingredient(ingredientName, quantity));
+
+                etIngredientName.setText("");
+                etQuantity.setText("");
+
+                Toast.makeText(getApplicationContext(), "Ingredient added!", Toast.LENGTH_LONG).show();
             }
-
-        });}
+        });
+    }
 
         int configureID(int idFlag){
             if(idFlag == 0){
