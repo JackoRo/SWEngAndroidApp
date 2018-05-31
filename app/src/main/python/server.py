@@ -1,26 +1,42 @@
-from flask import Flask, send_from_directory, request, redirect, url_for
-from werkzeug.utils import secure_filename
+import glob
 import os
+
+from flask import Flask, send_from_directory, request, redirect
+from werkzeug.utils import secure_filename
 
 cwd = os.getcwd()
 uploadPresentation = 'presentation'
 uploadRecipe = 'recipe'
+uploadMyRecipe = 'myRecipe'
 UPLOAD_PRESENTATION = os.path.join(cwd, uploadPresentation)
 UPLOAD_RECIPE = os.path.join(cwd, uploadRecipe)
+UPLOAD_MY_RECIPE = os.path.join(cwd, uploadMyRecipe)
 
-ALLOWED_EXTENSIONS = set(['xml', 'pws'])
+ALLOWED_EXTENSIONS = set(['xml', 'pws', 'jpg', 'png', 'jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
+app.config['UPLOAD_MY_RECIPE'] = UPLOAD_MY_RECIPE
 
-@app.route('/download/presentation/<id>')
-def fetchPresentation(id):
-    return send_from_directory(UPLOAD_PRESENTATION, "{}.pws".format(id))
+@app.route('/download/recipe/<fileid>/<id>')
+def fetchRecipeFile(fileid, id):
+    print "fetchRecipeFile"
+    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, id))
+	
+@app.route('/download/myRecipe/<fileid>/<id>')
+def fetchMyRecipeFile(fileid, id):
+    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, id))
 
-@app.route('/download/recipe/<id>')
-def fetchRecipe(id):
-    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
+@app.route('/download/recipe/<fileid>/<path:mediaid>')
+def fetchRecipeMedia(fileid, mediaid):
+    print "fetchRecipeMedia"
+    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, mediaid))
+
+@app.route('/download/myRecipe/<fileid>/<path:mediaid>')
+def fetchMyRecipeMedia(fileid, mediaid):
+    print "fetchRecipeMedia"
+    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, mediaid))
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -28,7 +44,12 @@ def allowed_file(filename):
 
 @app.route('/recipelist')
 def fetchRecipes():
-    return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("recipe/*/*.xml"))
+    # return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
+	
+@app.route('/myRecipeList')
+def fetchMyRecipes():
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("myRecipe/*/*.xml"))
 
 @app.route('/upload/presentation', methods=['GET', 'POST'])
 def storePresentation():

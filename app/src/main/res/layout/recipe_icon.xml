@@ -6,13 +6,13 @@
     android:layout_weight=".4"
     android:padding="5dp"
     >
-    <!-- BACKDROP THUMBNAIL -->
+    <!-- BACKDROP THUMBNAIL -->c
     <ImageView
         android:id="@+id/recipe_icon_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/thumbnail" />
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="TODO" />
 
     <!-- RECIPE TITLE -->
     <TextView
@@ -29,7 +29,7 @@
         android:paddingBottom="5dp"
         android:gravity="center"
 
-        android:text="RECIPE NAME"
+        android:text="@string/recipe_name"
         android:textColor="#FFF"
         android:background="#9000"
         >
@@ -49,13 +49,14 @@
 
         <ImageButton
             android:id="@+id/recipe_icon_numfavourites_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/recipe_icon_numfavourites"
-            android:src="@drawable/heart_off"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toEndOf="@id/recipe_icon_numfavourites"
+            android:scaleType="fitCenter"
+            android:src="@drawable/favempty"
             android:layout_margin="2dp"
             android:background="#0000"
-            />
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/recipe_icon_numfavourites"
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/recipe_icon_numfavourites_button"
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="#FFF"
             android:paddingStart="3dp"
             android:paddingEnd="2dp"
@@ -74,25 +75,43 @@
 
 
     <!-- TIME -->
-    <TextView
-        android:id="@+id/recipe_icon_time"
-        android:textSize="14sp"
-        android:gravity="bottom"
+    <RelativeLayout
+        android:id="@+id/recipe_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/timer"
-        android:text="0 mins"
-        android:textColor="#FFF"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="2dp"
-        android:drawablePadding="2dp"
         android:layout_margin="4dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#9000"
-        />
+        android:background="#9000">
+
+        <ImageView
+            android:id="@+id/recipe_time_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/timer"
+            android:layout_margin="2dp"
+            />
+
+
+        <TextView
+            android:id="@+id/recipe_time_text"
+            android:layout_toEndOf="@id/recipe_time_icon"
+            android:layout_alignBottom="@id/recipe_time_icon"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_0_mins"
+            android:textColor="#FFF"
+            android:paddingTop="2dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="2dp"
+            android:layout_marginEnd="4dp"
+            />
+
+
+
+    </RelativeLayout>
+
 
 
 </RelativeLayout>

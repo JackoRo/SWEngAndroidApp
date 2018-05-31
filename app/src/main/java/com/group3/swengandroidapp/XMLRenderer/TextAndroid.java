@@ -16,6 +16,7 @@ import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 /**
@@ -23,6 +24,8 @@ import android.widget.TextView;
  */
 
 public class TextAndroid extends Text {
+
+    private TextView textView;
 
     //BIU
 //    private StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
@@ -65,18 +68,38 @@ public class TextAndroid extends Text {
     //Text size method spans
     //private RelativeSizeSpan getTextSizeSpan() { return new RelativeSizeSpan(); }
 
+
+    public TextView getTextView() {
+        return textView;
+    }
+
     @Override
     public void draw(Activity activity) {
 
         if (parent instanceof Slide) {
             LinearLayout layout = ((Slide) parent).getLayout();
-            TextView textView = new TextView(activity);
+            textView = new TextView(activity);
 
             SpannableStringBuilder builder = new SpannableStringBuilder();
             buildString(builder, activity);
 
-            textView.setText(builder);
 
+            if (getX1() != null && getX2() != null && getY1() != null && getY2() != null) {
+                int x1 = Integer.valueOf(getX1());
+                int x2 = Integer.valueOf(getX2());
+                int y1 = Integer.valueOf(getY1());
+                int y2 = Integer.valueOf(getY2());
+
+
+                LayoutParams layoutParams=new LayoutParams(x2, y2);
+                layoutParams.setMargins(x1, y1, x2, y2);
+                textView.setLayoutParams(layoutParams);
+            }
+            else {
+                Log.d("Draw", "No parameters set. Loading default text position");
+            }
+
+            textView.setText(builder);
             layout.addView(textView);
         }
 
@@ -104,12 +127,21 @@ public class TextAndroid extends Text {
                 builderFont(builder, start);
                 builderSize(builder, start);
                 builderColor(builder, start);
-
+            } else if (e instanceof Br) {
+                builder.append("\n");
 
             } else if (e instanceof Format) {
                 ((Format)e).buildString(builder, activity);
             }
 
+        }
+
+        // Remove leading and trailing white spaces
+        while (builder.length() > 0 && Character.isWhitespace(builder.charAt(0))) {
+            builder.delete(0, 1);
+        }
+        while (builder.length() > 0 && Character.isWhitespace(builder.charAt(builder.length()-1))) {
+            builder.delete(builder.length()-1, builder.length());
         }
     }
 
@@ -211,7 +243,7 @@ public class TextAndroid extends Text {
                         getHandlerThreadHandler());
 
         return null;
-    }*/
+    }
 
     private Handler getHandlerThreadHandler() {
         if (mHandler == null) {
@@ -222,4 +254,5 @@ public class TextAndroid extends Text {
         return mHandler;
     }
 
+    */
 }

@@ -1,24 +1,13 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.*;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.group3.swengandroidapp.Filter;
-import com.group3.swengandroidapp.R;
 
-import org.xmlpull.v1.XmlPullParser;
-
-import java.io.InputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * {@link Recipe}<p>
@@ -34,6 +23,9 @@ import java.util.ArrayList;
  */
 
 public class Recipe implements Serializable {
+    public final static int THUMBNAILSIZE = 250;
+    public final static String ID = "Recipe_ID"; // Used with broadcast
+
     // Meta data
     private String title = "n/a";
     private String author = "n/a";
@@ -43,15 +35,9 @@ public class Recipe implements Serializable {
     private String presentationID = "n/a";
     private String time = "n/a";
     private Presentation presentation;
-
-    public final static int THUMBNAILSIZE = 250;
-
-
-    // Filters
     private Filter.Info info = new Filter.Info();
-
-    // Ingredients
-    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+    private HashSet<String> tags = new HashSet<>(0);
 
     // CONSTRUCTORS
 
@@ -75,7 +61,6 @@ public class Recipe implements Serializable {
         if(id != null) {
             this.id = id;
         }
-
         // Both ArrayLists initialised to have 0 stored objects
         // (Whenever you add to an array list, it extends the size by 1 (I think))
 
@@ -86,7 +71,7 @@ public class Recipe implements Serializable {
 
     // METHODS
     public String getNumFavourites(){
-        //TODO: Access server and figure out a way to extract the number of users that have this recipe ID as a favourite!
+        //TODO: Access server and figure out a way to extract the number of users that have this recipe UPDATED_RECIPE_ID as a favourite!
         return "0";
     }
 
@@ -127,10 +112,14 @@ public class Recipe implements Serializable {
         this.presentation = presentation;
     }
     public void setIngredients(ArrayList<Ingredient> ingredients) {this.ingredients = ingredients;}
-    public void appendIntgredient(Ingredient ingredient) {
+    public void appendIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
     public void setTime(String time){this.time = time;}
+    public void setFilterInfo(Filter.Info info){this.info = info;}
+    public void addKeyword(String keyword){
+        this.tags.add(keyword);
+    }
 
     // GETTERS
     public String getTitle() {
@@ -172,8 +161,29 @@ public class Recipe implements Serializable {
         return ingredients;
     }
     public String getTime(){return this.time;}
+    public HashSet<String> getTags(){return this.tags;}
 
-    public static class Icon {
+    public String generateIngredientsString(){
+        StringBuilder sb = new StringBuilder();
+        for(Ingredient i : this.ingredients){
+            sb.append("- " + i.getName() + ": " + i.getQuantityValue()+" " + i.getQuantityUnits()+"\n");
+        }
+        return sb.toString();
+    }
+
+    public Recipe clone(){
+        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID());
+        r.setThumbnail(this.getThumbnail());
+        r.setFilterInfo(this.getFilterInfo());
+        r.setPresentation(this.presentation);
+        r.setTime(this.time);
+        r.setIngredients(this.ingredients);
+        return r;
+    }
+
+    public static class Icon{
+        public final static String ICON_CHANGED = "Recipe.Icon_iconChanged"; // Used with broadcast
+
         private String title;
         private String numFavourites;
         private String time;
@@ -193,28 +203,43 @@ public class Recipe implements Serializable {
         public String getTime(){return this.time;}
         public String getNumFavourites(){return this.numFavourites;}
         public String getId(){return this.id;}
-    }
 
-    public static Icon produceDescriptor(Context c, Recipe recipe) {
-        Drawable image = null;
-
-        if(recipe.getThumbnail().contains("http")){
-            Log.d("Recipe", "Apparantly, " + recipe.getThumbnail() + "contains http");
-            try{
-                URL url = new URL(recipe.getThumbnail());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                image = new BitmapDrawable(c.getResources(), BitmapFactory.decodeStream(input));
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }else{
-            image = new BitmapDrawable(c.getResources(), recipe.getThumbnail());
+        public void setDrawable(Drawable d){
+            this.image = d;
         }
-        return new Recipe.Icon(recipe.getTitle(), image, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
+
+        public void setTitle(String title){
+            this.title = title;
+        }
     }
 
 
+    /**
+     * Produce a foundational icon to draw to screen.<br>
+     * Be sure when you use this that you use the ImageDownloaderService to download the thumbnail image.
+     * @param c
+     * @param recipe
+     * @return
+     */
+    public static Icon produceDescriptor(Context c, Recipe recipe){
+        return new Recipe.Icon(recipe.getTitle(), null, recipe.getNumFavourites(), recipe.getTime(), recipe.getID());
+    }
+
+    public static int tagSimilarity(Recipe recipe1, Recipe recipe2){
+        int score = 0;
+        for(String s1 : recipe1.getTags()){
+            for(String s2 : recipe2.getTags()){
+                if(s1.toUpperCase().matches(s2.toUpperCase())){
+                    score++;
+                }
+            }
+        }
+        return score;
+    }
+
+    public static int tagSimilarity(String id1, String id2){
+        Recipe r1 = RemoteFileManager.getInstance().getRecipe(id1);
+        Recipe r2 = RemoteFileManager.getInstance().getRecipe(id2);
+        return tagSimilarity(r1, r2);
+    }
 }

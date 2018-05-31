@@ -1,11 +1,11 @@
 package com.group3.swengandroidapp;
-//import javafx.scene.control.ListView;
-
-import android.util.Log;
 
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
+import java.util.ArrayList;
+
 /**
+ * To be used to filter recipes by dietary requirements.
  * Created by St. John on 06/03/2018.
  */
 
@@ -25,16 +25,14 @@ public class Filter {
 
     public Filter.Info getCriteria(){return this.criteria;}
 
-    public String[] process(String[] inputIds){
-        String[] output = new String[inputIds.length];
-        int counter = 0;
-        for(String s : inputIds){
+    public ArrayList<String> process(ArrayList<String> inputIds){
+        ArrayList<String> output = new ArrayList<>(0);
+        for(String id : inputIds){
             try{
-                Info info = RemoteFileManager.getInstance().getRecipe(s).getFilterInfo();
+                Info info = RemoteFileManager.getInstance().getRecipe(id).getFilterInfo();
                 System.out.println("TESTING: "+info.toString());
                 if(infoMatchesCriteria(info)){
-                    output[counter] = s;
-                    counter++;
+                    output.add(id);
                 }
             }catch (Exception e) {
                 e.printStackTrace();
