@@ -21,16 +21,19 @@ app.config['UPLOAD_MY_RECIPE'] = UPLOAD_MY_RECIPE
 
 @app.route('/download/recipe/<fileid>/<id>')
 def fetchRecipeFile(fileid, id):
-    return send_from_directory(os.path.join(cwd, uploadRecipe, fileid), id)
-	
+    print "fetchRecipeFile"
+    print UPLOAD_RECIPE
+    print os.path.join(fileid, id)
+    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, id))
+
 @app.route('/download/myRecipe/<fileid>/<id>')
 def fetchMyRecipeFile(fileid, id):
-    return send_from_directory(os.path.join(cwd, uploadMyRecipe, fileid), id)
+    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, id))
 
 @app.route('/download/recipe/<fileid>/<path:mediaid>')
 def fetchRecipeMedia(fileid, mediaid):
     print "fetchRecipeMedia"
-    return send_from_directory(os.path.join(cwd, uploadRecipe, fileid), mediaid)
+    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, mediaid))
 
 @app.route('/download/myRecipe/<fileid>/<path:mediaid>')
 def fetchMyRecipeMedia(fileid, mediaid):
