@@ -12,6 +12,8 @@ import android.widget.ListView;
 
 import com.group3.swengandroidapp.MainActivity;
 import com.group3.swengandroidapp.R;
+import com.group3.swengandroidapp.ShoppinglistHandler;
+import com.group3.swengandroidapp.XMLRenderer.Ingredient;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -82,61 +84,39 @@ public class ShoppinglistActivity extends MainActivity {
             }
             arrayAdapterName.notifyDataSetChanged();
         }
+        //Get items from shopping list handler and add to arrayList
+        ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
+        ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
+        int counter = 0;
 
-//        //Get items from shopping list handler and convert to string and add to arrayList
-//        arrayList = new ArrayList<>();
-//        ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
-//        ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
-//        if (ingredients == null){
-//            //do nothing
-//        }
-//        else {
-//            for (Ingredient data : ingredients) {
-//                StringBuilder sb = new StringBuilder(32);
-////                String pattern = data.getName();
-////                Boolean isTrue = false;
-////                String currentValue = "initialValue";
-//
-//                sb.append(data.getName() + ", ");
-//                sb.append(data.getQuantityValue() + " ");
-//                sb.append(data.getQuantityUnits());
-//                arrayList.add(sb.toString());
-//
-////                for (String ing: arrayList) {
-////                   Pattern r = Pattern.compile(pattern);
-////                   Matcher m = r.matcher(ing);
-////                   if (m.find()) {
-////                       Pattern s = Pattern.compile("\\d+");
-////                       Matcher o = s.matcher(ing);
-////                       isTrue = true;
-////                       Log.d("ShoppingListActivity:","found! isTrue is true");
-////                       if (o.find()){
-////                           currentValue = o.group(0);
-////                           arrayList.remove(ing);
-////                       }else{
-////                            currentValue = "";
-////                       }
-////                   }else{
-////                        isTrue = false;
-////                       Log.d("ShoppingListActivity:","not found! isTrue is false");
-////                   }
-////
-////                }
-////                if (isTrue == true){
-////                    sb.append(data.getName() + ", " );
-////                    sb.append(data.getQuantityValue() + currentValue);
-////                    sb.append(data.getQuantityUnits());
-////                    arrayList.add(sb.toString());
-////                }else {
-////                    sb.append(data.getName() + ", ");
-////                    sb.append(data.getQuantityValue() + " ");
-////                    sb.append(data.getQuantityUnits());
-////                    arrayList.add(sb.toString());
-////                }
-//
-//
-//            }
-//        }
+        if (ingredients == null){
+            //do nothing
+        }
+        else {
+            for (Ingredient data : ingredients) {
+
+                String name = data.getName();
+                String value = Integer.toString(data.getQuantityValue());
+                String unit = data.getQuantityUnits();
+
+//                listItem item = new listItem(name, value, unit);
+//                arrayListForShopping.add(item);
+//                itemNames.add(String.valueOf(arrayListForShopping.get(counter).getName()));
+//                itemQuantities.add(String.valueOf(arrayListForShopping.get(counter).getQuantity()));
+//                itemUnits.add(String.valueOf(arrayListForShopping.get(counter).getUnits()));
+                itemNames.add(name);
+                itemQuantities.add(value);
+                itemUnits.add(unit);
+                counter++;
+
+            }
+
+        }
+
+        for (String names : itemNames){
+
+        }
+
 
         //This listview is for the quantity display list.
         listViewQuantity = findViewById(R.id.listViewQuantity);
