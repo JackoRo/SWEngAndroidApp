@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.content.res.Configuration;
@@ -36,16 +37,22 @@ public class MainActivity extends AppCompatActivity {
     private String xmlFile;
 
     @Override
+    protected void onCreate(Bundle savedBundleInstance){
+        super.onCreate(savedBundleInstance);
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
+
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace() ;
-        }
-
     }
 
 
@@ -53,6 +60,27 @@ public class MainActivity extends AppCompatActivity {
         //final Context thisContext = this;
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
+        //listenButtons();
+        /*add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((ToggleButton) view).isChecked()) {
+                    DisplayToast("Toggle button is On");
+                }
+                else{
+                    DisplayToast("Toggle button is Off");
+                }
+            }
+        });*/
+
+        /*view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayToast("You have clicked the Save button");
+                //viewFavourites();
+            }
+        });*/
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
@@ -90,15 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        //Load recipes from server if the list of recipes is empty
-        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                    new IntentFilter("XML-event-name"));
 
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
-            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
-            startService(intent);
-        }
 
     }
 
@@ -158,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
@@ -260,13 +280,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
-            case 4:  // History
+            case 4:  // My Recipes
+
+                break;
+            case 5:  // History
                 intent = new Intent();
                 intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
-            case 5: // Settings
+            case 6: // Settings
                 intent = new Intent();
                 intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
                 startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
