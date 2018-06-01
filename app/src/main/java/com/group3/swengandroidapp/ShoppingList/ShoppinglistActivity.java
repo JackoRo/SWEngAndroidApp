@@ -86,6 +86,7 @@ public class ShoppinglistActivity extends MainActivity {
             }
             shoppingListHandlerObject.removeFromArrayList();
         }
+        update();
 
         //Set ListViews for each of the lists.
         //This listview is for the name display list.
@@ -293,83 +294,111 @@ public class ShoppinglistActivity extends MainActivity {
             e.printStackTrace();
         }
     }
+    public void update(){
+            //adds together similar items
+        for (int i =0; i<itemNames.size(); i++){
+            String name = itemNames.get(i);
+            System.out.println("enters first for loop");
+            System.out.println(name);
+            for (int j =0; j<itemNames.size(); j++){
+                String otherNames = itemNames.get(j);
+                System.out.println("enters second for loop");
+                System.out.println(itemNames);
+                System.out.println(otherNames);
+                if (name.equals(otherNames)){
+                    System.out.println("names are equal");
+                    Integer index1 = i;
+                    Integer index2 = j;
+                    System.out.println("index 1:" +index1);
+                    System.out.println("index 2:" +index2);
+                    if (index1!=index2){
+                        System.out.println("index inst equal" );
+                        String unit1 = itemUnits.get(index1);
+                        String unit2 = itemUnits.get(index2);
+                        if (unit1.equals(unit2)){
+                            System.out.println("units match");
+                            Integer value1 = Integer.parseInt(itemQuantities.get(index1));
+                            Integer value2 = Integer.parseInt(itemQuantities.get(index2));
+                            System.out.println("value from first arraylist is :" +value1 );
+                            System.out.println("value from second arraylist is :" +value2 );
+                            Integer updatedInteger = value1+value2;
+                            System.out.println("updated value =" +updatedInteger);
+                            String updatedValue = Integer.toString(updatedInteger);
+                            System.out.println("updated value converts to string =" +updatedValue);
 
+                            listItem newIngredientsItem = new listItem(name, updatedValue, unit1);
+                            System.out.println("listItem is:" +newIngredientsItem);
+
+                            arrayListForShopping.add(newIngredientsItem);
+                            itemNames.add(name);
+                            itemQuantities.add(updatedValue);
+                            itemUnits.add(unit1);
+                            System.out.println("testing adding similar items "  +newIngredientsItem);
+                            System.out.println("printing array list" +itemNames);
+                            System.out.println("printing array list" +itemQuantities);
+                            System.out.println("printing array list" +itemUnits);
+
+                            arrayListForShopping.remove(i);
+                            itemNames.remove(i);
+                            itemQuantities.remove(i);
+                            itemUnits.remove(i);
+
+                            arrayListForShopping.remove(j-1);
+                            itemNames.remove(j-1);
+                            itemQuantities.remove(j-1);
+                            itemUnits.remove(j-1);
+
+                            arrayAdapterName.notifyDataSetChanged();
+                            arrayAdapterQuantity.notifyDataSetChanged();
+                            arrayAdapterUnit.notifyDataSetChanged();
+
+                        }
+                    }else{
+                        System.out.println("indexes are equal");
+                    }
+                }else{
+                    System.out.println("names are not equal");
+                }
+            }
+        }
+
+    }
     //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
     @Override
     public void onPause()
     {
         super.onPause();
-
+        update();
         try
         {
-            //adds together similar items
-            for (String name : itemNames){
-                System.out.println("enters first for loop");
-                System.out.println(name);
-                for (String otherNames : itemNames){
-                    System.out.println("enters second for loop");
-                    System.out.println(itemNames);
-                    System.out.println(otherNames);
-                    if (name.equals(otherNames)){
-                        System.out.println("names are equal");
-                        Integer index1 = itemNames.indexOf(name);
-                        Integer index2 = itemNames.indexOf(otherNames);
-                        System.out.println("index 1:" +index1);
-                        System.out.println("index 2:" +index2);
-                        if (index1!=index2){
-                            System.out.println("index inst equal" );
-                            String unit1 = itemUnits.get(index1);
-                            String unit2 = itemUnits.get(index2);
-                            if (unit1.equals(unit2)){
-                                System.out.println("units match");
-                                Integer value1 = Integer.parseInt(itemQuantities.get(index1));
-                                Integer value2 = Integer.parseInt(itemQuantities.get(index2));
-                                Integer updatedInteger = value1+value2;
-                                String updatedValue = Integer.toString(updatedInteger);
+        //Delete old files.
+        deleteFile("ShoppingListItemNames.txt");
+        deleteFile("ShoppingListItemQuantities.txt");
+        deleteFile("ShoppingListItemUnits.txt");
+        deleteFile("ShoppingListItemChecked.txt");
+        //Write new files with the contents of the arrays.
+        PrintWriter pw1 = new PrintWriter(openFileOutput("ShoppingListItemNames.txt", Context.MODE_PRIVATE));
+        PrintWriter pw2 = new PrintWriter(openFileOutput("ShoppingListItemQuantities.txt", Context.MODE_PRIVATE));
+        PrintWriter pw3 = new PrintWriter(openFileOutput("ShoppingListItemUnits.txt", Context.MODE_PRIVATE));
+        PrintWriter pw4 = new PrintWriter(openFileOutput("ShoppingListItemChecked.txt", Context.MODE_PRIVATE));
 
-                                listItem newIngredientsItem = new listItem(name, updatedValue, unit1);
-                                arrayListForShopping.add(newIngredientsItem);
-                                arrayAdapterName.notifyDataSetChanged();
-                                arrayAdapterQuantity.notifyDataSetChanged();
-                                arrayAdapterUnit.notifyDataSetChanged();
-                                System.out.println("testing adding similar items "  +newIngredientsItem);
-
-                            }
-                        }else{
-                            System.out.println("indexes are equal");
-                        }
-                    }else{
-                        System.out.println("names are not equal");
-                    }
-                }
-            }
-            //Delete old files.
-            deleteFile("ShoppingListItemNames.txt");
-            deleteFile("ShoppingListItemQuantities.txt");
-            deleteFile("ShoppingListItemUnits.txt");
-            deleteFile("ShoppingListItemChecked.txt");
-            //Write new files with the contents of the arrays.
-            PrintWriter pw1 = new PrintWriter(openFileOutput("ShoppingListItemNames.txt", Context.MODE_PRIVATE));
-            PrintWriter pw2 = new PrintWriter(openFileOutput("ShoppingListItemQuantities.txt", Context.MODE_PRIVATE));
-            PrintWriter pw3 = new PrintWriter(openFileOutput("ShoppingListItemUnits.txt", Context.MODE_PRIVATE));
-            PrintWriter pw4 = new PrintWriter(openFileOutput("ShoppingListItemChecked.txt", Context.MODE_PRIVATE));
-
-            int i=0;
-            while (i!=(itemNames.size()))
-            {
-                pw1.println(itemNames.get(i));
-                pw2.println(itemQuantities.get(i));
-                pw3.println(itemUnits.get(i));
-                i++;
-            }
-            pw1.close();
-            pw2.close();
-            pw3.close();
-
-            //Used to reapply the checked items after opening.
-            pw4.println(listViewUnit.getCheckedItemPositions());
-            pw4.close();
+        int i=0;
+        while (i!=(itemNames.size()))
+        {
+            pw1.println(itemNames.get(i));
+            pw2.println(itemQuantities.get(i));
+            pw3.println(itemUnits.get(i));
+            i++;
         }
+        pw1.close();
+        pw2.close();
+        pw3.close();
+
+        //Used to reapply the checked items after opening.
+        pw4.println(listViewUnit.getCheckedItemPositions());
+        pw4.close();
+
+    }
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
@@ -433,7 +462,8 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterName.notifyDataSetChanged();
             arrayAdapterQuantity.notifyDataSetChanged();
             arrayAdapterUnit.notifyDataSetChanged();
-        }
+            update();
+            }
         //If it is result code 2, then the user is trying to save their edited text, so this code should run.
         else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_TWO){
             //Find the specific object in the arraylist and change it to the new values.
@@ -455,6 +485,7 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterName.notifyDataSetChanged();
             arrayAdapterQuantity.notifyDataSetChanged();
             arrayAdapterUnit.notifyDataSetChanged();
+            update();
         }
 
         //If it is result code 3, then the user is trying to delete their list item, so this code should run.
@@ -471,7 +502,9 @@ public class ShoppinglistActivity extends MainActivity {
                 arrayAdapterName.notifyDataSetChanged();
                 arrayAdapterQuantity.notifyDataSetChanged();
                 arrayAdapterUnit.notifyDataSetChanged();
+                update();
             }
+
         }
     }
 }
