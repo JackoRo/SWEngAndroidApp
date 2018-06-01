@@ -26,8 +26,9 @@ import java.util.Scanner;
     https://developer.android.com/guide/topics/ui/declaring-layout#AdapterViews
     https://robgibbens.com/androids-built-in-list-item-layouts/*/
 
-public class ShoppinglistActivity extends MainActivity {
-
+@SuppressWarnings("StatementWithEmptyBody")
+public class ShoppinglistActivity extends MainActivity
+{
     //Listviews
     ListView listViewName;
     ListView listViewQuantity;
@@ -69,8 +70,6 @@ public class ShoppinglistActivity extends MainActivity {
         ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
         ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
 
-
-
         //Set ListViews for each of the lists.
         //This listview is for the name display list.
         listViewName = findViewById(R.id.listViewName);
@@ -91,7 +90,6 @@ public class ShoppinglistActivity extends MainActivity {
             }
             arrayAdapterName.notifyDataSetChanged();
         }
-
 
         //This listview is for the quantity display list.
         listViewQuantity = findViewById(R.id.listViewQuantity);
@@ -134,9 +132,9 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterUnit.notifyDataSetChanged();
         }
 
-
         //When an item in the list in clicked on, the EditMessage method is called so that the message can be edited.
-        listViewName.setOnItemClickListener((adapterView, view, position, l) -> {
+        listViewName.setOnItemClickListener((adapterView, view, position, l) ->
+        {
             Intent intent = new Intent();
             intent.setClass(ShoppinglistActivity.this,EditMessageClass.class);
             intent.putExtra(Intent_Constants.INTENT_MESSAGE_DATA, arrayListForShopping.get(position).getName());
@@ -184,7 +182,7 @@ public class ShoppinglistActivity extends MainActivity {
             //Used to reapply the checked items after opening.
             String data4 = sc4.nextLine();
             sc4.close();
-            System.out.println("Data4 = " +data4);
+
             //This is a real hack to make this work. There is most likely a better way but for now it is just this.
             //Doing it this way limits the amount of items this will work for. Currently to 15.
             if (data4.contains("0=true"))
@@ -271,12 +269,16 @@ public class ShoppinglistActivity extends MainActivity {
                 arrayListForShopping.add(item);
                 j--;
             }
-            if (ingredients == null){
+
+            //This is the code to add ingredients to the shopping list from a recipe or other page.
+            if (ingredients == null)
+            {
                 //do nothing
             }
-            else {
-                for (Ingredient data : ingredients) {
-
+            else
+            {
+                for (Ingredient data : ingredients)
+                {
                     String name = data.getName();
                     String value = Integer.toString(data.getQuantityValue());
                     String unit = data.getQuantityUnits();
@@ -285,7 +287,6 @@ public class ShoppinglistActivity extends MainActivity {
                     itemNames.add(name);
                     itemQuantities.add(value);
                     itemUnits.add(unit);
-
                     arrayListForShopping.add(ingredientsItem);
                 }
                 shoppingListHandlerObject.removeFromArrayList();
@@ -297,98 +298,82 @@ public class ShoppinglistActivity extends MainActivity {
             e.printStackTrace();
         }
     }
-    public void update(){
-            //adds together similar items
-        for (int i =0; i<itemNames.size(); i++){
+
+    //This updates the shopping list every time it is called which will pack items together if they are the same as each other
+    public void update()
+    {
+        //adds together similar items
+        for (int i =0; i<itemNames.size(); i++)
+        {
             String name = itemNames.get(0);
-            System.out.println("enters first for loop");
-            System.out.println(name);
-            for (int j =0; j<itemNames.size(); j++){
+            for (int j =0; j<itemNames.size(); j++)
+            {
                 String otherNames = itemNames.get(j);
-                System.out.println("enters second for loop");
-                System.out.println(itemNames);
-                System.out.println(otherNames);
-                if (name.equals(otherNames)){
-                    System.out.println("names are equal");
+                if (name.equals(otherNames))
+                {
                     Integer index1 = 0;
                     Integer index2 = j;
-                    System.out.println("index 1:" +index1);
-                    System.out.println("index 2:" +index2);
-                    if (index1!=index2){
-                        System.out.println("index inst equal" );
+                    if (index1!=index2)
+                    {
                         String unit1 = itemUnits.get(index1);
                         String unit2 = itemUnits.get(index2);
-                        if (unit1.equals(unit2)){
-                            System.out.println("units match");
+                        if (unit1.equals(unit2))
+                        {
                             Integer value1 = Integer.parseInt(itemQuantities.get(index1));
                             Integer value2 = Integer.parseInt(itemQuantities.get(index2));
-                            System.out.println("value from first arraylist is :" +value1 );
-                            System.out.println("value from second arraylist is :" +value2 );
                             Integer updatedInteger = value1+value2;
-                            System.out.println("updated value =" +updatedInteger);
                             String updatedValue = Integer.toString(updatedInteger);
-                            System.out.println("updated value converts to string =" +updatedValue);
 
                             listItem newIngredientsItem = new listItem(name, updatedValue, unit1);
-                            System.out.println("listItem is:" +newIngredientsItem);
-
                             arrayListForShopping.add(newIngredientsItem);
                             itemNames.add(name);
                             itemQuantities.add(updatedValue);
                             itemUnits.add(unit1);
-                            System.out.println("testing adding similar items "  +newIngredientsItem);
-                            System.out.println("Array list for shopping is :" +arrayListForShopping);
-                            System.out.println("printing array list" +itemNames);
-                            System.out.println("printing array list" +itemQuantities);
-                            System.out.println("printing array list" +itemUnits);
 
                             arrayListForShopping.remove(0);
                             itemNames.remove(0);
                             itemQuantities.remove(0);
                             itemUnits.remove(0);
-                            System.out.println("j =" +j);
-                            System.out.println("Array list for shopping is :" +arrayListForShopping);
-                            System.out.println("printing array list" +itemNames);
-                            System.out.println("printing array list" +itemQuantities);
-                            System.out.println("printing array list" +itemUnits);
 
                             arrayListForShopping.remove(j-1);
                             itemNames.remove(j-1);
                             itemQuantities.remove(j-1);
                             itemUnits.remove(j-1);
-                            System.out.println("Array list for shopping is :" +arrayListForShopping);
-                            System.out.println("printing array list" +itemNames);
-                            System.out.println("printing array list" +itemQuantities);
-                            System.out.println("printing array list" +itemUnits);
 
                             arrayAdapterName.notifyDataSetChanged();
                             arrayAdapterQuantity.notifyDataSetChanged();
                             arrayAdapterUnit.notifyDataSetChanged();
-
                         }
-                    }else{
-                        System.out.println("indexes are equal");
                     }
-                }else{
-                    System.out.println("names are not equal");
+                    else
+                    {
+                        //Do Nothing
+                    }
+                }
+                else
+                {
+                    //Do Nothing
                 }
             }
         }
-
     }
+
+
     //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
     @Override
     public void onPause()
     {
         super.onPause();
         update();
+
         try
         {
-//Delete old files.
+        //Delete old files.
         deleteFile("ShoppingListItemNames.txt");
         deleteFile("ShoppingListItemQuantities.txt");
         deleteFile("ShoppingListItemUnits.txt");
         deleteFile("ShoppingListItemChecked.txt");
+
         //Write new files with the contents of the arrays.
         PrintWriter pw1 = new PrintWriter(openFileOutput("ShoppingListItemNames.txt", Context.MODE_PRIVATE));
         PrintWriter pw2 = new PrintWriter(openFileOutput("ShoppingListItemQuantities.txt", Context.MODE_PRIVATE));
@@ -410,8 +395,7 @@ public class ShoppinglistActivity extends MainActivity {
         //Used to reapply the checked items after opening.
         pw4.println(listViewUnit.getCheckedItemPositions());
         pw4.close();
-
-    }
+        }
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
@@ -419,14 +403,16 @@ public class ShoppinglistActivity extends MainActivity {
     }
 
     //When the 'add' button is clicked from the shopping list gui, this code will run and send an intent request to the EditField Class.
-    public void onClick(View v){
+    public void onClick(View v)
+    {
         Intent intent = new Intent();
         intent.setClass(ShoppinglistActivity.this,EditFieldClass.class);
         startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE);
     }
 
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
-    public void clearAllButtonClicked(View v){
+    public void clearAllButtonClicked(View v)
+    {
             arrayListForShopping.clear();
             itemNames.clear();
             itemQuantities.clear();
@@ -437,7 +423,8 @@ public class ShoppinglistActivity extends MainActivity {
     }
 
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
-    public void clearCheckedButtonClicked(View v){
+    public void clearCheckedButtonClicked(View v)
+    {
         SparseBooleanArray checkedItemPositions = listViewUnit.getCheckedItemPositions();
         int i = arrayListForShopping.size();
         while(i!=0)
@@ -460,7 +447,8 @@ public class ShoppinglistActivity extends MainActivity {
 
     //After the button has been clicked, the activity is established via request/result code and the appropriate method run.
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         //If it is result code 1, then the user is trying to add some text to the list, so this code should run.
         if(resultCode==Intent_Constants.INTENT_REQUEST_CODE)
         {
@@ -476,9 +464,10 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterQuantity.notifyDataSetChanged();
             arrayAdapterUnit.notifyDataSetChanged();
             update();
-            }
+        }
         //If it is result code 2, then the user is trying to save their edited text, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_TWO){
+        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_TWO)
+        {
             //Find the specific object in the arraylist and change it to the new values.
             position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
             messageText = data.getStringExtra(Intent_Constants.INTENT_CHANGED_MESSAGE);
@@ -500,14 +489,17 @@ public class ShoppinglistActivity extends MainActivity {
             arrayAdapterUnit.notifyDataSetChanged();
             update();
         }
-
         //If it is result code 3, then the user is trying to delete their list item, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE) {
+        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE)
+        {
             position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
             //noinspection StatementWithEmptyBody
-            if (arrayListForShopping.size() == 0) {
+            if (arrayListForShopping.size() == 0)
+            {
                 //Do Nothing
-            } else {
+            }
+            else
+            {
                 arrayListForShopping.remove(position);
                 itemNames.remove(position);
                 itemQuantities.remove(position);
@@ -517,7 +509,6 @@ public class ShoppinglistActivity extends MainActivity {
                 arrayAdapterUnit.notifyDataSetChanged();
                 update();
             }
-
         }
     }
 }
