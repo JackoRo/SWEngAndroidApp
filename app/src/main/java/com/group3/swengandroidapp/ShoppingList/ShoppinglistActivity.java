@@ -69,24 +69,7 @@ public class ShoppinglistActivity extends MainActivity {
         ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
         ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
 
-        if (ingredients == null){
-            //do nothing
-        }
-        else {
-            for (Ingredient data : ingredients) {
 
-                String name = data.getName();
-                String value = Integer.toString(data.getQuantityValue());
-                String unit = data.getQuantityUnits();
-
-                listItem ingredientsItem = new listItem(name, value, unit);
-
-
-                arrayListForShopping.add(ingredientsItem);
-            }
-            shoppingListHandlerObject.removeFromArrayList();
-        }
-        update();
 
         //Set ListViews for each of the lists.
         //This listview is for the name display list.
@@ -288,6 +271,26 @@ public class ShoppinglistActivity extends MainActivity {
                 arrayListForShopping.add(item);
                 j--;
             }
+            if (ingredients == null){
+                //do nothing
+            }
+            else {
+                for (Ingredient data : ingredients) {
+
+                    String name = data.getName();
+                    String value = Integer.toString(data.getQuantityValue());
+                    String unit = data.getQuantityUnits();
+
+                    listItem ingredientsItem = new listItem(name, value, unit);
+                    itemNames.add(name);
+                    itemQuantities.add(value);
+                    itemUnits.add(unit);
+
+                    arrayListForShopping.add(ingredientsItem);
+                }
+                shoppingListHandlerObject.removeFromArrayList();
+            }
+            update();
         }
         catch (FileNotFoundException e)
         {
@@ -297,7 +300,7 @@ public class ShoppinglistActivity extends MainActivity {
     public void update(){
             //adds together similar items
         for (int i =0; i<itemNames.size(); i++){
-            String name = itemNames.get(i);
+            String name = itemNames.get(0);
             System.out.println("enters first for loop");
             System.out.println(name);
             for (int j =0; j<itemNames.size(); j++){
@@ -307,7 +310,7 @@ public class ShoppinglistActivity extends MainActivity {
                 System.out.println(otherNames);
                 if (name.equals(otherNames)){
                     System.out.println("names are equal");
-                    Integer index1 = i;
+                    Integer index1 = 0;
                     Integer index2 = j;
                     System.out.println("index 1:" +index1);
                     System.out.println("index 2:" +index2);
@@ -334,19 +337,29 @@ public class ShoppinglistActivity extends MainActivity {
                             itemQuantities.add(updatedValue);
                             itemUnits.add(unit1);
                             System.out.println("testing adding similar items "  +newIngredientsItem);
+                            System.out.println("Array list for shopping is :" +arrayListForShopping);
                             System.out.println("printing array list" +itemNames);
                             System.out.println("printing array list" +itemQuantities);
                             System.out.println("printing array list" +itemUnits);
 
-                            arrayListForShopping.remove(i);
-                            itemNames.remove(i);
-                            itemQuantities.remove(i);
-                            itemUnits.remove(i);
+                            arrayListForShopping.remove(0);
+                            itemNames.remove(0);
+                            itemQuantities.remove(0);
+                            itemUnits.remove(0);
+                            System.out.println("j =" +j);
+                            System.out.println("Array list for shopping is :" +arrayListForShopping);
+                            System.out.println("printing array list" +itemNames);
+                            System.out.println("printing array list" +itemQuantities);
+                            System.out.println("printing array list" +itemUnits);
 
                             arrayListForShopping.remove(j-1);
                             itemNames.remove(j-1);
                             itemQuantities.remove(j-1);
                             itemUnits.remove(j-1);
+                            System.out.println("Array list for shopping is :" +arrayListForShopping);
+                            System.out.println("printing array list" +itemNames);
+                            System.out.println("printing array list" +itemQuantities);
+                            System.out.println("printing array list" +itemUnits);
 
                             arrayAdapterName.notifyDataSetChanged();
                             arrayAdapterQuantity.notifyDataSetChanged();
@@ -371,7 +384,7 @@ public class ShoppinglistActivity extends MainActivity {
         update();
         try
         {
-        //Delete old files.
+//Delete old files.
         deleteFile("ShoppingListItemNames.txt");
         deleteFile("ShoppingListItemQuantities.txt");
         deleteFile("ShoppingListItemUnits.txt");
