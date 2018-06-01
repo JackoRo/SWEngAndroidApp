@@ -19,19 +19,17 @@ public class XmlRecipe extends Recipe {
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         factory.setNamespaceAware(false);
         xpp = factory.newPullParser();
-
         xpp.setInput(new StringReader(xmlFile));
-
         int eventType = xpp.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG) {
                 if (xpp.getName().equals("Filters")) {
-                    setSpicy(Boolean.getBoolean(xpp.getAttributeValue(null, "spicy")));
-                    setLactose(Boolean.getBoolean(xpp.getAttributeValue(null, "lactose")));
-                    setNuts(Boolean.getBoolean(xpp.getAttributeValue(null, "nuts")));
-                    setVegetarian(Boolean.getBoolean(xpp.getAttributeValue(null, "vegetarian")));
-                    setVegan(Boolean.getBoolean(xpp.getAttributeValue(null, "vegan")));
-                    setGluten(Boolean.getBoolean(xpp.getAttributeValue(null, "gluten")));
+                    setSpicy(Boolean.valueOf(xpp.getAttributeValue(null, "spicy")));
+                    setLactose(Boolean.valueOf(xpp.getAttributeValue(null, "lactose")));
+                    setNuts(Boolean.valueOf(xpp.getAttributeValue(null, "nuts")));
+                    setVegetarian(Boolean.valueOf(xpp.getAttributeValue(null, "vegetarian")));
+                    setVegan(Boolean.valueOf(xpp.getAttributeValue(null, "vegan")));
+                    setGluten(Boolean.valueOf(xpp.getAttributeValue(null, "gluten")));
                 }
                 else if (xpp.getName().equals("Ingredient")) {
                     String name = "";
@@ -44,7 +42,7 @@ public class XmlRecipe extends Recipe {
 
                     name = xpp.getText();
 
-                    appendIntgredient(new Ingredient(name, quantity));
+                    appendIngredient(new Ingredient(name, quantity));
                 }
                 else if (xpp.getName().equals("id")) {
                     xpp.next();
@@ -65,6 +63,14 @@ public class XmlRecipe extends Recipe {
                 else if (xpp.getName().equals("thumbnailURL")) {
                     xpp.next();
                     setThumbnail(xpp.getText());
+                }
+                else if (xpp.getName().equals("time")) {
+                    xpp.next();
+                    setTime(xpp.getText());
+                }
+                else if (xpp.getName().equals("Tag")) {
+                    xpp.next();
+                    addKeyword(xpp.getText());
                 }
 
             }

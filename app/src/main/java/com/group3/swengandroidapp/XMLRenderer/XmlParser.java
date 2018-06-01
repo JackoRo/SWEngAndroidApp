@@ -1,5 +1,7 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+import com.group3.swengandroidapp.SImpLeGraphicsModule.GraphicModuleAndroid;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -74,11 +76,11 @@ public class XmlParser {
             case "format":
                 return new Format(parent);
             case "shape":
-                return new Shape(parent);
+                return new GraphicModuleAndroid(parent);
             case "video":
-                return new Video(parent);
+                return new VideoAndroid(parent);
             case "audio":
-                return new Audio(parent);
+                return new AudioAndroid(parent);
         }
         return null;
     }

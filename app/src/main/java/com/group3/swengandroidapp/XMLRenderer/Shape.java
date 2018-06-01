@@ -1,32 +1,45 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Shader;
+import android.graphics.Shader.TileMode;
+import android.util.Log;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Jack on 24/02/2018.
  */
 
-public class Shape extends XmlElement implements Drawable {
+public abstract class Shape extends XmlElement implements Drawable {
+
+    private Paint strokePaint;
+    private Paint fillPaint;
+    private static Pattern pattern = Pattern.compile("gradient\\((#.{6}),(#.{6})\\)");
 
     public Shape(XmlElement parent) {
         super(parent);
     }
 
-    public String  getX(){
-        return getInheritableProperty("x");
+    public String  getX1(){
+        return getInheritableProperty("x1");
     }
 
-    public void setX(String x) {
-        setProperty("x", x);
+    public void setX1(String x1){
+        setProperty("x1", x1);
     }
 
-
-    public String  getY(){
-        return getInheritableProperty("y");
+    public String  getY1(){
+        return getInheritableProperty("y1");
     }
 
-    public void setY(String y) {
-        setProperty("y", y);
+    public void setY1(String y1) {
+        setProperty("y1", y1);
     }
 
     public String  getX2(){
@@ -61,9 +74,65 @@ public class Shape extends XmlElement implements Drawable {
         setProperty("fill", fill);
     }
 
-
-    @Override
-    public void draw(Activity activity) {
-
+    public String getType() {
+        return getInheritableProperty("type");
     }
+
+    public void setType(String type) {
+        setProperty("type", type);
+    }
+
+    public String getStroke() {
+        return getInheritableProperty("stroke");
+    }
+
+    public void setStroke(String stroke) {
+        setProperty("stroke", stroke);
+    }
+
+    public String getDuration() {
+        return getProperty("duration");
+    }
+
+    public void setDuration(String duration) {
+        setProperty("duration", duration);
+    }
+
+    public Paint getFillPaint() {
+        if (fillPaint == null) {
+            fillPaint = new Paint();
+
+            Matcher matcher = pattern.matcher(getFill());
+
+            if (matcher.find()) {
+                fillPaint.setShader(new LinearGradient(Float.valueOf(getX1()),
+                        Float.valueOf(getY1()),
+                        Float.valueOf(getX2()),
+                        Float.valueOf(getY2()),
+                        Color.parseColor(matcher.group(1)),
+                        Color.parseColor(matcher.group(2)),
+                        TileMode.REPEAT));
+                Log.d("Gradient Fill Color", matcher.group(1) + " " + matcher.group(2));
+            } else {
+                fillPaint.setColor(Color.parseColor(getFill()));
+                Log.d("Fill Color", getFill());
+            }
+
+            fillPaint.setStyle(Style.FILL);
+            fillPaint.setStrokeWidth(Float.valueOf(getStroke()));
+        }
+        return fillPaint;
+    }
+
+    public Paint getStrokePaint() {
+        if (strokePaint == null) {
+            strokePaint = new Paint();
+            strokePaint.setColor(Color.parseColor(getColor()));
+            Log.d("Stroke Color", getColor());
+            strokePaint.setStyle(Style.STROKE);
+            strokePaint.setStrokeWidth(Float.valueOf(getStroke()));
+        }
+        return strokePaint;
+    }
+
 }

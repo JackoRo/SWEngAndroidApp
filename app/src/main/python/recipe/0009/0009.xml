@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+  <id>0009</id>
+  <title>Cheese on Toast</title>
+  <time>15mins</time>
+  <author>SWEng Group 3</author>
+  <description>When times are tougher.</description>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
+  <Filters spicy="false" lactose="false" nuts="false" vegetarian="true" vegan="false" gluten="false"></Filters>
+  <Ingredient amount="2" units="slices">Bread</Ingredient>
+  <Ingredient amount="200" units="grams">Cheese</Ingredient>
+  <Tag>Quick</Tag>
+  <Tag>Easy</Tag>
+  <Tag>Cheap</Tag>
+  <Tag>Sudent</Tag>
+</Recipe>

@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 
+import com.group3.swengandroidapp.AudioPlayer;
+import com.group3.swengandroidapp.SImpLeGraphicsModule.GraphicModuleAndroid;
+
 import junit.framework.Test;
 
 import java.util.ArrayList;
@@ -28,12 +31,7 @@ public class Presentation extends XmlElement {
     private int currentSlide;
     private Handler handler;
     private LinearLayout linearLayout;
-//    private Runnable slideAdvancer = new Runnable() {
-//        public void run() {
-//            drawNextSlide();
-//        }
-//    };
-
+    public static boolean listenerEnable = true;
 
     public Presentation() {
         super(null);
@@ -42,9 +40,10 @@ public class Presentation extends XmlElement {
 
         //Sets default properties
         setProperty("color","#000000");
+        setProperty("fill","#FFFFFF");
         setProperty("font","sans-serif-medium");
         setProperty("textsize","12");
-
+        setProperty("stroke","10");
         this.handler = new Handler(Looper.getMainLooper());
     }
 
@@ -105,23 +104,44 @@ public class Presentation extends XmlElement {
             private GestureDetector gestureDetector = new GestureDetector(activity, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
-                    Log.d("TEST", "onDoubleTap");
 
-                    handler.removeCallbacksAndMessages(null);
-                    handler.post(Presentation.this::drawPreviousSlide);
+                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                        Log.d("TEST", "onDoubleTap");
+                        
+                        AudioPlayer.touchSound();
 
-                    return super.onDoubleTap(e);
+                        handler.removeCallbacksAndMessages(null);
+                        handler.post(Presentation.this::drawPreviousSlide);
+
+                        return super.onDoubleTap(e);
+                    }
+                    else {
+                        listenerEnable = true;
+                        Log.d("listenerEnable", "TRUE");
+                        return false;
+                    }
+
+
+
                 }
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
-                    gestureDetector.onTouchEvent(e);
+                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                        AudioPlayer.touchSound();
+                        Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
+                        gestureDetector.onTouchEvent(e);
 
-                    handler.removeCallbacksAndMessages(null);
-                    handler.post(Presentation.this::drawNextSlide);
+                        handler.removeCallbacksAndMessages(null);
+                        handler.post(Presentation.this::drawNextSlide);
+                        return true;
+                    }
+                    else {
+                        listenerEnable = true;
+                        Log.d("listenerEnable", "TRUE");
+                        return false;
+                    }
 
-                    return true;
                 }
             });
 
@@ -133,15 +153,6 @@ public class Presentation extends XmlElement {
             }
 
         });
-
-
-                /*new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                handler.removeCallbacks(slideAdvancer);
-                handler.post(slideAdvancer);
-            }
-        }); */
 
         slides.get(index).draw(activity);
 

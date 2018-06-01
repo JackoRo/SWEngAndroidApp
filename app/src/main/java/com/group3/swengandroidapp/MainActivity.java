@@ -20,6 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
+import com.group3.swengandroidapp.ShoppingList.ShoppinglistActivity;
+import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 
@@ -33,19 +36,37 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private String[] mFragmentTitles;
 
-    private String xmlFile;
+    // For use in other parts of app that don't have access to the "getApplicationContext" method.
+    private static Context appContext;
+
+    /**
+     * A method to allow classes that don't normally have access to the "getApplicationContext()"
+     * method to have access to the app context.
+     * @return MainActivity application context
+     */
+    public static Context getAppContext(){
+        return appContext;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedBundleInstance){
+        appContext = getApplicationContext();
+
+        super.onCreate(savedBundleInstance);
+        //Load recipes from server if the list of recipes is empty
+        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("XML-event-name"));
+
+            Intent intent = new Intent(MainActivity.this, PythonClient.class);
+            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+            startService(intent);
+        }
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace() ;
-        }
-
     }
 
 
@@ -54,14 +75,35 @@ public class MainActivity extends AppCompatActivity {
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //listenButtons();
+        /*add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((ToggleButton) view).isChecked()) {
+                    DisplayToast("Toggle button is On");
+                }
+                else{
+                    DisplayToast("Toggle button is Off");
+                }
+            }
+        });*/
+
+        /*view_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayToast("You have clicked the Save button");
+                //viewFavourites();
+            }
+        });*/
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
         mFragmentTitles = getResources().getStringArray(R.array.screens_array);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = findViewById(R.id.left_drawer);
 
 
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mFragmentTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mFragmentTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -90,15 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        //Load recipes from server if the list of recipes is empty
-        if(RemoteFileManager.getInstance().getRecipeList().isEmpty()) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                    new IntentFilter("XML-event-name"));
 
-            Intent intent = new Intent(MainActivity.this, PythonClient.class);
-            intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
-            startService(intent);
-        }
 
     }
 
@@ -158,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
@@ -166,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("receiver", "Got message: " + message);
 
             //Fetches all the recipes from the server
-            if (intent.getStringExtra(PythonClient.ACTION) == PythonClient.LOAD_ALL) {
+            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.LOAD_ALL)) {
                 Toast toast = Toast.makeText(context, "Recipes loaded!",Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -197,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -213,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_menu:
                 Intent intent = new Intent();
                 intent.setClass(this,SearchpageActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -229,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** Swaps activities*/
     private void selectItem(int position) {
-
+        AudioPlayer.touchSound();
         // update the main content by replacing fragments
         Intent intent;
 
@@ -239,43 +272,48 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent();
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
                 break;
             case 1:  // FavouritesActivity
                 intent = new Intent();
                 intent.setClass(this,FavouritesActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
                 break;
             case 2:  // Instructional Videos
                 intent = new Intent();
                 intent.setClass(this,InstructionalVideoActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);           // switch activities
 
                 break;
             case 3:  // Shopping List
                 intent = new Intent();
                 intent.setClass(this,ShoppinglistActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
-            case 4:  // History
+            case 4:  // My Recipes
+                intent = new Intent();
+                intent.setClass(this,MyRecipesActivity.class);                 // Set new activity destination
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                break;
+            case 5:  // History
                 intent = new Intent();
                 intent.setClass(this,HistoryActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
-            case 5: // Settings
+            case 6: // Settings
                 intent = new Intent();
                 intent.setClass(this,SettingsActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);             // Send intent request and switch activities
 
                 break;
             default: // Home
                 intent = new Intent();
                 intent.setClass(this,HomeActivity.class);                 // Set new activity destination
-                startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);           // switch activities
+                startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);           // switch activities
 
         }
 
@@ -324,5 +362,31 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         // Override the transition animation between activities
         overridePendingTransition(0,0);
+    }
+
+    //TODO: Move method so it can be accessed by the search page activity
+
+    /**
+     * <p>
+     *     Send a request to {@link ImageDownloaderService} to get the saved thumbnail ready. (if it's
+     *     not yet downloaded, will download first, then notify ready).
+     * </p>
+     * <p>
+     *     When thumbnail is ready to load, an intent is broadcasted:<br>
+     *         - Action: {@link ImageDownloaderService#BITMAP_READY}<br>
+     *         - String Extra: {@link Recipe#ID} - ID of the recipe <br>
+     *         - String Extra: {@link ImageDownloaderService#ABSOLUTE_PATH} - absolute path of the saved image
+     * </p>
+     * <p>
+     *     It is reccommended to use an instance of {@link ImageDownloaderListener} to listen for
+     *     the broadcast.
+     * </p>
+     * @param id id of recipe whos thumbnail you want
+     */
+    public void requestBitmapFile(String id){
+        Intent downloadreq = new Intent(this, ImageDownloaderService.class);
+        downloadreq.setAction(ImageDownloaderService.GET_BITMAP_READY);
+        downloadreq.putExtra(Recipe.ID, id);
+        startService(downloadreq);
     }
 }
