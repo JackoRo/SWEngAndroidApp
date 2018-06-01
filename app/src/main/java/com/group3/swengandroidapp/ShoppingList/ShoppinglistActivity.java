@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*This is the shopping list code that runs the main GUI for the shopping list. Developed by Alex Bennett using references from;
     https://www.youtube.com/watch?v=3QHgJnPPnqQ&t=1545s
@@ -179,81 +181,14 @@ public class ShoppinglistActivity extends MainActivity
             String data4 = sc4.nextLine();
             sc4.close();
 
-            //This is a real hack to make this work. There is most likely a better way but for now it is just this.
-            //Doing it this way limits the amount of items this will work for. Currently to 15.
-            if (data4.contains("0=true"))
-            {
-                listViewUnit.setItemChecked(0, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("1=true"))
-            {
-                listViewUnit.setItemChecked(1, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("2=true"))
-            {
-                listViewUnit.setItemChecked(2, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("3=true"))
-            {
-                listViewUnit.setItemChecked(3, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("4=true"))
-            {
-                listViewUnit.setItemChecked(4, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("5=true"))
-            {
-                listViewUnit.setItemChecked(5, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("6=true"))
-            {
-                listViewUnit.setItemChecked(6, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("7=true"))
-            {
-                listViewUnit.setItemChecked(7, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("8=true"))
-            {
-                listViewUnit.setItemChecked(8, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("9=true"))
-            {
-                listViewUnit.setItemChecked(9, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("10=true"))
-            {
-                listViewUnit.setItemChecked(10, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("11=true"))
-            {
-                listViewUnit.setItemChecked(11, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("12=true"))
-            {
-                listViewUnit.setItemChecked(12, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("13=true"))
-            {
-                listViewUnit.setItemChecked(13, true);
-                arrayAdapterUnit.notifyDataSetChanged();
-            }
-            if (data4.contains("14=true"))
-            {
-                listViewUnit.setItemChecked(14, true);
+            // This could be made neater by using a standardised format and parser like JSON
+            // but this should be fine too.
+            Matcher m = Pattern.compile("(\\d+)=true").matcher(data4);
+
+            while (m.find()) {
+                String s = m.group();
+                int i = Integer.parseInt(s);
+                listViewUnit.setItemChecked(i, true);
                 arrayAdapterUnit.notifyDataSetChanged();
             }
 
