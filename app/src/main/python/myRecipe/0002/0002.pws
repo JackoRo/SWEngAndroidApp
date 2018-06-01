@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="Not Stuart Porter" />
+    <Meta key="name" value="Pasta Bake"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Pre-heat oven to 200 degrees (C)
+        </Text>
+        <Image path="https://i.ytimg.com/vi/rbc_LxfhSoY/hqdefault.jpg"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Lightly fry garlic in your butter until golden
+        </Text>
+        <Image path="https://www.propertydivision.co.uk/wp-content/uploads/2015/09/frying-pan-fire-696x467.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24"
+            underline="false"
+            font="Times New Roman">
+            STEP 3
+        </Text>
+        <Text>
+            Add Tomatoes and stuff to the frying pan and cook for 10 minutes
+        </Text>
+        <Image path="https://www.propertydivision.co.uk/wp-content/uploads/2015/09/frying-pan-fire-696x467.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 4
+        </Text>
+        <Text>
+            Place the defenseless pasta in a deep oven dish and seductively empty the contents
+            of the saucepan on top of your tasty victims. Ceremonially decorate with grated cheese.
+        </Text>
+        <Text>
+            Cook your dish of ingredients on the middle shelf until it becomes a pasta bake.
+        </Text>
+        <Image path="https://www.propertydivision.co.uk/wp-content/uploads/2015/09/frying-pan-fire-696x467.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 5
+        </Text>
+        <Text>
+            Leave to cool for 2 minutes, and enjoy!
+        </Text>
+        <Image path="https://thatangiegirl.files.wordpress.com/2008/05/1stcanonpics-096.jpg"/>
+    </Slide>
+
+</Presentation>

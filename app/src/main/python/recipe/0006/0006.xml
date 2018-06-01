@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+  <id>0006</id>
+  <title>Margherita Pizza</title>
+  <author>SWEng Group 3</author>
+  <time>2 Hours</time>
+  <description>A Neopolitan classic, sure to please the whole family.</description>
+  <thumbnailURL>thumbnail.jpg</thumbnailURL>
+  <Filters spicy="false" lactose="false" nuts="true" vegetarian="true" vegan="false" gluten="false"></Filters>
+  <Ingredient amount="300" units="grams">Bread Flour</Ingredient>
+  <Ingredient amount="1" units="tsp">Instant Yeast</Ingredient>
+  <Ingredient amount="1 1/2" units="tbsp">Olive Oil</Ingredient>
+  <Ingredient amount="1" units="clove">Crushed Garlic</Ingredient>
+  <Ingredient amount="1" units="can">San Marzano Tomatoes </Ingredient>
+  <Ingredient amount="250" units="grams">Low moisture mozzarella</Ingredient>
+  <Tag>Italian</Tag>
+  <Tag>Pizza</Tag>
+  <Tag>Max Effort</Tag>
+</Recipe>
