@@ -1,3 +1,4 @@
+from __future__ import print_function
 import glob
 import os
 
@@ -21,12 +22,12 @@ app.config['UPLOAD_MY_RECIPE'] = UPLOAD_MY_RECIPE
 
 @app.route('/download/recipe/<fileid>/<path:mediaid>')
 def fetchRecipeMedia(fileid, mediaid):
-    print "fetchRecipeMedia"
+    print("fetchRecipeMedia")
     return send_from_directory(UPLOAD_RECIPE, safe_join(fileid, mediaid))
 
 @app.route('/download/myRecipe/<fileid>/<path:mediaid>')
 def fetchMyRecipeMedia(fileid, mediaid):
-    print "fetchRecipeMedia"
+    print("fetchRecipeMedia")
     return send_from_directory(UPLOAD_MY_RECIPE, safe_join(fileid, mediaid))
 
 def allowed_file(filename):
