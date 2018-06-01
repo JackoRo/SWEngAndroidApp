@@ -3,6 +3,7 @@ package com.group3.swengandroidapp.ShoppingList;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
@@ -64,6 +65,28 @@ public class ShoppinglistActivity extends MainActivity {
         super.onCreateDrawer();
         setTitle(getString(R.string.shopping_list_name));
 
+        //Get items from shopping list handler and add to arrayList
+        ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
+        ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
+
+        if (ingredients == null){
+            //do nothing
+        }
+        else {
+            for (Ingredient data : ingredients) {
+
+                String name = data.getName();
+                String value = Integer.toString(data.getQuantityValue());
+                String unit = data.getQuantityUnits();
+
+                listItem ingredientsItem = new listItem(name, value, unit);
+
+
+                arrayListForShopping.add(ingredientsItem);
+            }
+            shoppingListHandlerObject.removeFromArrayList();
+        }
+
         //Set ListViews for each of the lists.
         //This listview is for the name display list.
         listViewName = findViewById(R.id.listViewName);
@@ -77,44 +100,12 @@ public class ShoppinglistActivity extends MainActivity {
         else
         {
             int j = 0;
-            while (j != arrayListForShopping.size()+1)
+            while (j != arrayListForShopping.size())
             {
                 itemNames.add(arrayListForShopping.get(j).getName());
                 j++;
             }
             arrayAdapterName.notifyDataSetChanged();
-        }
-        //Get items from shopping list handler and add to arrayList
-        ShoppinglistHandler shoppingListHandlerObject = ShoppinglistHandler.getInstance();
-        ArrayList<Ingredient> ingredients = shoppingListHandlerObject.getItems();
-        int counter = 0;
-
-        if (ingredients == null){
-            //do nothing
-        }
-        else {
-            for (Ingredient data : ingredients) {
-
-                String name = data.getName();
-                String value = Integer.toString(data.getQuantityValue());
-                String unit = data.getQuantityUnits();
-
-//                listItem item = new listItem(name, value, unit);
-//                arrayListForShopping.add(item);
-//                itemNames.add(String.valueOf(arrayListForShopping.get(counter).getName()));
-//                itemQuantities.add(String.valueOf(arrayListForShopping.get(counter).getQuantity()));
-//                itemUnits.add(String.valueOf(arrayListForShopping.get(counter).getUnits()));
-                itemNames.add(name);
-                itemQuantities.add(value);
-                itemUnits.add(unit);
-                counter++;
-
-            }
-
-        }
-
-        for (String names : itemNames){
-
         }
 
 
@@ -130,7 +121,7 @@ public class ShoppinglistActivity extends MainActivity {
         else
         {
             int j = 0;
-            while (j != arrayListForShopping.size()+1)
+            while (j != arrayListForShopping.size())
             {
                 itemQuantities.add(String.valueOf(arrayListForShopping.get(j).getQuantity()));
                 j++;
@@ -151,13 +142,14 @@ public class ShoppinglistActivity extends MainActivity {
         else
         {
             int j = 0;
-            while (j != arrayListForShopping.size()+1)
+            while (j != arrayListForShopping.size())
             {
                 itemUnits.add(arrayListForShopping.get(j).getUnits());
                 j++;
             }
             arrayAdapterUnit.notifyDataSetChanged();
         }
+
 
         //When an item in the list in clicked on, the EditMessage method is called so that the message can be edited.
         listViewName.setOnItemClickListener((adapterView, view, position, l) -> {
@@ -171,7 +163,7 @@ public class ShoppinglistActivity extends MainActivity {
         });
 
         //When an items checkbox is clicked on, this method is called.
-        /* This method is currently unused but has been left in incase needed in the future.
+        /* This method is currently unused but has been left in in case needed in the future.
         listViewUnit.setOnItemClickListener((adapterView, view, position, l) ->
         {
 
@@ -288,12 +280,12 @@ public class ShoppinglistActivity extends MainActivity {
             }
 
             //This is used to make sure that Item objects are created along with all of the other arrays being filled up.
-            int i=itemNames.size();
-            while (i!=0)
+            int j=itemNames.size();
+            while (j!=0)
             {
-                listItem item = new listItem(itemNames.get(i-1), itemQuantities.get(i-1), itemUnits.get(i-1));
+                listItem item = new listItem(itemNames.get(j-1), itemQuantities.get(j-1), itemUnits.get(j-1));
                 arrayListForShopping.add(item);
-                i--;
+                j--;
             }
         }
         catch (FileNotFoundException e)
@@ -304,10 +296,53 @@ public class ShoppinglistActivity extends MainActivity {
 
     //When the user exits the application, any data they have left in the shopping list will be saved to a text file called ShoppingList.txt
     @Override
-    public void onBackPressed()
+    public void onPause()
     {
+        super.onPause();
+
         try
         {
+            //adds together similar items
+            for (String name : itemNames){
+                System.out.println("enters first for loop");
+                System.out.println(name);
+                for (String otherNames : itemNames){
+                    System.out.println("enters second for loop");
+                    System.out.println(itemNames);
+                    System.out.println(otherNames);
+                    if (name.equals(otherNames)){
+                        System.out.println("names are equal");
+                        Integer index1 = itemNames.indexOf(name);
+                        Integer index2 = itemNames.indexOf(otherNames);
+                        System.out.println("index 1:" +index1);
+                        System.out.println("index 2:" +index2);
+                        if (index1!=index2){
+                            System.out.println("index inst equal" );
+                            String unit1 = itemUnits.get(index1);
+                            String unit2 = itemUnits.get(index2);
+                            if (unit1.equals(unit2)){
+                                System.out.println("units match");
+                                Integer value1 = Integer.parseInt(itemQuantities.get(index1));
+                                Integer value2 = Integer.parseInt(itemQuantities.get(index2));
+                                Integer updatedInteger = value1+value2;
+                                String updatedValue = Integer.toString(updatedInteger);
+
+                                listItem newIngredientsItem = new listItem(name, updatedValue, unit1);
+                                arrayListForShopping.add(newIngredientsItem);
+                                arrayAdapterName.notifyDataSetChanged();
+                                arrayAdapterQuantity.notifyDataSetChanged();
+                                arrayAdapterUnit.notifyDataSetChanged();
+                                System.out.println("testing adding similar items "  +newIngredientsItem);
+
+                            }
+                        }else{
+                            System.out.println("indexes are equal");
+                        }
+                    }else{
+                        System.out.println("names are not equal");
+                    }
+                }
+            }
             //Delete old files.
             deleteFile("ShoppingListItemNames.txt");
             deleteFile("ShoppingListItemQuantities.txt");
@@ -339,7 +374,6 @@ public class ShoppinglistActivity extends MainActivity {
         {
             e.printStackTrace();
         }
-        finish();
     }
 
     //When the 'add' button is clicked from the shopping list gui, this code will run and send an intent request to the EditField Class.
@@ -351,20 +385,13 @@ public class ShoppinglistActivity extends MainActivity {
 
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
     public void clearAllButtonClicked(View v){
-        int i=arrayListForShopping.size();
-        //ShoppinglistHandler removeList = ShoppinglistHandler.getInstance();
-        while(i!=0){
-            arrayListForShopping.remove(i-1);
-            itemNames.remove(i-1);
-            itemQuantities.remove(i-1);
-            itemUnits.remove(i-1);
+            arrayListForShopping.clear();
+            itemNames.clear();
+            itemQuantities.clear();
+            itemUnits.clear();
             arrayAdapterName.notifyDataSetChanged();
             arrayAdapterQuantity.notifyDataSetChanged();
             arrayAdapterUnit.notifyDataSetChanged();
-            i--;
-
-            //removeList.removeFromArrayList();
-        }
     }
 
     //When the clear all button is clicked from the shopping list gui, this code will run and clear the list.
@@ -431,16 +458,12 @@ public class ShoppinglistActivity extends MainActivity {
         }
 
         //If it is result code 3, then the user is trying to delete their list item, so this code should run.
-        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE)
-        {
-            position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION,-1);
+        else if(resultCode==Intent_Constants.INTENT_REQUEST_CODE_THREE) {
+            position = data.getIntExtra(Intent_Constants.INTENT_ITEM_POSITION, -1);
             //noinspection StatementWithEmptyBody
-            if(arrayListForShopping.size()==0)
-            {
+            if (arrayListForShopping.size() == 0) {
                 //Do Nothing
-            }
-            else
-            {
+            } else {
                 arrayListForShopping.remove(position);
                 itemNames.remove(position);
                 itemQuantities.remove(position);
