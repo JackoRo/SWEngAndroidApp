@@ -364,6 +364,10 @@ public class ShoppinglistActivity extends MainActivity {
 
     //When the 'add' button is clicked from the shopping list gui, this code will run and send an intent request to the EditField Class.
     public void onClick(View v){
+        com.group3.swengandroidapp.AudioPlayer.touchSound();
+        if (!com.group3.swengandroidapp.AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Intent intent = new Intent();
         intent.setClass(ShoppinglistActivity.this,EditFieldClass.class);
         startActivityForResult(intent,Intent_Constants.INTENT_REQUEST_CODE);

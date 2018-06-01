@@ -1,23 +1,28 @@
 package com.group3.swengandroidapp;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import static android.content.Context.VIBRATOR_SERVICE;
+
 /**
  * Created by Marco on 25/05/2018.
  */
 
-public class AudioPlayer {
+public class AudioPlayer{
 
     private static final int NUMBER_OF_TOUCH_SOUNDS = 3;
 
     private ArrayList<MediaPlayer> players;
     private static AudioPlayer instance = new AudioPlayer();
-    private Boolean muted = false;
+    private static Boolean muted = false;
+    private static Boolean vibrationOff = false;
 
     // Used to count through files used for the same effect (see touchSound())
     private int fileCounter = 0;
@@ -33,7 +38,8 @@ public class AudioPlayer {
         // Never repeats a number
         while((temp = r.nextInt(NUMBER_OF_TOUCH_SOUNDS))== instance.fileCounter);
         instance.fileCounter = temp;
-        switch(temp){
+
+        switch (temp) {
             case 0:
                 instance.playResource(R.raw.tap1);
                 break;
@@ -47,7 +53,13 @@ public class AudioPlayer {
                 instance.playResource(R.raw.tap1);
                 break;
         }
+
+        //myVib = (Vibrator) instance.getSystemService(VIBRATOR_SERVICE);
+
+        //instance.myVib.vibrate(50);
+
     }
+
 
     public static void favouritesSound(){
         instance.playResource(R.raw.favourite_click);
@@ -65,8 +77,16 @@ public class AudioPlayer {
         return instance.muted;
     }
 
+    public static Boolean isVibrationOff(){
+        return instance.vibrationOff;
+    }
+
     public static void mute(Boolean mute){
         instance.muted = mute;
+    }
+
+    public static void vibrationOff(boolean vibrationOff){
+        instance.vibrationOff = vibrationOff;
     }
 
     public static void play(int resourceID){

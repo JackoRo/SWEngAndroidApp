@@ -71,6 +71,10 @@ public class FavouritesActivity extends MainActivity implements RecipeRecyclerVi
     @Override
     public void onItemClick(String recipeId){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
+
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
 
         Intent intent;

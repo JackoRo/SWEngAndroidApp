@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private String[] mFragmentTitles;
 
+    public  Vibrator vibrator;
+
+
+
     // For use in other parts of app that don't have access to the "getApplicationContext" method.
     private static Context appContext;
 
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedBundleInstance){
         appContext = getApplicationContext();
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         super.onCreate(savedBundleInstance);
         //Load recipes from server if the list of recipes is empty
@@ -263,6 +270,10 @@ public class MainActivity extends AppCompatActivity {
     /** Swaps activities*/
     private void selectItem(int position) {
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
+
         // update the main content by replacing fragments
         Intent intent;
 

@@ -41,6 +41,9 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     public void onItemClick(String recipeId){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
