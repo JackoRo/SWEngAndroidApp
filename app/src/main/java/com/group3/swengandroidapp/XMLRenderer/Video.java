@@ -6,27 +6,26 @@ import android.app.Activity;
  * Created by Jack on 25/02/2018.
  */
 
-public class Video extends XmlElement implements Drawable {
+public abstract class Video extends XmlElement implements Drawable {
 
     public Video(XmlElement parent) {
         super(parent);
     }
 
-    public String  getX(){
-        return getInheritableProperty("x");
+    public String  getX1(){
+        return getInheritableProperty("x1");
     }
 
-    public void setX(String x) {
-        setProperty("x", x);
+    public void setX1(String x1) {
+        setProperty("x1", x1);
     }
 
-
-    public String  getY(){
-        return getInheritableProperty("y");
+    public String  getY1(){
+        return getInheritableProperty("y1");
     }
 
-    public void setY(String y) {
-        setProperty("y", y);
+    public void setY1(String y1) {
+        setProperty("y1", y1);
     }
 
     public String  getX2(){
@@ -37,7 +36,6 @@ public class Video extends XmlElement implements Drawable {
         setProperty("x2", x2);
     }
 
-
     public String  getY2(){
         return getInheritableProperty("y2");
     }
@@ -45,10 +43,9 @@ public class Video extends XmlElement implements Drawable {
     public void setY2(String y2) {
         setProperty("y2", y2);
     }
-    @Override
-    public void draw(Activity activity) {
 
-    }
+    public String getPath() { return getInheritableProperty("path"); }
 
+    public void setPath(String path) { setProperty("path", path); }
 
 }

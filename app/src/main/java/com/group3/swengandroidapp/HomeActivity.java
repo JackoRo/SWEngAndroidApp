@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -38,12 +40,17 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
      */
     @Override
     public void onItemClick(String recipeId){
+        AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);       // Set recipe id
-        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);                // switch activities
+        intent.putExtra("FROM_ACTIVITY", "HomeActivity");      // Tell new activity that this was the previous activity
+        startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
     }
 
     @Override
@@ -56,7 +63,10 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
 
         // Setup Recommended Recipes view
         RecyclerView recyclerView = findViewById(R.id.home_suggested_view);                // Get suggested recipe view
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);    // Set as a 2-collumn grid
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setVerticalScrollBarEnabled(true);
         suggestedAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view
         suggestedAdapter.setClickListener(this);                                          // Set the click listener for the adapter
         recyclerView.setAdapter(suggestedAdapter);                                        // Assign adapter to the view
@@ -68,6 +78,21 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         historyAdapter.setClickListener(this);
         historyView.setAdapter(historyAdapter);
 
+        // Set swipe refreshing
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent);
+        swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(HomeActivity.this, PythonClient.class);
+                intent.putExtra(PythonClient.ACTION,PythonClient.LOAD_ALL);
+                startService(intent);
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
     }
 
     @Override
@@ -77,7 +102,19 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Get all needed recipe ids
         String recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
         String[] histories = HistoryHandler.getInstance().getHistory();
-        String[] suggested = RemoteFileManager.getInstance().getSuggestedRecipes();
+        String[] suggested;
+        //int historySize = histories.length;
+        if (histories == null){
+            suggested = RemoteFileManager.getInstance().getSuggestedRecipes(0, histories);
+            Log.d("history", "nothing in history, loading all recipes instead");
+        }else{
+            Log.d("history", "entered into else statement");
+
+            int historySize = histories.length;
+            Log.d("history", "number of recipes in history:" + historySize);
+            suggested = RemoteFileManager.getInstance().getSuggestedRecipes(historySize, histories);
+        }
+
 
         // Process recipe of the day
         Recipe rotd = RemoteFileManager.getInstance().getRecipe(recipeOfTheDay).clone(); // Copy the recipe
@@ -97,6 +134,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         }
 
         // Process the suggested view
+
         for(String id : suggested){
             if(!icons.containsKey(id)){
                 icons.put(id, Recipe.produceDescriptor(this, RemoteFileManager.getInstance().getRecipe(id)));
@@ -117,9 +155,11 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         imageDownloaderListener = new ImageDownloaderListener(this) {
             @Override
             public void onBitmapReady(String id, String absolutePath){
-                icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
-                suggestedAdapter.notifyIconChanged(id);
-                historyAdapter.notifyIconChanged(id);
+                if(icons.containsKey(id)) {
+                    icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
+                    suggestedAdapter.notifyIconChanged(id);
+                    historyAdapter.notifyIconChanged(id);
+                }
             }
 
             @Override
@@ -146,16 +186,16 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            if(message != null) Log.d("receiver", "Got message: " + message);
+        // Get extra data included in the Intent
+        String message = intent.getStringExtra("message");
+        if(message != null) Log.d("receiver", "Got message: " + message);
 
-            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
-                Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-                startActivity(newIntent);
-            }else {
-                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
-            }
+        if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
+            Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
+            startActivity(newIntent);
+        }else {
+            Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
+        }
         }
     };
 
@@ -165,5 +205,4 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
-
 }

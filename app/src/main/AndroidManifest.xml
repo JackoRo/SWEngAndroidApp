@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.group3.swengandroidapp"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.group3.swengandroidapp">
 
     <!-- <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17" /> -->
     <application
@@ -46,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".ShoppinglistActivity"
+            android:name=".ShoppingList.ShoppinglistActivity"
             android:label="@string/app_name"
             android:parentActivityName=".HomeActivity">
             <intent-filter>
@@ -54,6 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <activity
             android:name=".FavouritesActivity"
@@ -75,8 +74,39 @@
             </intent-filter>
         </activity>
 
+
+        <activity
+            android:name=".MyRecipesActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".InstructionalVideoPlayingActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".InstructionalVideoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".HistoryActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SettingsActivity"
             android:label="@string/app_name"
             android:parentActivityName=".HomeActivity">
             <intent-filter>
@@ -97,8 +127,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EditFieldClass"/>
-        <activity android:name=".EditMessageClass"/>
+        <activity android:name=".ShoppingList.EditFieldClass"/>
+        <activity android:name=".ShoppingList.EditMessageClass"/>
 
         <activity
             android:name=".RecipeSelectionActivity"
@@ -120,6 +150,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
+
+
     </application>
 
 
@@ -128,5 +161,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
-</manifest>
+    </manifest>

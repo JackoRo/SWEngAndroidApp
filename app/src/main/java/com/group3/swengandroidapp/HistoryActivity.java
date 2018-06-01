@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -76,12 +76,17 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
 
     @Override
     public void onItemClick(String recipeId){
+        AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);
-        startActivityForResult(intent, IntentConstants.INTENT_REQUEST_CODE);            // switch activities
+        intent.putExtra("FROM_ACTIVITY", "HistoryActivity");      // Tell new activity that this was the previous activity
+        startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
     }
 

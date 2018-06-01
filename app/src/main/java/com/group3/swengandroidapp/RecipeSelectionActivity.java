@@ -8,54 +8,96 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.group3.swengandroidapp.XMLRenderer.*;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+
+import java.util.ArrayList;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
     String id;
     ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
+    private Recipe recipe;
+    ArrayList<String> ingredientsList;
+    String previousActivity;
 
+    public  android.os.Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_selection);
+
         Intent intent = getIntent();
         id = intent.getStringExtra(PythonClient.ID);
 
-        final Button button = findViewById(R.id.recipe_selection_start_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        vibrator = (android.os.Vibrator) getSystemService(android.content.Context.VIBRATOR_SERVICE);
+
+        final Button startButton = findViewById(R.id.recipe_selection_start_button);
+        startButton.setOnClickListener(v -> {
+            // Code here executes on main thread after user presses button
+            AudioPlayer.touchSound();
+            if (!AudioPlayer.isVibrationOff()){
+                vibrator.vibrate(20);
+             }
+            Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
+            newIntent.putExtra(PythonClient.ID, id);
+
+            if (previousActivity.equals("MyRecipesActivity")) {
+                newIntent.putExtra("FROM_ACTIVITY", "MyRecipesActivity");
+            } else {
+                newIntent.putExtra("FROM_ACTIVITY", "HomeActivity");
+            }
+
+            startActivity(newIntent);
+        });
+
+        final Button listButton = findViewById(R.id.recipe_selection_addToList_button);
+        listButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
-                newIntent.putExtra(PythonClient.ID, id);
-                startActivity(newIntent);
+                AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                 }
+//                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString());
+//                  if (toAdd.length > 0) {
+//                         for (int i=0; i < toAdd.length; i++){
+//                              ingredientsList.add(toAdd[i]);
+//                         }
+//                  }
+                ShoppinglistHandler.getInstance().addToShoppingList(recipe.getIngredients());
+                Toast.makeText(getApplicationContext(),"Recipes added to shopping list!", Toast.LENGTH_SHORT).show();
+
             }
         });
 
+
+
         final ImageButton favourites = findViewById(R.id.recipe_selection_thumbnail_favourites_button);
-        favourites.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(id!=null){
-                    FavouritesHandler.getInstance().toggleFavourite(id);
-                    if (FavouritesHandler.getInstance().contains(id)) {
-                        favourites.setImageResource(R.drawable.heart_on);
-                    } else {
-                        favourites.setImageResource(R.drawable.heart_off);
-                    }
+        favourites.setOnClickListener(v -> {
+            if(id!=null){
+                AudioPlayer.favouritesSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                 }
+                FavouritesHandler.getInstance().toggleFavourite(id);
+                if (FavouritesHandler.getInstance().contains(id)) {
+                    favourites.setImageResource(R.drawable.favfull);
+                } else {
+                    favourites.setImageResource(R.drawable.favempty);
                 }
             }
         });
         if(id!=null){
             if (FavouritesHandler.getInstance().contains(id)) {
-                favourites.setImageResource(R.drawable.heart_on);
+                favourites.setImageResource(R.drawable.favfull);
             } else {
-                favourites.setImageResource(R.drawable.heart_off);
+                favourites.setImageResource(R.drawable.favempty);
             }
         }else{
-            favourites.setImageResource(R.drawable.heart_off);
+            favourites.setImageResource(R.drawable.favempty);
         }
     }
 
@@ -66,7 +108,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         // Fill the screen with all the information!
 
         icon = findViewById(R.id.recipe_selection_thumbnail_image);
-        TextView time = findViewById(R.id.recipe_selection_thumbnail_time);
+        TextView time = findViewById(R.id.recipe_selection_timer_time);
         TextView description = findViewById(R.id.recipe_selection_description);
         TextView author = findViewById(R.id.recipe_selection_author);
         ImageView spicy = findViewById(R.id.recipe_selection_thumbnail_filter_spicy);
@@ -76,8 +118,15 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         ImageView nuts = findViewById(R.id.recipe_selection_thumbnail_filter_nuts);
         ImageView gluten = findViewById(R.id.recipe_selection_thumbnail_filter_gluten);
         TextView ingredients = findViewById(R.id.recipe_selection_ingredients);
+        TextView tags = findViewById(R.id.recipe_selection_tags_text);
 
-        Recipe recipe = RemoteFileManager.getInstance().getRecipe(id);
+        Intent intent = getIntent();
+        previousActivity= intent.getStringExtra("FROM_ACTIVITY"); // Get name of previous activity
+        if (previousActivity.equals("MyRecipesActivity")){
+            recipe = RemoteFileManager.getInstance().getMyRecipe(id);
+        }else{
+            recipe = RemoteFileManager.getInstance().getRecipe(id);
+        }
 
         if(recipe==null){
             recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a");
@@ -87,7 +136,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         }
 
         setTitle(recipe.getTitle());        // Set page title to the recipe title
-
         time.setText(recipe.getTime());
         author.setText(recipe.getAuthor());
         description.setText(recipe.getDescription());
@@ -113,6 +161,17 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         if(recipe.getGluten()){
             gluten.setImageResource(R.drawable.glutenfree_filter);
         }
+
+        // Tags
+        StringBuilder sb = new StringBuilder();
+        for(String s : recipe.getTags()){
+            sb.append(s);
+            sb.append(", ");
+        }
+        if(sb.length()>2) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        tags.setText(sb.toString());
     }
 
     @Override
@@ -137,6 +196,12 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         imageDownloaderListener.unRegister();
+    }
+
+    @Override
+    public void onBackPressed(){
+        AudioPlayer.touchSound();
+        super.onBackPressed();
     }
 
 }
