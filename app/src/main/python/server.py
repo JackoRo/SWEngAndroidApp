@@ -1,7 +1,7 @@
 import glob
 import os
 
-from flask import Flask, send_from_directory, request, redirect
+from flask import Flask, send_from_directory, request, redirect, safe_join
 from werkzeug.utils import secure_filename
 
 cwd = os.getcwd()
@@ -19,24 +19,15 @@ app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
 app.config['UPLOAD_MY_RECIPE'] = UPLOAD_MY_RECIPE
 
-@app.route('/download/recipe/<fileid>/<id>')
-def fetchRecipeFile(fileid, id):
-    print "fetchRecipeFile"
-    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, id))
-	
-@app.route('/download/myRecipe/<fileid>/<id>')
-def fetchMyRecipeFile(fileid, id):
-    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, id))
-
 @app.route('/download/recipe/<fileid>/<path:mediaid>')
 def fetchRecipeMedia(fileid, mediaid):
     print "fetchRecipeMedia"
-    return send_from_directory(UPLOAD_RECIPE, os.path.join(fileid, mediaid))
+    return send_from_directory(UPLOAD_RECIPE, safe_join(fileid, mediaid))
 
 @app.route('/download/myRecipe/<fileid>/<path:mediaid>')
 def fetchMyRecipeMedia(fileid, mediaid):
     print "fetchRecipeMedia"
-    return send_from_directory(UPLOAD_MY_RECIPE, os.path.join(fileid, mediaid))
+    return send_from_directory(UPLOAD_MY_RECIPE, safe_join(fileid, mediaid))
 
 def allowed_file(filename):
     return '.' in filename and \
