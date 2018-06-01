@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -43,17 +44,11 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         Log.d("InstructionalActivity","Clicked on video " + videoID);
 
-        Intent intent = new Intent(InstructionalVideoActivity.this, InstructionalVideoPlayingActivity.class );
-        intent.putExtra("key", videoID); //Optional parameters
-        InstructionalVideoActivity.this.startActivity(intent);
-
-        // Play Vide
-        /*
-        intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
+        Intent intent = new Intent();
+        intent.setClass(this,InstructionalVideoPlayingActivity.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
-        intent.putExtra(PythonClient.ID, videoID);       // Set recipe id
+        intent.putExtra(PythonClient.ID, videoID);       // Set  video id
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
-        */
     }
 
     @Override
@@ -76,15 +71,15 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     public void onStart(){
         super.onStart();
 
-        String[] instructionalVideo = RemoteFileManager.getInstance().getInstructionalVideo();
+        String[] instructionalVideos = RemoteFileManager.getInstance().getInstructionalVideos();
 
         // Process the instructional videos view
-        /*for(String id : instructionalVideo){
+        for(String id : instructionalVideos){
             if(!icons.containsKey(id)){
                 icons.put(id, InstructionalVideo.produceDescriptor(this, RemoteFileManager.getInstance().getInstructionalVideo(id)));
             }
             instructionalVideosAdapter.addIcon(icons.get(id));
-        }*/
+        }
         Drawable frying_onions = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.frying_onions));
         Drawable cutting_onions = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.cutting_onions));
         Drawable grilling_meat = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.grilling_meat));
@@ -96,8 +91,6 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         // Notify the adapters to update themselves.
         instructionalVideosAdapter.notifyDataSetChanged();
-
-
 
     }
 
@@ -141,11 +134,11 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
             String message = intent.getStringExtra("message");
             if(message != null) Log.d("receiver", "Got message: " + message);
 
-            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
+            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_INSTRU_VID)) {
                 // Need code for starting activity for playing videos
 
-                // Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-                // startActivity(newIntent);
+                 Intent newIntent = new Intent(context, InstructionalVideoPlayingActivity.class);
+                 startActivity(newIntent);
             }else {
                 Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
             }

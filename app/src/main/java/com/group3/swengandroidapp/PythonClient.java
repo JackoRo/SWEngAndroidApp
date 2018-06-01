@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 import com.group3.swengandroidapp.XMLRenderer.XmlParser;
 import com.group3.swengandroidapp.XMLRenderer.XmlRecipe;
@@ -32,6 +33,7 @@ public class PythonClient extends IntentService{
     public static final String FETCH_MY_RECIPE = "com.group3.swengandroidapp.FETCH_MY_RECIPE";
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
     public static final String FETCH_MY_PRESENTATION = "com.group3.swengandroidapp.FETCH_MY_PRESENTATION";
+    public static final String FETCH_INSTRU_VID = "com.group3.swengandroidapp.FETCH_INSTRU_VID";
     protected static final String SERVER_TIMEOUT = "PythonClient.serveTimeout";
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
@@ -159,6 +161,37 @@ public class PythonClient extends IntentService{
 
     }
 
+    public String[] fetchInstruvidListFromHttpServer() throws IOException{
+
+        url = new URL (String.format("http://%s:5000/instruvidList", IP_ADDR));
+        urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setConnectTimeout(2000);
+
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in).split(".");
+
+        } finally {
+            urlConnection.disconnect();
+        }
+
+    }
+
+    public String fetchInstruvidFromHttpServer(String id) throws IOException{
+
+        url = new URL (String.format("http://%s:5000/download/instruvid/%s"+".mpg", IP_ADDR, id));
+        urlConnection = (HttpURLConnection) url.openConnection();
+
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in);
+
+        } finally {
+            urlConnection.disconnect();
+        }
+
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
@@ -174,7 +207,6 @@ public class PythonClient extends IntentService{
                         }
                     }
 
-
                     String[] myIds = fetchMyRecipeListFromHttpServer();
                     for (String rid : myIds) {
                         if (remoteFileManager.getMyRecipe(rid) == null) {
@@ -182,6 +214,12 @@ public class PythonClient extends IntentService{
                         }
                     }
 
+                    String[] vIds = fetchInstruvidListFromHttpServer();
+                    for (String rid : vIds) {
+                        if (remoteFileManager.getInstructionalVideo(rid) == null) {
+                            remoteFileManager.setInstructionalVideo(rid, new InstructionalVideo(fetchInstruvidFromHttpServer(rid)));
+                        }
+                    }
 
                     Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
@@ -221,6 +259,15 @@ public class PythonClient extends IntentService{
                     }
                     Log.d("sender", "FETCH_MY_PRESENTATION");
                     sendMessage(FETCH_MY_PRESENTATION, id);
+                    break;
+                case FETCH_INSTRU_VID:
+                    id = intent.getStringExtra(ID);
+
+                    if (remoteFileManager.getInstructionalVideo(id) == null) {
+                        remoteFileManager.setInstructionalVideo(id, new InstructionalVideo(fetchInstruvidFromHttpServer(id)));
+                    }
+                    Log.d("sender", "FETCH_INSTRU_VID");
+                    sendMessage(FETCH_INSTRU_VID, id);
                     break;
             }
 
