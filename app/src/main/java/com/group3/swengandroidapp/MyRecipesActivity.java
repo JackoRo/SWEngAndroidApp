@@ -43,6 +43,11 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
      */
     @Override
     public void onItemClick(String myRecipeId){
+        AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
+
         Log.d("myRecipesActivity","Clicked on recipe " + myRecipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination

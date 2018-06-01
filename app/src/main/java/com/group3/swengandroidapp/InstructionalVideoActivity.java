@@ -37,6 +37,10 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     @Override
     public void onItemClick(String videoID){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
+
         Log.d("InstructionalActivity","Clicked on video " + videoID);
 
         Intent intent = new Intent(InstructionalVideoActivity.this, InstructionalVideoPlayingActivity.class );
