@@ -159,12 +159,17 @@
         </activity>
         <activity
             android:name=".CreateARecipe"
-            android:label="@string/title_activity_create_arecipe"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
+            android:parentActivityName=".MyRecipesActivity"
+            android:label="Hands Off">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--<activity
             android:name=".AddIngredients"
             android:label="@string/title_activity_add_ingredients"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>-->
     </application>
 
 

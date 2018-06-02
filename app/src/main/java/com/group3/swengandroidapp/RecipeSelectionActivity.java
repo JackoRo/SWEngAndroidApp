@@ -116,7 +116,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         }
 
         if(recipe==null){
-            recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a");
+            recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a", "n/a");
         }else{
             // Recipe is found, add to history
             HistoryHandler.getInstance().append(recipe.getID());

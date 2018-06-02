@@ -63,10 +63,13 @@
     <string name="introductory_comment">Create A Recipe</string>
     <string name="title_request">Title</string>
     <string name="description_request">Description</string>
+    <string name="time_request">Time</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="ingredient_request">Add Ingredient</string>
     <string name="first_step">Step One</string>
     <string name="create_recipe">Create Recipe</string>
+    <string name="filter_explanation">Please note that, for the health and safety of our users,
+        self-created recipes will not have filters or tags to indicate dietary suitability.</string>
 
     <!-- This contains a list of strings to be used in the Add Ingredient GUI-->
     <string name="ingredient_name">Name Of Ingredient</string>
