@@ -13,11 +13,13 @@ import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 
 /**
  * Created by Kevin on 12/03/2018.
+ * edited by af981/Alex
  */
 
 public class SettingsActivity extends MainActivity{
 
-    private static Boolean muted = false;
+    private static Boolean AudioMuted = false;
+    private static Boolean NotifcationMuted = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,14 @@ public class SettingsActivity extends MainActivity{
                 }
             }
         });
+
+        // initiate a Switch
+   //    Switch simpleSwitch = (Switch) findViewById(R.id.simpleSwitch);
+
+        // check current state of a Switch (true or false).
+     //   Boolean switchState = simpleSwitch.isChecked();
+
+
     }
 
 }

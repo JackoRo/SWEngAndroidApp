@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe>
+    <id>0012</id>
+    <title>Presentation Demo</title>
+    <time>2 min</time>
+    <author>SWEng Group 3</author>
+    <description>A test recipe with a demo presentation built in!</description>
+    <thumbnailURL>THIS_IS_A_FAKE_PATH</thumbnailURL>
+    <Filters spicy="true" lactose="true" nuts="true" vegetarian="true" vegan="true" gluten="true"></Filters>
+    <Ingredient amount="200" units="grams">Debugging</Ingredient>
+    <Ingredient amount="1" units="bowl">Delusion</Ingredient>
+</Recipe>

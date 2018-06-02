@@ -38,7 +38,7 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    //public static final String IP_ADDR = "192.168.0.20";
+    //public static final String IP_ADDR = "192.168.0.192";
     //For device emulator
     public static final String IP_ADDR = "10.0.2.2";
 
@@ -206,6 +206,7 @@ public class PythonClient extends IntentService{
                             remoteFileManager.setRecipe(rid, new XmlRecipe(fetchRecipeFromHttpServer(rid)));
                         }
                     }
+
 
                     String[] myIds = fetchMyRecipeListFromHttpServer();
                     for (String rid : myIds) {

@@ -127,14 +127,14 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
         imageDownloaderListener.unRegister();
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+  /*  private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
             if(message != null) Log.d("receiver", "Got message: " + message);
 
-            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_INSTRU_VID)) {
+           // if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_INSTRU_VID)) {
                 // Need code for starting activity for playing videos
 
                  Intent newIntent = new Intent(context, InstructionalVideoPlayingActivity.class);
@@ -151,5 +151,5 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
-
+*/
 }
