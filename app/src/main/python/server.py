@@ -35,7 +35,7 @@ def fetchMyRecipeMedia(fileid, mediaid):
 
 @app.route('/download/instruvid/<fileid>')
 def fetchInstruvid(fileid):
-    print("fetchRecipeMedia")
+    print("fetchInstruvid")
     return send_from_directory(UPLOAD_INSTRU_VID, fileid)
 
 def allowed_file(filename):

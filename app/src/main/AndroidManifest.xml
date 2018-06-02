@@ -87,6 +87,7 @@
 
         <activity
             android:name=".InstructionalVideoPlayingActivity"
+            android:screenOrientation="landscape"
             android:label="@string/app_name"
             android:parentActivityName=".InstructionalVideoActivity">
             <intent-filter>

@@ -32,12 +32,10 @@ public class InstructionalVideoPlayingActivity extends AppCompatActivity {
 
         Log.d("InstructionalVideoPlayingActivity","received video " + receivedIntent.getStringExtra(PythonClient.ID));
 
-        videoView.setVideoURI(Uri.parse(String.format("http://%s:5000/download/instruvid/%s" + ".mpg",
+        videoView.setVideoURI(Uri.parse(String.format("http://%s:5000/download/instruvid/%s" + ".mp4",
                 PythonClient.IP_ADDR,
                 receivedIntent.getStringExtra(PythonClient.ID))));
         videoView.requestFocus();
         videoView.start();
-
-
     }
 }

@@ -38,9 +38,9 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    public static final String IP_ADDR = "192.168.0.20";
+    //public static final String IP_ADDR = "192.168.0.20";
     //For device emulator
-    //public static final String IP_ADDR = "10.0.2.2";
+    public static final String IP_ADDR = "10.0.2.2";
 
 
     //private DataOutputStream dout;
@@ -179,7 +179,7 @@ public class PythonClient extends IntentService{
 
     public String fetchInstruvidFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/instruvid/%s"+".mpg", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/instruvid/%s"+".mp4", IP_ADDR, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -214,12 +214,12 @@ public class PythonClient extends IntentService{
                         }
                     }
 
-                    String[] vIds = fetchInstruvidListFromHttpServer();
-                    for (String rid : vIds) {
-                        if (remoteFileManager.getInstructionalVideo(rid) == null) {
-                            remoteFileManager.setInstructionalVideo(rid, new InstructionalVideo(fetchInstruvidFromHttpServer(rid)));
-                        }
-                    }
+//                    String[] vIds = fetchInstruvidListFromHttpServer();
+//                    for (String rid : vIds) {
+//                        if (remoteFileManager.getInstructionalVideo(rid) == null) {
+//                            remoteFileManager.setInstructionalVideo(rid, new InstructionalVideo(fetchInstruvidFromHttpServer(rid)));
+//                        }
+//                    }
 
                     Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
@@ -260,15 +260,15 @@ public class PythonClient extends IntentService{
                     Log.d("sender", "FETCH_MY_PRESENTATION");
                     sendMessage(FETCH_MY_PRESENTATION, id);
                     break;
-                case FETCH_INSTRU_VID:
-                    id = intent.getStringExtra(ID);
-
-                    if (remoteFileManager.getInstructionalVideo(id) == null) {
-                        remoteFileManager.setInstructionalVideo(id, new InstructionalVideo(fetchInstruvidFromHttpServer(id)));
-                    }
-                    Log.d("sender", "FETCH_INSTRU_VID");
-                    sendMessage(FETCH_INSTRU_VID, id);
-                    break;
+//                case FETCH_INSTRU_VID:
+//                    id = intent.getStringExtra(ID);
+//
+//                    if (remoteFileManager.getInstructionalVideo(id) == null) {
+//                        remoteFileManager.setInstructionalVideo(id, new InstructionalVideo(fetchInstruvidFromHttpServer(id)));
+//                    }
+//                    Log.d("sender", "FETCH_INSTRU_VID");
+//                    sendMessage(FETCH_INSTRU_VID, id);
+//                    break;
             }
 
             Log.d("sender", "B");
