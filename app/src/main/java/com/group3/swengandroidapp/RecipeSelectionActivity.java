@@ -16,12 +16,12 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import java.util.ArrayList;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
-    String id;
-    ImageView icon;
+    private String id;
+    private ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
     private Recipe recipe;
-    ArrayList<String> ingredientsList;
-    String previousActivity;
+    private ArrayList<String> ingredientsList;
+    private String previousActivity;
 
     public  android.os.Vibrator vibrator;
 

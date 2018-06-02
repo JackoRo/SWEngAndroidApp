@@ -159,7 +159,7 @@ public class RemoteFileManager {
         return instructionalVideos.get(id);
     }
 
-    public String[] getInstructionalVideo(){
+    public String[] getInstructionalVideos(){
         String[] ids = new String[instructionalVideos.size()];
         int counter = 0;
         for(String key : RemoteFileManager.getInstance().getInstructionalVideosList().keySet()){
@@ -177,6 +177,11 @@ public class RemoteFileManager {
     public void setMyPresentation(String id, Presentation myPresentation) {
         myPresentation.setProperty("_ID", id);
         myPresentations.put(id, myPresentation);
+    }
+
+    public void setInstructionalVideo(String id, InstructionalVideo instructionalVideo) {
+        instructionalVideo.setID(id);
+        instructionalVideos.put(id, instructionalVideo);
     }
 
     public Presentation getPresentation(String id) { return presentations.get(id); }

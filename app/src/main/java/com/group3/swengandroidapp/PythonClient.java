@@ -38,7 +38,7 @@ public class PythonClient extends IntentService{
     //For USB debugging
     //public static final String IP_ADDR = "192.168.0.192";
     //For device emulator
-    public static final String IP_ADDR = "192.168.1.128";
+    public static final String IP_ADDR = "10.0.2.2";
 
 
     //private DataOutputStream dout;
