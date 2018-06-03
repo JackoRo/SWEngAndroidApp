@@ -58,7 +58,7 @@ ul.navigation li{
 	float: left;
 }
 
-ul.navigation li.logo{
+ul.navigation li.menu-button{
 	display: inline-block;
 	color: #567;
 	text-align: center;
@@ -69,7 +69,19 @@ ul.navigation li.logo{
 	transition: color .2s;
 }
 
-ul.navigation li.logo:hover{
+ul.navigation li.logo{
+	display: inline-block;
+	position: center;
+	color: white;
+	text-align: center;
+	padding: 10px 16px;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: bold;
+	transition: margin-right .3s;
+}
+
+ul.navigation li.menu-button:hover{
 	color: white;
 }
 
