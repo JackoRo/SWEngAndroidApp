@@ -146,7 +146,7 @@ public class CreateARecipe extends AppCompatActivity {
 
         private int configureID(int idFlag){
                 if(idFlag == 0){
-                    id_integer = 12;
+                    id_integer = 13;
                 }
                 else{
                     id_integer++;
