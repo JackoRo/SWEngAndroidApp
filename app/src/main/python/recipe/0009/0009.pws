@@ -22,6 +22,7 @@
         <Text>
             Toast bread slightly
         </Text>
+        <Image path="https://www.istockphoto.com/photos/burning-toaster-toast-fire-natural-phenomenon"/>
     </Slide>
     <Slide>
         <Text
@@ -32,6 +33,7 @@
         <Text>
             Slice some cheese
         </Text>
+        <Image path="http://www.johnnywhitesfishandchips.co.uk/wp-content/uploads/2013/04/Cheese.jpg"/>
     </Slide>
 	<Slide>
         <Text
@@ -42,6 +44,7 @@
         <Text>
             Put cheese on the toast and put in under the grill for a bit!
         </Text>
+        <Image path="http://allrecipes.co.uk/recipe/33297/cheese-toast.aspx"/>
     </Slide>
 
 </Presentation>

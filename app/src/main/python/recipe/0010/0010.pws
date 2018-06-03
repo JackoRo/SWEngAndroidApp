@@ -22,6 +22,7 @@
         <Text>
             Open bag of chips
         </Text>
+        <Image path="https://www.huffingtonpost.com/entry/chips-without-a-clip_us_56b862d2e4b08069c7a7d8a5"/>
     </Slide>
     <Slide>
         <Text
@@ -32,6 +33,7 @@
         <Text>
             Pour bag in bowl
         </Text>
+        <Image path="http://bellybytes.com/bellybytes/kettle_bakes_pretzels.html"/>
     </Slide>
 
 </Presentation>
