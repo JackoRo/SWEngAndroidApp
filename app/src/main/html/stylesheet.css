@@ -60,7 +60,7 @@ ul.navigation li{
 
 ul.navigation li.logo{
 	display: inline-block;
-	color: #345;
+	color: #567;
 	text-align: center;
 	padding: 10px 16px;
 	text-decoration: none;
@@ -102,7 +102,7 @@ ul.navigation li a:hover{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 20px;
-    color: #888;
+    color: #567;
     display: block;
     transition: 0.3s;
 	white-space:nowrap;
