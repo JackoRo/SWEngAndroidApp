@@ -18,143 +18,150 @@ import java.util.ArrayList;
 
 public class CreateARecipe extends AppCompatActivity {
 
-    private Recipe temporaryRecipe = new Recipe();
+        private Recipe temporaryRecipe = new Recipe();
 
-    private EditText etTitle;
-    private EditText etDescription;
-    private EditText etTime;
-    private EditText etIngredientName;
-    private EditText etQuantity;
+        private EditText etTitle;
+        private EditText etDescription;
+        private EditText etTime;
+        private EditText etIngredientName;
+        private EditText etQuantity;
 
-    private String title;
-    private String description;
-    private String author = "User";
-    private String time;
-    private String ingredientName;
-    private String quantity;
-    private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+        private String title;
+        private String description;
+        private String author = "User";
+        private String time;
+        private String ingredientName;
+        private String quantity;
+        private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    private int idFlag = 0;
-    private int id_integer;
-    private String id_String;
+        private int idFlag = 0;
+        private int id_integer;
+        private String id_String;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_arecipe);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_create_arecipe);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            setTitle("Create A Recipe");
 
-        Button addIngredientBtn = findViewById(R.id.add_ingredients);
-        Button createRecipeBtn = findViewById(R.id.create_recipe);
+            Button addIngredientBtn = findViewById(R.id.add_ingredients);
+            Button createRecipeBtn = findViewById(R.id.create_recipe);
 
-        etTitle = findViewById(R.id.title_input);
-        etDescription = findViewById(R.id.description_input);
-        etTime = findViewById(R.id.time_input);
-        etIngredientName = findViewById(R.id.ingredient_name);
-        etQuantity = findViewById(R.id.ingredient_quantity);
+            etTitle = findViewById(R.id.title_input);
+            etDescription = findViewById(R.id.description_input);
+            etTime = findViewById(R.id.time_input);
+            etIngredientName = findViewById(R.id.ingredient_name);
+            etQuantity = findViewById(R.id.ingredient_quantity);
 
-        etTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(etTitle.getText().toString().isEmpty()){
-                    createRecipeBtn.setClickable(false);
-                    createRecipeBtn.setEnabled(false);
-                }
-                else{
-                    createRecipeBtn.setClickable(true);
-                    createRecipeBtn.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(etTitle.getText().toString().isEmpty()){
-                    createRecipeBtn.setClickable(false);
-                    createRecipeBtn.setEnabled(false);
-                }
-                else{
-                    createRecipeBtn.setClickable(true);
-                    createRecipeBtn.setEnabled(true);
-                }
-            }
-        });
-
-            createRecipeBtn.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View v) {
-
-                    title = etTitle.getText().toString();
-                    description = etDescription.getText().toString();
-                    time = etTime.getText().toString();
-
-                    configureID(idFlag);
-                    convertID(id_integer);
-                    settingRecipe(title, author, description, id_String, time, ingredients);
-
-                    RemoteFileManager userRecipe = RemoteFileManager.getInstance();
-                    userRecipe.setRecipe(id_String, temporaryRecipe);
+            //Disable the recipe creation button if the title editText is empty.
+            etTitle.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    if(etTitle.getText().toString().isEmpty()){
+                        createRecipeBtn.setClickable(false);
+                        createRecipeBtn.setEnabled(false);
+                    }
+                    else{
+                        createRecipeBtn.setClickable(true);
+                        createRecipeBtn.setEnabled(true);
+                    }
                 }
 
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(etTitle.getText().toString().isEmpty()){
+                        createRecipeBtn.setClickable(false);
+                        createRecipeBtn.setEnabled(false);
+                    }
+                    else{
+                        createRecipeBtn.setClickable(true);
+                        createRecipeBtn.setEnabled(true);
+                    }
+                }
             });
 
-        addIngredientBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                createRecipeBtn.setOnClickListener(new View.OnClickListener() {
 
+                    public void onClick(View v) {
 
-                ingredientName = etIngredientName.getText().toString();
-                quantity = etQuantity.getText().toString();
+                        title = etTitle.getText().toString();
+                        description = etDescription.getText().toString();
+                        time = etTime.getText().toString();
 
-                ingredients.add(new Ingredient(ingredientName, quantity));
+                        //Assign recipe an ID and increment.
+                        configureID(idFlag);
+                        convertID(id_integer);
 
-                etIngredientName.setText("");
-                etQuantity.setText("");
+                        /**Set recipe object to the contents of the editTexts and store
+                         * via RemoteFileManager. and store recipe using entered information.**/
+                        settingRecipe(title, author, description, id_String, time, ingredients);
+                        RemoteFileManager userRecipe = RemoteFileManager.getInstance();
+                        userRecipe.setRecipe(id_String, temporaryRecipe);
+                    }
 
-                Toast.makeText(getApplicationContext(), "Ingredient added!", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+                });
 
-    private int configureID(int idFlag){
-            if(idFlag == 0){
-                id_integer = 12;
-            }
+            addIngredientBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ingredientName = etIngredientName.getText().toString();
+                    quantity = etQuantity.getText().toString();
+                    ingredients.add(new Ingredient(ingredientName, quantity));
+                    /**Clear so another ingredient can be added, and notify user ingredient
+                     * has been added.**/
+                    etIngredientName.setText("");
+                    etQuantity.setText("");
+                    Toast.makeText(getApplicationContext(), "Ingredient added!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
-            else{
-                id_integer++;
-            }
+    /**Select ID number to assign to the recipe that has not been previously assigned, based on
+     * the assumption that only the user currently accesses these recipes.
+     */
 
-            return id_integer;
-    }
+        private int configureID(int idFlag){
+                if(idFlag == 0){
+                    id_integer = 12;
+                }
+                else{
+                    id_integer++;
+                }
 
-    private String convertID(int id_integer){
-            if(id_integer < 100){
-                id_String = "00" + id_integer;
-            }
-            else if(id_integer < 1000){
-                id_String = "0" + id_integer;
-            }
-            else{
-                id_String = "" + id_integer;
-            }
+                return id_integer;
+        }
 
-            return id_String;
-    }
+        //Converts the ID number into a string in order to assign it to the recipe.
+        private String convertID(int id_integer){
+                if(id_integer < 100){
+                    id_String = "00" + id_integer;
+                }
+                else if(id_integer < 1000){
+                    id_String = "0" + id_integer;
+                }
+                else{
+                    id_String = "" + id_integer;
+                }
 
-    private void settingRecipe(String title, String author, String description, String id_String, String time, ArrayList<Ingredient> ingredients){
-            temporaryRecipe.setTitle(title);
-            temporaryRecipe.setDescription(description);
-            temporaryRecipe.setTime(time);
-            temporaryRecipe.setAuthor(author);
-            temporaryRecipe.setID(id_String);
-            temporaryRecipe.setIngredients(ingredients);
-            idFlag++;
-    }
+                return id_String;
+        }
+
+        //Set the recipe object to the strings in the editTexts and assign an ID.
+        private void settingRecipe(String title, String author, String description, String id_String, String time, ArrayList<Ingredient> ingredients){
+                temporaryRecipe.setTitle(title);
+                temporaryRecipe.setDescription(description);
+                temporaryRecipe.setTime(time);
+                temporaryRecipe.setAuthor(author);
+                temporaryRecipe.setID(id_String);
+                temporaryRecipe.setIngredients(ingredients);
+                idFlag++;
+        }
 
 }
