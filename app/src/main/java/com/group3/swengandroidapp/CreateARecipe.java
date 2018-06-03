@@ -49,8 +49,8 @@ public class CreateARecipe extends AppCompatActivity {
         private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
         private Uri thumbnailUri = Uri.parse("android.resource://your.package.here/drawable/default_thumbnail_2");
 
-        private int idFlag = 0;
-        private int id_integer;
+        private static int idFlag = 0;
+        private static int id_integer = 13;
         private String id_String;
 
         @Override
@@ -128,6 +128,7 @@ public class CreateARecipe extends AppCompatActivity {
                     settingRecipe(title, author, description, id_String, time, ingredients, thumbnailUri);
                     RemoteFileManager userRecipe = RemoteFileManager.getInstance();
                     userRecipe.setMyRecipe(id_String, temporaryRecipe);
+                    userRecipe.setRecipe(id_String, temporaryRecipe);
                 }
             });
 
@@ -158,7 +159,7 @@ public class CreateARecipe extends AppCompatActivity {
 
         private int configureID(int idFlag){
                 if(idFlag == 0){
-                    id_integer = 3;
+                    id_integer = 13;
                 }
                 else{
                     id_integer++;

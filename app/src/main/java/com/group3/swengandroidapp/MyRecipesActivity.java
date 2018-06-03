@@ -24,14 +24,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.HashMap;
 
-/**
- * The home screen of the app.
- * <p>
- *     Displays a history of recently viewed recipes (as contained within {@link HistoryHandler}) and a
- *     "recommended" list of recipes (Produced within {@link RemoteFileManager}).
- * </p>
- * Created by Kevin on 12/03/2018 and edited by mb1510 (Team Leader).
- */
+
 public class MyRecipesActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     private RecipeRecyclerViewAdaper myRecipesAdapter;          // adapter to Suggested Recipes recyclerview
@@ -40,10 +33,6 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
 
     private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
 
-    /**
-     * Method called when a recipe is clicked from the home screen either in the history or main section.
-     * Opens an instance of {@link RecipeSelectionActivity}
-     */
     @Override
     public void onItemClick(String myRecipeId){
         AudioPlayer.touchSound();
