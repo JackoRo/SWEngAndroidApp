@@ -16,12 +16,14 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import java.util.ArrayList;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
-    String id;
-    ImageView icon;
+    private String id;
+    private ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
     private Recipe recipe;
-    ArrayList<String> ingredientsList;
-    String previousActivity;
+    private ArrayList<String> ingredientsList;
+    private String previousActivity;
+
+    public  android.os.Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,15 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra(PythonClient.ID);
 
+        vibrator = (android.os.Vibrator) getSystemService(android.content.Context.VIBRATOR_SERVICE);
+
         final Button startButton = findViewById(R.id.recipe_selection_start_button);
         startButton.setOnClickListener(v -> {
-            AudioPlayer.touchSound();
             // Code here executes on main thread after user presses button
+            AudioPlayer.touchSound();
+            if (!AudioPlayer.isVibrationOff()){
+                vibrator.vibrate(20);
+             }
             Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
             newIntent.putExtra(PythonClient.ID, id);
 
@@ -51,6 +58,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         listButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                 }
 //                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString());
 //                  if (toAdd.length > 0) {
 //                         for (int i=0; i < toAdd.length; i++){
@@ -69,6 +79,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         favourites.setOnClickListener(v -> {
             if(id!=null){
                 AudioPlayer.favouritesSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                 }
                 FavouritesHandler.getInstance().toggleFavourite(id);
                 if (FavouritesHandler.getInstance().contains(id)) {
                     favourites.setImageResource(R.drawable.favfull);

@@ -10,8 +10,8 @@
     color="#000000"
     font="Times New Roman">
 
-    <Meta key="author" value="Not Stuart Porter" />
-    <Meta key="name" value="Pasta Bake"/>
+    <Meta key="author" value="Rordon Gamsey" />
+    <Meta key="name" value="Ham and Cheese Omelette"/>
 
     <Slide>
         <Text
@@ -20,9 +20,9 @@
             STEP 1
         </Text>
         <Text>
-            Pre-heat oven to 200 degrees (C)
+            Whisk your eggs in an bowl.
         </Text>
-        <Image path="https://i.ytimg.com/vi/rbc_LxfhSoY/hqdefault.jpg"/>
+        <Image path="https://c1.staticflickr.com/4/3326/3343584303_e92b2312d0_b.jpg"/>
     </Slide>
     <Slide>
         <Text
@@ -31,9 +31,9 @@
             STEP 2
         </Text>
         <Text>
-            Lightly fry garlic in your butter until golden
+            Cut the ham into small squares
         </Text>
-        <Image path="https://www.propertydivision.co.uk/wp-content/uploads/2015/09/frying-pan-fire-696x467.jpg"/>
+        <Image path="https://www.ourbestbites.com/wp-content/uploads/2012/01/diced-ham.jpg"/>
     </Slide>
 
     <Slide>
@@ -45,9 +45,9 @@
             STEP 3
         </Text>
         <Text>
-            Add Tomatoes and stuff to the frying pan and cook for 10 minutes
+            Melt the butter in the pan at medium high heat
         </Text>
-        <Image path="https://www.propertydivision.co.uk/wp-content/uploads/2015/09/frying-pan-fire-696x467.jpg"/>
+        <Image path="https://slowcookersociety.com/wp-content/uploads/2016/08/melt-butter-in-skillet.jpg"/>
     </Slide>
 
     <Slide>
@@ -57,13 +57,9 @@
             STEP 4
         </Text>
         <Text>
-            Place the defenseless pasta in a deep oven dish and seductively empty the contents
-            of the saucepan on top of your tasty victims. Ceremonially decorate with grated cheese.
+            Pour the eggs into the pan and let it cook until it sets
         </Text>
-        <Text>
-            Cook your dish of ingredients on the middle shelf until it becomes a pasta bake.
-        </Text>
-        <Image path="https://www.propertydivision.co.uk/wp-content/uploads/2015/09/frying-pan-fire-696x467.jpg"/>
+        <Image path="http://www.melaniecooks.com/wp-content/uploads/2011/10/omelette-without-flipping.jpg"/>
     </Slide>
 
     <Slide>
@@ -73,9 +69,13 @@
             STEP 5
         </Text>
         <Text>
-            Leave to cool for 2 minutes, and enjoy!
+            Sprinkle the ham onto the omelette, fold it and sprinkle cheese on it.
         </Text>
-        <Image path="https://thatangiegirl.files.wordpress.com/2008/05/1stcanonpics-096.jpg"/>
+		
+		<Text>
+            Enjoy your omelette!
+        </Text>
+        <Image path="https://westernstarbutter.com.au/content/dam/westernstar/recipe/4357_fluffy-cheese-ham-omelet_standard.jpg"/>
     </Slide>
 
 </Presentation>
