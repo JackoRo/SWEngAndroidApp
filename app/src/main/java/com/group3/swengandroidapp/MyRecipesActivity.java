@@ -93,7 +93,7 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
     public void createNewRecipeScreen(){
         Log.d("myRecipesActivity","Create new recipe");
         Intent intent = new Intent();
-        intent.setClass(this,HomeActivity.class);                   // Set new activity destination TODO: CHANGE TO RECIPE CREATION ACTIVITY
+        intent.setClass(this,CreateARecipe.class);                   // Set new activity destination TODO: CHANGE TO RECIPE CREATION ACTIVITY
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
     }
