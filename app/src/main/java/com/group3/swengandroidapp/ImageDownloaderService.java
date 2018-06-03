@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -74,7 +75,7 @@ public class ImageDownloaderService extends IntentService {
                             if (RemoteFileManager.getInstance().getRecipe(id) == null) {
                                 recipeThumbnailURL = RemoteFileManager.getInstance().getMyRecipe(id).getThumbnail();
 
-                                if(!recipeThumbnailURL.contains("http")){
+                                if(!recipeThumbnailURL.contains("http") && !recipeThumbnailURL.contains("content://")){
                                     // is name of file in server (relative to recipe folder)
                                     StringBuilder sb = new StringBuilder();
                                     sb.append("http://");
@@ -91,7 +92,7 @@ public class ImageDownloaderService extends IntentService {
                                 recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
 
 
-                                if(!recipeThumbnailURL.contains("http")){
+                                if(!recipeThumbnailURL.contains("http") && !recipeThumbnailURL.contains("content://")){
                                     // is name of file in server (relative to recipe folder)
                                     StringBuilder sb = new StringBuilder();
                                     sb.append("http://");
@@ -178,7 +179,13 @@ public class ImageDownloaderService extends IntentService {
             connection.disconnect();
         } catch (Exception e) {
             Log.d("ImageDownloaderService", "[ER][6] Error when downloading image!");
-            return null;
+
+            try {
+                image = BitmapFactory.decodeFile(url);
+            }
+            catch (Exception ex) {
+                return null;
+            }
         }
 
         if(image != null){
