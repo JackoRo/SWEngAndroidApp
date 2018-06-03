@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="Rordon Gamsey" />
+    <Meta key="name" value="Ham and Cheese Omelette"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Whisk your eggs in an bowl.
+        </Text>
+        <Image path="https://c1.staticflickr.com/4/3326/3343584303_e92b2312d0_b.jpg"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Cut the ham into small squares
+        </Text>
+        <Image path="https://www.ourbestbites.com/wp-content/uploads/2012/01/diced-ham.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24"
+            underline="false"
+            font="Times New Roman">
+            STEP 3
+        </Text>
+        <Text>
+            Melt the butter in the pan at medium high heat
+        </Text>
+        <Image path="https://slowcookersociety.com/wp-content/uploads/2016/08/melt-butter-in-skillet.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 4
+        </Text>
+        <Text>
+            Pour the eggs into the pan and let it cook until it sets
+        </Text>
+        <Image path="http://www.melaniecooks.com/wp-content/uploads/2011/10/omelette-without-flipping.jpg"/>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 5
+        </Text>
+        <Text>
+            Sprinkle the ham onto the omelette, fold it and sprinkle cheese on it.
+        </Text>
+		
+		<Text>
+            Enjoy your omelette!
+        </Text>
+        <Image path="https://westernstarbutter.com.au/content/dam/westernstar/recipe/4357_fluffy-cheese-ham-omelet_standard.jpg"/>
+    </Slide>
+
+</Presentation>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="SWEng Group 3" />
+    <Meta key="name" value="Salsa Verde"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Finely cut the parsley leaves, basil leaves and garlic. Place in a bowl
+        </Text>
+        <Image path="https://ak5.picdn.net/shutterstock/videos/3153535/thumb/3.jpg?i10c=img.resize(height:160)"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Squeeze the juice out of the lemon into the bowl. Then pour in the olive oil.
+        </Text>
+		<Text>
+            Enjoy!
+        </Text>
+        <Image path="https://www.simplyrecipes.com/wp-content/uploads/2005/05/tomatillo-salsa-verde-vertical-a2-1800.jpg"/>
+    </Slide>
+
+</Presentation>

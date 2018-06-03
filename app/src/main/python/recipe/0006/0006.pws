@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="SWEng Group 3" />
+    <Meta key="name" value="Margarita Pizza"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Sieve the flour into a bowl. Pour in the olive oil, instant yeast and 200ml of water. 
+        </Text>
+        <Image path="https://pioneerwoman.files.wordpress.com/2016/06/how-to-make-and-freeze-pizza-dough-02.jpg"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Mix the mixture together until it's fairly soft and wet.
+        </Text>
+        <Image path="http://3.bp.blogspot.com/-inYiiIjsDFw/Ug50VnAL2FI/AAAAAAAACfo/2pE789E4jqU/s1600/italianfood_0888.JPG"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 3
+        </Text>
+        <Text>
+            Place the mixture onto a lightly floured surface. Then knead the dough for roughly 5 minutes until smooth. 
+        </Text>
+        <Image path="https://res.cloudinary.com/hksqkdlah/image/upload/ar_16:9,c_fill,f_auto,q_auto,w_1100/articles/STP_MonkeyBread_KneadingDoughbyHand_05"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 4
+        </Text>
+        <Text>
+            Set the dough aside in a bowl and cover it with a tea towel. Leave it to rise.
+        </Text>
+        <Image path="http://cdn.hollywoodtohills.com/wp-content/uploads/2016/08/Bertinet-Pizza-Dough-Rise.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 5
+        </Text>
+        <Text>
+            Once the dough has rised, roll it out.
+        </Text>
+        <Image path="https://foodonfifth.files.wordpress.com/2012/07/img_94721.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 6
+        </Text>
+        <Text>
+            To make the sauce, mix the San Marzano tomatoes and curshed garlic together in a bowl.
+        </Text>
+        <Image path="https://www.budgetbytes.com/wp-content/uploads/2011/08/Thick-Rich-Pizza-Sauce-finished.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 7
+        </Text>
+        <Text>
+            Cover the pizza dough with the tomato sauce and cheese
+        </Text>
+        <Image path="http://cyntillating.com/wp-content/uploads/2012/02/dough-cheesed.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 8
+        </Text>
+        <Text>
+            Preheat the oven to 240C/fan or 220C/gas 8. Place the pizza in the oven for roughly 8-10 minutes until crispy
+        </Text>
+        <Image path="https://slice.seriouseats.com/images/20110327-144755-Rudys-plain-whole.jpg"/>
+    </Slide>
+
+</Presentation>

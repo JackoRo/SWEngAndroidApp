@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="SWEng Group 3" />
+    <Meta key="name" value="Pancakes"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Sieve the flour in a bowl and mix it with the eggs and milk using a whisk to make a smooth batter.
+        </Text>
+        <Image path="http://ditezdowozem.info/wp-content/uploads/pancake-batter-cook-diary-pancake-batter.jpg"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Pre-heat the pan to medium heat. Cover it in the oil. Then pour in the batter into the pan.
+        </Text>
+        <Image path="https://stefangourmet.files.wordpress.com/2013/12/dsc01621.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 3
+        </Text>
+        <Text>
+            Let it for roughly a minute until the bottom is golden. Then flip it.
+        </Text>
+        <Image path="https://www.tiendeo.com.au/blog/wp-content/uploads/2016/02/FlippingPhotos-1-810x458.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 4
+        </Text>
+        <Text>
+            Cook the other side until golden, then serve!
+        </Text>
+        <Image path="https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe_images/recipe-image-legacy-id--1273452_7.jpg?itok=vE2Ai9hy"/>
+    </Slide>
+	
+</Presentation>
