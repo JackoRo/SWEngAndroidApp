@@ -1,5 +1,6 @@
 package com.group3.swengandroidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,10 @@ import java.util.ArrayList;
 public class CreateARecipe extends AppCompatActivity {
 
         private Recipe temporaryRecipe = new Recipe();
+
+        private Button addIngredientBtn;
+        private Button selectThumbnail;
+        private Button createRecipeBtn;
 
         private EditText etTitle;
         private EditText etDescription;
@@ -46,8 +51,9 @@ public class CreateARecipe extends AppCompatActivity {
             setSupportActionBar(toolbar);
             setTitle("Create A Recipe");
 
-            Button addIngredientBtn = findViewById(R.id.add_ingredients);
-            Button createRecipeBtn = findViewById(R.id.create_recipe);
+            addIngredientBtn = findViewById(R.id.add_ingredients);
+            selectThumbnail = findViewById(R.id.select_thumbnail);
+            createRecipeBtn = findViewById(R.id.create_recipe);
 
             etTitle = findViewById(R.id.title_input);
             etDescription = findViewById(R.id.description_input);
@@ -87,26 +93,31 @@ public class CreateARecipe extends AppCompatActivity {
                 }
             });
 
-                createRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            selectThumbnail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openGallery();
+                }
+            });
 
-                    public void onClick(View v) {
+            createRecipeBtn.setOnClickListener(new View.OnClickListener() {
 
-                        title = etTitle.getText().toString();
-                        description = etDescription.getText().toString();
-                        time = etTime.getText().toString();
+                public void onClick(View v) {
+                    title = etTitle.getText().toString();
+                    description = etDescription.getText().toString();
+                    time = etTime.getText().toString();
 
-                        //Assign recipe an ID and increment.
-                        configureID(idFlag);
-                        convertID(id_integer);
+                    //Assign recipe an ID and increment.
+                    id_integer = configureID(idFlag);
+                    id_String = convertID(id_integer);
 
-                        /**Set recipe object to the contents of the editTexts and store
-                         * via RemoteFileManager. and store recipe using entered information.**/
-                        settingRecipe(title, author, description, id_String, time, ingredients);
-                        RemoteFileManager userRecipe = RemoteFileManager.getInstance();
-                        userRecipe.setRecipe(id_String, temporaryRecipe);
-                    }
-
-                });
+                    /**Set recipe object to the contents of the editTexts and store
+                    * via RemoteFileManager. and store recipe using entered information.**/
+                    settingRecipe(title, author, description, id_String, time, ingredients);
+                    RemoteFileManager userRecipe = RemoteFileManager.getInstance();
+                    userRecipe.setRecipe(id_String, temporaryRecipe);
+                }
+            });
 
             addIngredientBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,6 +133,12 @@ public class CreateARecipe extends AppCompatActivity {
                 }
             });
         }
+
+    private void openGallery() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, 1);
+    }
 
     /**Select ID number to assign to the recipe that has not been previously assigned, based on
      * the assumption that only the user currently accesses these recipes.

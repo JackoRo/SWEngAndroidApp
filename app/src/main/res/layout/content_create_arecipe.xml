@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/upper_section"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/introductory_comment"
-            android:textSize="50sp"
-            android:textColor="@color/buttonColour"/>
+            android:textColor="@color/buttonColour"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/title_input"
@@ -51,7 +51,7 @@
     <LinearLayout
         android:id="@+id/middle_section_one"
         android:layout_width="match_parent"
-        android:layout_height="190sp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/upper_section">
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ingredients_title"
             android:textColor="@color/buttonColour"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/ingredient_name"
@@ -88,7 +88,6 @@
             android:textColor="@color/buttonTextColour" />
 
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -97,22 +96,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/middle_section_one">
+
         <TextView
             android:id="@+id/filter_explanation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/warningColour"
             android:text="@string/filter_explanation"
-            android:textSize="15sp"
-            android:background="@color/warningColour"/>
+            android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lower_section"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <Button
+            android:id="@+id/select_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_thumbnail_request"
+            android:background="@drawable/new_rounded_button"
+            android:textColor="@color/buttonTextColour"/>
         <Button
             android:id="@+id/create_recipe"
             android:layout_width="match_parent"
@@ -121,4 +128,6 @@
             android:text="@string/create_recipe"
             android:textColor="@color/buttonTextColour" />
     </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>
