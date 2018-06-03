@@ -1,6 +1,7 @@
 body{
 	background-color: #EEE;
-	
+	min-height:100vh;
+	transition: margin-left .3s;
 }
 
 div.text_section{
@@ -38,12 +39,14 @@ div.text_section h2{
 	color: white;
 	font-size: 60px;
 	padding-bottom: 50px;
-	padding-top: 40px;
+	padding-top: 100px;
 	padding-left: 5%;
 	padding-right:5%;
 }
 
 ul.navigation{
+	position:fixed;
+	width: 100%;
 	list-style-type: none;
     margin: 0;
     padding: 0;
@@ -57,12 +60,17 @@ ul.navigation li{
 
 ul.navigation li.logo{
 	display: inline-block;
-	color: white;
+	color: #345;
 	text-align: center;
 	padding: 10px 16px;
 	text-decoration: none;
 	font-size: 20px;
 	font-weight: bold;
+	transition: color .2s;
+}
+
+ul.navigation li.logo:hover{
+	color: white;
 }
 
 ul.navigation li a{
@@ -75,4 +83,39 @@ ul.navigation li a{
 
 ul.navigation li a:hover{
 	background-color: #234;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #123;
+    overflow-x: hidden;
+    transition: .3s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #888;
+    display: block;
+    transition: 0.3s;
+	white-space:nowrap;
+}
+
+.sidenav a:hover {
+    color: #FFF;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }

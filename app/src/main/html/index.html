@@ -19,11 +19,19 @@
   <body>
   
 	<ul class="navigation">
-		<li class="logo">Hands Off! </li>
-		<li><a href="index.html">Home</a></li>
-		<li><a href="research.html">Research</a></li>
-		<li><a href="roles_members.html">Roles & Members</a></li>
+		<li id="LOGO" class="logo" style="cursor:pointer;" onclick="openNav()">Hands Off! </li>
 	</ul>  
+	
+	<div id="SIDENAV" class="sidenav">
+		<a href="#" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="index.html">Home</a>
+		<a href="documentation.html">Documentation</a>
+		<a href="#">Design</a>
+		<a href="#">Finance</a>
+		<a href="research.html">Research</a>
+	</div>
+	
+	
 	
 	<h1 class="BANNER">SWEng Group 3 Enterprise HTML Product Tour</h1>
 
@@ -80,7 +88,7 @@
 	</p>
 	</div>
 	
-	
+	<script src="sidenav.js"></script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
