@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="Not Stuart Porter" />
+    <Meta key="name" value="Pasta Bake"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Pre-heat oven to 200 degrees (C)
+        </Text>
+        <Image path="https://i.ytimg.com/vi/rbc_LxfhSoY/hqdefault.jpg"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Roll pastry, and lightly prick with a fork
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24"
+            underline="false"
+            font="Times New Roman">
+            STEP 3
+        </Text>
+        <Text>
+            Peel and quarter the apples
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 4
+        </Text>
+        <Text>
+           Melt the butter in a oven proof skillet
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 5
+        </Text>
+        <Text>
+           Add the sugar to the skillet
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 6
+        </Text>
+        <Text>
+           Add the prepared apples to the skillet
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 7
+        </Text>
+        <Text>
+           Cook until the caramel begins to brown
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 8
+        </Text>
+        <Text>
+           Place the pastry on top of the apples and bake until the pastry is cooked
+        </Text>
+    </Slide>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 9
+        </Text>
+        <Text>
+          Place a plate on top of  the pan and carefully invert to have apples facing up
+        </Text>
+    </Slide>
+</Presentation>

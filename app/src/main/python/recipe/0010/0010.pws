@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="SWEng Group 3" />
+    <Meta key="name" value="Pancakes"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Open bag of chips
+        </Text>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Pour bag in bowl
+        </Text>
+    </Slide>
+
+</Presentation>
