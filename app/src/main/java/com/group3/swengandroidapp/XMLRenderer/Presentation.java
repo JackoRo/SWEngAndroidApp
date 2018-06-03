@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.group3.swengandroidapp.AudioPlayer;
 import com.group3.swengandroidapp.SImpLeGraphicsModule.GraphicModuleAndroid;
