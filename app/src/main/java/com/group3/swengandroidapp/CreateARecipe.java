@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Im;
@@ -30,7 +31,7 @@ public class CreateARecipe extends AppCompatActivity {
         private Recipe temporaryRecipe = new Recipe();
 
         private Button addIngredientBtn;
-        private Button selectThumbnail;
+        private Button selectThumbnailBtn;
         private Button createRecipeBtn;
 
         private EditText etTitle;
@@ -63,7 +64,7 @@ public class CreateARecipe extends AppCompatActivity {
             setTitle("Create A Recipe");
 
             addIngredientBtn = findViewById(R.id.add_ingredients);
-            selectThumbnail = findViewById(R.id.select_thumbnail);
+            selectThumbnailBtn = findViewById(R.id.select_thumbnail);
             createRecipeBtn = findViewById(R.id.create_recipe);
 
             etTitle = findViewById(R.id.title_input);
@@ -107,7 +108,7 @@ public class CreateARecipe extends AppCompatActivity {
                 }
             });
 
-            selectThumbnail.setOnClickListener(new View.OnClickListener() {
+            selectThumbnailBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openGallery();
@@ -216,6 +217,8 @@ public class CreateARecipe extends AppCompatActivity {
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
                 //thumbnail.setImageBitmap(selectedImage);
+                selectThumbnailBtn.setText(R.string.thumbnai_image_selected);
+                selectThumbnailBtn.setBackgroundColor(Color.BLUE);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 //Toast.makeText(PostImage.this, "Something went wrong", Toast.LENGTH_LONG).show();

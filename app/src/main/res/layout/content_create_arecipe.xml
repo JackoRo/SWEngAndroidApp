@@ -8,131 +8,144 @@
     tools:context="com.group3.swengandroidapp.CreateARecipe"
     tools:showIn="@layout/activity_create_arecipe">
 
-    <LinearLayout
-        android:id="@+id/upper_section"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbarThumbVertical="@drawable/drawable_scrollbar">
 
-        <TextView
-            android:id="@+id/create_recipe_title"
+        <LinearLayout
+            android:id="@+id/entire_scrolling_section"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/introductory_comment"
-            android:textColor="@color/buttonColour"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/section_three">
 
-        <EditText
-            android:id="@+id/title_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/title_request" />
+            <LinearLayout
+                android:id="@+id/section_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/description_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/description_request" />
+                <TextView
+                    android:id="@+id/create_recipe_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/introductory_comment"
+                    android:textColor="@color/buttonColour"
+                    android:textSize="28sp" />
 
-        <EditText
-            android:id="@+id/time_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/time_request" />
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/title_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/title_request"
+                    android:inputType="textPersonName"/>
 
-    <LinearLayout
-        android:id="@+id/middle_section_one"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/upper_section">
+                <EditText
+                    android:id="@+id/description_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/description_request"
+                    android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/ingredient_entry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredients_title"
-            android:textColor="@color/buttonColour"
-            android:textSize="20sp" />
+                <EditText
+                    android:id="@+id/time_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/time_request"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/ingredient_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/ingredient_name" />
+            <LinearLayout
+                android:id="@+id/section_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/ingredient_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/ingredient_quantity" />
+                <TextView
+                    android:id="@+id/ingredient_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ingredients_title"
+                    android:textColor="@color/buttonColour"
+                    android:textSize="28sp" />
 
-        <Button
-            android:id="@+id/add_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/new_rounded_button"
-            android:text="@string/ingredient_add"
-            android:textColor="@color/buttonTextColour" />
+                <EditText
+                    android:id="@+id/ingredient_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/ingredient_name"
+                    android:inputType="textPersonName" />
 
+                <EditText
+                    android:id="@+id/ingredient_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/ingredient_quantity"
+                    android:inputType="textPersonName" />
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/add_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/new_rounded_button"
+                    android:text="@string/ingredient_add"
+                    android:textColor="@color/buttonTextColour" />
 
-    <LinearLayout
-        android:id="@+id/middle_section_two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/middle_section_one">
+                <TextView
+                    android:id="@+id/filter_explanation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/warningColour"
+                    android:text="@string/filter_explanation"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/filter_explanation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/warningColour"
-            android:text="@string/filter_explanation"
-            android:textSize="10sp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/section_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/lower_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+                <Button
+                    android:id="@+id/select_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/new_rounded_button"
+                    android:text="@string/select_thumbnail_request"
+                    android:textColor="@color/buttonTextColour" />
 
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/thumbnail" />-->
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/select_thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/select_thumbnail_request"
-            android:background="@drawable/new_rounded_button"
-            android:textColor="@color/buttonTextColour"/>
-        <Button
-            android:id="@+id/create_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/new_rounded_button"
-            android:text="@string/create_recipe"
-            android:textColor="@color/buttonTextColour" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/section_four"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <Button
+                    android:id="@+id/create_recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/new_rounded_button"
+                    android:text="@string/create_recipe"
+                    android:textColor="@color/buttonTextColour" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
