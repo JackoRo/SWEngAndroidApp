@@ -1,6 +1,7 @@
 package com.group3.swengandroidapp;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -73,6 +74,7 @@ public class CreateARecipe extends AppCompatActivity {
 
             //thumbnail = findViewById(R.id.thumbnail);
 
+
             //Disable the recipe creation button if the title editText is empty.
             etTitle.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -129,6 +131,14 @@ public class CreateARecipe extends AppCompatActivity {
                     RemoteFileManager userRecipe = RemoteFileManager.getInstance();
                     userRecipe.setMyRecipe(id_String, temporaryRecipe);
                     userRecipe.setRecipe(id_String, temporaryRecipe);
+
+                    if (title.isEmpty()) {
+                        Toast.makeText(getApplicationContext(),"Error: Recipe must have a title", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Recipes " + title + " created", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
                 }
             });
 
