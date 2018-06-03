@@ -66,22 +66,45 @@ public class ImageDownloaderService extends IntentService {
                         // Check if it's already downloaded
                         if(!thumbnailNeedsDownloading(id)){
                             sendBitmapSavedMessage(id);
-                        }else{
+                        }else {
                             // Try downloading the bitmap
                             Boolean temporary = false;
-                            String recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
+                            String recipeThumbnailURL;
 
-                            if(!recipeThumbnailURL.contains("http")){
-                                // is name of file in server (relative to recipe folder)
-                                StringBuilder sb = new StringBuilder();
-                                sb.append("http://");
-                                sb.append(PythonClient.IP_ADDR);
-                                sb.append(":5000/download/recipe/");
-                                sb.append(id);
-                                sb.append("/");
-                                sb.append(recipeThumbnailURL);
-                                recipeThumbnailURL = sb.toString();
+                            if (RemoteFileManager.getInstance().getRecipe(id) == null) {
+                                recipeThumbnailURL = RemoteFileManager.getInstance().getMyRecipe(id).getThumbnail();
+
+                                if(!recipeThumbnailURL.contains("http")){
+                                    // is name of file in server (relative to recipe folder)
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("http://");
+                                    sb.append(PythonClient.IP_ADDR);
+                                    sb.append(":5000/download/myRecipe/");
+                                    sb.append(id);
+                                    sb.append("/");
+                                    sb.append(recipeThumbnailURL);
+                                    recipeThumbnailURL = sb.toString();
+                                }
+
                             }
+                            else {
+                                recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
+
+
+                                if(!recipeThumbnailURL.contains("http")){
+                                    // is name of file in server (relative to recipe folder)
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("http://");
+                                    sb.append(PythonClient.IP_ADDR);
+                                    sb.append(":5000/download/recipe/");
+                                    sb.append(id);
+                                    sb.append("/");
+                                    sb.append(recipeThumbnailURL);
+                                    recipeThumbnailURL = sb.toString();
+                                }
+
+                            }
+
 
                             Bitmap bitmap = downloadImage(recipeThumbnailURL);
 

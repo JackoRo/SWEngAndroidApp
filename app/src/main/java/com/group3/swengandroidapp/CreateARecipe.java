@@ -1,7 +1,11 @@
 package com.group3.swengandroidapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -9,12 +13,15 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.group3.swengandroidapp.XMLRenderer.Ingredient;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class CreateARecipe extends AppCompatActivity {
@@ -31,6 +38,8 @@ public class CreateARecipe extends AppCompatActivity {
         private EditText etIngredientName;
         private EditText etQuantity;
 
+        private ImageView thumbnail;
+
         private String title;
         private String description;
         private String author = "User";
@@ -38,6 +47,7 @@ public class CreateARecipe extends AppCompatActivity {
         private String ingredientName;
         private String quantity;
         private ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+        private Uri thumbnailUri = Uri.parse("android.resource://your.package.here/drawable/default_thumbnail_2");
 
         private int idFlag = 0;
         private int id_integer;
@@ -60,6 +70,8 @@ public class CreateARecipe extends AppCompatActivity {
             etTime = findViewById(R.id.time_input);
             etIngredientName = findViewById(R.id.ingredient_name);
             etQuantity = findViewById(R.id.ingredient_quantity);
+
+            //thumbnail = findViewById(R.id.thumbnail);
 
             //Disable the recipe creation button if the title editText is empty.
             etTitle.addTextChangedListener(new TextWatcher() {
@@ -113,9 +125,9 @@ public class CreateARecipe extends AppCompatActivity {
 
                     /**Set recipe object to the contents of the editTexts and store
                     * via RemoteFileManager. and store recipe using entered information.**/
-                    settingRecipe(title, author, description, id_String, time, ingredients);
+                    settingRecipe(title, author, description, id_String, time, ingredients, thumbnailUri);
                     RemoteFileManager userRecipe = RemoteFileManager.getInstance();
-                    userRecipe.setRecipe(id_String, temporaryRecipe);
+                    userRecipe.setMyRecipe(id_String, temporaryRecipe);
                 }
             });
 
@@ -146,7 +158,7 @@ public class CreateARecipe extends AppCompatActivity {
 
         private int configureID(int idFlag){
                 if(idFlag == 0){
-                    id_integer = 13;
+                    id_integer = 3;
                 }
                 else{
                     id_integer++;
@@ -171,14 +183,36 @@ public class CreateARecipe extends AppCompatActivity {
         }
 
         //Set the recipe object to the strings in the editTexts and assign an ID.
-        private void settingRecipe(String title, String author, String description, String id_String, String time, ArrayList<Ingredient> ingredients){
+        private void settingRecipe(String title, String author, String description, String id_String, String time, ArrayList<Ingredient> ingredients, Uri thumbnailUri){
                 temporaryRecipe.setTitle(title);
                 temporaryRecipe.setDescription(description);
                 temporaryRecipe.setTime(time);
                 temporaryRecipe.setAuthor(author);
                 temporaryRecipe.setID(id_String);
                 temporaryRecipe.setIngredients(ingredients);
+                temporaryRecipe.setThumbnail(thumbnailUri.toString());
                 idFlag++;
         }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            try {
+                thumbnailUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(thumbnailUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                //thumbnail.setImageBitmap(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                //Toast.makeText(PostImage.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            //Toast.makeText(PostImage.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+    }
 
 }
