@@ -128,14 +128,18 @@ public class CreateARecipe extends AppCompatActivity {
 
                     /**Set recipe object to the contents of the editTexts and store
                     * via RemoteFileManager. and store recipe using entered information.**/
-                    settingRecipe(title, author, description, id_String, time, ingredients, thumbnailUri);
-                    RemoteFileManager userRecipe = RemoteFileManager.getInstance();
-                    userRecipe.setMyRecipe(id_String, temporaryRecipe);
-                    userRecipe.setRecipe(id_String, temporaryRecipe);
 
                     if (title.isEmpty()) {
                         Toast.makeText(getApplicationContext(),"Error: Recipe must have a title", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                    else if (ingredients.isEmpty()){
+                        Toast.makeText(getApplicationContext(),"Error: There must be at least one ingredient", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        settingRecipe(title, author, description, id_String, time, ingredients, thumbnailUri);
+                        RemoteFileManager userRecipe = RemoteFileManager.getInstance();
+                        userRecipe.setMyRecipe(id_String, temporaryRecipe);
+                        userRecipe.setRecipe(id_String, temporaryRecipe);
                         Toast.makeText(getApplicationContext(),"Recipes " + title + " created", Toast.LENGTH_SHORT).show();
                         finish();
                     }
