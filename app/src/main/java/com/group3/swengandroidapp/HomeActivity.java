@@ -1,8 +1,10 @@
 package com.group3.swengandroidapp;
 
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -18,6 +20,7 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * The home screen of the app.
@@ -32,7 +35,12 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     private RecipeRecyclerViewAdaper suggestedAdapter;          // adapter to Suggested Recipes recyclerview
     private RecipeRecyclerViewAdaper historyAdapter;            // Adapter to History recyclerview
     private ImageDownloaderListener imageDownloaderListener;    // Listens for BITMAP_READY messages from ImageDownloaderService
-    HashMap<String, Recipe.Icon> icons = new HashMap<>();       // Contains all icons that are to be deplyed on this page
+    HashMap<String, Recipe.Icon> icons = new HashMap<>();       // Contains all icons that are to be deployed on this page
+
+    static boolean viewed = false;
+    int min = 0; int max = 7;
+    Random r = new Random();                    // these variables are used for the possible welcome messages
+    int i = r.nextInt(max - min + 1) + min;
 
     /**
      * Method called when a recipe is clicked from the home screen either in the history or main section.
@@ -92,7 +100,34 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
             }
         });
 
+        // 5 possible starting messages
 
+        //welcomeM.setIcon(android.R.drawable.ic_dialog_alert) // image! , hands off logo?
+        if(!viewed) {
+            AlertDialog.Builder welcomeM = new AlertDialog.Builder(this);
+            welcomeM.setTitle("HANDS OFF");
+            welcomeM.setPositiveButton("OK!", null);
+
+            switch (i) {
+                case 0:
+                    welcomeM.setMessage("Please consider rating HANDS OFF 5 stars on the Google Play Store").show();
+                    break;
+                case 1:
+                    welcomeM.setMessage("We'd love if you tweeted about HANDS OFF!").show();
+                    break;
+                case 2:
+                    welcomeM.setMessage("Favourite all your preferred recipes to easily view them at any time!").show();
+                    break;
+                case 3:
+                    welcomeM.setMessage("Have you tried our fantastic Recipe of the Day?").show();
+                    break;
+                case 4:
+                    welcomeM.setMessage("Try the amazing shopping list feature!").show();
+                    break;
+            }   // note it is possible that no message appears 0-7 rand
+        }
+        //set flag as the user only gets one possible pop up per app startup
+        viewed = true;
     }
 
     @Override
@@ -145,12 +180,16 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Notify the adapters to update themselves.
         historyAdapter.notifyDataSetChanged();
         suggestedAdapter.notifyDataSetChanged();
+
+
+
+
     }
 
     @Override
     public void onResume(){
         super.onResume();
-
+        viewed = true;
         // Startup imageDownloaderListener
         imageDownloaderListener = new ImageDownloaderListener(this) {
             @Override
@@ -202,6 +241,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        viewed = true;
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }

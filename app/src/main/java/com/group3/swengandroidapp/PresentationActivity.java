@@ -17,6 +17,7 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 public class PresentationActivity extends AppCompatActivity {
 
     private Presentation presentation;
+    static boolean showTips = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,29 @@ public class PresentationActivity extends AppCompatActivity {
             intent.putExtra(PythonClient.ACTION,PythonClient.FETCH_PRESENTATION);
         }
 
-
         intent.putExtra(PythonClient.ID,receivedIntent.getStringExtra(PythonClient.ID));
         startService(intent);
+
+        // instructional pop up
+        if (showTips){new AlertDialog.Builder(this)
+                .setTitle("Recipe Viewer")
+                .setMessage("To progress through the presentation tap the screen once and to go back tap twice, how easy is that?")
+                .setPositiveButton("Let's Cook!", null )
+
+                /* the negative button will set a flag so that this doesn't show again
+                 ideally this would be saved in the user's preferences on the server, as it stands this
+                 will reset every time the app is restarted */
+
+                .setNegativeButton("Don't show me this again", new DialogInterface.OnClickListener()
+                {
+                    // this is just an override for the 'no' button in the dialoginterface to end the activity
+                    @Override
+                    public void onClick(DialogInterface dialog, int x) {
+                        showTips = false;
+                    }
+                }).show();}
     }
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -94,7 +114,7 @@ public class PresentationActivity extends AppCompatActivity {
                 {
                     // this is just an override for the yes button in the dialoginterface to end the activity
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int x) {
                         finish();
                     }
                 })
@@ -102,7 +122,7 @@ public class PresentationActivity extends AppCompatActivity {
                 .show();
     }
     //this makes the other back button (top left in portrait) also have a confirmation message
-    // as it behaves identically to the default back press
+    // as it behaves identi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
