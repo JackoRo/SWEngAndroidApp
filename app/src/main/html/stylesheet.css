@@ -8,9 +8,10 @@ div.text_section{
 	background-color: white;
 	border-style: groove;
 	border-width: 5px;
-	padding: 20px;
+	padding: 20px 50px;
+	padding-top: 30px;
 	width: 95%;
-	max-width: 800px;
+	max-width: 1000px;
 	display: block;
 	margin: 10px auto;
 	color: black;
@@ -24,6 +25,15 @@ div.text_section h1{
 div.text_section h2{
 	border-style: none none solid none;
 	border-width: 1px;
+}
+
+.anchor{
+  display: block;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  margin-top: -200px;
+  visibility: hidden;
 }
 
 
