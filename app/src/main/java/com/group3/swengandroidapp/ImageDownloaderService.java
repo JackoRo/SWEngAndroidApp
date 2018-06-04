@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -66,22 +67,45 @@ public class ImageDownloaderService extends IntentService {
                         // Check if it's already downloaded
                         if(!thumbnailNeedsDownloading(id)){
                             sendBitmapSavedMessage(id);
-                        }else{
+                        }else {
                             // Try downloading the bitmap
                             Boolean temporary = false;
-                            String recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
+                            String recipeThumbnailURL;
 
-                            if(!recipeThumbnailURL.contains("http")){
-                                // is name of file in server (relative to recipe folder)
-                                StringBuilder sb = new StringBuilder();
-                                sb.append("http://");
-                                sb.append(PythonClient.IP_ADDR);
-                                sb.append(":5000/download/recipe/");
-                                sb.append(id);
-                                sb.append("/");
-                                sb.append(recipeThumbnailURL);
-                                recipeThumbnailURL = sb.toString();
+                            if (RemoteFileManager.getInstance().getRecipe(id) == null) {
+                                recipeThumbnailURL = RemoteFileManager.getInstance().getMyRecipe(id).getThumbnail();
+
+                                if(!recipeThumbnailURL.contains("http") && !recipeThumbnailURL.contains("content://")){
+                                    // is name of file in server (relative to recipe folder)
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("http://");
+                                    sb.append(PythonClient.IP_ADDR);
+                                    sb.append(":5000/download/myRecipe/");
+                                    sb.append(id);
+                                    sb.append("/");
+                                    sb.append(recipeThumbnailURL);
+                                    recipeThumbnailURL = sb.toString();
+                                }
+
                             }
+                            else {
+                                recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
+
+
+                                if(!recipeThumbnailURL.contains("http") && !recipeThumbnailURL.contains("content://")){
+                                    // is name of file in server (relative to recipe folder)
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("http://");
+                                    sb.append(PythonClient.IP_ADDR);
+                                    sb.append(":5000/download/recipe/");
+                                    sb.append(id);
+                                    sb.append("/");
+                                    sb.append(recipeThumbnailURL);
+                                    recipeThumbnailURL = sb.toString();
+                                }
+
+                            }
+
 
                             Bitmap bitmap = downloadImage(recipeThumbnailURL);
 
@@ -155,7 +179,13 @@ public class ImageDownloaderService extends IntentService {
             connection.disconnect();
         } catch (Exception e) {
             Log.d("ImageDownloaderService", "[ER][6] Error when downloading image!");
-            return null;
+
+            try {
+                image = BitmapFactory.decodeFile(url);
+            }
+            catch (Exception ex) {
+                return null;
+            }
         }
 
         if(image != null){

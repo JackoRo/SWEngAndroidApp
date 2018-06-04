@@ -17,10 +17,12 @@ import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
@@ -42,7 +44,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
     private String search;
 
-    private TextInputEditText editText;
+    private EditText editText;
 
     public  android.os.Vibrator vibrator;
 
@@ -61,7 +63,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
         vibrator = (android.os.Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        editText = (TextInputEditText) findViewById(R.id.searchPage_edit_text);
+        editText = (EditText) findViewById(R.id.searchPage_edit_text);
 
         editText.setOnKeyListener(new View.OnKeyListener()
         {
@@ -72,6 +74,19 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                     return true;
                 }
 
+                return false;
+            }
+        });
+
+
+
+        editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchProcess();
+                    return true;
+                }
                 return false;
             }
         });

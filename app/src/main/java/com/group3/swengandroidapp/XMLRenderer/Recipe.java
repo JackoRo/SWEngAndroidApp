@@ -45,7 +45,7 @@ public class Recipe implements Serializable {
 
     }
 
-    public Recipe(String title, String author, String description, String id) {
+    public Recipe(String title, String author, String description, String id, String time) {
 
         // Set meta data, checking to make sure that each has been given
         // if not, leave at default of "n/a"
@@ -60,6 +60,9 @@ public class Recipe implements Serializable {
         }
         if(id != null) {
             this.id = id;
+        }
+        if(time != null){
+            this.time = time;
         }
         // Both ArrayLists initialised to have 0 stored objects
         // (Whenever you add to an array list, it extends the size by 1 (I think))
@@ -172,7 +175,7 @@ public class Recipe implements Serializable {
     }
 
     public Recipe clone(){
-        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID());
+        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID(), this.getTime());
         r.setThumbnail(this.getThumbnail());
         r.setFilterInfo(this.getFilterInfo());
         r.setPresentation(this.presentation);

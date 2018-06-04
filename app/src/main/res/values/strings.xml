@@ -57,4 +57,26 @@
     <string name="instructional_video_name">VIDEO NAME</string>
     <string name="_0">0</string>
     <string name="_0_mins">0 mins</string>
+    <string name="title_activity_create_arecipe">CreateARecipe</string>
+
+    <!-- This contains a list of strings to be used in the Create a Recipe GUI-->
+    <string name="introductory_comment">Welcome To Create A Recipe</string>
+    <string name="title_request">Title</string>
+    <string name="description_request">Description</string>
+    <string name="time_request">Time</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="ingredient_request">Add Ingredient</string>
+    <string name="select_thumbnail_request">Select Recipe Image</string>
+    <string name="thumbnai_image_selected">Image Selected</string>
+    <string name="create_recipe">Create Recipe</string>
+    <string name="filter_explanation">Please note that, for the health and safety of our users,
+        self-created recipes will not have filters or tags to indicate dietary suitability.</string>
+
+    <!-- This contains a list of strings to be used in the Add Ingredient GUI-->
+    <string name="ingredient_name">Name Of Ingredient</string>
+    <string name="ingredient_number_of_servings">Number of servings</string>
+    <string name="ingredient_quantity">Quantity (eg: 100g, 0.5 cup)</string>
+    <string name="ingredient_add">Add</string>
+    <string name="ingredients_exit">Exit</string>
+    <string name="title_activity_add_ingredients">AddIngredients</string>
 </resources>
