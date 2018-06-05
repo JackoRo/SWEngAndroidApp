@@ -29,6 +29,21 @@ div.text_section h2{
 	border-width: 1px;
 }
 
+.quote{
+	font-style: italic;
+	background-color: #EEE;
+	
+	border-style: solid;
+	border-color: #9AB;
+	border-width: 1px;
+	
+	border-radius: 10px;
+	
+	padding: 10px;
+	padding-top: 20px;
+	margin: 10px 20px;
+}
+
 .text_section h4{
 	margin-top: 20px;
 }
