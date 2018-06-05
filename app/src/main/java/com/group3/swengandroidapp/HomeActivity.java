@@ -28,7 +28,6 @@ import java.util.Random;
  *     Displays a history of recently viewed recipes (as contained within {@link HistoryHandler}) and a
  *     "recommended" list of recipes (Produced within {@link RemoteFileManager}).
  * </p>
- * Created by Kevin on 12/03/2018 and edited by mb1510 (Team Leader) + af981.
  */
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 

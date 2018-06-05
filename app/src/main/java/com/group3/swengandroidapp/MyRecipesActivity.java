@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 public class MyRecipesActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
-    private RecipeRecyclerViewAdaper myRecipesAdapter;          // adapter to Suggested Recipes recyclerview
+    private RecipeRecyclerViewAdaper myRecipesAdapter;          // adapter to My Recipes recyclerview
     private ImageDownloaderListener imageDownloaderListener;    // Listens for BITMAP_READY messages from ImageDownloaderService
     HashMap<String, Recipe.Icon> icons = new HashMap<>();       // Contains all icons that are to be deplyed on this page
 
@@ -60,7 +60,7 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
         setTitle("My recipes");
 
         // Setup Recommended Recipes view
-        RecyclerView recyclerView = findViewById(R.id.my_recipes_view);                // Get suggested recipe view
+        RecyclerView recyclerView = findViewById(R.id.my_recipes_view);                // Get my recipes view
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));    // Set as a 2-collumn grid
         myRecipesAdapter = new RecipeRecyclerViewAdaper(this);                     // Initialise the adapter for the view
         myRecipesAdapter.setClickListener(this);                                          // Set the click listener for the adapter
@@ -82,7 +82,7 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
     public void createNewRecipeScreen(){
         Log.d("myRecipesActivity","Create new recipe");
         Intent intent = new Intent();
-        intent.setClass(this,CreateARecipe.class);                   // Set new activity destination TODO: CHANGE TO RECIPE CREATION ACTIVITY
+        intent.setClass(this,CreateARecipe.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
     }
@@ -103,20 +103,6 @@ public class MyRecipesActivity extends MainActivity implements RecipeRecyclerVie
             }
             myRecipesAdapter.addIcon(icons.get(id));
         }
-
-        //remoteFileManager.setRecipe("0001", new XmlRecipe(fetchRecipeFromHttpServer("0001")));
-
-        /*
-        try {
-            remoteFileManager.setRecipe("0001", new XmlRecipe("myRecipes/0002"));
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        */
 
         // Notify the adapters to update themselves.
         myRecipesAdapter.notifyDataSetChanged();

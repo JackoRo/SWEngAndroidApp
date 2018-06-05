@@ -84,13 +84,6 @@ public class SettingsActivity extends MainActivity{
             }
         });
 
-        // initiate a Switch
-   //    Switch simpleSwitch = (Switch) findViewById(R.id.simpleSwitch);
-
-        // check current state of a Switch (true or false).
-     //   Boolean switchState = simpleSwitch.isChecked();
-
-
     }
 
 }
