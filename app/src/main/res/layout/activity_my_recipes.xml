@@ -30,20 +30,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- My recipes view -->
             <RelativeLayout
                 android:id="@+id/instructional_videos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
 
+                <!-- Display title -->
                 <TextView
-                    android:paddingStart="10dp"
                     android:id="@+id/my_recipes_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:textColor="#000"
-                    />
+                    android:paddingStart="10dp"
+                    android:textColor="#000" />
 
+                <!-- Display thumbnails -->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/my_recipes_view"
                     android:layout_width="wrap_content"
@@ -54,6 +58,7 @@
 
         </RelativeLayout>
 
+        <!-- Button to create a new recipe-->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_recipe_button"
             android:layout_width="65dp"
@@ -68,6 +73,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <!-- Navigation drawer -->
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"

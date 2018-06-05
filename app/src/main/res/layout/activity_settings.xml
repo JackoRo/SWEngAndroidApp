@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Audio setting switch -->
         <Switch
             android:id="@+id/audio_switch"
             android:layout_width="356dp"
@@ -34,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-
+        <!-- Haptic vibration setting switch -->
         <Switch
             android:id="@+id/vibration"
             android:layout_width="356dp"
@@ -50,7 +51,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
-
+    <!-- Navigation drawer -->
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
