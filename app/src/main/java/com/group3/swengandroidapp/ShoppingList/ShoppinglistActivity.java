@@ -164,7 +164,7 @@ public class ShoppinglistActivity extends MainActivity {
 
             // This could be made neater by using a standardised format and parser like JSON
             // but this should be fine too.
-            Matcher m = Pattern.compile("(\\d+)=true").matcher(data4);
+            Matcher m = Pattern.compile("(\\d+)=1").matcher(data4);
 
             while (m.find()) {
                 String s = m.group();
@@ -221,6 +221,7 @@ public class ShoppinglistActivity extends MainActivity {
                             Integer updatedInteger = value1 + value2;
                             String updatedValue = Integer.toString(updatedInteger);
 
+                            //Add a new entry with the updated total quantity and remove the 2 old entries.
                             listItem newIngredientsItem = new listItem(name, updatedValue, unit1);
                             arrayListForShopping.add(newIngredientsItem);
                             itemNames.add(name);
