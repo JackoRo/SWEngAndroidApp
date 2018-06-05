@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.text.SpannableStringBuilder;
 
 /**
- * Created by Jack on 22/02/2018.
+ * Interface to define drawable objects for the presentation viewer
  */
 
 public interface Drawable {

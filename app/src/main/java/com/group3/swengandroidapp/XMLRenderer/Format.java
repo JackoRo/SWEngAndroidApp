@@ -3,9 +3,9 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 
 /**
- * Created by Jack on 25/02/2018.
+ * Format class for parsing into from the PWS
+ * Handles any format tags that might occur
  */
-
 public class Format extends TextAndroid {
     public Format(XmlElement parent) {
         super(parent);
@@ -15,9 +15,4 @@ public class Format extends TextAndroid {
     public void draw(Activity activity) {
 
     }
-//
-//    @Override
-//    public void buildString(SpannableStringBuilder stringBuilder) {
-//
-//    }
 }

@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Jack on 22/02/2018.
+ * Presentation class for parsing into from the PWS
+ * Draws the slides and the slide elements when drawnSlide is called
  */
-
 public class Presentation extends XmlElement {
     private List<Slide> slides;
     private Map<String, String> meta;
@@ -39,7 +39,7 @@ public class Presentation extends XmlElement {
         slides = new ArrayList<>();
         meta = new HashMap<>();
 
-        //Sets default properties
+        //Sets default properties for children to inherit if they have no properties set
         setProperty("color","#000000");
         setProperty("fill","#FFFFFF");
         setProperty("font","sans-serif-medium");

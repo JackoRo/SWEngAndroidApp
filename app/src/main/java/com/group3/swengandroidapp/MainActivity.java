@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     public  Vibrator vibrator;
 
-
-
     // For use in other parts of app that don't have access to the "getApplicationContext" method.
     private static Context appContext;
 
@@ -79,30 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected void onCreateDrawer() {
-        //final Context thisContext = this;
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-
-        //listenButtons();
-        /*add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (((ToggleButton) view).isChecked()) {
-                    DisplayToast("Toggle button is On");
-                }
-                else{
-                    DisplayToast("Toggle button is Off");
-                }
-            }
-        });*/
-
-        /*view_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DisplayToast("You have clicked the Save button");
-                //viewFavourites();
-            }
-        });*/
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
@@ -144,62 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*public void listenButtons(){
-         add_button.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-         if (((ToggleButton) view).isChecked()) {
-         DisplayToast("Toggle button is On");
-         }
-         else{
-         DisplayToast("Toggle button is Off");
-         }
-     } */
-     /* view_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //DisplayToast("You have clicked the Save button");
-                viewFavourites();
-            }
-        });
-    }*/
-
-
-    /*
-    public void addFavourite() {
-       Recipe recipe1 = new Recipe("Crisps", "user1", "This is a recipe for crisps.", 1);
-       addToFavourites(recipe1);
-
-    }
-
-    protected void addToFavourites(Recipe recipe){
-
-        ArrayList<Recipe> arrayRecipe = new ArrayList<Recipe>();
-
-        arrayRecipe.add(recipe);
-
-    }*/
-
-
-
-/*
-    public void viewFavourites() {
-        //Call command to pass arraylist through to other activity.
-
-
-        //Creates an instance of the Intent class-the way android switches between activities.
-        //Tells you to watch the class FavouriteListActivity.
-        Intent view_f = new Intent(this, FavouriteListActivity.class);
-        //Next, the code that launches an activity.
-        startActivity(view_f);
-    }
-
-    private void DisplayToast(String msg) {
-        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
-    }*/
-
-
-
     protected BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -221,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
-        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
 
@@ -375,8 +292,6 @@ public class MainActivity extends AppCompatActivity {
         // Override the transition animation between activities
         overridePendingTransition(0,0);
     }
-
-    //TODO: Move method so it can be accessed by the search page activity
 
     /**
      * <p>

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * To be used to filter recipes by dietary requirements.
- * Created by St. John on 06/03/2018.
  */
 
 public class Filter {
@@ -36,7 +35,6 @@ public class Filter {
                 }
             }catch (Exception e) {
                 e.printStackTrace();
-                //Log.d("Filter", "Error getting info from recipe: "+s);
             }
         }
         return output;

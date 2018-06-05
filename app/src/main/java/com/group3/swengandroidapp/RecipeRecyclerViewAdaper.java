@@ -17,11 +17,6 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.ArrayList;
 
-/**
- *
- * Created by Marco on 14/03/2018.
- */
-
 // TODO: Rename - "Adapter"
 public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecyclerViewAdaper.ViewHolder> {
     private ItemClickListener clickListener;
@@ -221,10 +216,6 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             }
         }
     }
-
-
-
-
 
     //******** UPDATING ICONS ********//
 

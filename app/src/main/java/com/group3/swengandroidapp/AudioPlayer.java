@@ -11,10 +11,6 @@ import java.util.Random;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
-/**
- * Created by Marco on 25/05/2018.
- */
-
 public class AudioPlayer{
 
     private static final int NUMBER_OF_TOUCH_SOUNDS = 3;
@@ -54,9 +50,6 @@ public class AudioPlayer{
                 break;
         }
 
-        //myVib = (Vibrator) instance.getSystemService(VIBRATOR_SERVICE);
-
-        //instance.myVib.vibrate(50);
 
     }
 

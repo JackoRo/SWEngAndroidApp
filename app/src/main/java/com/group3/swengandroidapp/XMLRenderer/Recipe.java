@@ -18,7 +18,6 @@ import java.util.HashSet;
  * {@linkplain String} {@linkplain #description} A short description as provided by the author.<p>
  * {@linkplain ArrayList}<{@linkplain Ingredient}> {@linkplain #ingredients} A list of all ingredients<p>
  * @see {@link Ingredient}, {@link Slide}
- * @author mb1510 (Team Leader)
  *
  */
 
@@ -40,7 +39,6 @@ public class Recipe implements Serializable {
     private HashSet<String> tags = new HashSet<>(0);
 
     // CONSTRUCTORS
-
     public Recipe() {
 
     }
@@ -64,17 +62,11 @@ public class Recipe implements Serializable {
         if(time != null){
             this.time = time;
         }
-        // Both ArrayLists initialised to have 0 stored objects
-        // (Whenever you add to an array list, it extends the size by 1 (I think))
-
-        //ingredients = new ArrayList<Ingredient>(0);
-        //slides = new ArrayList<Slide>(0);
     }
 
 
     // METHODS
     public String getNumFavourites(){
-        //TODO: Access server and figure out a way to extract the number of users that have this recipe UPDATED_RECIPE_ID as a favourite!
         return "0";
     }
 

@@ -16,11 +16,6 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.ArrayList;
 
-/**
- *
- * Created by Marco on 14/03/2018.
- */
-
 // TODO: Rename - "Adapter"
 public class InstructionalVideoRecyclerViewAdapter extends RecyclerView.Adapter<InstructionalVideoRecyclerViewAdapter.ViewHolder> {
     private ItemClickListener clickListener;

@@ -90,37 +90,7 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                 return false;
             }
         });
-//        editText.setKeyListener(new KeyListener() {
-//            @Override
-//            public int getInputType() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public boolean onKeyDown(View view, Editable editable, int i, KeyEvent keyEvent) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onKeyUp(View view, Editable editable, int i, KeyEvent keyEvent) {
-//
-//                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-//                    searchProcess();
-//                }
-//
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onKeyOther(View view, Editable editable, KeyEvent keyEvent) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void clearMetaKeyState(View view, Editable editable, int i) {
-//
-//            }
-//        });
+
         //When search button is click store the input string of the search bar
         final ImageButton button = findViewById(R.id.searchPage_search_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -257,8 +227,6 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
     @Override
     protected void onStart(){
         super.onStart();
-        //String[] ids = {"0000", "0001", "0002"};
-        //displayAdapter.setRecipes(ids);
     }
 
     @Override
@@ -266,24 +234,6 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         super.onPause();
         imageDownloaderListener.unRegister();
     }
-
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//
-//        imageDownloaderListener = new ImageDownloaderListener(this) {
-//            @Override
-//            public void onBitmapReady(String id, String absolutePath){
-//                icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
-//                displayAdapter.notifyIconChanged(id);
-//            }
-//        };
-//
-//        for(String id : icons.keySet()){
-//            requestBitmapFile(id);
-//        }
-//
-//    }
 
     @Override
     public void onItemClick(String recipeId){

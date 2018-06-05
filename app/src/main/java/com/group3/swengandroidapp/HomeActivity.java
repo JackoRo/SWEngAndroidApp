@@ -100,8 +100,6 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         });
 
         // 5 possible starting messages
-
-        //welcomeM.setIcon(android.R.drawable.ic_dialog_alert) // image! , hands off logo?
         if(!viewed) {
             AlertDialog.Builder welcomeM = new AlertDialog.Builder(this);
             welcomeM.setTitle("HANDS OFF");
@@ -137,7 +135,6 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         String recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
         String[] histories = HistoryHandler.getInstance().getHistory();
         String[] suggested;
-        //int historySize = histories.length;
         if (histories == null){
             suggested = RemoteFileManager.getInstance().getSuggestedRecipes(0, histories);
             Log.d("history", "nothing in history, loading all recipes instead");

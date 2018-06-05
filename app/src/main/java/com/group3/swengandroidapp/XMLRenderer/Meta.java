@@ -3,7 +3,8 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 
 /**
- * Created by Jack on 24/02/2018.
+ * Meta class for parsing into from the PWS.
+ * Parses any meta tags in the PWS.
  */
 
 public class Meta extends XmlElement {

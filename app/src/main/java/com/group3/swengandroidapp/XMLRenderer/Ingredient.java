@@ -4,7 +4,6 @@ package com.group3.swengandroidapp.XMLRenderer;
  * {@link Ingredient}<p>
  * Class that contains name and quantity information about a single ingredient.<p>
  * @see {@link #getQuantityUnits()}, {@link #getQuantityValue()}, {@link #getQuantity()}, {@link #getName()}
- * @author mb1510 (Team Leader)
  *
  */
 public class Ingredient {

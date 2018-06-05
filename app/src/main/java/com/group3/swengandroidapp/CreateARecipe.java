@@ -59,8 +59,6 @@ public class CreateARecipe extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_create_arecipe);
-            //Toolbar toolbar = findViewById(R.id.toolbar);
-            //setSupportActionBar(toolbar);
             setTitle("Create A Recipe");
 
             addIngredientBtn = findViewById(R.id.add_ingredients);
@@ -72,9 +70,6 @@ public class CreateARecipe extends AppCompatActivity {
             etTime = findViewById(R.id.time_input);
             etIngredientName = findViewById(R.id.ingredient_name);
             etQuantity = findViewById(R.id.ingredient_quantity);
-
-            //thumbnail = findViewById(R.id.thumbnail);
-
 
             //Disable the recipe creation button if the title editText is empty.
             etTitle.addTextChangedListener(new TextWatcher() {
@@ -220,16 +215,12 @@ public class CreateARecipe extends AppCompatActivity {
                 final InputStream imageStream = getContentResolver().openInputStream(thumbnailUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                //thumbnail.setImageBitmap(selectedImage);
                 selectThumbnailBtn.setText(R.string.thumbnai_image_selected);
                 selectThumbnailBtn.setBackgroundColor(Color.BLUE);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                //Toast.makeText(PostImage.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
 
-        }else {
-            //Toast.makeText(PostImage.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
     }
 

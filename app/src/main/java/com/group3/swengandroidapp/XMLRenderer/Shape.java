@@ -13,13 +13,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Jack on 24/02/2018.
+ * Shape class for parsing into from the PWS
  */
 
 public abstract class Shape extends XmlElement implements Drawable {
 
     private Paint strokePaint;
     private Paint fillPaint;
+    // Regex used to determine a union of two colours in the paint attribute
     private static Pattern pattern = Pattern.compile("gradient\\((#.{6}),(#.{6})\\)");
 
     public Shape(XmlElement parent) {

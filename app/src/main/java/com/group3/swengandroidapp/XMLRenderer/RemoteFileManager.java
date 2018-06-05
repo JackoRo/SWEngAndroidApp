@@ -20,7 +20,10 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Created by Jack on 11/02/2018.
+ * Handles the data between the app for recipes, instructional videos, presentations etc.
+ *
+ * If it cannot find the data requested, send intent to PythonClient and start service to
+ * fetch the data from the server.
  */
 
 public class RemoteFileManager {
@@ -90,11 +93,10 @@ public class RemoteFileManager {
                 Log.d("history", "adding suggestions based on history");
                 String historyId = histories[i];
                 for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
-                    //ids[counter] = key;
                     if (!historyId.equals(key)){
                         //only compare tags to different recipes
                         similarityValue = myRecipe.tagSimilarity(historyId, key);
-                        int newSimilarityValue = similarityValue*(historySize-i);                 //weights the similarity value based on
+                        int newSimilarityValue = similarityValue*(historySize-i); //weights the similarity value based on
                         //how recently the recipe was viewed
                         suggestions.put(key, newSimilarityValue);
                     }else{

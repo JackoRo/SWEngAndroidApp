@@ -10,12 +10,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 
-
-/**
- * Created by Kevin on 12/03/2018.
- * edited by af981/Alex
- */
-
 public class SettingsActivity extends MainActivity{
 
     private static Boolean AudioMuted = false;

@@ -24,14 +24,6 @@ public class PresentationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentation);
 
-        // TODO FIX THIS
-        if (presentation != null && savedInstanceState == null) {
-            // This activity has been recreated, but we do not have a saved state
-            // reset the presentation to the first slide. If we have opened a different
-            // presentation, it will be overwritten anyway
-            //presentation.restart();
-        }
-
         Intent receivedIntent = getIntent();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -122,7 +114,6 @@ public class PresentationActivity extends AppCompatActivity {
                 .show();
     }
     //this makes the other back button (top left in portrait) also have a confirmation message
-    // as it behaves identi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

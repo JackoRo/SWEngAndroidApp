@@ -1,4 +1,6 @@
-/*This class temporarily acts as the adapter for the favourites page.*/
+/**
+ * This class temporarily acts as the adapter for the favourites page.
+ * */
 package com.group3.swengandroidapp.XMLRenderer;
 
 import android.content.Context;
@@ -11,10 +13,6 @@ import android.widget.TextView;
 import com.group3.swengandroidapp.R;
 
 import java.util.ArrayList;
-
-/**
- * Created by mlowt on 14/03/2018.
- */
 
 public class FavouritesAdapter extends ArrayAdapter<Recipe> {
 
@@ -34,7 +32,6 @@ public class FavouritesAdapter extends ArrayAdapter<Recipe> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             view = inflater.inflate(R.layout.activity_favourites, parent, false);
-            //viewHolder.txtTitle = (TextView)view.findViewById(R.id.favourite_recipe);
             view.setTag(viewHolder);
         }
 

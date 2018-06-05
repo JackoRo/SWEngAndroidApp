@@ -8,9 +8,8 @@ import java.io.IOException;
 import java.io.StringReader;
 
 /**
- * Created by Jack on 10/03/2018.
- */
-
+ * Recipe class for parsing into from the recipe XML file
+ * */
 public class XmlRecipe extends Recipe {
 
     private XmlPullParser xpp;
@@ -74,7 +73,6 @@ public class XmlRecipe extends Recipe {
                 }
 
             }
-            //else if
             eventType = xpp.next();
         }
 

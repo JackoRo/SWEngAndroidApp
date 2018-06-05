@@ -9,7 +9,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 /**
- * Created by Jack on 21/05/2018.
+ * Custom view to handle shape drawing onto the slides of the presentation
  */
 
 public class CanvasView extends View {

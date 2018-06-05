@@ -16,7 +16,6 @@ import java.util.TimerTask;
 
 /**
  * Made to give the PythonClient Time to download all its' recipes
- * Created by Marco on 04/04/2018.
  */
 
 

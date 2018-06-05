@@ -61,12 +61,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
                 if (!AudioPlayer.isVibrationOff()){
                     vibrator.vibrate(20);
                  }
-//                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString());
-//                  if (toAdd.length > 0) {
-//                         for (int i=0; i < toAdd.length; i++){
-//                              ingredientsList.add(toAdd[i]);
-//                         }
-//                  }
                 ShoppinglistHandler.getInstance().addToShoppingList(recipe.getIngredients());
                 Toast.makeText(getApplicationContext(),"Recipes added to shopping list!", Toast.LENGTH_SHORT).show();
 

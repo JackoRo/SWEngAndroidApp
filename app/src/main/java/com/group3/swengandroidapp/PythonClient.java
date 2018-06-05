@@ -19,12 +19,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- *
- * Created by Jack on 08/02/2018.
+ * Handles the client to server communication
  */
 
 public class PythonClient extends IntentService{
 
+    //Intent definitions
     public static final String ACTION = "com.group3.swengandroidapp.ACTION";
     public static final String ID = "com.group3.swengandroidapp.UPDATED_RECIPE_ID";
 
@@ -38,13 +38,10 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    //public static final String IP_ADDR = "192.168.0.192";
+    public static final String IP_ADDR = "192.168.0.20";
     //For device emulator
-    public static final String IP_ADDR = "10.0.2.2";
+    //public static final String IP_ADDR = "10.0.2.2";
 
-
-    //private DataOutputStream dout;
-    //private Socket socket;
     private URL url;
     private HttpURLConnection urlConnection;
     private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
@@ -215,13 +212,6 @@ public class PythonClient extends IntentService{
                         }
                     }
 
-//                    String[] vIds = fetchInstruvidListFromHttpServer();
-//                    for (String rid : vIds) {
-//                        if (remoteFileManager.getInstructionalVideo(rid) == null) {
-//                            remoteFileManager.setInstructionalVideo(rid, new InstructionalVideo(fetchInstruvidFromHttpServer(rid)));
-//                        }
-//                    }
-
                     Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
                     break;
@@ -261,15 +251,6 @@ public class PythonClient extends IntentService{
                     Log.d("sender", "FETCH_MY_PRESENTATION");
                     sendMessage(FETCH_MY_PRESENTATION, id);
                     break;
-//                case FETCH_INSTRU_VID:
-//                    id = intent.getStringExtra(ID);
-//
-//                    if (remoteFileManager.getInstructionalVideo(id) == null) {
-//                        remoteFileManager.setInstructionalVideo(id, new InstructionalVideo(fetchInstruvidFromHttpServer(id)));
-//                    }
-//                    Log.d("sender", "FETCH_INSTRU_VID");
-//                    sendMessage(FETCH_INSTRU_VID, id);
-//                    break;
             }
 
             Log.d("sender", "B");
