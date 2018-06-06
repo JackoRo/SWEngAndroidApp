@@ -2,6 +2,7 @@ body{
 	background-color: #EEE;
 	min-height:100vh;
 	transition: margin-left .3s;
+	text-align: justify;
 }
 
 div.text_section{
@@ -183,12 +184,14 @@ ul.navigation li a:hover{
 	justify-content: center;
 	align-items: flex-start;
 	list-style-type: none;
-	margin: 0;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .flex-item {
   padding: 5px;
-  margin: 7px;
+  margin: 10px;
 }
 
 .flex-item p{
