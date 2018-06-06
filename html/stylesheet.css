@@ -2,6 +2,7 @@ body{
 	background-color: #EEE;
 	min-height:100vh;
 	transition: margin-left .3s;
+	text-align: justify;
 }
 
 div.text_section{
@@ -9,7 +10,7 @@ div.text_section{
 	border-style: solid;
 	border-width: 2px;
 	border-color: #567;
-	padding: 30px 50px;
+	padding: 30px 8%;
 	padding-top: 42px;
 	width: 95%;
 	max-width: 1000px;
@@ -183,12 +184,14 @@ ul.navigation li a:hover{
 	justify-content: center;
 	align-items: flex-start;
 	list-style-type: none;
-	margin: 0;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .flex-item {
   padding: 5px;
-  margin: 7px;
+  margin: 10px;
 }
 
 .flex-item p{
