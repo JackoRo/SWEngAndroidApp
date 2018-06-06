@@ -218,6 +218,18 @@ ul.navigation li a:hover{
 	opacity: 0.8;
 }
 
+.flex-item ul{
+	padding: 5px;
+	list-style-type: none;
+	margin: 0;
+}
+
+.flex-item h4{
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	padding-bottom: 10px;
+}
+
 
 .polaroid {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
