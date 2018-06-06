@@ -84,6 +84,7 @@ ul.navigation{
     padding: 0;
     overflow: hidden;
     background-color: #123;
+	z-index: 999;
 }
 
 ul.navigation li{
