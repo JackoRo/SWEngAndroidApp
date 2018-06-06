@@ -1,3 +1,8 @@
+/**
+ * Graphics module from contractors
+ * Deprecated as it is incompatible with Android Java
+ * */
+
 //import javafx.animation.*;
 //import javafx.event.EventHandler;
 //import javafx.scene.paint.Color;

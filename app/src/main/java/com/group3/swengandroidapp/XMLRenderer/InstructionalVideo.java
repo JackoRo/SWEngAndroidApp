@@ -5,11 +5,9 @@ import android.graphics.drawable.Drawable;
 
 import java.io.Serializable;
 
-// TODO: copy from recipe.java
-
 public class InstructionalVideo implements Serializable {
     public final static int THUMBNAILSIZE = 250;
-    public final static String ID = "Recipe_ID"; // Used with broadcast
+    public final static String ID = "Instruvid_ID"; // Used with broadcast
 
     // Meta data
     private String title = "n/a";
@@ -17,8 +15,8 @@ public class InstructionalVideo implements Serializable {
     private String thumbnail = "n/a";
 
     // CONSTRUCTORS
-    public InstructionalVideo() {
-
+    public InstructionalVideo(String id) {
+        this.id = id;
     }
 
     public InstructionalVideo(String title, String id) {

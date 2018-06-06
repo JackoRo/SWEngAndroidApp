@@ -18,7 +18,6 @@ import java.util.HashSet;
  * {@linkplain String} {@linkplain #description} A short description as provided by the author.<p>
  * {@linkplain ArrayList}<{@linkplain Ingredient}> {@linkplain #ingredients} A list of all ingredients<p>
  * @see {@link Ingredient}, {@link Slide}
- * @author mb1510 (Team Leader)
  *
  */
 
@@ -40,12 +39,11 @@ public class Recipe implements Serializable {
     private HashSet<String> tags = new HashSet<>(0);
 
     // CONSTRUCTORS
-
     public Recipe() {
 
     }
 
-    public Recipe(String title, String author, String description, String id) {
+    public Recipe(String title, String author, String description, String id, String time) {
 
         // Set meta data, checking to make sure that each has been given
         // if not, leave at default of "n/a"
@@ -61,17 +59,14 @@ public class Recipe implements Serializable {
         if(id != null) {
             this.id = id;
         }
-        // Both ArrayLists initialised to have 0 stored objects
-        // (Whenever you add to an array list, it extends the size by 1 (I think))
-
-        //ingredients = new ArrayList<Ingredient>(0);
-        //slides = new ArrayList<Slide>(0);
+        if(time != null){
+            this.time = time;
+        }
     }
 
 
     // METHODS
     public String getNumFavourites(){
-        //TODO: Access server and figure out a way to extract the number of users that have this recipe UPDATED_RECIPE_ID as a favourite!
         return "0";
     }
 
@@ -172,7 +167,7 @@ public class Recipe implements Serializable {
     }
 
     public Recipe clone(){
-        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID());
+        Recipe r = new Recipe(this.getTitle(), this.getAuthor(), this.getDescription(), this.getID(), this.getTime());
         r.setThumbnail(this.getThumbnail());
         r.setFilterInfo(this.getFilterInfo());
         r.setPresentation(this.presentation);

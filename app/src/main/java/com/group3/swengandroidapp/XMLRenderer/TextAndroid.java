@@ -3,6 +3,7 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.provider.FontRequest;
@@ -20,29 +21,19 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 /**
- * Created by Jack on 23/02/2018.
+ * Text class for drawing in the presentation for Android
  */
 
 public class TextAndroid extends Text {
 
     private TextView textView;
 
-    //BIU
-//    private StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
-//    private StyleSpan italicSpan = new StyleSpan(Typeface.ITALIC);
-//    private StyleSpan plainSpan = new StyleSpan(Typeface.NORMAL);
-//    private UnderlineSpan underlineSpan = new UnderlineSpan();
-
     //Fonts
     private Handler mHandler = null;
-    //private TypefaceSpan timeNewRoman = new TypefaceSpan("Times New Roman");
-
-
 
     //Constuctor
     public TextAndroid(XmlElement parent) {
         super(parent);
-
     }
 
     //BIU method spans
@@ -60,13 +51,7 @@ public class TextAndroid extends Text {
     }
 
     //Font method spans
-//    private Typeface getTimeNewRomanSpan(Activity activity) { return requestDownload("Times New Roman", activity);}
     private TypefaceSpan getTimeNewRomanSpan() { return new TypefaceSpan("monospace");}
-
-
-
-    //Text size method spans
-    //private RelativeSizeSpan getTextSizeSpan() { return new RelativeSizeSpan(); }
 
 
     public TextView getTextView() {
@@ -89,7 +74,6 @@ public class TextAndroid extends Text {
                 int x2 = Integer.valueOf(getX2());
                 int y1 = Integer.valueOf(getY1());
                 int y2 = Integer.valueOf(getY2());
-
 
                 LayoutParams layoutParams=new LayoutParams(x2, y2);
                 layoutParams.setMargins(x1, y1, x2, y2);
@@ -206,53 +190,4 @@ public class TextAndroid extends Text {
         builder.setSpan(new ForegroundColorSpan(Color.parseColor(getColor())),start,builder.length(),SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-
-
-    //Requests a download from Google Fonts
-    /*private Typeface requestDownload (String familyName, Activity activity) {
-        int certs = 0;
-
-        QueryBuilder queryBuilder = new QueryBuilder(familyName)
-                .withWidth(0)
-                .withWeight(0)
-                .withItalic(0)
-                .withBestEffort(false);
-        String query = queryBuilder.build();
-
-        Log.d("Requesting a font. Query: ", query);
-        FontRequest request = new FontRequest(
-                "com.google.android.gms.fonts",
-                "com.google.android.gms",
-                query,
-                certs);
-
-        FontsContractCompat.FontRequestCallback callback = new FontsContractCompat
-                .FontRequestCallback() {
-            @Override
-            public void onTypefaceRetrieved(Typeface typeface) {
-                //return typeface;
-            }
-
-            @Override
-            public void onTypefaceRequestFailed(int reason) {
-                Log.d("TextAndroid: requestDownload: onTypeFaceRequestFailed: ", String.valueOf(reason));
-            }
-        };
-        FontsContractCompat
-                .requestFont(activity, request, callback,
-                        getHandlerThreadHandler());
-
-        return null;
-    }
-
-    private Handler getHandlerThreadHandler() {
-        if (mHandler == null) {
-            HandlerThread handlerThread = new HandlerThread("fonts");
-            handlerThread.start();
-            mHandler = new Handler(handlerThread.getLooper());
-        }
-        return mHandler;
-    }
-
-    */
 }

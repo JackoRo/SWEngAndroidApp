@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -66,10 +67,49 @@ public class ImageDownloaderService extends IntentService {
                         // Check if it's already downloaded
                         if(!thumbnailNeedsDownloading(id)){
                             sendBitmapSavedMessage(id);
-                        }else{
+                        }else {
                             // Try downloading the bitmap
                             Boolean temporary = false;
-                            Bitmap bitmap = downloadImage(RemoteFileManager.getInstance().getRecipe(id).getThumbnail());
+                            String recipeThumbnailURL;
+
+                            if (RemoteFileManager.getInstance().getRecipe(id) == null) {
+                                recipeThumbnailURL = RemoteFileManager.getInstance().getMyRecipe(id).getThumbnail();
+
+                                if(!recipeThumbnailURL.contains("http") && !recipeThumbnailURL.contains("content://")){
+                                    // is name of file in server (relative to recipe folder)
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("http://");
+                                    sb.append(PythonClient.IP_ADDR);
+                                    sb.append(":5000/download/myRecipe/");
+                                    sb.append(id);
+                                    sb.append("/");
+                                    sb.append(recipeThumbnailURL);
+                                    recipeThumbnailURL = sb.toString();
+                                }
+
+                            }
+                            else {
+                                recipeThumbnailURL = RemoteFileManager.getInstance().getRecipe(id).getThumbnail();
+
+
+                                if(!recipeThumbnailURL.contains("http") && !recipeThumbnailURL.contains("content://")){
+                                    // is name of file in server (relative to recipe folder)
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("http://");
+                                    sb.append(PythonClient.IP_ADDR);
+                                    sb.append(":5000/download/recipe/");
+                                    sb.append(id);
+                                    sb.append("/");
+                                    sb.append(recipeThumbnailURL);
+                                    recipeThumbnailURL = sb.toString();
+                                }
+
+                            }
+
+
+                            Bitmap bitmap = downloadImage(recipeThumbnailURL);
+
+                            // If thumbnail not found, get default thumbnails
                             if(bitmap == null){
                                 Log.d("ImageDownloaderService", "[ER][1] Unable to download bitmap!");
                                 // If file doesnt exist, assign a temporary file
@@ -116,41 +156,36 @@ public class ImageDownloaderService extends IntentService {
     }
 
     /**
-     * Download image from given destination. Can handle URLs as well as file paths.
-     * If the image is not found, it will return the default "Thumbnail" icon found in
-     * the drawable section of Resources.
-     * @param url filepath of the image (URL or local)
+     * Download image from given destination.
+     * If the image is not found, it will return null.
+     * @param url url of the image
      * @return Downloaded bitmap (null if not found)
      */
     private Bitmap downloadImage(String url){
 
-        if(url == null){
-            return null;
-        }
-
         // STAGE 1: Import image
         Bitmap image = null;
 
-        // If thumbnail location is URL, connect and download
-        if (url.contains("http")) {
+        try {
+            // Get HTTP connection
+            URL address = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) address.openConnection();
+            connection.setDoInput(true);
+            // If connection times out, revert to defaul thumbnail.
+            connection.setConnectTimeout(500);
+            connection.setReadTimeout(500);
+            connection.connect();
+            image = BitmapFactory.decodeStream(connection.getInputStream());
+            connection.disconnect();
+        } catch (Exception e) {
+            Log.d("ImageDownloaderService", "[ER][6] Error when downloading image!");
+
             try {
-                // Get HTTP connection
-                URL address = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) address.openConnection();
-                connection.setDoInput(true);
-                // If connection times out, revert to defaul thumbnail.
-                connection.setConnectTimeout(500);
-                connection.setReadTimeout(500);
-                connection.connect();
-                image = BitmapFactory.decodeStream(connection.getInputStream());
-                connection.disconnect();
-            } catch (Exception e) {
-                Log.d("ImageDownloaderService", "[ER][6] Error when downloading image!");
+                image = BitmapFactory.decodeFile(url);
+            }
+            catch (Exception ex) {
                 return null;
             }
-        }else{
-            // Is a file location...
-            image = BitmapFactory.decodeFile(url);
         }
 
         if(image != null){

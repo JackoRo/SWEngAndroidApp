@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Jack on 25/02/2018.
- */
+ * Element class for parsing into from the PWS
+ * Every Drawable object extends this class so the elements can inherit their parent attributes
+ * */
 
 public abstract class XmlElement implements Drawable {
     protected XmlElement parent;
@@ -27,6 +28,10 @@ public abstract class XmlElement implements Drawable {
         if (item != null) {
             children.add(item);
         }
+    }
+
+    public List<XmlElement> getChildren() {
+        return children;
     }
 
     public void setProperty(String key, String value) {

@@ -13,7 +13,6 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 /**
  * A simplified listener for listening to broadcasts sent from ImageDownloaderService.
  * You can also optionally override the <code>public void onIconChanged()</code> method too.
- * Created by Marco on 08/04/2018.
  */
 public abstract class ImageDownloaderListener extends BroadcastReceiver {
 

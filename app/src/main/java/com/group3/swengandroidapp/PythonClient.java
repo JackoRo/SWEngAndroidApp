@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 import com.group3.swengandroidapp.XMLRenderer.XmlParser;
 import com.group3.swengandroidapp.XMLRenderer.XmlRecipe;
@@ -18,18 +19,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- *
- * Created by Jack on 08/02/2018.
+ * Handles the client to server communication
  */
 
 public class PythonClient extends IntentService{
 
+    //Intent definitions
     public static final String ACTION = "com.group3.swengandroidapp.ACTION";
     public static final String ID = "com.group3.swengandroidapp.UPDATED_RECIPE_ID";
 
     public static final String LOAD_ALL = "com.group3.swengandroidapp.LOAD_ALL";
     public static final String FETCH_RECIPE = "com.group3.swengandroidapp.FETCH_RECIPE";
+    public static final String FETCH_MY_RECIPE = "com.group3.swengandroidapp.FETCH_MY_RECIPE";
     public static final String FETCH_PRESENTATION = "com.group3.swengandroidapp.FETCH_PRESENTATION";
+    public static final String FETCH_MY_PRESENTATION = "com.group3.swengandroidapp.FETCH_MY_PRESENTATION";
+    public static final String FETCH_INSTRU_VID = "com.group3.swengandroidapp.FETCH_INSTRU_VID";
     protected static final String SERVER_TIMEOUT = "PythonClient.serveTimeout";
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
@@ -38,13 +42,9 @@ public class PythonClient extends IntentService{
     //For device emulator
     public static final String IP_ADDR = "10.0.2.2";
 
-
-    //private DataOutputStream dout;
-    //private Socket socket;
     private URL url;
     private HttpURLConnection urlConnection;
     private RemoteFileManager remoteFileManager = RemoteFileManager.getInstance();
-    private RemoteFileManager myRecipeRemoteFileManager = RemoteFileManager.getInstance();
 
 
     public PythonClient() throws IOException {
@@ -59,6 +59,7 @@ public class PythonClient extends IntentService{
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
         for (String line = r.readLine(); line != null; line =r.readLine()){
             sb.append(line);
+            sb.append("\n");
         }
         is.close();
         return sb.toString();
@@ -67,7 +68,7 @@ public class PythonClient extends IntentService{
 
     public String fetchRecipeFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/recipe/%s", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/recipe/%s/%s"+".xml", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -82,7 +83,7 @@ public class PythonClient extends IntentService{
 
     public String fetchMyRecipeFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/myRecipe/%s", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/myRecipe/%s/%s"+".xml", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -97,7 +98,22 @@ public class PythonClient extends IntentService{
 
     public String fetchPresentationFromHttpServer(String id) throws IOException{
 
-        url = new URL (String.format("http://%s:5000/download/presentation/%s", IP_ADDR, id));
+        url = new URL (String.format("http://%s:5000/download/recipe/%s/%s"+".pws", IP_ADDR, id, id));
+        urlConnection = (HttpURLConnection) url.openConnection();
+
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            return readStream(in);
+
+        } finally {
+            urlConnection.disconnect();
+        }
+
+    }
+
+    public String fetchMyPresentationFromHttpServer(String id) throws IOException{
+
+        url = new URL (String.format("http://%s:5000/download/myRecipe/%s/%s"+".pws", IP_ADDR, id, id));
         urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
@@ -119,7 +135,7 @@ public class PythonClient extends IntentService{
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split(".xml");
+            return readStream(in).split(".xml\n");
         }
         finally{
             urlConnection.disconnect();
@@ -135,7 +151,7 @@ public class PythonClient extends IntentService{
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split(".xml");
+            return readStream(in).split(".xml\n");
         }
         finally{
             urlConnection.disconnect();
@@ -161,11 +177,10 @@ public class PythonClient extends IntentService{
 
                     String[] myIds = fetchMyRecipeListFromHttpServer();
                     for (String rid : myIds) {
-                        if (myRecipeRemoteFileManager.getMyRecipe(rid) == null) {
-                            myRecipeRemoteFileManager.setMyRecipe(rid, new XmlRecipe(fetchMyRecipeFromHttpServer(rid)));
+                        if (remoteFileManager.getMyRecipe(rid) == null) {
+                            remoteFileManager.setMyRecipe(rid, new XmlRecipe(fetchMyRecipeFromHttpServer(rid)));
                         }
                     }
-
 
                     Log.d("sender", "LOAD_ALL");
                     sendMessage(LOAD_ALL, "");
@@ -179,6 +194,15 @@ public class PythonClient extends IntentService{
                     Log.d("sender", "FETCH_RECIPE");
                     sendMessage(FETCH_RECIPE, id);
                     break;
+                case FETCH_MY_RECIPE:
+                    id = intent.getStringExtra(ID);
+
+                    if (remoteFileManager.getMyRecipe(id) == null) {
+                        remoteFileManager.setMyRecipe(id, new XmlRecipe(fetchMyRecipeFromHttpServer(id)));
+                    }
+                    Log.d("sender", "FETCH_MY_RECIPE");
+                    sendMessage(FETCH_MY_RECIPE, id);
+                    break;
                 case FETCH_PRESENTATION:
                     id = intent.getStringExtra(ID);
 
@@ -187,6 +211,15 @@ public class PythonClient extends IntentService{
                     }
                     Log.d("sender", "FETCH_PRESENTATION");
                     sendMessage(FETCH_PRESENTATION, id);
+                    break;
+                case FETCH_MY_PRESENTATION:
+                    id = intent.getStringExtra(ID);
+
+                    if (remoteFileManager.getMyPresentation(id) == null) {
+                        remoteFileManager.setMyPresentation(id, new XmlParser(fetchMyPresentationFromHttpServer(id)).parse());
+                    }
+                    Log.d("sender", "FETCH_MY_PRESENTATION");
+                    sendMessage(FETCH_MY_PRESENTATION, id);
                     break;
             }
 

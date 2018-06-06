@@ -9,7 +9,7 @@
         <!-- No transition between activities -->
         <item name="android:windowAnimationStyle">@null</item>
     </style>
-    
+
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">
             @drawable/splash_background
@@ -30,6 +30,10 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme.AppTheme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar" />
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

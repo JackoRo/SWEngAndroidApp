@@ -3,7 +3,8 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 
 /**
- * Created by Jack on 25/02/2018.
+ * Raw text class for parsing into from the PWS
+ * Handles any raw text in the PWS
  */
 
 public class RawText extends XmlElement {

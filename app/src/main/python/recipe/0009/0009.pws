@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation
+    xmlns="namespaceURI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="namespaceURI"
+    italic="false"
+    bold="false"
+    underline="false"
+    textsize="12"
+    color="#000000"
+    font="Times New Roman">
+
+    <Meta key="author" value="SWEng Group 3" />
+    <Meta key="name" value="Pancakes"/>
+
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 1
+        </Text>
+        <Text>
+            Toast bread slightly
+        </Text>
+        <Image path="http://lilinhaangel.com/wp-content/uploads/2015/04/Breville-Warburtons-Toaster.jpg"/>
+    </Slide>
+    <Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 2
+        </Text>
+        <Text>
+            Slice some cheese
+        </Text>
+        <Image path="http://www.johnnywhitesfishandchips.co.uk/wp-content/uploads/2013/04/Cheese.jpg"/>
+    </Slide>
+	<Slide>
+        <Text
+            bold="true"
+            textsize="24">
+            STEP 3
+        </Text>
+        <Text>
+            Put cheese on the toast and put in under the grill for a bit!
+        </Text>
+        <Image path="http://ukcdn.ar-cdn.com/recipes/port960/a90bb4c9-c1a9-4608-bea8-c829f442864a.jpg"/>
+    </Slide>
+
+</Presentation>

@@ -24,10 +24,8 @@ public class EditFieldClass extends AppCompatActivity {
         String quantity = ((EditText)findViewById(R.id.addQuantity)).getText().toString();
         String unit = ((EditText)findViewById(R.id.addUnit)).getText().toString();
         //noinspection StatementWithEmptyBody
-        if(messageText.equals("") | quantity.equals("") | unit.equals("")){
+        if(!messageText.equals("") | !quantity.equals("") | !unit.equals("")){
             //Do nothing
-        }
-        else{
             Intent intent = new Intent();
             intent.putExtra(Intent_Constants.INTENT_MESSAGE_FIELD,messageText);
             intent.putExtra(Intent_Constants.INTENT_ITEM_QUANTITY,quantity);

@@ -23,7 +23,7 @@ import com.group3.swengandroidapp.PythonClient;
 import java.net.URL;
 
 /**
- * Created by Jack on 25/05/2018.
+ * Video class for drawing in the presentation for Android
  */
 
 public class VideoAndroid extends Video {

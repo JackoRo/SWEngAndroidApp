@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.group3.swengandroidapp.AudioPlayer;
 import com.group3.swengandroidapp.SImpLeGraphicsModule.GraphicModuleAndroid;
@@ -21,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Jack on 22/02/2018.
+ * Presentation class for parsing into from the PWS
+ * Draws the slides and the slide elements when drawnSlide is called
  */
-
 public class Presentation extends XmlElement {
     private List<Slide> slides;
     private Map<String, String> meta;
@@ -38,7 +39,7 @@ public class Presentation extends XmlElement {
         slides = new ArrayList<>();
         meta = new HashMap<>();
 
-        //Sets default properties
+        //Sets default properties for children to inherit if they have no properties set
         setProperty("color","#000000");
         setProperty("fill","#FFFFFF");
         setProperty("font","sans-serif-medium");
@@ -105,7 +106,7 @@ public class Presentation extends XmlElement {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
 
-                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                    if (slides.get(index).getAdvert() == null && listenerEnable == true) {
                         Log.d("TEST", "onDoubleTap");
                         
                         AudioPlayer.touchSound();
@@ -127,7 +128,7 @@ public class Presentation extends XmlElement {
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                    if (slides.get(index).getAdvert() == null && listenerEnable == true) {
                         AudioPlayer.touchSound();
                         Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
                         gestureDetector.onTouchEvent(e);

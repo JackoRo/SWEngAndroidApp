@@ -10,7 +10,7 @@ import com.group3.swengandroidapp.PythonClient;
 import java.net.URL;
 
 /**
- * Created by Jack on 26/05/2018.
+ * Audio class for drawing in the presentation for Android
  */
 
 public class AudioAndroid extends Audio {

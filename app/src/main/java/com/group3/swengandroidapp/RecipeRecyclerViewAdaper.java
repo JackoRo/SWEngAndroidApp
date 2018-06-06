@@ -2,6 +2,7 @@ package com.group3.swengandroidapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,11 +17,6 @@ import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.ArrayList;
 
-/**
- *
- * Created by Marco on 14/03/2018.
- */
-
 // TODO: Rename - "Adapter"
 public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecyclerViewAdaper.ViewHolder> {
     private ItemClickListener clickListener;
@@ -28,6 +24,8 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
 
     private ArrayList<Recipe.Icon> items;
     private Context context;
+
+    public Vibrator vibrator;
 
     RecipeRecyclerViewAdaper(Context context){
         this.context = context;
@@ -39,6 +37,7 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = layoutInflater.inflate(R.layout.recipe_icon, parent, false);
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         return new ViewHolder(view);
     }
 
@@ -53,6 +52,9 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
         holder.title.setText(title);
         holder.favouritesButton.setOnClickListener((View view) -> {
             AudioPlayer.favouritesSound();
+            if (!AudioPlayer.isVibrationOff()){
+                vibrator.vibrate(20);
+            }
             if(id != null){
                 FavouritesHandler.getInstance().toggleFavourite(context, id);
                 if (FavouritesHandler.getInstance().contains(id)) {
@@ -214,10 +216,6 @@ public class RecipeRecyclerViewAdaper extends RecyclerView.Adapter<RecipeRecycle
             }
         }
     }
-
-
-
-
 
     //******** UPDATING ICONS ********//
 

@@ -21,7 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Jack on 20/05/2018.
+ * Shape class for drawing in the presentation for Android
+ * Changes the contract code to work with Android
  */
 
 public class GraphicModuleAndroid extends Shape{
