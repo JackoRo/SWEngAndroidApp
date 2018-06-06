@@ -3,6 +3,7 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.provider.FontRequest;
@@ -73,7 +74,6 @@ public class TextAndroid extends Text {
                 int x2 = Integer.valueOf(getX2());
                 int y1 = Integer.valueOf(getY1());
                 int y2 = Integer.valueOf(getY2());
-
 
                 LayoutParams layoutParams=new LayoutParams(x2, y2);
                 layoutParams.setMargins(x1, y1, x2, y2);

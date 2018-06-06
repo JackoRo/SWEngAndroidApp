@@ -9,10 +9,8 @@
     textsize="12"
     color="#000000"
     font="Times New Roman">
-
     <Meta key="author" value="TEST" />
     <Meta key="name" value="Demo"/>
-
     <Slide>
         <Text
             bold="true"
@@ -28,6 +26,35 @@
 			slide by tapping twice.
         </Text>
     </Slide>
+     <Slide advert="1" duration="6">
+        <Text
+            bold="true"
+            textsize="24">
+            Ads
+        </Text>
+        <Text>
+            In the free version of the app, ads will be embedded amongst the
+            recipe slides. You cannot go to the next or previous slide until you have waited the duration.
+            <Br />
+            The duration for this advert (or slide) is 6 seconds
+        </Text>
+    </Slide>
+   <Slide>
+      <Text textsize="12" font="Times New Roman">
+         This is an example of the text viewer
+         <Format bold="true" color="#F341DE">PWS</Format>
+         it can be positioned, change font colours, and has bold, italic, and underline features.
+         <Format bold="true" underline="true" italic="true" color="#F314DE">Fonts</Format>
+         were difficult to implement in android as only a few fonts could be selected without getting the licence for the font.
+         <Br />
+      </Text>
+        <Text x1="50" y1="50" x2="1000" y2="400" textsize="10">
+           Elements can also have durations like the text below is on screen for 10 seconds:
+        </Text>
+      <Text x1="50" y1="50" x2="800" y2="800" textsize="24" duration="10" color="#0a5b06">
+           You can see me now!
+      </Text>
+   </Slide>
     <Slide>
         <Text
             bold="true"
@@ -37,11 +64,15 @@
         <Text>
             Our presentation viewer will automatically lay out images 
 			(unless otherwise specified by the presentation file) in 
-			the designed layout for a recipe
+			the designed layout for a recipe.
+			<Br />
+			They can also be positioned and resized as well as
+			read from a local directory on the server with the follow paths: python/recipe/recipeid/media.
+			Where media could be image/example.jpg, audio/example.wav, video/example.mp4
         </Text>
         <Image path="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2016/04/wow-796x398.jpg"/>
+        <Image x1="100" y1="100" x2="300" y2="300" path="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2016/04/wow-796x398.jpg"/>
     </Slide>
-
     <Slide>
         <Text
             bold="true"
@@ -51,21 +82,23 @@
             Video
         </Text>
         <Text>
-            The presentation viewer also supports video!
+            The presentation viewer also supports video and positioning of videos!
         </Text>
-        <Video path="http://techslides.com/demos/sample-videos/small.mp4"/>
+        <Video x1="100" y1="100" x2="600" y2="600" path="http://techslides.com/demos/sample-videos/small.mp4"/>
     </Slide>
-
     <Slide>
-        <Text
-            bold="true"
-            textsize="24">
-            Ads
-        </Text>
-        <Text>
-            In the free version of the app, ads will be embedded amongst the 
-			recipe slides...
-        </Text>
+          <Text underline="true" textsize="18" color="#F341DE" font="Times New Roman">
+             It also supports
+             <Format underline="false" textsize="24">Shapes</Format>!
+          </Text>
+          <Shape x1="100" y1="100" type="ellipse" x2="200" y2="200" fill="gradient(#FF0000,#0000FF)" duration="2"/>
+          <Shape x1="300" y1="300" type="rectangle" x2="400" y2="400" fill="gradient(#00FF00,#FFFF00)" />
+          <Shape x1="500" y1="500" type="line" x2="600" y2="600" fill="#00FFFF" />
     </Slide>
-
+       <Slide>
+               <Text>
+                    It can also support audio files
+               </Text>
+          <Audio path="http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02-8kHz.wav" x1="50" y1="100" x2="10" y2="10" />
+       </Slide>
 </Presentation>

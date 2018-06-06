@@ -30,6 +30,10 @@ public abstract class XmlElement implements Drawable {
         }
     }
 
+    public List<XmlElement> getChildren() {
+        return children;
+    }
+
     public void setProperty(String key, String value) {
         properties.put(key, value);
     }

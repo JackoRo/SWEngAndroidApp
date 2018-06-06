@@ -106,7 +106,7 @@ public class Presentation extends XmlElement {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
 
-                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                    if (slides.get(index).getAdvert() == null && listenerEnable == true) {
                         Log.d("TEST", "onDoubleTap");
                         
                         AudioPlayer.touchSound();
@@ -128,7 +128,7 @@ public class Presentation extends XmlElement {
 
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
-                    if (slides.get(index).getAdvert() == null || listenerEnable == true) {
+                    if (slides.get(index).getAdvert() == null && listenerEnable == true) {
                         AudioPlayer.touchSound();
                         Log.d("TEST", "Raw event: " + e.getAction() + ", (" + e.getRawX() + ", " + e.getRawY() + ")");
                         gestureDetector.onTouchEvent(e);
