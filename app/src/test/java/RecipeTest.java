@@ -3,7 +3,10 @@
  */
 
 import com.group3.swengandroidapp.PythonClient;
+import com.group3.swengandroidapp.XMLRenderer.Presentation;
 import com.group3.swengandroidapp.XMLRenderer.Recipe;
+import com.group3.swengandroidapp.XMLRenderer.XmlElement;
+import com.group3.swengandroidapp.XMLRenderer.XmlParser;
 import com.group3.swengandroidapp.XMLRenderer.XmlRecipe;
 
 import static org.junit.Assert.assertEquals;
@@ -58,4 +61,16 @@ public class RecipeTest {
         }
     }
 
+    @Test
+    public void presentationCreation() {
+        try {
+            Presentation presentation = new XmlParser(client.fetchPresentationFromHttpServer("0000")).parse();
+            assertEquals("#023211", presentation.getSlide(2).getProperty("fill"));
+            assertEquals("#F341DE", presentation.getSlide(2).getProperty("color"));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            fail("No presentation found");
+        }
+    }
 }
