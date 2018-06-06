@@ -6,15 +6,17 @@ body{
 
 div.text_section{
 	background-color: white;
-	border-style: groove;
-	border-width: 5px;
-	padding: 20px 50px;
-	padding-top: 30px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #567;
+	padding: 30px 50px;
+	padding-top: 42px;
 	width: 95%;
 	max-width: 1000px;
 	display: block;
 	margin: 10px auto;
 	color: black;
+	border-radius: 10px;
 }
 
 div.text_section h1{
@@ -25,6 +27,25 @@ div.text_section h1{
 div.text_section h2{
 	border-style: none none solid none;
 	border-width: 1px;
+}
+
+.quote{
+	font-style: italic;
+	background-color: #EEE;
+	
+	border-style: solid;
+	border-color: #9AB;
+	border-width: 1px;
+	
+	border-radius: 10px;
+	
+	padding: 10px;
+	padding-top: 20px;
+	margin: 10px 20px;
+}
+
+.text_section h4{
+	margin-top: 20px;
 }
 
 .anchor{
@@ -107,6 +128,16 @@ ul.navigation li a:hover{
 	background-color: #234;
 }
 
+.closebtn{
+	color: #567;
+	transition: color .3s;
+}
+
+.closebtn:hover{
+	color: #FFF;
+	cursor: pointer;
+}
+
 .sidenav {
     height: 100%;
     width: 0;
@@ -140,4 +171,34 @@ ul.navigation li a:hover{
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+}
+
+.flex-container{
+	padding-left: 0;
+	display: flex;
+	flex-direction: row;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
+	list-style-type: none;
+	margin: 0;
+}
+
+.flex-item {
+  padding: 5px;
+  margin: 7px;
+}
+
+.flex-item p{
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+
+.polaroid {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 2px;
+  transition: opacity .2s;
 }
