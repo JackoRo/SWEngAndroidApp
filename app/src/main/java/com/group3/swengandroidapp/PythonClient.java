@@ -38,9 +38,9 @@ public class PythonClient extends IntentService{
 
     //IP ADDRESS OF THE SERVER. EDIT THIS FOR YOUR SYSTEM.
     //For USB debugging
-    public static final String IP_ADDR = "192.168.0.20";
+    //public static final String IP_ADDR = "192.168.0.20";
     //For device emulator
-    //public static final String IP_ADDR = "10.0.2.2";
+    public static final String IP_ADDR = "10.0.2.2";
 
     private URL url;
     private HttpURLConnection urlConnection;
@@ -59,6 +59,7 @@ public class PythonClient extends IntentService{
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
         for (String line = r.readLine(); line != null; line =r.readLine()){
             sb.append(line);
+            sb.append("\n");
         }
         is.close();
         return sb.toString();
@@ -134,7 +135,7 @@ public class PythonClient extends IntentService{
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split(".xml");
+            return readStream(in).split(".xml\n");
         }
         finally{
             urlConnection.disconnect();
@@ -150,40 +151,9 @@ public class PythonClient extends IntentService{
 
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split(".xml");
+            return readStream(in).split(".xml\n");
         }
         finally{
-            urlConnection.disconnect();
-        }
-
-    }
-
-    public String[] fetchInstruvidListFromHttpServer() throws IOException{
-
-        url = new URL (String.format("http://%s:5000/instruvidList", IP_ADDR));
-        urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setConnectTimeout(2000);
-
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in).split(".");
-
-        } finally {
-            urlConnection.disconnect();
-        }
-
-    }
-
-    public String fetchInstruvidFromHttpServer(String id) throws IOException{
-
-        url = new URL (String.format("http://%s:5000/download/instruvid/%s"+".mp4", IP_ADDR, id));
-        urlConnection = (HttpURLConnection) url.openConnection();
-
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            return readStream(in);
-
-        } finally {
             urlConnection.disconnect();
         }
 
