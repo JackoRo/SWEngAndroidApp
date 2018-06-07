@@ -20,7 +20,10 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Created by Jack on 11/02/2018.
+ * Handles the data between the app for recipes, instructional videos, presentations etc.
+ *
+ * If it cannot find the data requested, send intent to PythonClient and start service to
+ * fetch the data from the server.
  */
 
 public class RemoteFileManager {
@@ -36,6 +39,7 @@ public class RemoteFileManager {
     private static HashMap<String, Recipe> myRecipes;
     private static HashMap<String, InstructionalVideo> instructionalVideos;
     private static HashMap<String, Presentation> presentations;
+    private static HashMap<String, Presentation> myPresentations;
     private static HashMap<String, Integer> suggestions;
     private static HashMap<String, Integer> orderedSuggestions;
 
@@ -44,6 +48,7 @@ public class RemoteFileManager {
         myRecipes = new HashMap<>();
         recipes = new HashMap<>();
         presentations = new HashMap<>();
+        myPresentations = new HashMap<>();
         instructionalVideos = new HashMap<>();
         suggestions = new HashMap<>();
         orderedSuggestions = new HashMap<>();
@@ -88,11 +93,10 @@ public class RemoteFileManager {
                 Log.d("history", "adding suggestions based on history");
                 String historyId = histories[i];
                 for(String key : RemoteFileManager.getInstance().getRecipeList().keySet()){
-                    //ids[counter] = key;
                     if (!historyId.equals(key)){
                         //only compare tags to different recipes
                         similarityValue = myRecipe.tagSimilarity(historyId, key);
-                        int newSimilarityValue = similarityValue*(historySize-i);                 //weights the similarity value based on
+                        int newSimilarityValue = similarityValue*(historySize-i); //weights the similarity value based on
                         //how recently the recipe was viewed
                         suggestions.put(key, newSimilarityValue);
                     }else{
@@ -157,7 +161,7 @@ public class RemoteFileManager {
         return instructionalVideos.get(id);
     }
 
-    public String[] getInstructionalVideo(){
+    public String[] getInstructionalVideos(){
         String[] ids = new String[instructionalVideos.size()];
         int counter = 0;
         for(String key : RemoteFileManager.getInstance().getInstructionalVideosList().keySet()){
@@ -172,7 +176,19 @@ public class RemoteFileManager {
         presentations.put(id, presentation);
     }
 
+    public void setMyPresentation(String id, Presentation myPresentation) {
+        myPresentation.setProperty("_ID", id);
+        myPresentations.put(id, myPresentation);
+    }
+
+    public void setInstructionalVideo(String id, InstructionalVideo instructionalVideo) {
+        instructionalVideo.setID(id);
+        instructionalVideos.put(id, instructionalVideo);
+    }
+
     public Presentation getPresentation(String id) { return presentations.get(id); }
+
+    public Presentation getMyPresentation(String id) { return myPresentations.get(id); }
 
     public HashMap<String, Recipe> getRecipeList() { return recipes; }
 

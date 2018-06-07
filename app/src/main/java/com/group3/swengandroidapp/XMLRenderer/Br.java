@@ -3,7 +3,8 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 
 /**
- * Created by Jack on 24/05/2018.
+ * BR class for parsing into from the PWS
+ * Handles any BR expressions in the PWS as new lines in the text
  */
 
 public class Br extends XmlElement {

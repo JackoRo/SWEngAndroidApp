@@ -3,7 +3,7 @@ package com.group3.swengandroidapp.XMLRenderer;
 import android.app.Activity;
 
 /**
- * Created by Jack on 22/02/2018.
+ * Image class for parsing into from the PWS
  */
 
 public abstract class Image extends XmlElement implements Drawable {

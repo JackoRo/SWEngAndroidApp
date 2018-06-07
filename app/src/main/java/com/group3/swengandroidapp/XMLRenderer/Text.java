@@ -1,7 +1,8 @@
 package com.group3.swengandroidapp.XMLRenderer;
 
+
 /**
- * Created by Jack on 22/02/2018.
+ * Text class for parsing into from the PWS
  */
 
 public abstract class Text extends XmlElement implements Drawable {

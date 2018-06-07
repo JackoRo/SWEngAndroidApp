@@ -24,7 +24,7 @@ import java.net.URL;
 
 
 /**
- * Created by Jack on 05/03/2018.
+ * Image class for drawing in the presentation for Android
  */
 
 public class ImageAndroid extends Image {

@@ -17,10 +17,12 @@ import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
@@ -42,8 +44,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
 
     private String search;
 
-    private TextInputEditText editText;
+    private EditText editText;
 
+    public  android.os.Vibrator vibrator;
 
 
 
@@ -58,7 +61,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         displayAdapter.setClickListener(this);
         recyclerView.setAdapter(displayAdapter);
 
-        editText = (TextInputEditText) findViewById(R.id.searchPage_edit_text);
+        vibrator = (android.os.Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        editText = (EditText) findViewById(R.id.searchPage_edit_text);
 
         editText.setOnKeyListener(new View.OnKeyListener()
         {
@@ -72,55 +77,40 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
                 return false;
             }
         });
-//        editText.setKeyListener(new KeyListener() {
-//            @Override
-//            public int getInputType() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public boolean onKeyDown(View view, Editable editable, int i, KeyEvent keyEvent) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onKeyUp(View view, Editable editable, int i, KeyEvent keyEvent) {
-//
-//                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-//                    searchProcess();
-//                }
-//
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onKeyOther(View view, Editable editable, KeyEvent keyEvent) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void clearMetaKeyState(View view, Editable editable, int i) {
-//
-//            }
-//        });
+
+
+
+        editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    searchProcess();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         //When search button is click store the input string of the search bar
         final ImageButton button = findViewById(R.id.searchPage_search_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 searchProcess();
             }
         });
-
-
-
-
 
         //Toggle Buttons for filters
         ToggleButton toggleSpicy = (ToggleButton) findViewById(R.id.searchPage_togglebuttonSpicy);
         toggleSpicy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 Filter.getInstance().getCriteria().setSpicy(isChecked);
                 if (isChecked) {
                    toggleSpicy.setBackgroundResource(R.drawable.spicy_filter);
@@ -134,6 +124,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         toggleVegetarian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 Filter.getInstance().getCriteria().setVegetarian(isChecked);
                 if (isChecked) {
                     toggleVegetarian.setBackgroundResource(R.drawable.vegetarian_filter);
@@ -148,6 +141,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         toggleVegan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 Filter.getInstance().getCriteria().setVegan(isChecked);
                 if (isChecked) {
                     toggleVegan.setBackgroundResource(R.drawable.vegan_filter);
@@ -161,6 +157,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         toggleLactose.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 Filter.getInstance().getCriteria().setLactose(isChecked);
                 if (isChecked) {
                     toggleLactose.setBackgroundResource(R.drawable.lactosefree_filter);
@@ -174,6 +173,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         toggleNut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 Filter.getInstance().getCriteria().setNuts(isChecked);
                 if (isChecked) {
                     toggleNut.setBackgroundResource(R.drawable.nutfree_filter);
@@ -188,6 +190,9 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         toggleGluten.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AudioPlayer.touchSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                }
                 Filter.getInstance().getCriteria().setGluten(isChecked);
                 if (isChecked) {
                     toggleGluten.setBackgroundResource(R.drawable.glutenfree_filter);
@@ -222,8 +227,6 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
     @Override
     protected void onStart(){
         super.onStart();
-        //String[] ids = {"0000", "0001", "0002"};
-        //displayAdapter.setRecipes(ids);
     }
 
     @Override
@@ -232,32 +235,18 @@ public class SearchpageActivity extends AppCompatActivity implements RecipeRecyc
         imageDownloaderListener.unRegister();
     }
 
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//
-//        imageDownloaderListener = new ImageDownloaderListener(this) {
-//            @Override
-//            public void onBitmapReady(String id, String absolutePath){
-//                icons.get(id).setDrawable(ImageDownloaderService.fetchBitmapDrawable(absolutePath));
-//                displayAdapter.notifyIconChanged(id);
-//            }
-//        };
-//
-//        for(String id : icons.keySet()){
-//            requestBitmapFile(id);
-//        }
-//
-//    }
-
     @Override
     public void onItemClick(String recipeId){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);           // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                            // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);
+        intent.putExtra("FROM_ACTIVITY", "HomeActivity");
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);        // switch activities
 
     }

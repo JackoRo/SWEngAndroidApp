@@ -39,12 +39,4 @@
         android:textOff="@string/add_fave"
         android:textOn="@string/added_fave" />
 
-    <!--<Button
-        android:id="@+id/b_view"
-        android:layout_width="@android:dimen/thumbnail_width"
-        android:layout_height="@android:dimen/thumbnail_height"
-        android:text="@string/view_fave" />-->
-
-
-
 </android.support.v4.widget.DrawerLayout>

@@ -16,11 +16,14 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import java.util.ArrayList;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
-    String id;
-    ImageView icon;
+    private String id;
+    private ImageView icon;
     private ImageDownloaderListener imageDownloaderListener;
     private Recipe recipe;
-    ArrayList<String> ingredientsList;
+    private ArrayList<String> ingredientsList;
+    private String previousActivity;
+
+    public  android.os.Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +33,24 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra(PythonClient.ID);
 
+        vibrator = (android.os.Vibrator) getSystemService(android.content.Context.VIBRATOR_SERVICE);
+
         final Button startButton = findViewById(R.id.recipe_selection_start_button);
         startButton.setOnClickListener(v -> {
-            AudioPlayer.touchSound();
             // Code here executes on main thread after user presses button
+            AudioPlayer.touchSound();
+            if (!AudioPlayer.isVibrationOff()){
+                vibrator.vibrate(20);
+             }
             Intent newIntent = new Intent(getApplicationContext(), PresentationActivity.class);
             newIntent.putExtra(PythonClient.ID, id);
+
+            if (previousActivity.equals("MyRecipesActivity")) {
+                newIntent.putExtra("FROM_ACTIVITY", "MyRecipesActivity");
+            } else {
+                newIntent.putExtra("FROM_ACTIVITY", "HomeActivity");
+            }
+
             startActivity(newIntent);
         });
 
@@ -43,12 +58,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         listButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 AudioPlayer.touchSound();
-//                  String toAdd[] = ingredients.setText(recipe.generateIngredientsString());
-//                  if (toAdd.length > 0) {
-//                         for (int i=0; i < toAdd.length; i++){
-//                              ingredientsList.add(toAdd[i]);
-//                         }
-//                  }
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                 }
                 ShoppinglistHandler.getInstance().addToShoppingList(recipe.getIngredients());
                 Toast.makeText(getApplicationContext(),"Recipes added to shopping list!", Toast.LENGTH_SHORT).show();
 
@@ -61,6 +73,9 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         favourites.setOnClickListener(v -> {
             if(id!=null){
                 AudioPlayer.favouritesSound();
+                if (!AudioPlayer.isVibrationOff()){
+                    vibrator.vibrate(20);
+                 }
                 FavouritesHandler.getInstance().toggleFavourite(id);
                 if (FavouritesHandler.getInstance().contains(id)) {
                     favourites.setImageResource(R.drawable.favfull);
@@ -100,7 +115,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         TextView tags = findViewById(R.id.recipe_selection_tags_text);
 
         Intent intent = getIntent();
-        String previousActivity= intent.getStringExtra("FROM_ACTIVITY"); // Get name of previous activity
+        previousActivity= intent.getStringExtra("FROM_ACTIVITY"); // Get name of previous activity
         if (previousActivity.equals("MyRecipesActivity")){
             recipe = RemoteFileManager.getInstance().getMyRecipe(id);
         }else{
@@ -108,7 +123,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         }
 
         if(recipe==null){
-            recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a");
+            recipe = new Recipe("Recipe not found!", "n/a", ("UPDATED_RECIPE_ID: " + id), "n/a", "n/a");
         }else{
             // Recipe is found, add to history
             HistoryHandler.getInstance().append(recipe.getID());

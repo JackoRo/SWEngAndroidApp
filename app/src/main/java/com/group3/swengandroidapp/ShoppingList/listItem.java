@@ -12,7 +12,6 @@ public class listItem
         itemName = name;
         itemUnits = units;
         itemQuantity = quantity;
-        //itemChecked = checked;
     }
 
     //Getters for the object.

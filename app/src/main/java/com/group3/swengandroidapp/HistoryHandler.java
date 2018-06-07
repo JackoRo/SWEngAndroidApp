@@ -3,8 +3,7 @@ package com.group3.swengandroidapp;
 import java.util.ArrayList;
 
 /**
- * Class to handle the
- * Created by Marco on 24/03/2018.
+ * Class to handle the History
  */
 public class HistoryHandler {
     private static final int MAX_NUMBER_OF_ITEMS = 10;

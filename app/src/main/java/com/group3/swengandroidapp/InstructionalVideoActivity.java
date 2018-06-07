@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.group3.swengandroidapp.ShoppingList.Intent_Constants;
 import com.group3.swengandroidapp.XMLRenderer.InstructionalVideo;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
@@ -20,10 +21,9 @@ import java.util.HashMap;
 
 /**
  * The instructional videos screen of the app.
- * <p>
- *     Displays a list of videos of cooking tips and instructions
- * </p>
- * Created by Kevin on 12/03/2018
+ *
+ * Displays a list of videos of cooking tips and instructions
+ *
  */
 public class InstructionalVideoActivity extends MainActivity implements InstructionalVideoRecyclerViewAdapter.ItemClickListener{
 
@@ -37,19 +37,17 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     @Override
     public void onItemClick(String videoID){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
+
         Log.d("InstructionalActivity","Clicked on video " + videoID);
 
-        Intent intent = new Intent(InstructionalVideoActivity.this, InstructionalVideoPlayingActivity.class );
-        intent.putExtra("key", videoID); //Optional parameters
-        InstructionalVideoActivity.this.startActivity(intent);
-
-        // Play Vide
-        /*
-        intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
+        Intent intent = new Intent();
+        intent.setClass(this,InstructionalVideoPlayingActivity.class);                   // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);                                    // Delete previous activities
-        intent.putExtra(PythonClient.ID, videoID);       // Set recipe id
+        intent.putExtra(PythonClient.ID, videoID);       // Set  video id
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);                // switch activities
-        */
     }
 
     @Override
@@ -72,19 +70,23 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     public void onStart(){
         super.onStart();
 
-        String[] instructionalVideo = RemoteFileManager.getInstance().getInstructionalVideo();
+        String[] instructionalVideos = RemoteFileManager.getInstance().getInstructionalVideos();
 
         // Process the instructional videos view
-        /*for(String id : instructionalVideo){
+        for(String id : instructionalVideos){
             if(!icons.containsKey(id)){
                 icons.put(id, InstructionalVideo.produceDescriptor(this, RemoteFileManager.getInstance().getInstructionalVideo(id)));
             }
             instructionalVideosAdapter.addIcon(icons.get(id));
-        }*/
+        }
+
+        // Assign thumbnail pictures for the instructional videos
         Drawable frying_onions = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.frying_onions));
         Drawable cutting_onions = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.cutting_onions));
         Drawable grilling_meat = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.grilling_meat));
         Drawable frying_egg = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.frying_egg));
+
+        //Create thumbnails
         instructionalVideosAdapter.addIcon(new InstructionalVideo.Icon("Frying Onions", frying_onions, "frying_onions"));
         instructionalVideosAdapter.addIcon(new InstructionalVideo.Icon("Cutting Onions", cutting_onions, "cutting_onions"));
         instructionalVideosAdapter.addIcon(new InstructionalVideo.Icon("Grilling Meat", grilling_meat, "grilling_meat"));
@@ -92,8 +94,6 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
 
         // Notify the adapters to update themselves.
         instructionalVideosAdapter.notifyDataSetChanged();
-
-
 
     }
 
@@ -126,33 +126,7 @@ public class InstructionalVideoActivity extends MainActivity implements Instruct
     @Override
     public void onPause(){
         super.onPause();
-        // TODO: Unregistered in onPause, not re-registered in onResume?
         imageDownloaderListener.unRegister();
-    }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            if(message != null) Log.d("receiver", "Got message: " + message);
-
-            if (intent.getStringExtra(PythonClient.ACTION).matches(PythonClient.FETCH_RECIPE)) {
-                // Need code for starting activity for playing videos
-
-                // Intent newIntent = new Intent(context, RecipeSelectionActivity.class);
-                // startActivity(newIntent);
-            }else {
-                Log.d("ASDLKA", intent.getStringExtra(PythonClient.ACTION));
-            }
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
 }

@@ -1,8 +1,10 @@
 package com.group3.swengandroidapp;
 
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -18,6 +20,7 @@ import com.group3.swengandroidapp.XMLRenderer.Recipe;
 import com.group3.swengandroidapp.XMLRenderer.RemoteFileManager;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * The home screen of the app.
@@ -25,14 +28,18 @@ import java.util.HashMap;
  *     Displays a history of recently viewed recipes (as contained within {@link HistoryHandler}) and a
  *     "recommended" list of recipes (Produced within {@link RemoteFileManager}).
  * </p>
- * Created by Kevin on 12/03/2018 and edited by mb1510 (Team Leader).
  */
 public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdaper.ItemClickListener{
 
     private RecipeRecyclerViewAdaper suggestedAdapter;          // adapter to Suggested Recipes recyclerview
     private RecipeRecyclerViewAdaper historyAdapter;            // Adapter to History recyclerview
     private ImageDownloaderListener imageDownloaderListener;    // Listens for BITMAP_READY messages from ImageDownloaderService
-    HashMap<String, Recipe.Icon> icons = new HashMap<>();       // Contains all icons that are to be deplyed on this page
+    HashMap<String, Recipe.Icon> icons = new HashMap<>();       // Contains all icons that are to be deployed on this page
+
+    static boolean viewed = false;
+    int min = 0; int max = 7;
+    Random r = new Random();                    // these variables are used for the possible welcome messages
+    int i = r.nextInt(max - min + 1) + min;
 
     /**
      * Method called when a recipe is clicked from the home screen either in the history or main section.
@@ -41,6 +48,9 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     public void onItemClick(String recipeId){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                   // Set new activity destination
@@ -89,7 +99,32 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
             }
         });
 
+        // 5 possible starting messages
+        if(!viewed) {
+            AlertDialog.Builder welcomeM = new AlertDialog.Builder(this);
+            welcomeM.setTitle("HANDS OFF");
+            welcomeM.setPositiveButton("OK!", null);
 
+            switch (i) {
+                case 0:
+                    welcomeM.setMessage("Please consider rating HANDS OFF 5 stars on the Google Play Store").show();
+                    break;
+                case 1:
+                    welcomeM.setMessage("We'd love if you tweeted about HANDS OFF!").show();
+                    break;
+                case 2:
+                    welcomeM.setMessage("Favourite all your preferred recipes to easily view them at any time!").show();
+                    break;
+                case 3:
+                    welcomeM.setMessage("Have you tried our fantastic Recipe of the Day?").show();
+                    break;
+                case 4:
+                    welcomeM.setMessage("Try the amazing shopping list feature!").show();
+                    break;
+            }   // note it is possible that no message appears 0-7 rand
+        }
+        //set flag as the user only gets one possible pop up per app startup
+        viewed = true;
     }
 
     @Override
@@ -100,7 +135,6 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         String recipeOfTheDay = RemoteFileManager.getInstance().getRecipeOfTheDay();
         String[] histories = HistoryHandler.getInstance().getHistory();
         String[] suggested;
-        //int historySize = histories.length;
         if (histories == null){
             suggested = RemoteFileManager.getInstance().getSuggestedRecipes(0, histories);
             Log.d("history", "nothing in history, loading all recipes instead");
@@ -142,12 +176,16 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         // Notify the adapters to update themselves.
         historyAdapter.notifyDataSetChanged();
         suggestedAdapter.notifyDataSetChanged();
+
+
+
+
     }
 
     @Override
     public void onResume(){
         super.onResume();
-
+        viewed = true;
         // Startup imageDownloaderListener
         imageDownloaderListener = new ImageDownloaderListener(this) {
             @Override
@@ -180,7 +218,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
         imageDownloaderListener.unRegister();
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver MessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
         // Get extra data included in the Intent
@@ -199,6 +237,7 @@ public class HomeActivity extends MainActivity implements RecipeRecyclerViewAdap
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        viewed = true;
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }

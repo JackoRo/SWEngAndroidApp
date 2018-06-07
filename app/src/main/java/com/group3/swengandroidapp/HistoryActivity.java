@@ -1,5 +1,6 @@
-/*This class will receive arraylist of favourite recipes from home activity class and
- *display the recipes (currently in ListView).*/
+/** This class will receive arraylist of favourite recipes from home activity class and
+ *  display the recipes (currently in ListView).
+ * */
 
 package com.group3.swengandroidapp;
 
@@ -77,11 +78,15 @@ public class HistoryActivity extends MainActivity implements RecipeRecyclerViewA
     @Override
     public void onItemClick(String recipeId){
         AudioPlayer.touchSound();
+        if (!AudioPlayer.isVibrationOff()){
+            vibrator.vibrate(20);
+        }
         Log.d("HomeActivity","Clicked on recipe " + recipeId);
         Intent intent = new Intent();
         intent.setClass(this,RecipeSelectionActivity.class);                 // Set new activity destination
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  // Delete previous activities
         intent.putExtra(PythonClient.ID, recipeId);
+        intent.putExtra("FROM_ACTIVITY", "HistoryActivity");      // Tell new activity that this was the previous activity
         startActivityForResult(intent, Intent_Constants.INTENT_REQUEST_CODE);            // switch activities
 
     }

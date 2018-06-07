@@ -30,11 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- Instructional videos view -->
             <RelativeLayout
                 android:id="@+id/instructional_videos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- Display title -->
                 <TextView
                     android:paddingStart="10dp"
                     android:id="@+id/instructional_videos_title"
@@ -44,6 +46,7 @@
                     android:textColor="#000"
                     />
 
+                <!-- Display thumbnails -->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/instructional_videos_view"
                     android:layout_width="wrap_content"
@@ -55,6 +58,7 @@
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
+    <!-- Navigation drawer drawer -->
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"

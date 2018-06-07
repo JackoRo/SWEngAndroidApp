@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.io.StringReader;
 
 /**
- * Created by Jack on 15/02/2018.
- */
-
+ * XML parser for the PWS
+ *
+ * */
 public class XmlParser {
     private XmlPullParser xpp;
 

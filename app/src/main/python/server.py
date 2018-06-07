@@ -1,36 +1,42 @@
-from flask import Flask, send_from_directory, request, redirect, url_for
-from werkzeug.utils import secure_filename
+from __future__ import print_function
+import glob
 import os
+
+from flask import Flask, send_from_directory, request, redirect, safe_join
+from werkzeug.utils import secure_filename
 
 cwd = os.getcwd()
 uploadPresentation = 'presentation'
 uploadRecipe = 'recipe'
 uploadMyRecipe = 'myRecipe'
+uploadInstruvid = 'instruvid'
 UPLOAD_PRESENTATION = os.path.join(cwd, uploadPresentation)
 UPLOAD_RECIPE = os.path.join(cwd, uploadRecipe)
 UPLOAD_MY_RECIPE = os.path.join(cwd, uploadMyRecipe)
+UPLOAD_INSTRU_VID = os.path.join(cwd, uploadInstruvid)
 
 ALLOWED_EXTENSIONS = set(['xml', 'pws', 'jpg', 'png', 'jpeg'])
 
 app = Flask(__name__)
 app.config['UPLOAD_PRESENTATION'] = UPLOAD_PRESENTATION
 app.config['UPLOAD_RECIPE'] = UPLOAD_RECIPE
+app.config['UPLOAD_MY_RECIPE'] = UPLOAD_MY_RECIPE
+app.config['UPLOAD_INSTRU_VID'] = UPLOAD_INSTRU_VID
 
-@app.route('/download/presentation/<id>')
-def fetchPresentation(id):
-    return send_from_directory(UPLOAD_PRESENTATION, "{}.pws".format(id))
+@app.route('/download/recipe/<fileid>/<path:mediaid>')
+def fetchRecipeMedia(fileid, mediaid):
+    print("fetchRecipeMedia")
+    return send_from_directory(UPLOAD_RECIPE, safe_join(fileid, mediaid))
 
-@app.route('/download/recipe/<id>')
-def fetchRecipe(id):
-    return send_from_directory(UPLOAD_RECIPE, "{}.xml".format(id))
-	
-@app.route('/download/myRecipe/<id>')
-def fetchMyRecipe(id):
-    return send_from_directory(UPLOAD_MY_RECIPE, "{}.xml".format(id))
+@app.route('/download/myRecipe/<fileid>/<path:mediaid>')
+def fetchMyRecipeMedia(fileid, mediaid):
+    print("fetchRecipeMedia")
+    return send_from_directory(UPLOAD_MY_RECIPE, safe_join(fileid, mediaid))
 
-@app.route('/download/presentation/<presentationid>/<path:id>')
-def fetchMedia(presentationid, id):
-    return send_from_directory(UPLOAD_PRESENTATION, os.path.join(presentationid, id))
+@app.route('/download/instruvid/<fileid>')
+def fetchInstruvid(fileid):
+    print("fetchInstruvid")
+    return send_from_directory(UPLOAD_INSTRU_VID, fileid)
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -38,11 +44,16 @@ def allowed_file(filename):
 
 @app.route('/recipelist')
 def fetchRecipes():
-    return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("recipe/*/*.xml"))
+    # return "\n".join(next(os.walk(UPLOAD_RECIPE))[2])
 	
 @app.route('/myRecipeList')
 def fetchMyRecipes():
-    return "\n".join(next(os.walk(UPLOAD_MY_RECIPE))[2])
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("myRecipe/*/*.xml"))
+
+@app.route('/instruvidList')
+def fetchInstruvids():
+    return "\n".join(os.path.split(x)[1] for x in glob.glob("instruvid/*"))
 
 @app.route('/upload/presentation', methods=['GET', 'POST'])
 def storePresentation():

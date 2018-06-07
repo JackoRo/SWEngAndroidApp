@@ -17,11 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Marco on 04/04/2018.
- */
-
-
 public class SplashActivity extends MainActivity {
 
     public static boolean progress = false;

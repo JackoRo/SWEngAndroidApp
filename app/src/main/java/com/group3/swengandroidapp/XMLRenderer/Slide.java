@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import com.group3.swengandroidapp.SImpLeGraphicsModule.GraphicModuleAndroid;
 
 /**
- * Created by Jack on 22/02/2018.
+ * Slide class for parsing into from the PWS
+ * Draws the elements on the slide after draw is called
  */
 
 public class Slide extends XmlElement {
@@ -22,13 +23,13 @@ public class Slide extends XmlElement {
     private Handler handler;
 
     // Must call drawAll again on activity unRegister e.g. rotating phone
-
     public Slide (XmlElement parent) {
         super(parent);
         this.handler = new Handler(Looper.getMainLooper());
 
     }
 
+    // Handles adverts in the PWS. Slides marked with advert element must have a duration.
     public String getAdvert () {
         return getInheritableProperty("advert");
     }
