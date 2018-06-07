@@ -215,7 +215,7 @@ ul.navigation li a:hover{
 .flex-item a:hover{
 	text-decoration: none;
 	color: black;
-	opacity: 0.8;
+	opacity: 0.75;
 }
 
 .flex-item ul{
